@@ -20,14 +20,15 @@ Status truth for the project. Update this file and the matching
 
 ## Next session starts here
 
-Phase 0 is complete and committed. Nothing is in flight. Open items, in order:
+Phase 0 is complete and committed. Theme port done 2026-09-17 (uncommitted at time of writing). Open items, in order:
 
 1. **`lib/` housekeeping (user, 4 files):** add the `AI-GENERATED` header +
    Why line to `lib/main.dart` and `lib/app/{app,router,home_screen}.dart`
    (they are listed as "marker pending" in `docs/AI_CONTRIBUTIONS.md`); rename
    `TenpaiApp` → `App` (or the file); make `AppRoutes` → `_Routes`. Then
    `dart run tool/check_conventions.dart` must exit 0.
-2. **Milestone 1 begins with the theme**, following the port order in
+2. **Tile model + `TileWidget`** (design/README.md port step 5; theme is done, skip to this).
+   Previously: **Milestone 1 begins with the theme**, following the port order in
    `design/README.md`: colour tokens light + dark → spacing/radius/shadow/
    motion → text theme (fonts already bundled) → `ThemeData` light + dark.
    The user writes; Claude explains options first (static token class vs
@@ -73,7 +74,7 @@ Plan: [docs/plans/2026-09-17-project-setup.md](plans/2026-09-17-project-setup.md
 | Exports dropped into `design/` | done 2026-09-17 (`design/handoff/`) |
 | `design/README.md` inventory + token map | done |
 | Fonts: Outfit 400–700 + IBM Plex Mono 400/500 static TTFs in `assets/fonts/` with OFL licences, declared in pubspec | done 2026-09-17 |
-| Theme tokens (colours light+dark → spacing/radius/shadow → text theme → ThemeData) | colours done 2026-09-17: `lib/app/theme/app_colors.dart` (palette + `AppColors` by Claude via `/implement`; schemes by user), `app_theme.dart` + `MaterialApp` wiring by user. Next: spacing/radius/shadow, text theme |
-| Component port, order in `design/README.md` (Tile first) | not started |
+| Theme tokens (colours light+dark → spacing/radius/shadow → text theme → ThemeData) | done 2026-09-17: `lib/app/theme/{app_colors,app_tokens,app_theme}.dart`, wired in `MaterialApp.router`. Claude via `/implement`: `_Palette`, `AppColors` fields, `_textTheme` (marked). User: schemes, `AppTokens`, `ThemeData` builders. Open nits: Why markers in app_colors, `AppTokens` doc wording |
+| Component port, order in `design/README.md` (Tile first) | tile model + widget next (2026-09-17) |
 | Debug gallery route | not started |
 | Delete `design/handoff/` once every screen matches its screenshot (keep `design/README.md`) | after port |
