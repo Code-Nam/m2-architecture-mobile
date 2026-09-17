@@ -1,0 +1,93 @@
+{
+  "planPath": "docs/plans/2026-09-17-tile-widget.md",
+  "tasks": [
+    {
+      "id": 1,
+      "subject": "Task 1: Tile model (freezed)",
+      "status": "pending",
+      "blockedBy": [],
+      "description": "**Goal:** One canonical tile value class. `Tile(suit: TileSuit, number: int, isRed: bool = false)` via freezed `abstract class` + `const factory`; `TileSuit { man, pin, sou, honor }`; `Tile.parse('5p')` and `String get code` ('1m'..'9s', '1z'..'7z'). Range assert only, no engine.\n**Read:** CLAUDE.md freezed row; `~/.pub-cache/hosted/pub.dev/freezed_annotation-3.1.0/lib/`.\n**Acceptance:** `dart run build_runner build -d` emits `tile.freezed.dart`; `Tile.parse('5p').code == '5p'`; equal tiles are `==`.\n**Verify:** `dart run build_runner build -d && flutter analyze`\n```json:metadata\n{\"verifyCommand\": \"flutter analyze\", \"acceptanceCriteria\": [\"see description\"], \"modelTier\": \"standard\"}\n```"
+    },
+    {
+      "id": 2,
+      "subject": "Task 2: TileState enum",
+      "status": "pending",
+      "blockedBy": [],
+      "description": "**Goal:** `enum TileState { normal, selected, correct, incorrect, highlighted, faceDown }`. Red five is NOT a state: it is `Tile.isRed` and composes with any state (design lists 7 rows, one is orthogonal).\n**Acceptance:** 6 values; a `switch` over it compiles with no `default` (`no_default_cases`).\n**Verify:** `flutter analyze`\n```json:metadata\n{\"verifyCommand\": \"flutter analyze\", \"acceptanceCriteria\": [\"see description\"], \"modelTier\": \"standard\"}\n```"
+    },
+    {
+      "id": 3,
+      "subject": "Task 3: TileSize enum",
+      "status": "pending",
+      "blockedBy": [],
+      "description": "**Goal:** Enhanced enum with const `width`/`height`: small 24x34 (hand row), option 48x66, regular 64x88 (default), demo 110x152. Ratio 64:88.\n**Acceptance:** `TileSize.regular.width == 64`.\n**Verify:** `flutter analyze`\n```json:metadata\n{\"verifyCommand\": \"flutter analyze\", \"acceptanceCriteria\": [\"see description\"], \"modelTier\": \"standard\"}\n```"
+    },
+    {
+      "id": 4,
+      "subject": "Task 4: TileWidget skeleton",
+      "status": "pending",
+      "blockedBy": [
+        1,
+        2,
+        3
+      ],
+      "description": "**Goal:** `StatelessWidget(tile, state, size)`. `SizedBox` -> `DecoratedBox(gradient, borderRadius: AppTokens.radiusTile, boxShadow: AppTokens.shadowTile)`. Gradient from `AppColors` via `Theme.of(context).extension<AppColors>()`: face `tileFaceTop/Bottom`; back `tileBackTop/Bottom` when faceDown; success/error gradients for correct/incorrect. Placeholder symbol: centred `Text(tile.code)`, `vermillionText` when `isRed`, hidden when faceDown. No emoji.\n**Read:** `flutter/lib/src/painting/box_decoration.dart`, `gradient.dart` (LinearGradient begin/end).\n**Acceptance:** all 6 states x regular size render without overflow.\n**Verify:** `flutter analyze && dart run tool/check_conventions.dart`\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && dart run tool/check_conventions.dart\", \"acceptanceCriteria\": [\"see description\"], \"modelTier\": \"standard\"}\n```"
+    },
+    {
+      "id": 5,
+      "subject": "Task 5: Ring / halo per state",
+      "status": "pending",
+      "blockedBy": [
+        4
+      ],
+      "description": "**Goal:** CSS `0 0 0 3px bamboo` = `BoxShadow(spreadRadius: 3, blurRadius: 0, color: bamboo)`. selected/correct -> bamboo ring; incorrect -> vermillion ring; highlighted -> 6px ring at 15% alpha (`Color(0x261E6B52)`). Append to list: `[...AppTokens.shadowTile, ring]`.\n**Acceptance:** selected tile shows crisp 3px green outline, no blur.\n**Verify:** visual / golden\n```json:metadata\n{\"verifyCommand\": \"flutter analyze\", \"acceptanceCriteria\": [\"see description\"], \"modelTier\": \"standard\"}\n```"
+    },
+    {
+      "id": 6,
+      "subject": "Task 6: Selected lift + motion",
+      "status": "pending",
+      "blockedBy": [
+        5
+      ],
+      "description": "**Goal:** `AnimatedSlide`/`AnimatedContainer` with `AppTokens.duration` + `AppTokens.curve`; offset -6px when selected; stronger shadow (second BoxShadow, higher alpha).\n**Acceptance:** toggling state animates over 250ms.\n**Verify:** visual\n```json:metadata\n{\"verifyCommand\": \"flutter analyze\", \"acceptanceCriteria\": [\"see description\"], \"modelTier\": \"standard\"}\n```"
+    },
+    {
+      "id": 7,
+      "subject": "Task 7: Correct/incorrect badge",
+      "status": "pending",
+      "blockedBy": [
+        5
+      ],
+      "description": "**Goal:** circle badge top-right, overhanging: `Stack(clipBehavior: Clip.none)` + `Positioned(top: -8, right: -8)`. Bamboo circle + white check for correct; vermillion + white cross for incorrect. Use `Icons.check`/`Icons.close`, not emoji.\n**Acceptance:** badge overhangs the corner and is not clipped.\n**Verify:** visual / golden\n```json:metadata\n{\"verifyCommand\": \"flutter analyze\", \"acceptanceCriteria\": [\"see description\"], \"modelTier\": \"standard\"}\n```"
+    },
+    {
+      "id": 8,
+      "subject": "Task 8: Bevel + face-down inner frame",
+      "status": "pending",
+      "blockedBy": [
+        4
+      ],
+      "description": "**Goal:** two overlay layers in the Stack: top 2px white 95%, bottom 4px ink 9% (CSS inset shadows have no BoxDecoration equivalent). Face-down: 2px inner frame white 18% via padding + `Border.all`.\n**Acceptance:** screenshot matches `design/handoff/screenshots/` tile.\n**Verify:** visual\n```json:metadata\n{\"verifyCommand\": \"flutter analyze\", \"acceptanceCriteria\": [\"see description\"], \"modelTier\": \"standard\"}\n```"
+    },
+    {
+      "id": 9,
+      "subject": "Task 9: Tests (test-writer agent)",
+      "status": "pending",
+      "blockedBy": [
+        7,
+        8
+      ],
+      "description": "**Goal:** `test/` mirrors `lib/`: model round-trip + equality; enum exhaustiveness; widget golden per state x regular size. Wrap in `ProviderScope(retry: (_, _) => null)` only if providers appear; otherwise plain material_ui `MaterialApp(theme: lightTheme())`.\n**Acceptance:** `flutter test` green; goldens committed.\n**Verify:** `flutter test`\n```json:metadata\n{\"verifyCommand\": \"flutter test\", \"acceptanceCriteria\": [\"see description\"], \"modelTier\": \"standard\"}\n```"
+    },
+    {
+      "id": 10,
+      "subject": "Task 10: Debug gallery route",
+      "status": "pending",
+      "blockedBy": [
+        4
+      ],
+      "description": "**Goal:** `/gallery` route rendering all states x sizes in a grid for screenshot comparison against `design/handoff/screenshots/`. Debug-only, cheap.\n**Acceptance:** route opens, every state visible side by side.\n**Verify:** `flutter run` then navigate\n```json:metadata\n{\"verifyCommand\": \"flutter analyze\", \"acceptanceCriteria\": [\"see description\"], \"modelTier\": \"standard\"}\n```"
+    }
+  ],
+  "lastUpdated": "2026-09-17T20:00:00Z"
+}

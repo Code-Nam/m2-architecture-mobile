@@ -20,26 +20,31 @@ Status truth for the project. Update this file and the matching
 
 ## Next session starts here
 
-Phase 0 is complete and committed. Theme port done 2026-09-17 (uncommitted at time of writing). Open items, in order:
+Phase 0 committed (`1d758d4`). Theme port done 2026-09-17 (light + dark colours,
+tokens, text theme, `ThemeData` wired) — **uncommitted** at handover; the user
+commits. Nothing in flight.
 
-1. **`lib/` housekeeping (user, 4 files):** add the `AI-GENERATED` header +
-   Why line to `lib/main.dart` and `lib/app/{app,router,home_screen}.dart`
-   (they are listed as "marker pending" in `docs/AI_CONTRIBUTIONS.md`); rename
-   `TenpaiApp` → `App` (or the file); make `AppRoutes` → `_Routes`. Then
-   `dart run tool/check_conventions.dart` must exit 0.
-2. **Tile model + `TileWidget`** (design/README.md port step 5; theme is done, skip to this).
-   Previously: **Milestone 1 begins with the theme**, following the port order in
-   `design/README.md`: colour tokens light + dark → spacing/radius/shadow/
-   motion → text theme (fonts already bundled) → `ThemeData` light + dark.
-   The user writes; Claude explains options first (static token class vs
-   `ThemeExtension`) and reviews. Ask Claude: "how do I structure colour
-   tokens in Flutter?"
-3. Then the tile widget (7 states, placeholder symbol), then the rest of
-   milestone 1.
+**Next: tile model + `TileWidget`.** Plan and task state:
+[docs/plans/2026-09-17-tile-widget.md](plans/2026-09-17-tile-widget.md) +
+`.tasks.json`. Rebuild the task list from those files. Before Task 1 the user
+decides the shared-code folder layout (open decision in the plan). First
+question to ask Claude: "how do I write a freezed class?"
 
-Working mode reminders for the session: `lib/` is hook-guarded (only
-`/implement <scope>` opens it for one turn); git is the user's; every
-AI-written file/block is marked and registered; README is product doc only.
+Small chores, user, non-blocking:
+
+1. `// Why: Tedious data entry, no Flutter concept to learn.` under the two
+   BEGIN markers in `lib/app/theme/app_colors.dart` (register already has it).
+2. `lib/app/theme/app_tokens.dart`: `sideMargin` doc is wrong (it is the 20 px
+   screen margin); `space2-4` docs say "base unit"; add a comment on the
+   literal-hex exception for shadows; `//*` -> `//`.
+3. Phase-0 housekeeping still open: `TenpaiApp` -> `App`, `AppRoutes` ->
+   `_Routes`, `AI-GENERATED` headers on `lib/main.dart` and
+   `lib/app/{app,router,home_screen}.dart`. Then `check_conventions` reports
+   only `AppTokens` unused (dies with the tile).
+
+Working mode reminders: `lib/` is hook-guarded (only `/implement <scope>` opens
+it for one turn); git is the user's; every AI-written file/block is marked and
+registered; README is product doc only; `test/` is currently empty.
 
 ## Phase 0 — Project setup (Claude-authored, 2026-09-17)
 
@@ -75,6 +80,6 @@ Plan: [docs/plans/2026-09-17-project-setup.md](plans/2026-09-17-project-setup.md
 | `design/README.md` inventory + token map | done |
 | Fonts: Outfit 400–700 + IBM Plex Mono 400/500 static TTFs in `assets/fonts/` with OFL licences, declared in pubspec | done 2026-09-17 |
 | Theme tokens (colours light+dark → spacing/radius/shadow → text theme → ThemeData) | done 2026-09-17: `lib/app/theme/{app_colors,app_tokens,app_theme}.dart`, wired in `MaterialApp.router`. Claude via `/implement`: `_Palette`, `AppColors` fields, `_textTheme` (marked). User: schemes, `AppTokens`, `ThemeData` builders. Open nits: Why markers in app_colors, `AppTokens` doc wording |
-| Component port, order in `design/README.md` (Tile first) | tile model + widget next (2026-09-17) |
+| Component port, order in `design/README.md` (Tile first) | tile plan written 2026-09-17: `docs/plans/2026-09-17-tile-widget.md`, 10 tasks, none started |
 | Debug gallery route | not started |
 | Delete `design/handoff/` once every screen matches its screenshot (keep `design/README.md`) | after port |

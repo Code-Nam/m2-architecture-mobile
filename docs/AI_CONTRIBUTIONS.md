@@ -67,6 +67,8 @@ Rules:
 | `docs/AI_CONTRIBUTIONS.md` | file | 2026-09-17 | Project tooling and setup so study time goes to Flutter code. |
 | `docs/plans/2026-09-17-project-setup.md` | file | 2026-09-17 | Project tooling and setup so study time goes to Flutter code. |
 | `docs/plans/2026-09-17-project-setup.md.tasks.json` | file (no marker) | 2026-09-17 | Project tooling and setup so study time goes to Flutter code. |
+| `docs/plans/2026-09-17-tile-widget.md` | file | 2026-09-17 | Project tooling and setup so study time goes to Flutter code. |
+| `docs/plans/2026-09-17-tile-widget.md.tasks.json` | file (no marker) | 2026-09-17 | Project tooling and setup so study time goes to Flutter code. |
 | `design/README.md` | file | 2026-09-17 | Project tooling and setup so study time goes to Flutter code. |
 | `README.md` | file | 2026-09-17 | Project tooling and setup so study time goes to Flutter code. |
 | `android/app/src/main/AndroidManifest.xml` | block: INTERNET permission | 2026-09-17 | Project tooling and setup so study time goes to Flutter code. |
