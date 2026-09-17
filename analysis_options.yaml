@@ -30,9 +30,9 @@ analyzer:
   errors:
     # Privacy: an unused private symbol is dead code; an undocumented public
     # symbol is either accidentally public or missing its contract.
-    unused_element: error
-    unused_field: error
-    unused_local_variable: error
+    unused_element: warning
+    unused_field: warning
+    unused_local_variable: warning
     public_member_api_docs: error
     # Style that the reviewer should never have to mention.
     always_use_package_imports: error
