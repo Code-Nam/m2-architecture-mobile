@@ -18,6 +18,28 @@ Status truth for the project. Update this file and the matching
   `windows/`, `web/` deleted; regenerate with
   `flutter create . --platforms=<name>` when a platform is wanted.
 
+## Next session starts here
+
+Phase 0 is complete and committed. Nothing is in flight. Open items, in order:
+
+1. **`lib/` housekeeping (user, 4 files):** add the `AI-GENERATED` header +
+   Why line to `lib/main.dart` and `lib/app/{app,router,home_screen}.dart`
+   (they are listed as "marker pending" in `docs/AI_CONTRIBUTIONS.md`); rename
+   `TenpaiApp` → `App` (or the file); make `AppRoutes` → `_Routes`. Then
+   `dart run tool/check_conventions.dart` must exit 0.
+2. **Milestone 1 begins with the theme**, following the port order in
+   `design/README.md`: colour tokens light + dark → spacing/radius/shadow/
+   motion → text theme (fonts already bundled) → `ThemeData` light + dark.
+   The user writes; Claude explains options first (static token class vs
+   `ThemeExtension`) and reviews. Ask Claude: "how do I structure colour
+   tokens in Flutter?"
+3. Then the tile widget (7 states, placeholder symbol), then the rest of
+   milestone 1.
+
+Working mode reminders for the session: `lib/` is hook-guarded (only
+`/implement <scope>` opens it for one turn); git is the user's; every
+AI-written file/block is marked and registered; README is product doc only.
+
 ## Phase 0 — Project setup (Claude-authored, 2026-09-17)
 
 Plan: [docs/plans/2026-09-17-project-setup.md](plans/2026-09-17-project-setup.md)
@@ -25,13 +47,13 @@ Plan: [docs/plans/2026-09-17-project-setup.md](plans/2026-09-17-project-setup.md
 | # | Task | Status |
 |---|------|--------|
 | 1 | Migrate to `material_ui` | done |
-| 2 | Scaffold folder tree, move shell, placeholder screen | done (2 user edits open: `TenpaiApp`→`App`, `AppRoutes`→`_Routes`) |
+| 2 | Scaffold folder tree, move shell, placeholder screen | done (see Next session). **Correction 2026-09-17:** `test/` is empty; the smoke test claimed here was never committed |
 | 3 | `analysis_options.yaml` with convention lints | done |
 | 4 | `CLAUDE.md` (tutor mode, architecture, naming, privacy) | done |
 | 5 | Enforcement hooks, `/implement` skill, settings | done, verified |
 | 6 | Subagents: reviewer, test writer, doc reviewer | done, not yet run on real code |
 | 7 | `tool/check_conventions.dart` | done, verified |
-| 8 | Verification and handover (README rewritten 2026-09-17; user runs `git init`) | waiting on git init |
+| 8 | Verification and handover | done 2026-09-17, initial commit `1d758d4` pushed |
 
 ## Milestones (user-authored, Claude reviews)
 
@@ -51,7 +73,7 @@ Plan: [docs/plans/2026-09-17-project-setup.md](plans/2026-09-17-project-setup.md
 | Exports dropped into `design/` | done 2026-09-17 (`design/handoff/`) |
 | `design/README.md` inventory + token map | done |
 | Fonts: Outfit 400–700 + IBM Plex Mono 400/500 static TTFs in `assets/fonts/` with OFL licences, declared in pubspec | done 2026-09-17 |
-| Theme tokens (colours light+dark → spacing/radius/shadow → text theme → ThemeData) | not started (user writes) |
+| Theme tokens (colours light+dark → spacing/radius/shadow → text theme → ThemeData) | colours done 2026-09-17: `lib/app/theme/app_colors.dart` (palette + `AppColors` by Claude via `/implement`; schemes by user), `app_theme.dart` + `MaterialApp` wiring by user. Next: spacing/radius/shadow, text theme |
 | Component port, order in `design/README.md` (Tile first) | not started |
 | Debug gallery route | not started |
 | Delete `design/handoff/` once every screen matches its screenshot (keep `design/README.md`) | after port |

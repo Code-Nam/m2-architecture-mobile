@@ -12,51 +12,70 @@
       "id": 2,
       "subject": "Task 2: Scaffold folder tree and move shell",
       "status": "completed",
-      "blockedBy": [1],
+      "blockedBy": [
+        1
+      ],
       "description": "**Goal:** Repo matches the feature-first layout in the plan; template counter app removed.\n**Files:** lib/main.dart, lib/app/app.dart (TenpaiApp), lib/app/router.dart (appRouter), lib/app/home_screen.dart placeholder, test/app/home_screen_test.dart, .gitkeep in empty leaves.\n**Result (2026-09-17):** Done. Template lib/views, lib/shared, lib/app.dart, test/widget_test.dart and stray empty lib/models, lib/providers, lib/services removed. `flutter test` green.\n**Open for the user (lib/ is hook-guarded):** rename class `TenpaiApp` to `App` (file is app.dart) or the file to tenpai_app.dart; make `AppRoutes` private (`_Routes`) and drop the obvious `GoRouter` type annotation on `appRouter`.\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && flutter test\", \"acceptanceCriteria\": [\"tree exists\", \"placeholder boots\", \"smoke test green\"], \"modelTier\": \"mechanical\"}\n```"
     },
     {
       "id": 3,
       "subject": "Task 3: analysis_options.yaml with convention lints",
       "status": "completed",
-      "blockedBy": [2],
+      "blockedBy": [
+        2
+      ],
       "description": "**Goal:** Lints enforce what lints can; riverpod_lint runs as a native analyzer plugin.\n**Result (2026-09-17):** Written. `omit_obvious_property_types` dropped (conflicts with `type_annotate_public_apis`); `specify_nonobvious_*` dropped as too noisy for a learner. Analyzer auto-added platform dir excludes. `flutter analyze`: no issues.\n```json:metadata\n{\"verifyCommand\": \"flutter analyze\", \"acceptanceCriteria\": [\"rules present\", \"plugin loads\", \"analyze clean\"], \"modelTier\": \"mechanical\"}\n```"
     },
     {
       "id": 4,
       "subject": "Task 4: CLAUDE.md encoding tutor mode, architecture, naming, privacy",
       "status": "completed",
-      "blockedBy": [2],
+      "blockedBy": [
+        2
+      ],
       "description": "**Goal:** CLAUDE.md with eight sections: working-mode hard rules (incl. no git writes, /implement escape hatch), check-the-source table, architecture + tie-breaks, naming/privacy, stack conventions, commands, agent write matrix, task carry-over.\n**Result (2026-09-17):** Written, 8 sections.\n```json:metadata\n{\"verifyCommand\": \"grep -c '^## ' CLAUDE.md\", \"acceptanceCriteria\": [\"8 sections\", \"hard rules testable\"], \"modelTier\": \"standard\"}\n```"
     },
     {
       "id": 5,
       "subject": "Task 5: Enforcement hooks, /implement skill, settings",
       "status": "completed",
-      "blockedBy": [2],
+      "blockedBy": [
+        2
+      ],
       "description": "**Goal:** lib/** unwritable by Claude and subagents unless the prompt starts with /implement; test-writer confined to test/**, doc-reviewer to README.md.\n**Files:** .claude/settings.json, .claude/hooks/guard_lib_writes.py, .claude/hooks/implement_grant.py, .claude/skills/implement/SKILL.md, .gitignore.\n**Result (2026-09-17):** 14 crafted stdin cases pass (deny lib edit, allow test write, deny sed/redirect into lib, allow build_runner/grep, deny tokensave edit, agent scopes, grant via /implement, revoke on next prompt, garbage stdin ignored). Hook also blocked Claude's own lib edit during setup, as intended.\n```json:metadata\n{\"verifyCommand\": \"python3 .claude/hooks/guard_lib_writes.py < test-fixture\", \"acceptanceCriteria\": [\"deny without grant\", \"allow with grant\", \"grant single-turn\"], \"modelTier\": \"standard\"}\n```"
     },
     {
       "id": 6,
       "subject": "Task 6: Three subagents",
       "status": "completed",
-      "blockedBy": [4, 5],
+      "blockedBy": [
+        4,
+        5
+      ],
       "description": "**Goal:** .claude/agents/flutter-reviewer.md (read-only), test-writer.md (test/** only), doc-reviewer.md (README.md only).\n**Result (2026-09-17):** Written with tools/model frontmatter and explicit write scopes. Not yet exercised on real code; first real run happens after milestone-1 code exists.\n```json:metadata\n{\"verifyCommand\": \"ls .claude/agents\", \"acceptanceCriteria\": [\"three agents\", \"scopes stated\"], \"modelTier\": \"standard\"}\n```"
     },
     {
       "id": 7,
       "subject": "Task 7: tool/check_conventions.dart",
       "status": "completed",
-      "blockedBy": [2],
+      "blockedBy": [
+        2
+      ],
       "description": "**Goal:** Flag naming violations lints cannot: file/class match, folder suffixes, *NotifierProvider names, public symbols used nowhere else.\n**Result (2026-09-17):** Written; optional root arg for fixtures. Fixture run: 10 expected findings. Real lib: 2 findings, handed to the user (see Task 2).\n```json:metadata\n{\"verifyCommand\": \"dart run tool/check_conventions.dart\", \"acceptanceCriteria\": [\"flags fixture\", \"clean on scaffold\"], \"modelTier\": \"standard\"}\n```"
     },
     {
       "id": 8,
       "subject": "Task 8: Setup verification and handover",
-      "status": "in_progress",
-      "blockedBy": [3, 4, 5, 6, 7],
-      "description": "**Goal:** Everything in the plan's Verification section passes; user does git init + first commit.\n**Done:** flutter analyze clean, flutter test green, hooks verified, conventions script verified, .gitignore updated.\n**Done later the same day:** README rewritten by doc-reviewer (9 sections incl. AI usage); AI attribution convention + register + checker added.\n**Waiting on user:** the two lib/ edits from Task 2 plus AI-GENERATED headers on the four lib/ files; `git init` + first commit.\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && flutter test && dart run tool/check_conventions.dart\", \"acceptanceCriteria\": [\"all checks pass\", \"handover done\"], \"modelTier\": \"standard\"}\n```"
+      "status": "completed",
+      "blockedBy": [
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "description": "**Goal:** Everything in the plan's Verification section passes; user does git init + first commit.\n**Done:** flutter analyze clean, flutter test green, hooks verified, conventions script verified, .gitignore updated.\n**Done later the same day:** README rewritten by doc-reviewer (9 sections incl. AI usage); AI attribution convention + register + checker added.\n**Closed 2026-09-17:** git initialised, initial commit 1d758d4 pushed to origin. Remaining lib/ housekeeping (headers + two renames) tracked under 'Next session' in docs/ROADMAP.md.\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && flutter test && dart run tool/check_conventions.dart\", \"acceptanceCriteria\": [\"all checks pass\", \"handover done\"], \"modelTier\": \"standard\"}\n```"
     }
   ],
-  "lastUpdated": "2026-09-17T14:10:00Z"
+  "lastUpdated": "2026-09-17T16:00:00Z"
 }
