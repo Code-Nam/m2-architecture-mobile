@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  body { margin:0; background:#FAF7F0; color:#1C1A17; font-family:'Outfit',sans-serif; -webkit-font-smoothing:antialiased; }
+  a { color:#1E6B52; } a:hover { color:#174F3D; }
+  @keyframes senseiTile { 0%, 60%, 100% { transform:translateY(0); opacity:0.4; } 30% { transform:translateY(-5px); opacity:1; } }
+  @keyframes senseiCaret { 0%, 49% { opacity:1; } 50%, 100% { opacity:0; } }
+</style>
+</helmet>
+
+<div style="max-width:1080px; margin:0 auto; padding:56px 24px 96px; display:flex; flex-direction:column; gap:72px">
+
+  <header style="display:flex; flex-direction:column; gap:12px">
+    <div style="font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.14em; text-transform:uppercase; color:#8B8378">Tenpai · Fondations</div>
+    <h1 style="margin:0; font-size:44px; font-weight:700; line-height:1.12; letter-spacing:-0.01em; max-width:560px; text-wrap:pretty">Système de design</h1>
+    <p style="margin:0; font-size:17px; line-height:1.6; color:#8B8378; max-width:520px">Calme, concentré, japonais moderne. La palette, l'échelle typographique et la tuile — l'élément central de l'app.</p>
+  </header>
+
+  <section style="display:flex; flex-direction:column; gap:24px">
+    <div style="display:flex; flex-direction:column; gap:6px">
+      <div style="font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.14em; text-transform:uppercase; color:#8B8378">01</div>
+      <h2 style="margin:0; font-size:26px; font-weight:700">Palette</h2>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:16px">
+      <div style="background:#FFFFFF; border-radius:16px; box-shadow:0 2px 12px rgba(28,26,23,0.06); overflow:hidden">
+        <div style="height:96px; background:#FAF7F0; border-bottom:1px solid rgba(28,26,23,0.05)"></div>
+        <div style="padding:14px 16px 16px"><div style="font-size:15px; font-weight:600">Fond ivoire</div><div style="font-family:'IBM Plex Mono',monospace; font-size:12px; color:#8B8378; margin-top:2px">#FAF7F0</div><div style="font-size:13px; color:#8B8378; margin-top:6px; line-height:1.5">Fond global de tous les écrans.</div></div>
+      </div>
+      <div style="background:#FFFFFF; border-radius:16px; box-shadow:0 2px 12px rgba(28,26,23,0.06); overflow:hidden">
+        <div style="height:96px; background:#FFFFFF; border-bottom:1px solid rgba(28,26,23,0.05)"></div>
+        <div style="padding:14px 16px 16px"><div style="font-size:15px; font-weight:600">Surface</div><div style="font-family:'IBM Plex Mono',monospace; font-size:12px; color:#8B8378; margin-top:2px">#FFFFFF</div><div style="font-size:13px; color:#8B8378; margin-top:6px; line-height:1.5">Cartes et panneaux, ombres douces, jamais de bordure dure.</div></div>
+      </div>
+      <div style="background:#FFFFFF; border-radius:16px; box-shadow:0 2px 12px rgba(28,26,23,0.06); overflow:hidden">
+        <div style="height:96px; background:#1E6B52"></div>
+        <div style="padding:14px 16px 16px"><div style="font-size:15px; font-weight:600">Vert bambou</div><div style="font-family:'IBM Plex Mono',monospace; font-size:12px; color:#8B8378; margin-top:2px">#1E6B52</div><div style="font-size:13px; color:#8B8378; margin-top:6px; line-height:1.5">Progression, validation, CTA, dos des tuiles.</div></div>
+      </div>
+      <div style="background:#FFFFFF; border-radius:16px; box-shadow:0 2px 12px rgba(28,26,23,0.06); overflow:hidden">
+        <div style="height:96px; background:#D64541"></div>
+        <div style="padding:14px 16px 16px"><div style="font-size:15px; font-weight:600">Vermillon</div><div style="font-family:'IBM Plex Mono',monospace; font-size:12px; color:#8B8378; margin-top:2px">#D64541</div><div style="font-size:13px; color:#8B8378; margin-top:6px; line-height:1.5">Erreurs, tuiles rouges, streak. Avec parcimonie.</div></div>
+      </div>
+      <div style="background:#FFFFFF; border-radius:16px; box-shadow:0 2px 12px rgba(28,26,23,0.06); overflow:hidden">
+        <div style="height:96px; background:#1C1A17"></div>
+        <div style="padding:14px 16px 16px"><div style="font-size:15px; font-weight:600">Charbon</div><div style="font-family:'IBM Plex Mono',monospace; font-size:12px; color:#8B8378; margin-top:2px">#1C1A17</div><div style="font-size:13px; color:#8B8378; margin-top:6px; line-height:1.5">Texte principal.</div></div>
+      </div>
+      <div style="background:#FFFFFF; border-radius:16px; box-shadow:0 2px 12px rgba(28,26,23,0.06); overflow:hidden">
+        <div style="height:96px; background:#8B8378"></div>
+        <div style="padding:14px 16px 16px"><div style="font-size:15px; font-weight:600">Gris chaud</div><div style="font-family:'IBM Plex Mono',monospace; font-size:12px; color:#8B8378; margin-top:2px">#8B8378</div><div style="font-size:13px; color:#8B8378; margin-top:6px; line-height:1.5">Texte secondaire, légendes.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section style="display:flex; flex-direction:column; gap:24px">
+    <div style="display:flex; flex-direction:column; gap:6px">
+      <div style="font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.14em; text-transform:uppercase; color:#8B8378">02</div>
+      <h2 style="margin:0; font-size:26px; font-weight:700">Typographie</h2>
+      <p style="margin:0; font-size:15px; line-height:1.6; color:#8B8378; max-width:520px">Outfit, géométrique et ronde, pour tout. IBM Plex Mono pour les micro-repères techniques (numéros, tags). Interlignage généreux, rien de compact.</p>
+    </div>
+    <div style="background:#FFFFFF; border-radius:16px; box-shadow:0 2px 12px rgba(28,26,23,0.06); padding:12px 28px; display:flex; flex-direction:column">
+      <div style="display:flex; align-items:baseline; gap:24px; padding:22px 0; border-bottom:1px solid rgba(28,26,23,0.06); flex-wrap:wrap">
+        <div style="font-family:'IBM Plex Mono',monospace; font-size:12px; color:#8B8378; width:150px; flex-shrink:0">Display · 40 / 700</div>
+        <div style="font-size:40px; font-weight:700; line-height:1.15; letter-spacing:-0.01em">Prêt pour la table</div>
+      </div>
+      <div style="display:flex; align-items:baseline; gap:24px; padding:22px 0; border-bottom:1px solid rgba(28,26,23,0.06); flex-wrap:wrap">
+        <div style="font-family:'IBM Plex Mono',monospace; font-size:12px; color:#8B8378; width:150px; flex-shrink:0">Titre écran · 28 / 700</div>
+        <div style="font-size:28px; font-weight:700; line-height:1.25">Lire une tuile</div>
+      </div>
+      <div style="display:flex; align-items:baseline; gap:24px; padding:22px 0; border-bottom:1px solid rgba(28,26,23,0.06); flex-wrap:wrap">
+        <div style="font-family:'IBM Plex Mono',monospace; font-size:12px; color:#8B8378; width:150px; flex-shrink:0">Titre section · 20 / 600</div>
+        <div style="font-size:20px; font-weight:600; line-height:1.35">Les trois familles</div>
+      </div>
+      <div style="display:flex; align-items:baseline; gap:24px; padding:22px 0; border-bottom:1px solid rgba(28,26,23,0.06); flex-wrap:wrap">
+        <div style="font-family:'IBM Plex Mono',monospace; font-size:12px; color:#8B8378; width:150px; flex-shrink:0">Corps · 17 / 400 · 1.6</div>
+        <div style="font-size:17px; line-height:1.6; max-width:460px">Chaque tuile appartient à une famille. Une fois qu'on sait les reconnaître, le reste vient tout seul.</div>
+      </div>
+      <div style="display:flex; align-items:baseline; gap:24px; padding:22px 0; border-bottom:1px solid rgba(28,26,23,0.06); flex-wrap:wrap">
+        <div style="font-family:'IBM Plex Mono',monospace; font-size:12px; color:#8B8378; width:150px; flex-shrink:0">Secondaire · 15 / 400</div>
+        <div style="font-size:15px; line-height:1.6; color:#8B8378">Leçon 3 sur 8 · environ 4 minutes</div>
+      </div>
+      <div style="display:flex; align-items:baseline; gap:24px; padding:22px 0; flex-wrap:wrap">
+        <div style="font-family:'IBM Plex Mono',monospace; font-size:12px; color:#8B8378; width:150px; flex-shrink:0">Repère mono · 12 / 500</div>
+        <div style="font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.14em; text-transform:uppercase; color:#8B8378">Chapitre 01 · Les tuiles</div>
+      </div>
+    </div>
+    <div style="display:flex; gap:12px; flex-wrap:wrap; align-items:center">
+      <button style="font-family:'Outfit',sans-serif; font-size:17px; font-weight:600; color:#FFFFFF; background:#1E6B52; border:none; border-radius:16px; padding:16px 32px; cursor:pointer; box-shadow:0 4px 14px rgba(30,107,82,0.25)" style-hover="background:#175A44" style-active="transform:translateY(1px)">Continuer</button>
+      <button style="font-family:'Outfit',sans-serif; font-size:17px; font-weight:600; color:#1E6B52; background:#FFFFFF; border:none; border-radius:16px; padding:16px 32px; cursor:pointer; box-shadow:0 2px 10px rgba(28,26,23,0.08)" style-hover="box-shadow:0 4px 14px rgba(28,26,23,0.12)">Revoir la leçon</button>
+      <div style="font-size:13px; color:#8B8378; margin-left:4px">Boutons : rayon 16px, la silhouette d'une tuile.</div>
+    </div>
+  </section>
+
+  <section style="display:flex; flex-direction:column; gap:24px">
+    <div style="display:flex; flex-direction:column; gap:6px">
+      <div style="font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.14em; text-transform:uppercase; color:#8B8378">03</div>
+      <h2 style="margin:0; font-size:26px; font-weight:700">La tuile</h2>
+      <p style="margin:0; font-size:15px; line-height:1.6; color:#8B8378; max-width:560px">Face ivoire avec biseau clair en haut, assise plus sombre en bas, dos vert bambou. Le motif hachuré est un placeholder — il sera remplacé par les vrais symboles SVG. Cliquez la grande tuile pour parcourir les états.</p>
+    </div>
+
+    <div style="background:#FFFFFF; border-radius:16px; box-shadow:0 2px 12px rgba(28,26,23,0.06); padding:36px 28px; display:flex; align-items:center; gap:36px; flex-wrap:wrap">
+      <div onClick="{{ cycleState }}" style="cursor:pointer; flex-shrink:0">{{ demoTile }}</div>
+      <div style="display:flex; flex-direction:column; gap:6px; min-width:200px">
+        <div style="font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.14em; text-transform:uppercase; color:#8B8378">État · {{ demoIndex }} / 7</div>
+        <div style="font-size:22px; font-weight:600">{{ demoName }}</div>
+        <div style="font-size:15px; line-height:1.6; color:#8B8378; max-width:340px">{{ demoDesc }}</div>
+      </div>
+    </div>
+
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(128px, 1fr)); gap:16px">
+
+      <div style="background:#FFFFFF; border-radius:16px; box-shadow:0 2px 12px rgba(28,26,23,0.06); padding:24px 12px 18px; display:flex; flex-direction:column; align-items:center; gap:14px">
+        <div style="width:64px; height:88px; border-radius:10px; background:linear-gradient(180deg,#FFFEFA,#F4EEE1); box-shadow:inset 0 2px 0 rgba(255,255,255,0.95), inset 0 -4px 0 rgba(28,26,23,0.09), 0 4px 10px rgba(28,26,23,0.12); display:flex; align-items:center; justify-content:center">
+          <div style="width:32px; height:46px; border-radius:6px; border:1.5px dashed rgba(28,26,23,0.22); background:repeating-linear-gradient(45deg, rgba(28,26,23,0.07) 0 3px, transparent 3px 8px)"></div>
+        </div>
+        <div style="font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:#8B8378">Normale</div>
+      </div>
+
+      <div style="background:#FFFFFF; border-radius:16px; box-shadow:0 2px 12px rgba(28,26,23,0.06); padding:24px 12px 18px; display:flex; flex-direction:column; align-items:center; gap:14px">
+        <div style="width:64px; height:88px; border-radius:10px; background:linear-gradient(180deg,#FFFEFA,#F4EEE1); box-shadow:inset 0 2px 0 rgba(255,255,255,0.95), inset 0 -4px 0 rgba(28,26,23,0.09), 0 10px 18px rgba(28,26,23,0.16), 0 0 0 3px #1E6B52; transform:translateY(-6px); display:flex; align-items:center; justify-content:center">
+          <div style="width:32px; height:46px; border-radius:6px; border:1.5px dashed rgba(28,26,23,0.22); background:repeating-linear-gradient(45deg, rgba(28,26,23,0.07) 0 3px, transparent 3px 8px)"></div>
+        </div>
+        <div style="font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:#8B8378">Sélectionnée</div>
+      </div>
+
+      <div style="background:#FFFFFF; border-radius:16px; box-shadow:0 2px 12px rgba(28,26,23,0.06); padding:24px 12px 18px; display:flex; flex-direction:column; align-items:center; gap:14px">
+        <div style="width:64px; height:88px; border-radius:10px; background:linear-gradient(180deg,#F2F8F4,#DFEDE5); box-shadow:inset 0 2px 0 rgba(255,255,255,0.95), inset 0 -4px 0 rgba(23,79,61,0.12), 0 4px 10px rgba(28,26,23,0.10), 0 0 0 3px #1E6B52; display:flex; align-items:center; justify-content:center; position:relative">
+          <div style="width:32px; height:46px; border-radius:6px; border:1.5px dashed rgba(30,107,82,0.4); background:repeating-linear-gradient(45deg, rgba(30,107,82,0.12) 0 3px, transparent 3px 8px)"></div>
+          <div style="position:absolute; top:-9px; right:-9px; width:22px; height:22px; border-radius:50%; background:#1E6B52; color:#FFFFFF; font-size:13px; font-weight:700; display:flex; align-items:center; justify-content:center; box-shadow:0 2px 6px rgba(28,26,23,0.2)">✓</div>
+        </div>
+        <div style="font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:#8B8378">Correcte</div>
+      </div>
+
+      <div style="background:#FFFFFF; border-radius:16px; box-shadow:0 2px 12px rgba(28,26,23,0.06); padding:24px 12px 18px; display:flex; flex-direction:column; align-items:center; gap:14px">
+        <div style="width:64px; height:88px; border-radius:10px; background:linear-gradient(180deg,#FCF1F0,#F5DFDD); box-shadow:inset 0 2px 0 rgba(255,255,255,0.95), inset 0 -4px 0 rgba(214,69,65,0.12), 0 4px 10px rgba(28,26,23,0.10), 0 0 0 3px #D64541; display:flex; align-items:center; justify-content:center; position:relative">
+          <div style="width:32px; height:46px; border-radius:6px; border:1.5px dashed rgba(214,69,65,0.45); background:repeating-linear-gradient(45deg, rgba(214,69,65,0.12) 0 3px, transparent 3px 8px)"></div>
+          <div style="position:absolute; top:-9px; right:-9px; width:22px; height:22px; border-radius:50%; background:#D64541; color:#FFFFFF; font-size:12px; font-weight:700; display:flex; align-items:center; justify-content:center; box-shadow:0 2px 6px rgba(28,26,23,0.2)">✕</div>
+        </div>
+        <div style="font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:#8B8378">Incorrecte</div>
+      </div>
+
+      <div style="background:#FFFFFF; border-radius:16px; box-shadow:0 2px 12px rgba(28,26,23,0.06); padding:24px 12px 18px; display:flex; flex-direction:column; align-items:center; gap:14px">
+        <div style="width:64px; height:88px; border-radius:10px; background:linear-gradient(180deg,#FFFEFA,#F4EEE1); box-shadow:inset 0 2px 0 rgba(255,255,255,0.95), inset 0 -4px 0 rgba(28,26,23,0.09), 0 4px 10px rgba(28,26,23,0.10), 0 0 0 6px rgba(30,107,82,0.15); display:flex; align-items:center; justify-content:center">
+          <div style="width:32px; height:46px; border-radius:6px; border:1.5px dashed rgba(28,26,23,0.22); background:repeating-linear-gradient(45deg, rgba(28,26,23,0.07) 0 3px, transparent 3px 8px)"></div>
+        </div>
+        <div style="font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:#8B8378">Surlignée</div>
+      </div>
+
+      <div style="background:#FFFFFF; border-radius:16px; box-shadow:0 2px 12px rgba(28,26,23,0.06); padding:24px 12px 18px; display:flex; flex-direction:column; align-items:center; gap:14px">
+        <div style="width:64px; height:88px; border-radius:10px; background:linear-gradient(180deg,#237A5E,#174F3D); box-shadow:inset 0 2px 0 rgba(255,255,255,0.18), inset 0 -4px 0 rgba(0,0,0,0.18), 0 4px 10px rgba(28,26,23,0.14); display:flex; align-items:center; justify-content:center">
+          <div style="width:30px; height:44px; border-radius:6px; border:1.5px solid rgba(255,255,255,0.18)"></div>
+        </div>
+        <div style="font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:#8B8378">Face cachée</div>
+      </div>
+
+      <div style="background:#FFFFFF; border-radius:16px; box-shadow:0 2px 12px rgba(28,26,23,0.06); padding:24px 12px 18px; display:flex; flex-direction:column; align-items:center; gap:14px">
+        <div style="width:64px; height:88px; border-radius:10px; background:linear-gradient(180deg,#FFFEFA,#F4EEE1); box-shadow:inset 0 2px 0 rgba(255,255,255,0.95), inset 0 -4px 0 rgba(28,26,23,0.09), 0 4px 10px rgba(28,26,23,0.12); display:flex; align-items:center; justify-content:center; position:relative">
+          <div style="width:32px; height:46px; border-radius:6px; border:1.5px dashed rgba(214,69,65,0.5); background:repeating-linear-gradient(45deg, rgba(214,69,65,0.14) 0 3px, transparent 3px 8px)"></div>
+          <div style="position:absolute; top:7px; right:7px; width:8px; height:8px; border-radius:50%; background:#D64541"></div>
+        </div>
+        <div style="font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:#8B8378">Tuile rouge</div>
+      </div>
+
+    </div>
+  </section>
+
+  <section style="display:flex; flex-direction:column; gap:24px">
+    <div style="display:flex; flex-direction:column; gap:6px">
+      <div style="font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.14em; text-transform:uppercase; color:#8B8378">04</div>
+      <h2 style="margin:0; font-size:26px; font-weight:700">Le sensei</h2>
+      <p style="margin:0; font-size:15px; line-height:1.6; color:#8B8378; max-width:560px">L'IA de l'app. Jamais un chatbot : un professeur discret qui intervient après une erreur ou un scan, puis s'efface. Identité : sceau hanko vermillon 先, panneau ivoire teinté, liseré vert à gauche. Pas d'étincelle, pas de dégradé violet.</p>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:16px">
+      <div style="background:#FFFFFF; border-radius:16px; box-shadow:0 2px 12px rgba(28,26,23,0.06); padding:22px 24px; display:flex; flex-direction:column; gap:14px">
+        <div style="font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:#8B8378">Chargement</div>
+        <div style="background:#F7F2E7; border-left:3px solid #1E6B52; border-radius:12px; padding:16px 18px; display:flex; flex-direction:column; gap:12px">
+          <div style="display:flex; align-items:center; gap:9px">
+            <div style="width:22px; height:22px; border-radius:6px; background:#B93531; color:#FFFFFF; font-size:12px; font-weight:600; display:flex; align-items:center; justify-content:center">先</div>
+            <div style="font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:#8B8378">Le sensei regarde votre main</div>
+          </div>
+          <div style="display:flex; gap:6px; padding:2px 0 4px">
+            <div style="width:11px; height:15px; border-radius:3px; background:#1E6B52; animation:senseiTile 1.2s ease-in-out infinite"></div>
+            <div style="width:11px; height:15px; border-radius:3px; background:#1E6B52; animation:senseiTile 1.2s ease-in-out 0.2s infinite"></div>
+            <div style="width:11px; height:15px; border-radius:3px; background:#1E6B52; animation:senseiTile 1.2s ease-in-out 0.4s infinite"></div>
+          </div>
+        </div>
+        <div style="font-size:13px; line-height:1.6; color:#8B8378">Trois tuiles qui pulsent — jamais de spinner générique. 1 à 3 secondes.</div>
+      </div>
+      <div style="background:#FFFFFF; border-radius:16px; box-shadow:0 2px 12px rgba(28,26,23,0.06); padding:22px 24px; display:flex; flex-direction:column; gap:14px">
+        <div style="font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:#8B8378">Réponse · streaming</div>
+        <div style="background:#F7F2E7; border-left:3px solid #1E6B52; border-radius:12px; padding:16px 18px; display:flex; flex-direction:column; gap:10px">
+          <div style="display:flex; align-items:center; gap:9px">
+            <div style="width:22px; height:22px; border-radius:6px; background:#B93531; color:#FFFFFF; font-size:12px; font-weight:600; display:flex; align-items:center; justify-content:center">先</div>
+            <div style="font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:#8B8378">Le sensei</div>
+          </div>
+          <div style="font-size:15px; line-height:1.65; color:#1C1A17">Le réflexe est bon, mais cette main n'avait pas besoin d'un troisième brelan.<span style="display:inline-block; width:8px; height:15px; border-radius:2px; background:#1E6B52; margin-left:3px; vertical-align:-2px; animation:senseiCaret 0.9s steps(1) infinite"></span></div>
+        </div>
+        <div style="font-size:13px; line-height:1.6; color:#8B8378">Texte contextualisé à l'erreur précise, ton de professeur patient, apparition progressive.</div>
+      </div>
+      <div style="background:#FFFFFF; border-radius:16px; box-shadow:0 2px 12px rgba(28,26,23,0.06); padding:22px 24px; display:flex; flex-direction:column; gap:14px">
+        <div style="font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:#8B8378">Échec</div>
+        <div style="background:#F7F2E7; border-left:3px solid #B5AC9F; border-radius:12px; padding:16px 18px; display:flex; flex-direction:column; gap:10px">
+          <div style="display:flex; align-items:center; gap:9px">
+            <div style="width:22px; height:22px; border-radius:6px; background:#B5AC9F; color:#FFFFFF; font-size:12px; font-weight:600; display:flex; align-items:center; justify-content:center">先</div>
+            <div style="font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:#8B8378">Le sensei</div>
+          </div>
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:12px">
+            <div style="font-size:15px; line-height:1.55; color:#5C554A">L'explication n'est pas arrivée.</div>
+            <button style="font-family:'Outfit',sans-serif; font-size:14px; font-weight:600; color:#1E6B52; background:#FFFFFF; border:none; border-radius:12px; padding:10px 16px; cursor:pointer; box-shadow:0 2px 8px rgba(28,26,23,0.08); flex-shrink:0">Réessayer</button>
+          </div>
+        </div>
+        <div style="font-size:13px; line-height:1.6; color:#8B8378">Sceau grisé, message honnête, jamais bloquant. Hors ligne : le point d'entrée est atténué, pas absent.</div>
+      </div>
+    </div>
+  </section>
+
+  <section style="display:flex; flex-direction:column; gap:24px">
+    <div style="display:flex; flex-direction:column; gap:6px">
+      <div style="font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.14em; text-transform:uppercase; color:#8B8378">05</div>
+      <h2 style="margin:0; font-size:26px; font-weight:700">Mode sombre</h2>
+      <p style="margin:0; font-size:15px; line-height:1.6; color:#8B8378; max-width:560px">Noir-brun chaleureux, jamais un noir pur froid. Les tuiles gardent leur face ivoire — comme sur une vraie table. Vert et vermillon légèrement éclaircis pour le contraste.</p>
+    </div>
+    <div style="background:#171512; border-radius:16px; padding:28px; display:flex; flex-direction:column; gap:24px">
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(160px, 1fr)); gap:14px">
+        <div style="background:#24211C; border-radius:16px; box-shadow:0 2px 12px rgba(0,0,0,0.3); overflow:hidden">
+          <div style="height:72px; background:#171512; border-bottom:1px solid rgba(255,255,255,0.06)"></div>
+          <div style="padding:12px 16px 14px"><div style="font-size:14px; font-weight:600; color:#F2EDE3">Fond</div><div style="font-family:'IBM Plex Mono',monospace; font-size:12px; color:#A89E8F; margin-top:2px">#171512</div></div>
+        </div>
+        <div style="background:#24211C; border-radius:16px; box-shadow:0 2px 12px rgba(0,0,0,0.3); overflow:hidden">
+          <div style="height:72px; background:#24211C; border-bottom:1px solid rgba(255,255,255,0.06)"></div>
+          <div style="padding:12px 16px 14px"><div style="font-size:14px; font-weight:600; color:#F2EDE3">Surface</div><div style="font-family:'IBM Plex Mono',monospace; font-size:12px; color:#A89E8F; margin-top:2px">#24211C</div></div>
+        </div>
+        <div style="background:#24211C; border-radius:16px; box-shadow:0 2px 12px rgba(0,0,0,0.3); overflow:hidden">
+          <div style="height:72px; background:#3FA37E"></div>
+          <div style="padding:12px 16px 14px"><div style="font-size:14px; font-weight:600; color:#F2EDE3">Vert éclairci</div><div style="font-family:'IBM Plex Mono',monospace; font-size:12px; color:#A89E8F; margin-top:2px">#3FA37E · texte/liens</div></div>
+        </div>
+        <div style="background:#24211C; border-radius:16px; box-shadow:0 2px 12px rgba(0,0,0,0.3); overflow:hidden">
+          <div style="height:72px; background:#E05A56"></div>
+          <div style="padding:12px 16px 14px"><div style="font-size:14px; font-weight:600; color:#F2EDE3">Vermillon éclairci</div><div style="font-family:'IBM Plex Mono',monospace; font-size:12px; color:#A89E8F; margin-top:2px">#E05A56 · texte d'erreur</div></div>
+        </div>
+        <div style="background:#24211C; border-radius:16px; box-shadow:0 2px 12px rgba(0,0,0,0.3); overflow:hidden">
+          <div style="height:72px; background:#F2EDE3"></div>
+          <div style="padding:12px 16px 14px"><div style="font-size:14px; font-weight:600; color:#F2EDE3">Texte ivoire</div><div style="font-family:'IBM Plex Mono',monospace; font-size:12px; color:#A89E8F; margin-top:2px">#F2EDE3 · secondaire #A89E8F</div></div>
+        </div>
+      </div>
+      <div style="display:flex; align-items:center; gap:24px; flex-wrap:wrap">
+        <div style="width:64px; height:88px; border-radius:10px; background:linear-gradient(180deg,#FFFEFA,#F4EEE1); box-shadow:inset 0 2px 0 rgba(255,255,255,0.95), inset 0 -4px 0 rgba(0,0,0,0.09), 0 4px 10px rgba(0,0,0,0.4); display:flex; align-items:center; justify-content:center; flex-shrink:0">
+          <div style="width:32px; height:46px; border-radius:6px; border:1.5px dashed rgba(28,26,23,0.22); background:repeating-linear-gradient(45deg, rgba(28,26,23,0.07) 0 3px, transparent 3px 8px)"></div>
+        </div>
+        <div style="font-size:14px; line-height:1.6; color:#A89E8F; max-width:420px">La tuile ne change pas en mode sombre : face ivoire, mêmes états. Seule l'ombre portée se renforce. Le bouton primaire garde #1E6B52 (fond plein, texte blanc) ; #3FA37E est réservé au texte et aux liens sur fond sombre.</div>
+      </div>
+    </div>
+  </section>
+
+  <section style="display:flex; flex-direction:column; gap:24px">
+    <div style="display:flex; flex-direction:column; gap:6px">
+      <div style="font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.14em; text-transform:uppercase; color:#8B8378">06</div>
+      <h2 style="margin:0; font-size:26px; font-weight:700">Règles de forme</h2>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:16px">
+      <div style="background:#FFFFFF; border-radius:16px; box-shadow:0 2px 12px rgba(28,26,23,0.06); padding:22px 24px; display:flex; flex-direction:column; gap:6px">
+        <div style="font-size:16px; font-weight:600">Rayons</div>
+        <div style="font-size:14px; line-height:1.6; color:#8B8378">16px pour cartes et boutons, 10px pour la tuile elle-même. Jamais d'angle vif.</div>
+      </div>
+      <div style="background:#FFFFFF; border-radius:16px; box-shadow:0 2px 12px rgba(28,26,23,0.06); padding:22px 24px; display:flex; flex-direction:column; gap:6px">
+        <div style="font-size:16px; font-weight:600">Ombres, pas de bordures</div>
+        <div style="font-family:'IBM Plex Mono',monospace; font-size:12px; color:#8B8378">0 2px 12px rgba(28,26,23,.06)</div>
+        <div style="font-size:14px; line-height:1.6; color:#8B8378">Une seule ombre douce pour les surfaces au repos.</div>
+      </div>
+      <div style="background:#FFFFFF; border-radius:16px; box-shadow:0 2px 12px rgba(28,26,23,0.06); padding:22px 24px; display:flex; flex-direction:column; gap:6px">
+        <div style="font-size:16px; font-weight:600">Espacement</div>
+        <div style="font-size:14px; line-height:1.6; color:#8B8378">Marges latérales 20px sur mobile, respirations en multiples de 8. Une action principale par écran.</div>
+      </div>
+    </div>
+  </section>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}">
+class Component extends DCLogic {
+  state = { i: 0 };
+  states = [
+    { name: "Normale", desc: "Au repos dans la main ou le catalogue. Face ivoire, biseau clair en haut, assise sombre en bas.",
+      tile: { bg: "linear-gradient(180deg,#FFFEFA,#F4EEE1)", shadow: "inset 0 3px 0 rgba(255,255,255,0.95), inset 0 -6px 0 rgba(28,26,23,0.09), 0 6px 16px rgba(28,26,23,0.14)" } },
+    { name: "Sélectionnée", desc: "La tuile se soulève et prend un anneau vert. Le geste doit sembler physique.",
+      tile: { bg: "linear-gradient(180deg,#FFFEFA,#F4EEE1)", shadow: "inset 0 3px 0 rgba(255,255,255,0.95), inset 0 -6px 0 rgba(28,26,23,0.09), 0 16px 28px rgba(28,26,23,0.18), 0 0 0 4px #1E6B52", lift: true } },
+    { name: "Correcte", desc: "Teinte verte discrète et coche. La validation est nette mais sobre.",
+      tile: { bg: "linear-gradient(180deg,#F2F8F4,#DFEDE5)", shadow: "inset 0 3px 0 rgba(255,255,255,0.95), inset 0 -6px 0 rgba(23,79,61,0.12), 0 6px 16px rgba(28,26,23,0.12), 0 0 0 4px #1E6B52", badge: "✓", badgeBg: "#1E6B52", ph: "vert" } },
+    { name: "Incorrecte", desc: "Vermillon, réservé à l'erreur. Pas de secousse agressive, juste un signal clair.",
+      tile: { bg: "linear-gradient(180deg,#FCF1F0,#F5DFDD)", shadow: "inset 0 3px 0 rgba(255,255,255,0.95), inset 0 -6px 0 rgba(214,69,65,0.12), 0 6px 16px rgba(28,26,23,0.12), 0 0 0 4px #D64541", badge: "✕", badgeBg: "#D64541", ph: "rouge" } },
+    { name: "Surlignée", desc: "Halo vert léger pour guider l'attention pendant une leçon, sans la voler.",
+      tile: { bg: "linear-gradient(180deg,#FFFEFA,#F4EEE1)", shadow: "inset 0 3px 0 rgba(255,255,255,0.95), inset 0 -6px 0 rgba(28,26,23,0.09), 0 6px 16px rgba(28,26,23,0.12), 0 0 0 9px rgba(30,107,82,0.15)" } },
+    { name: "Face cachée", desc: "Dos vert bambou. Utilisée pour le mur et les exercices de mémoire.",
+      tile: { bg: "linear-gradient(180deg,#237A5E,#174F3D)", shadow: "inset 0 3px 0 rgba(255,255,255,0.18), inset 0 -6px 0 rgba(0,0,0,0.18), 0 6px 16px rgba(28,26,23,0.16)", back: true } },
+    { name: "Tuile rouge", desc: "Le symbole passe en vermillon et un point rouge marque le coin. Rare, donc précieuse.",
+      tile: { bg: "linear-gradient(180deg,#FFFEFA,#F4EEE1)", shadow: "inset 0 3px 0 rgba(255,255,255,0.95), inset 0 -6px 0 rgba(28,26,23,0.09), 0 6px 16px rgba(28,26,23,0.14)", ph: "rouge", dot: true } }
+  ];
+  renderVals() {
+    const s = this.states[this.state.i], t = s.tile, e = React.createElement;
+    const phColors = { vert: ["rgba(30,107,82,0.4)", "rgba(30,107,82,0.12)"], rouge: ["rgba(214,69,65,0.5)", "rgba(214,69,65,0.14)"] };
+    const [phBorder, phStripe] = phColors[t.ph] || ["rgba(28,26,23,0.22)", "rgba(28,26,23,0.07)"];
+    const children = [];
+    if (t.back) {
+      children.push(e("div", { key: "b", style: { width: 52, height: 76, borderRadius: 10, border: "2px solid rgba(255,255,255,0.18)" } }));
+    } else {
+      children.push(e("div", { key: "p", style: { width: 56, height: 80, borderRadius: 10, border: "2px dashed " + phBorder, background: "repeating-linear-gradient(45deg, " + phStripe + " 0 5px, transparent 5px 13px)" } }));
+    }
+    if (t.badge) children.push(e("div", { key: "g", style: { position: "absolute", top: -13, right: -13, width: 34, height: 34, borderRadius: "50%", background: t.badgeBg, color: "#fff", fontSize: 18, fontWeight: 700, display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 3px 8px rgba(28,26,23,0.2)" } }, t.badge));
+    if (t.dot) children.push(e("div", { key: "d", style: { position: "absolute", top: 12, right: 12, width: 12, height: 12, borderRadius: "50%", background: "#D64541" } }));
+    const demoTile = e("div", {
+      style: { width: 110, height: 152, borderRadius: 16, background: t.bg, boxShadow: t.shadow, display: "flex", alignItems: "center", justifyContent: "center", position: "relative", transform: t.lift ? "translateY(-8px)" : "none", transition: "all 0.25s cubic-bezier(0.2,0.8,0.3,1)" }
+    }, children);
+    return {
+      demoTile, demoName: s.name, demoDesc: s.desc, demoIndex: this.state.i + 1,
+      cycleState: () => this.setState(st => ({ i: (st.i + 1) % this.states.length }))
+    };
+  }
+}
+</script>
+</body>
+</html>
