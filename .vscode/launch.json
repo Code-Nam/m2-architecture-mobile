@@ -1,0 +1,30 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Tenpai (debug, emulator)",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main.dart",
+      "deviceId": "emulator-5554",
+      "flutterMode": "debug"
+    },
+    {
+      "name": "Tenpai (debug, open at gallery)",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main.dart",
+      "deviceId": "emulator-5554",
+      "flutterMode": "debug",
+      "args": ["--route", "/gallery"]
+    },
+    {
+      "name": "Tenpai (profile)",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main.dart",
+      "deviceId": "emulator-5554",
+      "flutterMode": "profile"
+    }
+  ]
+}

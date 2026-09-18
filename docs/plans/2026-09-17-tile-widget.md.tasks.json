@@ -82,12 +82,12 @@
     {
       "id": 10,
       "subject": "Task 10: Debug gallery route",
-      "status": "pending",
+      "status": "completed",
       "blockedBy": [
         4
       ],
       "description": "**Goal:** `/gallery` route rendering all states x sizes in a grid for screenshot comparison against `design/handoff/screenshots/`. Debug-only, cheap.\n**Acceptance:** route opens, every state visible side by side.\n**Verify:** `flutter run` then navigate\n```json:metadata\n{\"verifyCommand\": \"flutter analyze\", \"acceptanceCriteria\": [\"see description\"], \"modelTier\": \"standard\"}\n```"
     }
   ],
-  "lastUpdated": "2026-09-18T13:00:00Z"
+  "lastUpdated": "2026-09-18T09:17:09.661036+00:00"
 }

@@ -24,19 +24,49 @@ Phase 0 committed (`1d758d4`). Theme port done 2026-09-17 (light + dark colours,
 tokens, text theme, `ThemeData` wired) — committed `62d8664`.
 
 **Folder decision 2026-09-17:** `lib/app/` = shell only (`app`, `router`,
-`home_screen`). Shared code lives under `lib/shared/`; theme moved to
-`lib/shared/theme/` (move uncommitted at handover, analyze clean). Tile model
-and widget go under `lib/shared/` too; subfolder names are the user's.
+`home_screen`). Shared code lives under `lib/shared/` (`theme/`, `models/`,
+`widgets/`; committed `bc7e02d`). Subfolder names are the user's.
 
-**Next: tile model + `TileWidget`.** Plan and task state:
+**In progress: tile model + `TileWidget`.** Plan and task state:
 [docs/plans/2026-09-17-tile-widget.md](plans/2026-09-17-tile-widget.md) +
-`.tasks.json`. Rebuild the task list from those files. **Task 1 done
-2026-09-17** (`lib/shared/models/tile.dart`, freezed; red five = `r` suffix,
-`5pr`; committed `7350dd8`). **Tasks 2-4 done 2026-09-18**
-(`lib/shared/widgets/{tile_state,tile_size,tile_widget}.dart`; enums
-committed, widget uncommitted at handover). Widget verified by a throwaway
-widget test, not kept (Task 9 owns real tests). Next, user's pick: Task 10
-(gallery route, makes 5-8 visually checkable) or Task 5 (ring per state).
+`.tasks.json`. Rebuild the task list from those files. Tasks 1-4 done
+(`lib/shared/models/tile.dart`, `lib/shared/widgets/{tile_state,tile_size,tile_widget}.dart`;
+red five = `r` suffix, `5pr`; widget verified by a throwaway widget test, not
+kept, Task 9 owns real tests). **Task 10 done 2026-09-18**: `/gallery` route
+(`lib/app/tile_gallery_screen.dart`, `AppRoutes.gallery`, `kDebugMode` button
+on the placeholder home, `.vscode/launch.json` with a `--route /gallery`
+config). Gallery review found the fixed 10 px radius wrong on small tiles;
+radius now lives on `TileSize` (4/7/10/16, ≈15 % of width per the handoff's
+two data points), `AppTokens.radiusTile` deleted. Placeholder text symbol
+overflows the 24 px tile; accepted, dies with SVG art. **Remaining order: 5,
+6, 7, 8, 9**, each checked in the gallery against
+`design/handoff/screenshots/06-08*`. Tasks 1-4 committed (`7350dd8`, `d78b7ed`,
+`4cb2512`); Task 10 + radius change uncommitted at handover.
+
+**After the tile: Milestone 1 lesson slice** (plan to write when started,
+`docs/plans/<date>-lesson-slice.md`). Order, from the setup plan: lesson
+domain (`Lesson`, `Unit`, `LessonBlock` sealed freezed union) → `LessonRepository`
+interface + `rootBundle` asset source + one authored `assets/lessons/unit_01_*.json`
+→ `ProgressRepository` interface + in-memory impl → providers
+(`lessonRepositoryProvider`, `unitsProvider`, `currentLessonProvider`,
+`userProgressProvider`) → router shell (`StatefulShellRoute.indexedStack`, 4
+tabs, `/lesson/:id`) → tests → `LessonPathScreen` + `LessonScreen`. REST (M2),
+Firebase (M4) and AI (M5) plug in behind those interfaces later; do not start
+them early.
+
+**Non-code prep, any time, blocks nothing, no new deps:**
+
+- Host the yaku catalog JSON as a static file (GitHub Pages or raw URL);
+  base URL will be injected, never hard-coded. Needed at M2.
+- Create the Firebase project in the console, register the Android app
+  (package name from `android/app/build.gradle`). No SDK until M4. Check
+  whether Cloud Functions (Blaze billing) or Firebase AI Logic (App Check)
+  fits the school account; that decides M5.
+- Get the 34 tile faces + 3 red-five SVGs from the designer
+  (`design/README.md` "Still missing"); `assets/tiles/` is empty. Placeholder
+  text symbol stays until then; `flutter_svg` added only then.
+- Draft unit 1 lesson prose in French; encode as JSON once the block schema
+  exists.
 
 Small chores, user, non-blocking:
 
@@ -48,7 +78,10 @@ Small chores, user, non-blocking:
 3. Phase-0 housekeeping still open: `TenpaiApp` -> `App`, `AppRoutes` ->
    `_Routes`, `AI-GENERATED` headers on `lib/main.dart` and
    `lib/app/{app,router,home_screen}.dart`. Then `check_conventions` reports
-   only `AppTokens` unused (dies with the tile).
+   only `TileSuit`/`TileWidget` unused (die with tests and the gallery).
+4. `tile_widget.dart` class doc still says "placeholder"; `tile_state.dart`
+   value docs should carry the design-table visuals; `tile.dart` has two doc
+   blocks around `@Assert`.
 
 Working mode reminders: `lib/` is hook-guarded (only `/implement <scope>` opens
 it for one turn); git is the user's; every AI-written file/block is marked and
@@ -73,7 +106,7 @@ Plan: [docs/plans/2026-09-17-project-setup.md](plans/2026-09-17-project-setup.md
 
 | Milestone | Scope | Status |
 |-----------|-------|--------|
-| 1 — Architecture holds | Tile model + widget, learning vertical slice from JSON asset, in-memory progress, shell routes, tests | not started |
+| 1 — Architecture holds | Tile model + widget, learning vertical slice from JSON asset, in-memory progress, shell routes, tests | in progress 2026-09-18: tile model + widget skeleton done, tile tasks 5-10 next, lesson slice after |
 | 2 — Yaku | dio + REST yaku catalog, Yaku Dex screens | not started |
 | 3 — Scanner | image_picker single shot, fake identifier, scan result card | not started |
 | 4 — Firebase | Auth + Firestore progress behind the existing repository interfaces | not started |
