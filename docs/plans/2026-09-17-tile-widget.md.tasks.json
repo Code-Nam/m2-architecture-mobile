@@ -4,9 +4,9 @@
     {
       "id": 1,
       "subject": "Task 1: Tile model (freezed)",
-      "status": "pending",
+      "status": "completed",
       "blockedBy": [],
-      "description": "**Goal:** One canonical tile value class. `Tile(suit: TileSuit, number: int, isRed: bool = false)` via freezed `abstract class` + `const factory`; `TileSuit { man, pin, sou, honor }`; `Tile.parse('5p')` and `String get code` ('1m'..'9s', '1z'..'7z'). Range assert only, no engine.\n**Read:** CLAUDE.md freezed row; `~/.pub-cache/hosted/pub.dev/freezed_annotation-3.1.0/lib/`.\n**Acceptance:** `dart run build_runner build -d` emits `tile.freezed.dart`; `Tile.parse('5p').code == '5p'`; equal tiles are `==`.\n**Verify:** `dart run build_runner build -d && flutter analyze`\n```json:metadata\n{\"verifyCommand\": \"flutter analyze\", \"acceptanceCriteria\": [\"see description\"], \"modelTier\": \"standard\"}\n```"
+      "description": "**Result (2026-09-17):** User-written `lib/shared/models/tile.dart` (`Tile` + enhanced `TileSuit` with `letter`), `tile.freezed.dart` generated. Red five encoded as `r` suffix (`5pr`); `parse` and `code` round-trip. Verified by script: parse/code, ==, hashCode, copyWith, assert on `8z`, StateError on bad suit letter. Analyze clean. Open nit: duplicate doc comment around `@Assert` (lines 30-33). `check_conventions` flags `TileSuit` unused elsewhere until TileWidget/tests exist.\n**Goal:** One canonical tile value class. `Tile(suit: TileSuit, number: int, isRed: bool = false)` via freezed `abstract class` + `const factory`; `TileSuit { man, pin, sou, honor }`; `Tile.parse('5p')` and `String get code` ('1m'..'9s', '1z'..'7z'). Range assert only, no engine.\n**Read:** CLAUDE.md freezed row; `~/.pub-cache/hosted/pub.dev/freezed_annotation-3.1.0/lib/`.\n**Acceptance:** `dart run build_runner build -d` emits `tile.freezed.dart`; `Tile.parse('5p').code == '5p'`; equal tiles are `==`.\n**Verify:** `dart run build_runner build -d && flutter analyze`\n```json:metadata\n{\"verifyCommand\": \"flutter analyze\", \"acceptanceCriteria\": [\"see description\"], \"modelTier\": \"standard\"}\n```"
     },
     {
       "id": 2,
@@ -89,5 +89,5 @@
       "description": "**Goal:** `/gallery` route rendering all states x sizes in a grid for screenshot comparison against `design/handoff/screenshots/`. Debug-only, cheap.\n**Acceptance:** route opens, every state visible side by side.\n**Verify:** `flutter run` then navigate\n```json:metadata\n{\"verifyCommand\": \"flutter analyze\", \"acceptanceCriteria\": [\"see description\"], \"modelTier\": \"standard\"}\n```"
     }
   ],
-  "lastUpdated": "2026-09-17T20:00:00Z"
+  "lastUpdated": "2026-09-17T22:00:00Z"
 }

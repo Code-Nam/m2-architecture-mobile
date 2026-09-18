@@ -9,15 +9,13 @@ canonical tile model, exactly one renderer, states normal / selected / correct /
 incorrect / highlighted / face-down, red-five as a tile flag. Placeholder symbol
 until SVGs arrive; `flutter_svg` is approved but not added until then.
 
-## Open decision (user)
+## Folder decision (user, 2026-09-17)
 
-Folder layout for shared domain + widgets. Tree today: `lib/app/`, `lib/app/theme/`.
-Options discussed: keep `lib/app/` as shell only and add `lib/core/` (or
-`lib/shared/`) for theme/tokens/tile, with features beside it; or keep theme under
-`lib/app/` and put the tile as a sibling. Checker keys on folder names: `widgets/`
--> `*_widget.dart`/`*Widget`, `screens/` -> `*_screen.dart`/`*Screen`.
-Decide before Task 1. `home_screen.dart` is a placeholder; leave it until the
-lesson path replaces it.
+`lib/app/` = shell only. Shared code under `lib/shared/`: theme moved to
+`lib/shared/theme/`; tile model + widget go under `lib/shared/` too. Subfolder
+names are the user's; checker keys on folder names: `widgets/` ->
+`*_widget.dart`/`*Widget`, `screens/` -> `*_screen.dart`/`*Screen`.
+`home_screen.dart` is a placeholder; leave it until the lesson path replaces it.
 
 ## Tasks
 

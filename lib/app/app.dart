@@ -1,6 +1,6 @@
 import 'package:material_ui/material_ui.dart';
 import 'package:tenpai/app/router.dart';
-import 'package:tenpai/app/theme/app_theme.dart';
+import 'package:tenpai/shared/theme/app_theme.dart';
 
 /// The main entry point for the Tenpai application.
 class TenpaiApp extends StatelessWidget {
