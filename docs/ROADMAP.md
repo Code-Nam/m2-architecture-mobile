@@ -102,6 +102,11 @@ for every tile size; dark mode does not strengthen the drop shadow
 - Create the Firebase project in the console, register the Android app
   (package name from `android/app/build.gradle`), enable Auth, Firestore,
   App Check (Play Integrity for Android) and AI Logic. No SDK until M4.
+  `google-services.json` and `lib/firebase_options.dart` are git-ignored
+  (decided 2026-09-18) and go to the grader beside the source archive; README
+  "Firebase configuration" says where they drop in. Confirm at M4 that
+  `flutterfire configure` still writes exactly those two files and the Gradle
+  plugin lines, against firebase.google.com/docs/flutter/setup.
 - Check that `isar_community` (3.3.2 on pub.dev) resolves against Dart
   3.13 with `flutter pub add --dry-run`; fall back to the original `isar`
   only if it does too. Needed at M2 (yaku catalog cache) or M3 (scan

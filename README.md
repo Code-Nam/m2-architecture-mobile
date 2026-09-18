@@ -84,6 +84,27 @@ flutter run                      # -d <android-device-id> to target a device
 
 No `--dart-define` values are required.
 
+### Firebase configuration (not in the repository)
+
+The app needs two generated files that hold the Firebase project's
+identifiers and API keys. They are git-ignored; the author provides them with
+the submission, next to the source archive.
+
+| File | Drop it at |
+|---|---|
+| `google-services.json` | `android/app/google-services.json` |
+| `firebase_options.dart` | `lib/firebase_options.dart` |
+
+To import them into a fresh clone, copy each file to its path above, then run
+`flutter pub get` and `flutter run` as usual. Nothing else changes: the Gradle
+plugin entries that read `google-services.json` are committed.
+
+To regenerate them for your own Firebase project instead, install the CLI
+with `dart pub global activate flutterfire_cli`, sign in with
+`firebase login`, and run `flutterfire configure` at the repository root
+(Android platform only). The console alternative for the first file is
+Project settings → Your apps → Android app → *Download google-services.json*.
+
 ### Develop
 
 ```bash

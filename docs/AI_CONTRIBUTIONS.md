@@ -78,6 +78,7 @@ Rules:
 | `assets/lessons/unit_05_gagner.json` | file (no marker) | 2026-09-18 | |
 | `assets/lessons/unit_06_le_score.json` | file (no marker) | 2026-09-18 | |
 | `pubspec.yaml` | block: lesson content assets | 2026-09-18 | |
+| `.gitignore` | block: Firebase configuration | 2026-09-18 | |
 | `design/README.md` | file | 2026-09-17 | Project tooling and setup so study time goes to Flutter code. |
 | `README.md` | file | 2026-09-17 | Project tooling and setup so study time goes to Flutter code. |
 | `android/app/src/main/AndroidManifest.xml` | block: INTERNET permission | 2026-09-17 | Project tooling and setup so study time goes to Flutter code. |

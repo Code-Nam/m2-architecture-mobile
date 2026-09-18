@@ -53,3 +53,11 @@ app.*.map.json
 .claude/.implement-grant
 .claude/settings.local.json
 # AI-GENERATED (Claude) END
+
+# AI-GENERATED (Claude) BEGIN — Firebase configuration
+# Generated per project by the Firebase console / flutterfire configure.
+# Delivered with the assignment submission, not committed; see README
+# "Firebase configuration".
+android/app/google-services.json
+lib/firebase_options.dart
+# AI-GENERATED (Claude) END — Firebase configuration
