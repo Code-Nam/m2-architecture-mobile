@@ -158,7 +158,7 @@ Plan: [docs/plans/2026-09-17-project-setup.md](plans/2026-09-17-project-setup.md
 
 | Milestone | Scope | Status |
 |-----------|-------|--------|
-| 1 — Architecture holds | Tile model + widget, learning vertical slice from JSON asset, in-memory progress, shell routes, tests | in progress: tile model + widget + tests done 2026-09-18 (`b105eb7`); lesson slice plan approved 2026-09-18, Task 1 (lesson domain) done, Task 2 next |
+| 1 — Architecture holds | Tile model + widget, learning vertical slice from JSON asset, in-memory progress, shell routes, tests | in progress: tile model + widget + tests done 2026-09-18 (`b105eb7`); lesson slice plan approved 2026-09-18, Tasks 1-2 (lesson domain, unit 1 asset) done, Task 3 next |
 | 2 — Yaku | dio + REST yaku catalog, Yaku Dex screens | not started |
 | 3 — Scanner | image_picker single shot, fake identifier, scan result card | not started |
 | 4 — Firebase | `firebase_auth` + App Check + Firestore progress (offline persistence on, Security Rules written and tested) replacing the in-memory impl behind the existing repository interfaces; Isar for settings and scan history if not already added | not started |

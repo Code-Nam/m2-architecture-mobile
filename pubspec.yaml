@@ -32,6 +32,12 @@ dev_dependencies:
 flutter:
     uses-material-design: true
 
+    # AI-GENERATED (Claude) BEGIN — lesson content assets
+    # One JSON per unit under assets/lessons/, read by the lesson asset source.
+    assets:
+        - assets/lessons/
+    # AI-GENERATED (Claude) END — lesson content assets
+
     # AI-GENERATED (Claude) BEGIN — bundled fonts
     # Why: Project tooling and setup so study time goes to Flutter code.
     # Design handoff: Outfit for everything, IBM Plex Mono for technical

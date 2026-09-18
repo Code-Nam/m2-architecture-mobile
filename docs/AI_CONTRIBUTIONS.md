@@ -71,6 +71,13 @@ Rules:
 | `docs/plans/2026-09-17-tile-widget.md.tasks.json` | file (no marker) | 2026-09-17 | Project tooling and setup so study time goes to Flutter code. |
 | `docs/plans/2026-09-18-lesson-slice.md` | file | 2026-09-18 | |
 | `docs/plans/2026-09-18-lesson-slice.md.tasks.json` | file (no marker) | 2026-09-18 | |
+| `assets/lessons/unit_01_lire_les_tuiles.json` | file (no marker) | 2026-09-18 | |
+| `assets/lessons/unit_02_les_briques_d_une_main.json` | file (no marker) | 2026-09-18 | |
+| `assets/lessons/unit_03_la_table.json` | file (no marker) | 2026-09-18 | |
+| `assets/lessons/unit_04_le_deroule_d_une_partie.json` | file (no marker) | 2026-09-18 | |
+| `assets/lessons/unit_05_gagner.json` | file (no marker) | 2026-09-18 | |
+| `assets/lessons/unit_06_le_score.json` | file (no marker) | 2026-09-18 | |
+| `pubspec.yaml` | block: lesson content assets | 2026-09-18 | |
 | `design/README.md` | file | 2026-09-17 | Project tooling and setup so study time goes to Flutter code. |
 | `README.md` | file | 2026-09-17 | Project tooling and setup so study time goes to Flutter code. |
 | `android/app/src/main/AndroidManifest.xml` | block: INTERNET permission | 2026-09-17 | Project tooling and setup so study time goes to Flutter code. |

@@ -1,0 +1,92 @@
+{
+  "id": "unit_01",
+  "title": "Lire les tuiles",
+  "lessons": [
+    {
+      "id": "unit_01_lesson_01",
+      "title": "Trois familles, un même alphabet",
+      "xp": 10,
+      "blocks": [
+        {
+          "type": "explanation",
+          "tile": "5p",
+          "title": "Trois familles, un même alphabet",
+          "body": "Chaque tuile numérotée appartient à une famille : caractères, cercles ou bambous. Neuf valeurs par famille, et vous savez déjà lire les deux tiers du jeu."
+        },
+        {
+          "type": "quiz",
+          "question": "Quelle tuile complète cette main ?",
+          "hand": [
+            "1m",
+            "2m",
+            "3m",
+            "4m",
+            "5m",
+            "6m",
+            "7m",
+            "8m",
+            "9m",
+            "2p",
+            "3p",
+            "4p",
+            "5s"
+          ],
+          "options": [
+            "6s",
+            "9p",
+            "5s",
+            "1z"
+          ],
+          "correctIndex": 2,
+          "feedback": "Il manquait la deuxième tuile de la paire : sans paire, pas de main complète."
+        },
+        {
+          "type": "explanation",
+          "tile": "1z",
+          "title": "Les honneurs",
+          "body": "Sept tuiles n'ont pas de numéro : les quatre vents et les trois dragons. On les appelle les honneurs. Elles ne forment jamais de suite, seulement des paires ou des brelans."
+        }
+      ]
+    },
+    {
+      "id": "unit_01_lesson_02",
+      "title": "Les suites",
+      "xp": 10,
+      "blocks": [
+        {
+          "type": "explanation",
+          "tile": "4m",
+          "title": "Trois tuiles qui se suivent",
+          "body": "Une suite, c'est trois tuiles consécutives de la même famille : 4-5-6 de caractères, par exemple. Une suite ne traverse jamais le 9 vers le 1, et ne mélange jamais deux familles."
+        },
+        {
+          "type": "quiz",
+          "question": "Quelle tuile complète cette main ?",
+          "hand": [
+            "1m",
+            "2m",
+            "3m",
+            "4p",
+            "5p",
+            "6p",
+            "7s",
+            "8s",
+            "9s",
+            "4m",
+            "5m",
+            "1z",
+            "1z"
+          ],
+          "options": [
+            "9m",
+            "6m",
+            "2p",
+            "7z"
+          ],
+          "correctIndex": 1,
+          "feedback": "La bonne réponse était la tuile entourée de vert : elle termine la suite 4-5-6."
+        }
+      ]
+    }
+  ]
+}
