@@ -21,7 +21,11 @@ computation (needs dates, M4), `drill` / `interactive` block bodies (M6),
 Yaku / Scanner / Profil tab content (M2, M3, M4). They get empty variants or
 placeholder screens only.
 
-## Folder decision (user, pending)
+## Folder decision (user, 2026-09-18, partial)
+
+**Decided:** lesson domain models (`lesson.dart`, `unit.dart`,
+`lesson_block.dart`) go in `lib/shared/models/` next to `tile.dart`. Still open:
+where repositories, providers and screens live.
 
 Your tree today: `lib/app/` (shell), `lib/shared/{models,theme,widgets}/`.
 This plan needs a **feature folder for learning**; its name and depth are
