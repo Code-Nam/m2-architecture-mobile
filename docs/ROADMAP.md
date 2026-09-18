@@ -31,10 +31,11 @@ and widget go under `lib/shared/` too; subfolder names are the user's.
 **Next: tile model + `TileWidget`.** Plan and task state:
 [docs/plans/2026-09-17-tile-widget.md](plans/2026-09-17-tile-widget.md) +
 `.tasks.json`. Rebuild the task list from those files. **Task 1 done
-2026-09-17** (`lib/shared/models/tile.dart`, user-written, freezed; red five =
-`r` suffix, `5pr`; acceptance verified by script, uncommitted at handover).
-Next: Tasks 2 + 3 (`TileState`, `TileSize` enums, plain Dart, next to the
-future `TileWidget`), then Task 4.
+2026-09-17** (`lib/shared/models/tile.dart`, freezed; red five = `r` suffix,
+`5pr`; committed `7350dd8`). **Tasks 2 + 3 done 2026-09-18**
+(`lib/shared/widgets/tile_state.dart`, `tile_size.dart`; uncommitted at
+handover, one commit planned). Next: Task 4 (`TileWidget` skeleton in
+`lib/shared/widgets/tile_widget.dart`), which unblocks 5, 8, 10.
 
 Small chores, user, non-blocking:
 
@@ -86,6 +87,6 @@ Plan: [docs/plans/2026-09-17-project-setup.md](plans/2026-09-17-project-setup.md
 | `design/README.md` inventory + token map | done |
 | Fonts: Outfit 400–700 + IBM Plex Mono 400/500 static TTFs in `assets/fonts/` with OFL licences, declared in pubspec | done 2026-09-17 |
 | Theme tokens (colours light+dark → spacing/radius/shadow → text theme → ThemeData) | done 2026-09-17: `lib/shared/theme/{app_colors,app_tokens,app_theme}.dart` (moved from `lib/app/theme/` same day), wired in `MaterialApp.router`. Claude via `/implement`: `_Palette`, `AppColors` fields, `_textTheme` (marked). User: schemes, `AppTokens`, `ThemeData` builders. Open nits: Why markers in app_colors, `AppTokens` doc wording |
-| Component port, order in `design/README.md` (Tile first) | tile plan `docs/plans/2026-09-17-tile-widget.md`, 10 tasks; Task 1 (model) done 2026-09-17, 2-10 pending |
+| Component port, order in `design/README.md` (Tile first) | tile plan `docs/plans/2026-09-17-tile-widget.md`, 10 tasks; Task 1 (model) done 2026-09-17, Tasks 2-3 (`TileState`, `TileSize`) done 2026-09-18, 4-10 pending |
 | Debug gallery route | not started |
 | Delete `design/handoff/` once every screen matches its screenshot (keep `design/README.md`) | after port |
