@@ -6,7 +6,7 @@ import 'package:tenpai/app/tile_gallery_screen.dart';
 abstract final class AppRoutes {
   /// Landing screen. Becomes the lesson path in milestone 1.
   static const home = '/';
-  
+
   /// Debug gallery of tiles
   static const gallery = '/gallery';
 }

@@ -29,7 +29,6 @@ abstract class Tile with _$Tile {
 
   /// The number of the tile, which must be between 1 and 9 for man, pin, and sou suits, and between 1 and 7 for honor tiles.
   @Assert('number >= 1 && number <= (suit == TileSuit.honor ? 7 : 9)')
-
   /// Factory constructor for creating a Tile instance.
   const factory Tile({
     required TileSuit suit,
@@ -41,7 +40,11 @@ abstract class Tile with _$Tile {
   /// example: "1m" for 1 of man, "9s" for 9 of sou, "5pr" for red 5 of pin
   factory Tile.parse(String code) {
     final suit = TileSuit.values.firstWhere((s) => s.letter == code[1]);
-    return Tile(suit: suit, number: int.parse(code[0]), isRed: code.endsWith('r'));
+    return Tile(
+      suit: suit,
+      number: int.parse(code[0]),
+      isRed: code.endsWith('r'),
+    );
   }
 
   /// Returns a string representation of the tile in the format "number + suit letter + 'r' if red".
