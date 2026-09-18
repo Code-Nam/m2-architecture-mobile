@@ -47,7 +47,7 @@ abstract final class _Palette {
   static const vermillionTextDark = Color(0xFFE05A56);
   static const senseiPanelDark = Color(0xFF2A2620);
   static const errorPanelDark = Color(0xFF38211F);
-  static const successTintDark = Color(0xFF1F2E27);
+  // static const successTintDark = Color(0xFF1F2E27);
   static const iconInactiveDark = Color(0xFF4A453C);
 }
 // AI-GENERATED (Claude) END
@@ -113,6 +113,7 @@ final class AppColors extends ThemeExtension<AppColors> {
     required this.tileBackBottom,
     required this.viewfinderBg,
     required this.viewfinderBracket,
+    required this.tileInk,
   });
 
   /// Primary pressed / hover fill.
@@ -175,6 +176,9 @@ final class AppColors extends ThemeExtension<AppColors> {
   /// Face-down tile gradient end.
   final Color tileBackBottom;
 
+  /// Symbol ink that stays the same in dark mode.
+  final Color tileInk;
+
   /// Scanner full-screen background.
   final Color viewfinderBg;
 
@@ -203,6 +207,7 @@ final class AppColors extends ThemeExtension<AppColors> {
     Color? tileFaceBottom,
     Color? tileBackTop,
     Color? tileBackBottom,
+    Color? tileInk,
     Color? viewfinderBg,
     Color? viewfinderBracket,
   }) => AppColors(
@@ -226,6 +231,7 @@ final class AppColors extends ThemeExtension<AppColors> {
     tileFaceBottom: tileFaceBottom ?? this.tileFaceBottom,
     tileBackTop: tileBackTop ?? this.tileBackTop,
     tileBackBottom: tileBackBottom ?? this.tileBackBottom,
+    tileInk: tileInk ?? this.tileInk,
     viewfinderBg: viewfinderBg ?? this.viewfinderBg,
     viewfinderBracket: viewfinderBracket ?? this.viewfinderBracket,
   );
@@ -258,6 +264,7 @@ final class AppColors extends ThemeExtension<AppColors> {
           tileFaceBottom: Color.lerp(tileFaceBottom, other.tileFaceBottom, t)!,
           tileBackTop: Color.lerp(tileBackTop, other.tileBackTop, t)!,
           tileBackBottom: Color.lerp(tileBackBottom, other.tileBackBottom, t)!,
+          tileInk: Color.lerp(tileInk, other.tileInk, t)!,
           viewfinderBg: Color.lerp(viewfinderBg, other.viewfinderBg, t)!,
           viewfinderBracket: Color.lerp(
             viewfinderBracket,
@@ -289,6 +296,7 @@ const lightColors = AppColors(
   tileFaceBottom: _Palette.tileFaceBottom,
   tileBackTop: _Palette.tileBackTop,
   tileBackBottom: _Palette.tileBackBottom,
+  tileInk: _Palette.ink,
   viewfinderBg: _Palette.viewfinderBg,
   viewfinderBracket: _Palette.viewfinderBracket,
 );
@@ -305,7 +313,7 @@ const darkColors = AppColors(
   trackDeep: _Palette.trackDeep,
   iconInactive: _Palette.iconInactiveDark,
   senseiPanel: _Palette.senseiPanelDark,
-  successTint: _Palette.successTintDark,
+  successTint: _Palette.successTint,
   successTintDeep: _Palette.successTintDeep,
   errorPanel: _Palette.errorPanelDark,
   errorTint: _Palette.errorTint,
@@ -315,6 +323,7 @@ const darkColors = AppColors(
   tileFaceBottom: _Palette.tileFaceBottom,
   tileBackTop: _Palette.tileBackTop,
   tileBackBottom: _Palette.tileBackBottom,
+  tileInk: _Palette.ink,
   viewfinderBg: _Palette.viewfinderBg,
   viewfinderBracket: _Palette.viewfinderBracket,
 );

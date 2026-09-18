@@ -51,24 +51,16 @@ class TileWidget extends StatelessWidget {
           height: size.height,
           duration: AppTokens.duration,
           curve: AppTokens.curve,
+          foregroundDecoration: _bevel(),
           transform: state == .selected
               ? Matrix4.translationValues(0, -AppTokens.tileLift, 0)
               : Matrix4.identity(),
           decoration: BoxDecoration(
             gradient: _gradient(colors),
             borderRadius: BorderRadius.circular(size.radius),
-            boxShadow: _shadows(theme.colorScheme),
+            boxShadow: _shadows(scheme),
           ),
-          child: state == .faceDown
-              ? null
-              : Center(
-                  child: Text(
-                    tile.code,
-                    style: theme.textTheme.titleMedium?.copyWith(
-                      color: tile.isRed ? colors.vermillionText : null,
-                    ),
-                  ),
-                ),
+          child: state == .faceDown ? _backFrame() : _symbol(theme, colors),
         ),
         if (badge != null)
           Positioned(
@@ -117,6 +109,65 @@ class TileWidget extends StatelessWidget {
     };
 
     return [...base, ?ring];
+  }
+
+  Widget _backFrame() => Center(
+    child: FractionallySizedBox(
+      widthFactor: AppTokens.backFrameWidthFactor,
+      heightFactor: AppTokens.backFrameHeightFactor,
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: AppTokens.backFrame,
+            width: AppTokens.backFrameWidth,
+          ),
+          borderRadius: BorderRadius.circular(
+            size.radius * AppTokens.backFrameRadiusFactor,
+          ),
+        ),
+      ),
+    ),
+  );
+
+  Widget _symbol(ThemeData theme, AppColors colors) => Center(
+    child: Text(
+      tile.code,
+      style: theme.textTheme.titleMedium?.copyWith(
+        color: tile.isRed ? colors.vermillionText : colors.tileInk,
+      ),
+    ),
+  );
+
+  BoxDecoration _bevel() {
+    final top = state == .faceDown
+        ? AppTokens.backHighlight
+        : AppTokens.bevelTop;
+    final bottomStop = state == .faceDown
+        ? 1.0
+        : 1 - AppTokens.bevelBottomHeight / size.height;
+    return BoxDecoration(
+      borderRadius: BorderRadius.circular(size.radius),
+      gradient: LinearGradient(
+        begin: .topCenter,
+        end: .bottomCenter,
+        colors: [
+          top,
+          top,
+          Colors.transparent,
+          Colors.transparent,
+          AppTokens.bevelBottom,
+          AppTokens.bevelBottom,
+        ],
+        stops: [
+          0,
+          AppTokens.bevelTopHeight / size.height,
+          AppTokens.bevelTopHeight / size.height,
+          bottomStop,
+          bottomStop,
+          1,
+        ],
+      ),
+    );
   }
 }
 

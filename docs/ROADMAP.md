@@ -53,8 +53,18 @@ verified in the gallery; the 250 ms tween itself is Task 9's widget test.
 scheme `primary`/`error` + `on*`), `Stack(clipBehavior: .none)` around the
 container, `Positioned` at `-badgeOverhang` (9 px, handoff value; plan said 8).
 One badge size for every tile size, as the handoff only shows it on 64 px.
-Verified in the gallery. **Remaining: 8, then 9** (tests, test-writer agent).
-Tasks 1-6 and 10 committed; Task 7 uncommitted at handover.
+Verified in the gallery. **Task 8 done 2026-09-18**: bevel as
+`foregroundDecoration` (hard-stop vertical gradient: 2 px white 95 % top, 4 px
+ink 9 % bottom; face-down gets only a 2 px white 18 % top line) and the
+face-down inner frame (`FractionallySizedBox` 30/64 x 44/88, 1.5 px white
+18 % border, radius 0.6 x tile radius), all values in `AppTokens`. Dark-mode
+fixes with it: `AppColors.tileInk` (ink in both modes) for the symbol;
+`darkColors.successTint` now the light value so the tile does not change in
+dark (`successTintDark` removed). Both modes checked in the gallery against
+the handoff. Known deviation, not fixed: handoff wants a stronger drop shadow
+in dark; `AppTokens` shadows are mode-independent. **Remaining: 9** (tests,
+test-writer agent). Tasks 1-7 and 10 committed; Task 8 uncommitted at
+handover.
 
 **After the tile: Milestone 1 lesson slice** (plan to write when started,
 `docs/plans/<date>-lesson-slice.md`). Order, from the setup plan: lesson

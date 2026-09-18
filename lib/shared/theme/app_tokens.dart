@@ -97,4 +97,38 @@ abstract final class AppTokens {
 
   /// Size of the badge icon
   static const badgeIconSize = 13.0;
+
+  //* Tile bevel and back
+
+  /// color of the tile back frame, which is a semi-transparent white overlay on the tile back
+  static const backFrame = Color(0x2EFFFFFF);
+
+  /// Width of the tile back frame
+  static const backFrameWidth = 1.5;
+
+  /// factor of the back tile radius
+  static const backFrameRadiusFactor = 0.6;
+
+  /// factor of the back tile width
+  static const backFrameWidthFactor = 30 / 64;
+
+  /// factor of the back tile height
+  static const backFrameHeightFactor = 44 / 88;
+
+  //* Bevel
+
+  /// Color of the top bevel
+  static const bevelTop = Color(0xF2FFFFFF);
+
+  /// Color of the bottom bevel
+  static const bevelBottom = Color(0x171C1A17);
+
+  /// Color of the back highlight
+  static const backHighlight = Color(0x2EFFFFFF);
+
+  /// Height of the top bevel
+  static const bevelTopHeight = 2.0;
+
+  /// Height of the bottom bevel
+  static const bevelBottomHeight = 4.0;
 }
