@@ -44,10 +44,15 @@ React terms. Claude is a **tutor and reviewer, not an implementer**.
 9. **Generated files** (`*.g.dart`, `*.freezed.dart`) come only from
    `dart run build_runner build -d`. Never hand-edit or hand-create them.
 10. **No new dependencies** without saying which, why, and stopping for approval.
-    Planned and approved: `flutter_svg` (tile art), `image_picker` (scanner),
-    Firebase packages when their milestone starts (`firebase_core`,
-    `firebase_auth`, `cloud_firestore`; then `cloud_functions` or
-    `firebase_ai`). Not wanted: mocktail, google_fonts, any non-Firebase BaaS.
+    Planned and approved (assignment requirements, 2026-09-18): `flutter_svg`
+    (tile art), `image_picker` (scanner), Isar (on-device database for
+    local-only data, via the maintained `isar_community` fork; the original
+    `isar` 3.1 was last published in 2023, check which builds on Dart 3.13
+    before adding), and the Firebase packages when their milestone starts:
+    `firebase_core`, `firebase_auth`, `firebase_app_check`, `cloud_firestore`
+    (progress, with its built-in offline persistence), `firebase_ai`
+    (Firebase AI Logic). `cloud_functions` is no longer planned.
+    Not wanted: mocktail, google_fonts, any non-Firebase BaaS.
 11. **No hand-evaluation engine.** No shanten calculator, no yaku detector. Lesson
     hands are authored, so answers are known ahead of time.
 12. **Mark everything you write.** Every file Claude creates gets the
@@ -86,17 +91,26 @@ Say "unverified" when you did not.
 - School requirements: a public REST API (yaku catalog from a hosted JSON
   endpoint), a BaaS (**Firebase**, decided 2026-09-17), the camera
   (single-shot photo of a tile → identify → show its card), an AI feature
-  (contextual explanation after a quiz mistake). **AI goes through Firebase
-  too**: either Cloud Functions proxying an LLM, or Firebase AI Logic
-  (`firebase_ai`) with App Check. Pick at milestone 5. No API key ships in
-  the app either way.
+  (contextual explanation after a quiz mistake), a local database (**Isar**)
+  and Cloud Firestore synchronisation. **AI goes through Firebase
+  AI Logic** (`firebase_ai`, decided 2026-09-18) protected by App Check
+  (`firebase_app_check`); Cloud Functions is dropped. No API key ships in
+  the app.
 - One canonical tile model (`1m`, `5p`, `7s`, `1z`, red-five flag) and exactly one
   widget that renders it, with states normal / selected / correct / incorrect /
   highlighted / face-down / red-five. Tile art is SVG via `flutter_svg`.
 - Lessons are data, not hand-written screens: one renderer driven by content,
   four block types (`explanation`, `quiz`, `drill`, `interactive`) as a sealed
   union. A lesson is a list of blocks. One JSON per unit under `assets/lessons/`.
-- Progress lives in memory until the BaaS lands.
+- **Progress is Firestore's, local-only data is Isar's; they never hold the
+  same data** (decided 2026-09-18). Progress (lesson completions, XP,
+  streak) lives in memory during milestone 1, then in Cloud Firestore with
+  its built-in offline persistence (queued writes, `FieldValue.increment`,
+  `serverTimestamp`) validated by Security Rules; no hand-written sync code.
+  Isar holds what never leaves the device: settings, cached yaku catalog,
+  scan history. Threat model, accepted: the client is untrusted input; rules
+  validate shape and bounds; a rooted user cheating their own progress has no
+  victim and is not defended against. Repository interfaces do not change.
 - **Design is fixed by the handoff in `design/handoff/README.md`** (source of
   truth; `design/README.md` is the Flutter-oriented inventory). Non-negotiable
   from it: light **and dark** mode; Outfit + IBM Plex Mono bundled as TTF

@@ -36,7 +36,10 @@ The design handoff (`design/handoff/`) ships 36 reference captures at
 - **Tile scanner** — point the camera at a tile for a single-shot photo, and
   see the matching tile card.
 - **Account and progress sync** — email/password or Google sign-in, with
-  streaks, XP, and lesson progress synced to the account.
+  streaks, XP, and lesson progress kept in Cloud Firestore; its offline
+  persistence queues changes made without a network and replays them on
+  reconnect. Settings, the cached yaku catalog and scan history stay on the
+  device in Isar.
 - **Sensei** — a patient AI explanation offered after a wrong quiz answer,
   shown in a dedicated panel (seal `先`) that never blocks the quiz; it
   covers loading, streaming, error, and offline states gracefully.
@@ -57,10 +60,15 @@ Flutter 3.47 / Dart 3.13, targeting Android only. Declared in
   `assets/fonts/`, no `google_fonts`.
 - `flutter_svg` (planned) for tile art.
 - `image_picker` (planned) for the tile scanner.
+- Isar (planned, `isar_community` fork) as the on-device database for
+  local-only data: settings, cached yaku catalog, scan history. The
+  original `isar` package has not been published since 2023.
 - `firebase_core`, `firebase_auth`, `cloud_firestore` (planned) for
-  authentication and progress sync.
-- `cloud_functions` or `firebase_ai` (planned) to route the Sensei
-  explanation through Firebase, so no API key ships in the app.
+  authentication and progress, with Firestore's built-in offline
+  persistence doing the synchronisation.
+- `firebase_ai` with `firebase_app_check` (planned) to run the Sensei
+  explanation through Firebase AI Logic, so no API key ships in the app and
+  only the genuine app can call it.
 
 ## Getting started
 

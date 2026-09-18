@@ -28,7 +28,7 @@ Claude Code hooks: PreToolUse stdin carries `tool_name`, `tool_input.file_path`,
 - Tutor rule enforced by **hook with escape hatch** (`/implement` prefix grants lib/ writes for one turn).
 - AI calls (quiz explanation, tile identification) **deferred to a BaaS function**; repositories get interfaces + fakes now. Tile identification will be a vision-LLM call.
 - Tile art via **flutter_svg**.
-- Progress persisted **in memory** until BaaS.
+- Progress persisted **in memory** until BaaS. *Superseded 2026-09-18: Cloud Firestore with offline persistence for progress, Isar for local-only data; see `docs/ROADMAP.md` decisions log.*
 - Assumption: yaku JSON hosted as a static file (GitHub Pages / raw). Base URL lives in `core/network/`, injected so it can change.
 
 ## New dependencies (each justified)
@@ -139,9 +139,9 @@ Main-thread Claude: writes `CLAUDE.md`, `docs/**`, `.claude/**`, `analysis_optio
 
 **Milestone 3 — Scanner (camera):** `image_picker`, `TileIdentifier` interface + `FakeTileIdentifier` (returns a fixed tile), `ScanResultDto` (foreign wire format → DTO split justified), scan screen → tile card.
 
-**Milestone 4 — BaaS decision:** compare Firebase vs Supabase against `AuthRepository`/`ProgressRepository` interfaces; implement both repos; swap the in-memory fake via provider override.
+**Milestone 4 — BaaS decision:** compare Firebase vs Supabase against `AuthRepository`/`ProgressRepository` interfaces; implement both repos; swap the in-memory fake via provider override. *Superseded: Firebase (2026-09-17); `firebase_auth` + `firebase_app_check` + Firestore progress with offline persistence, Isar for local-only data (2026-09-18).*
 
-**Milestone 5 — AI:** BaaS function proxies the LLM; `ExplanationRepository` (mistake → explanation), `TileIdentifierImpl` (photo → tile). Key never on device.
+**Milestone 5 — AI:** BaaS function proxies the LLM; `ExplanationRepository` (mistake → explanation), `TileIdentifierImpl` (photo → tile). Key never on device. *Superseded 2026-09-18: `firebase_ai` (Firebase AI Logic) behind App Check, no Cloud Functions.*
 
 **Milestone 6 — Content + polish:** remaining units, `drill`/`interactive` blocks, animations, gallery parity with `design/`.
 

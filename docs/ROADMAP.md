@@ -13,82 +13,95 @@ Status truth for the project. Update this file and the matching
   reads it and works within it. Naming/privacy rules, product decisions and the
   tutor working mode stay.
 - **2026-09-17 — BaaS is Firebase; AI also via Firebase** (Cloud Functions
-  proxy or Firebase AI Logic, chosen at milestone 5).
+  proxy or Firebase AI Logic, chosen at milestone 5). *Superseded 2026-09-18.*
+- **2026-09-18 — Assignment package list fixed.** Required: `firebase_auth`,
+  `firebase_app_check`, `firebase_ai` (Firebase AI Logic, so Cloud Functions
+  is dropped and milestone 5 is decided), Isar as the on-device database,
+  Cloud Firestore synchronisation. Isar via the maintained `isar_community`
+  fork unless the original `isar` 3.1 (last published 2023) proves to build
+  on Dart 3.13.
+- **2026-09-18 — Isar and Firestore never hold the same data.** Progress
+  (completions, XP, streak) goes to Cloud Firestore, whose offline
+  persistence already is a local cache with a write queue; Security Rules
+  validate every write (owner only, `at <= request.time`, known lesson id,
+  bounded increments). Isar holds local-only data: settings, cached yaku
+  catalog, scan history. Rejected alternative: Isar as progress store with a
+  hand-written outbox/sync, because it duplicates Firestore's cache and a
+  tampered local DB would be uploaded as truth. Accepted threat model: a
+  rooted user can fake their own progress; no leaderboard, no victim.
 - **2026-09-17 — Android only, for now.** `ios/`, `linux/`, `macos/`,
   `windows/`, `web/` deleted; regenerate with
   `flutter create . --platforms=<name>` when a platform is wanted.
+- **2026-09-18 — Screens placement.** `lib/app/` is shell only; product
+  screens live under a feature folder (depth is the user's); throwaway
+  screens sit where they can be deleted without touching anything else.
+- **2026-09-18 — Tile radius scales with size** (4/7/10/16 on `TileSize`),
+  from the handoff's two data points (10 at 64, 16 at 110).
+  `AppTokens.radiusTile` deleted.
+- **2026-09-18 — Tile does not change in dark mode** (handoff line 32):
+  face, tints and symbol ink use light values in both themes (`tileInk`).
 
 ## Next session starts here
 
-Phase 0 committed (`1d758d4`). Theme port done 2026-09-17 (light + dark colours,
-tokens, text theme, `ThemeData` wired) — committed `62d8664`.
+**State on 2026-09-18, all committed (`b105eb7`), working tree clean.**
 
-**Folder decision 2026-09-17:** `lib/app/` = shell only (`app`, `router`,
-`home_screen`). Shared code lives under `lib/shared/` (`theme/`, `models/`,
-`widgets/`; committed `bc7e02d`). Subfolder names are the user's.
+Done: Phase 0 (`1d758d4`), theme port (`62d8664`), folder move to
+`lib/shared/` (`bc7e02d`), and the whole tile plan
+([docs/plans/2026-09-17-tile-widget.md](plans/2026-09-17-tile-widget.md) +
+`.tasks.json`, tasks 1-10 all `completed`). `flutter analyze` clean,
+`flutter test` 44 green, `check_conventions` reports only `TenpaiApp` -> `App`.
 
-**Done: tile model + `TileWidget`** (2026-09-18). Plan and task state:
-[docs/plans/2026-09-17-tile-widget.md](plans/2026-09-17-tile-widget.md) +
-`.tasks.json`. Rebuild the task list from those files. Tasks 1-4 done
-(`lib/shared/models/tile.dart`, `lib/shared/widgets/{tile_state,tile_size,tile_widget}.dart`;
-red five = `r` suffix, `5pr`; widget verified by a throwaway widget test, not
-kept, Task 9 owns real tests). **Task 10 done 2026-09-18**: `/gallery` route
-(`lib/app/tile_gallery_screen.dart`, `AppRoutes.gallery`, `kDebugMode` button
-on the placeholder home, `.vscode/launch.json` with a `--route /gallery`
-config). Gallery review found the fixed 10 px radius wrong on small tiles;
-radius now lives on `TileSize` (4/7/10/16, ≈15 % of width per the handoff's
-two data points), `AppTokens.radiusTile` deleted. Placeholder text symbol
-overflows the 24 px tile; accepted, dies with SVG art. **Task 5 done
-2026-09-18**: ring/halo per state via `BoxShadow(spreadRadius:)` from the
-scheme's `primary`/`error`; widths and halo alpha in `AppTokens`
-(`ringWidth`, `haloWidth`, `haloAlpha`); verified in the gallery, dark mode.
-Two dark-mode issues noted on Task 8 in `.tasks.json` (placeholder text
-invisible on ivory face; correct/incorrect tints drift in dark, handoff says
-the tile does not change). **Task 6 done 2026-09-18**: `SizedBox` +
-`DecoratedBox` replaced by one `AnimatedContainer` (`AppTokens.duration`/
-`curve`); selected = `Matrix4.translationValues(0, -tileLift, 0)` +
-`shadowTileSelected` (0 10 18 ink 16 %, replaces the base shadow). Lift
-verified in the gallery; the 250 ms tween itself is Task 9's widget test.
-**Task 7 done 2026-09-18**: `_Badge` (22 px circle, `Icons.check`/`close`,
-scheme `primary`/`error` + `on*`), `Stack(clipBehavior: .none)` around the
-container, `Positioned` at `-badgeOverhang` (9 px, handoff value; plan said 8).
-One badge size for every tile size, as the handoff only shows it on 64 px.
-Verified in the gallery. **Task 8 done 2026-09-18**: bevel as
-`foregroundDecoration` (hard-stop vertical gradient: 2 px white 95 % top, 4 px
-ink 9 % bottom; face-down gets only a 2 px white 18 % top line) and the
-face-down inner frame (`FractionallySizedBox` 30/64 x 44/88, 1.5 px white
-18 % border, radius 0.6 x tile radius), all values in `AppTokens`. Dark-mode
-fixes with it: `AppColors.tileInk` (ink in both modes) for the symbol;
-`darkColors.successTint` now the light value so the tile does not change in
-dark (`successTintDark` removed). Both modes checked in the gallery against
-the handoff. Known deviation, not fixed: handoff wants a stronger drop shadow
-in dark; `AppTokens` shadows are mode-independent. **Task 9 done 2026-09-18**
-(test-writer agent): 44 tests under `test/shared/{models,widgets}/`, 12 goldens
-(6 states x light/dark, regular size, `5pr`) in `test/shared/widgets/goldens/`.
-Fonts do not load under `flutter test`, so goldens lock geometry and colour,
-not glyphs; a `test/flutter_test_config.dart` loading the bundled TTFs would
-fix that later. **Tile plan complete.** Tasks 1-8 and 10 committed; Task 9
-files uncommitted at handover.
+**Next: Milestone 1 lesson slice.** First action: write
+`docs/plans/<date>-lesson-slice.md` + `.tasks.json` (Claude drafts, user
+approves), then the user builds it task by task with Claude tutoring. Order,
+from the setup plan: lesson domain (`Lesson`, `Unit`, `LessonBlock` sealed
+freezed union) -> `LessonRepository` interface + `rootBundle` asset source +
+one authored `assets/lessons/unit_01_*.json` -> `ProgressRepository` interface
++ in-memory impl -> providers (`lessonRepositoryProvider`, `unitsProvider`,
+`currentLessonProvider`, `userProgressProvider`) -> router shell
+(`StatefulShellRoute.indexedStack`, 4 tabs, `/lesson/:id`) -> tests ->
+`LessonPathScreen` + `LessonScreen`. REST (M2), Firebase (M4) and AI (M5) plug
+in behind those interfaces later; do not start them early.
 
-**After the tile: Milestone 1 lesson slice** (plan to write when started,
-`docs/plans/<date>-lesson-slice.md`). Order, from the setup plan: lesson
-domain (`Lesson`, `Unit`, `LessonBlock` sealed freezed union) → `LessonRepository`
-interface + `rootBundle` asset source + one authored `assets/lessons/unit_01_*.json`
-→ `ProgressRepository` interface + in-memory impl → providers
-(`lessonRepositoryProvider`, `unitsProvider`, `currentLessonProvider`,
-`userProgressProvider`) → router shell (`StatefulShellRoute.indexedStack`, 4
-tabs, `/lesson/:id`) → tests → `LessonPathScreen` + `LessonScreen`. REST (M2),
-Firebase (M4) and AI (M5) plug in behind those interfaces later; do not start
-them early.
+**Where things live** (user's layout, see Decisions log):
+
+- `lib/app/` shell only: `app.dart`, `router.dart` (`AppRoutes`, `/` and
+  `/gallery`), `home_screen.dart` (placeholder + `kDebugMode` gallery button),
+  `tile_gallery_screen.dart` (debug, every state x size). Home and gallery
+  die at M1; feature screens go under a feature folder, layer depth is the
+  user's call; any `screens/` folder gets the `_screen` suffix check.
+- `lib/shared/models/tile.dart` (freezed `Tile`, `TileSuit`, `Tile.parse`,
+  red five = `5pr`), `lib/shared/widgets/{tile_state,tile_size,tile_widget}.dart`
+  (`TileSize` carries width/height/radius 4/7/10/16; `TileWidget` =
+  `Stack` > `AnimatedContainer` with gradient face, ring/halo shadows, bevel
+  as `foregroundDecoration`, lift, `_Badge`, `_backFrame`, `_symbol`).
+- `lib/shared/theme/`: `app_colors.dart` (`AppColors` incl. `tileInk`; tile
+  face/tints identical in dark), `app_tokens.dart` (spacing, radii, shadows,
+  motion, ring/halo/lift/badge/bevel/back-frame values), `app_theme.dart`.
+- `test/shared/{models,widgets}/` + `goldens/` (12 PNGs, regular size,
+  light + dark). Fonts do not load under `flutter test`: goldens lock
+  geometry and colour, not glyphs. A `test/flutter_test_config.dart` loading
+  the bundled TTFs would fix that; not done.
+- `.vscode/launch.json`: debug on `emulator-5554`, a `--route /gallery`
+  config, profile. Hot reload fires on manual save only; top-level `const`
+  theme values need a hot restart.
+
+**Known deviations from the handoff, deliberate:** placeholder symbol is
+text, overflows the 24 px tile (dies with SVG art); badge is one size (22 px)
+for every tile size; dark mode does not strengthen the drop shadow
+(`AppTokens` shadows are mode-independent).
 
 **Non-code prep, any time, blocks nothing, no new deps:**
 
 - Host the yaku catalog JSON as a static file (GitHub Pages or raw URL);
   base URL will be injected, never hard-coded. Needed at M2.
 - Create the Firebase project in the console, register the Android app
-  (package name from `android/app/build.gradle`). No SDK until M4. Check
-  whether Cloud Functions (Blaze billing) or Firebase AI Logic (App Check)
-  fits the school account; that decides M5.
+  (package name from `android/app/build.gradle`), enable Auth, Firestore,
+  App Check (Play Integrity for Android) and AI Logic. No SDK until M4.
+- Check that `isar_community` (3.3.2 on pub.dev) resolves against Dart
+  3.13 with `flutter pub add --dry-run`; fall back to the original `isar`
+  only if it does too. Needed at M2 (yaku catalog cache) or M3 (scan
+  history), whichever comes first.
 - Get the 34 tile faces + 3 red-five SVGs from the designer
   (`design/README.md` "Still missing"); `assets/tiles/` is empty. Placeholder
   text symbol stays until then; `flutter_svg` added only then.
@@ -99,20 +112,28 @@ Small chores, user, non-blocking:
 
 1. `// Why: Tedious data entry, no Flutter concept to learn.` under the two
    BEGIN markers in `lib/shared/theme/app_colors.dart` (register already has it).
-2. `lib/shared/theme/app_tokens.dart`: `sideMargin` doc is wrong (it is the 20 px
-   screen margin); `space2-4` docs say "base unit"; add a comment on the
-   literal-hex exception for shadows; `//*` -> `//`.
-3. Phase-0 housekeeping still open: `TenpaiApp` -> `App`, `AppRoutes` ->
-   `_Routes`, `AI-GENERATED` headers on `lib/main.dart` and
-   `lib/app/{app,router,home_screen}.dart`. Then `check_conventions` reports
-   only `TileSuit`/`TileWidget` unused (die with tests and the gallery).
-4. `tile_widget.dart` class doc still says "placeholder"; `tile_state.dart`
+2. `lib/shared/theme/app_colors.dart:50`: delete the commented-out
+   `successTintDark` line (git remembers it).
+3. `lib/shared/theme/app_tokens.dart`: `sideMargin` doc is wrong (it is the 20 px
+   screen margin); `space2-4` docs say "base unit"; several 2026-09-18 token
+   docs start lowercase; add a comment on the literal-hex exception for
+   shadows; `//*` -> `//`.
+4. Phase-0 housekeeping still open: `TenpaiApp` -> `App` (last
+   `check_conventions` finding), `AppRoutes` -> `_Routes` once nothing outside
+   `router.dart` uses it (home screen does today), `AI-GENERATED` headers on
+   `lib/main.dart` and `lib/app/{app,router,home_screen}.dart`.
+5. `tile_widget.dart` class doc still says "placeholder"; `tile_state.dart`
    value docs should carry the design-table visuals; `tile.dart` has two doc
-   blocks around `@Assert`.
+   blocks around `@Assert`; `tile_widget.dart` `_shadows(theme.colorScheme)`
+   could use the `scheme` local.
+6. `dart format lib/` before each commit; `router.dart` and `tile.dart`
+   have drifted before.
 
 Working mode reminders: `lib/` is hook-guarded (only `/implement <scope>` opens
 it for one turn); git is the user's; every AI-written file/block is marked and
-registered; README is product doc only; `test/` is currently empty.
+registered (`docs/AI_CONTRIBUTIONS.md`, checked by `check_conventions`); README
+is product doc only; test-writer agent writes `test/**` only and worked well
+on task 9.
 
 ## Phase 0 — Project setup (Claude-authored, 2026-09-17)
 
@@ -133,11 +154,11 @@ Plan: [docs/plans/2026-09-17-project-setup.md](plans/2026-09-17-project-setup.md
 
 | Milestone | Scope | Status |
 |-----------|-------|--------|
-| 1 — Architecture holds | Tile model + widget, learning vertical slice from JSON asset, in-memory progress, shell routes, tests | in progress 2026-09-18: tile model + widget skeleton done, tile tasks 5-10 next, lesson slice after |
+| 1 — Architecture holds | Tile model + widget, learning vertical slice from JSON asset, in-memory progress, shell routes, tests | in progress: tile model + widget + tests done 2026-09-18 (`b105eb7`); lesson slice next, plan to write |
 | 2 — Yaku | dio + REST yaku catalog, Yaku Dex screens | not started |
 | 3 — Scanner | image_picker single shot, fake identifier, scan result card | not started |
-| 4 — Firebase | Auth + Firestore progress behind the existing repository interfaces | not started |
-| 5 — AI | Cloud Functions proxy or Firebase AI Logic; explanation + tile identification | not started |
+| 4 — Firebase | `firebase_auth` + App Check + Firestore progress (offline persistence on, Security Rules written and tested) replacing the in-memory impl behind the existing repository interfaces; Isar for settings and scan history if not already added | not started |
+| 5 — AI | Firebase AI Logic (`firebase_ai`) behind App Check; explanation + tile identification | not started |
 | 6 — Content + polish | remaining units, drill/interactive blocks, gallery parity | not started |
 
 ## Design import

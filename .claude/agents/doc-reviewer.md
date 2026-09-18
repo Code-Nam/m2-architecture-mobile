@@ -51,11 +51,14 @@ Keep this exact section order:
 3. `## Features` — bullet list of what the app offers: lesson path with short
    lessons and immediate feedback, the Sensei (AI explanation after a quiz
    mistake), Yaku Dex (yaku catalog from a public REST API), tile scanner
-   (camera, single shot), account and progress sync (Firebase), light and dark
+   (camera, single shot), account and progress sync (Cloud Firestore with
+   offline persistence; Isar only for settings, catalog cache, scan
+   history), light and dark
    mode. Plain product language, no statuses.
 4. `## Tech stack` — Flutter/Dart versions, `material_ui`, Riverpod,
-   go_router, freezed + json_serializable, dio, Firebase (Auth, Firestore,
-   Functions or AI Logic), flutter_svg, image_picker, bundled fonts. One line
+   go_router, freezed + json_serializable, dio, Isar (`isar_community`),
+   Firebase (Auth, App Check, Firestore, AI Logic), flutter_svg,
+   image_picker, bundled fonts. One line
    each on what it is used for. Read `pubspec.yaml`; list only what is
    declared or explicitly planned in `CLAUDE.md`, and mark planned ones as
    such in one word.
