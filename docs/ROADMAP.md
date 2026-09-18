@@ -49,9 +49,12 @@ the tile does not change). **Task 6 done 2026-09-18**: `SizedBox` +
 `curve`); selected = `Matrix4.translationValues(0, -tileLift, 0)` +
 `shadowTileSelected` (0 10 18 ink 16 %, replaces the base shadow). Lift
 verified in the gallery; the 250 ms tween itself is Task 9's widget test.
-**Remaining order: 7, 8, 9**, each checked in the gallery against
-`design/handoff/screenshots/06-08*`. Tasks 1-5 and 10 committed; Task 6
-uncommitted at handover.
+**Task 7 done 2026-09-18**: `_Badge` (22 px circle, `Icons.check`/`close`,
+scheme `primary`/`error` + `on*`), `Stack(clipBehavior: .none)` around the
+container, `Positioned` at `-badgeOverhang` (9 px, handoff value; plan said 8).
+One badge size for every tile size, as the handoff only shows it on 64 px.
+Verified in the gallery. **Remaining: 8, then 9** (tests, test-writer agent).
+Tasks 1-6 and 10 committed; Task 7 uncommitted at handover.
 
 **After the tile: Milestone 1 lesson slice** (plan to write when started,
 `docs/plans/<date>-lesson-slice.md`). Order, from the setup plan: lesson

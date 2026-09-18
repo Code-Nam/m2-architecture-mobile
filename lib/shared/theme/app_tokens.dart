@@ -81,4 +81,20 @@ abstract final class AppTokens {
 
   /// Lift of a selected tile
   static const tileLift = 6.0;
+
+  //* Badge
+
+  /// Size of the badge, which is a circle with this diameter
+  static const badgeSize = 22.0;
+
+  /// Overhang of the badge, which is how much it extends beyond the corner of the tile
+  static const badgeOverhang = 9.0;
+
+  /// Shadow of the badge has 0 2 6 ink 20 %
+  static const shadowBadge = [
+    BoxShadow(offset: Offset(0, 2), blurRadius: 6, color: Color(0x331C1A17)),
+  ];
+
+  /// Size of the badge icon
+  static const badgeIconSize = 13.0;
 }
