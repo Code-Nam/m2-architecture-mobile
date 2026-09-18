@@ -62,4 +62,15 @@ abstract final class AppTokens {
 
   /// Button pressed: shift down 1 px.
   static const pressedOffset = Offset(0, 1);
+
+  //* Tile selection and highlight
+
+  /// Width of the tile selection ring
+  static const ringWidth = 3.0;
+
+  /// Width of the tile highlight halo
+  static const haloWidth = 6.0;
+
+  /// Alpha of the tile highlight halo
+  static const haloAlpha = 0.15;
 }

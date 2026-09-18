@@ -36,7 +36,7 @@ class TileWidget extends StatelessWidget {
         decoration: BoxDecoration(
           gradient: _gradient(colors),
           borderRadius: BorderRadius.circular(size.radius),
-          boxShadow: AppTokens.shadowTile,
+          boxShadow: _shadows(theme.colorScheme),
         ),
         child: state == .faceDown
             ? null
@@ -66,5 +66,25 @@ class TileWidget extends StatelessWidget {
       end: .bottomCenter,
       colors: [top, bottom],
     );
+  }
+
+  List<BoxShadow> _shadows(ColorScheme scheme) {
+    final ring = switch (state) {
+      .normal || .faceDown => null,
+      .selected || .correct => BoxShadow(
+        color: scheme.primary,
+        spreadRadius: AppTokens.ringWidth,
+      ),
+      .incorrect => BoxShadow(
+        color: scheme.error,
+        spreadRadius: AppTokens.ringWidth,
+      ),
+      .highlighted => BoxShadow(
+        color: scheme.primary.withValues(alpha: AppTokens.haloAlpha),
+        spreadRadius: AppTokens.haloWidth,
+      ),
+    };
+
+    return [...AppTokens.shadowTile, ?ring];
   }
 }

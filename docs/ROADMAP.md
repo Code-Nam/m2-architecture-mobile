@@ -38,10 +38,15 @@ on the placeholder home, `.vscode/launch.json` with a `--route /gallery`
 config). Gallery review found the fixed 10 px radius wrong on small tiles;
 radius now lives on `TileSize` (4/7/10/16, ≈15 % of width per the handoff's
 two data points), `AppTokens.radiusTile` deleted. Placeholder text symbol
-overflows the 24 px tile; accepted, dies with SVG art. **Remaining order: 5,
-6, 7, 8, 9**, each checked in the gallery against
-`design/handoff/screenshots/06-08*`. Tasks 1-4 committed (`7350dd8`, `d78b7ed`,
-`4cb2512`); Task 10 + radius change uncommitted at handover.
+overflows the 24 px tile; accepted, dies with SVG art. **Task 5 done
+2026-09-18**: ring/halo per state via `BoxShadow(spreadRadius:)` from the
+scheme's `primary`/`error`; widths and halo alpha in `AppTokens`
+(`ringWidth`, `haloWidth`, `haloAlpha`); verified in the gallery, dark mode.
+Two dark-mode issues noted on Task 8 in `.tasks.json` (placeholder text
+invisible on ivory face; correct/incorrect tints drift in dark, handoff says
+the tile does not change). **Remaining order: 6, 7, 8, 9**, each checked in
+the gallery against `design/handoff/screenshots/06-08*`. Tasks 1-5 and 10
+committed through `6d9151d` except Task 5, uncommitted at handover.
 
 **After the tile: Milestone 1 lesson slice** (plan to write when started,
 `docs/plans/<date>-lesson-slice.md`). Order, from the setup plan: lesson
