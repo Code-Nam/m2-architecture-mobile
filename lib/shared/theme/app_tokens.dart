@@ -23,9 +23,6 @@ abstract final class AppTokens {
   /// Cards and buttons
   static const radiusCard = BorderRadius.all(Radius.circular(16));
 
-  /// Tiles
-  static const radiusTile = BorderRadius.all(Radius.circular(10));
-
   /// Panels
   static const radiusSubPanel = BorderRadius.all(Radius.circular(12));
 

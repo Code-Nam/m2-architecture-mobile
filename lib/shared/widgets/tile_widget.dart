@@ -35,7 +35,7 @@ class TileWidget extends StatelessWidget {
       child: DecoratedBox(
         decoration: BoxDecoration(
           gradient: _gradient(colors),
-          borderRadius: AppTokens.radiusTile,
+          borderRadius: BorderRadius.circular(size.radius),
           boxShadow: AppTokens.shadowTile,
         ),
         child: state == .faceDown
