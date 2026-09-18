@@ -52,6 +52,11 @@ abstract final class AppTokens {
     BoxShadow(offset: Offset(0, 4), blurRadius: 10, color: Color(0x1F1C1A17)),
   ];
 
+  /// Tile selected has 0 10 18 ink 16 %. Replaces [shadowTile], ring is added by the widget.
+  static const shadowTileSelected = [
+    BoxShadow(offset: Offset(0, 10), blurRadius: 18, color: Color(0x291C1A17)),
+  ];
+
   //* Motion
 
   /// Motion duration for all transitions
@@ -73,4 +78,7 @@ abstract final class AppTokens {
 
   /// Alpha of the tile highlight halo
   static const haloAlpha = 0.15;
+
+  /// Lift of a selected tile
+  static const tileLift = 6.0;
 }

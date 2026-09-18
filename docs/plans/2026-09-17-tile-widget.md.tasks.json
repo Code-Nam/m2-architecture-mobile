@@ -45,7 +45,7 @@
     {
       "id": 6,
       "subject": "Task 6: Selected lift + motion",
-      "status": "pending",
+      "status": "completed",
       "blockedBy": [
         5
       ],
@@ -89,5 +89,5 @@
       "description": "**Goal:** `/gallery` route rendering all states x sizes in a grid for screenshot comparison against `design/handoff/screenshots/`. Debug-only, cheap.\n**Acceptance:** route opens, every state visible side by side.\n**Verify:** `flutter run` then navigate\n```json:metadata\n{\"verifyCommand\": \"flutter analyze\", \"acceptanceCriteria\": [\"see description\"], \"modelTier\": \"standard\"}\n```"
     }
   ],
-  "lastUpdated": "2026-09-18T09:34:01.779329+00:00"
+  "lastUpdated": "2026-09-18T09:51:36.345524+00:00"
 }

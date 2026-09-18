@@ -29,26 +29,29 @@ class TileWidget extends StatelessWidget {
     final theme = Theme.of(context);
     final colors = theme.extension<AppColors>()!;
 
-    return SizedBox(
+    return AnimatedContainer(
       width: size.width,
       height: size.height,
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          gradient: _gradient(colors),
-          borderRadius: BorderRadius.circular(size.radius),
-          boxShadow: _shadows(theme.colorScheme),
-        ),
-        child: state == .faceDown
-            ? null
-            : Center(
-                child: Text(
-                  tile.code,
-                  style: theme.textTheme.titleMedium?.copyWith(
-                    color: tile.isRed ? colors.vermillionText : null,
-                  ),
+      duration: AppTokens.duration,
+      curve: AppTokens.curve,
+      transform: state == .selected
+          ? Matrix4.translationValues(0, -AppTokens.tileLift, 0)
+          : Matrix4.identity(),
+      decoration: BoxDecoration(
+        gradient: _gradient(colors),
+        borderRadius: BorderRadius.circular(size.radius),
+        boxShadow: _shadows(theme.colorScheme),
+      ),
+      child: state == .faceDown
+          ? null
+          : Center(
+              child: Text(
+                tile.code,
+                style: theme.textTheme.titleMedium?.copyWith(
+                  color: tile.isRed ? colors.vermillionText : null,
                 ),
               ),
-      ),
+            ),
     );
   }
 
@@ -69,6 +72,9 @@ class TileWidget extends StatelessWidget {
   }
 
   List<BoxShadow> _shadows(ColorScheme scheme) {
+    final base = state == .selected
+        ? AppTokens.shadowTileSelected
+        : AppTokens.shadowTile;
     final ring = switch (state) {
       .normal || .faceDown => null,
       .selected || .correct => BoxShadow(
@@ -85,6 +91,6 @@ class TileWidget extends StatelessWidget {
       ),
     };
 
-    return [...AppTokens.shadowTile, ?ring];
+    return [...base, ?ring];
   }
 }

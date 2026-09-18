@@ -44,9 +44,14 @@ scheme's `primary`/`error`; widths and halo alpha in `AppTokens`
 (`ringWidth`, `haloWidth`, `haloAlpha`); verified in the gallery, dark mode.
 Two dark-mode issues noted on Task 8 in `.tasks.json` (placeholder text
 invisible on ivory face; correct/incorrect tints drift in dark, handoff says
-the tile does not change). **Remaining order: 6, 7, 8, 9**, each checked in
-the gallery against `design/handoff/screenshots/06-08*`. Tasks 1-5 and 10
-committed through `6d9151d` except Task 5, uncommitted at handover.
+the tile does not change). **Task 6 done 2026-09-18**: `SizedBox` +
+`DecoratedBox` replaced by one `AnimatedContainer` (`AppTokens.duration`/
+`curve`); selected = `Matrix4.translationValues(0, -tileLift, 0)` +
+`shadowTileSelected` (0 10 18 ink 16 %, replaces the base shadow). Lift
+verified in the gallery; the 250 ms tween itself is Task 9's widget test.
+**Remaining order: 7, 8, 9**, each checked in the gallery against
+`design/handoff/screenshots/06-08*`. Tasks 1-5 and 10 committed; Task 6
+uncommitted at handover.
 
 **After the tile: Milestone 1 lesson slice** (plan to write when started,
 `docs/plans/<date>-lesson-slice.md`). Order, from the setup plan: lesson
