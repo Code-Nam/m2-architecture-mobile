@@ -29,7 +29,10 @@ The design handoff (`design/handoff/`) ships 36 reference captures at
   feedback: Lire les tuiles, Les briques d'une main, La table, Le déroulé
   d'une partie, Gagner, Le score.
 - **Yaku Dex** — a browsable catalog of scoring hands (yaku), served from a
-  hosted JSON REST API.
+  hosted JSON REST API. No public API for Riichi yaku exists, so the catalog
+  is authored by hand and hosted as a static JSON file; the app fetches it
+  over HTTP like any other REST endpoint (base URL injected, never
+  hard-coded).
 - **Tile scanner** — point the camera at a tile for a single-shot photo, and
   see the matching tile card.
 - **Account and progress sync** — email/password or Google sign-in, with
