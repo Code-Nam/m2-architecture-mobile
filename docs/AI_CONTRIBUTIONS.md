@@ -80,6 +80,24 @@ Rules:
 | `lib/app/home_screen.dart` | file (marker pending, as above) | 2026-09-17 | Project tooling and setup so study time goes to Flutter code. |
 | `lib/shared/theme/app_colors.dart` | blocks: _Palette consts; AppColors fields + light/dark instances (schemes are author-written) | 2026-09-17 | Tedious data entry, no Flutter concept to learn. |
 | `lib/shared/theme/app_theme.dart` | block: _textTheme (theme builders are author-written) | 2026-09-17 | Tedious data entry, no Flutter concept to learn. |
+| `.vscode/launch.json` | file (no marker) | 2026-09-18 | Editor launch config, no Flutter concept to learn. |
+| `test/shared/models/tile_test.dart` | file | 2026-09-18 | Test scaffolding is tedious and teaches no Flutter concept; the widget under test is author-written. |
+| `test/shared/widgets/tile_state_test.dart` | file | 2026-09-18 | Test scaffolding is tedious and teaches no Flutter concept; the widget under test is author-written. |
+| `test/shared/widgets/tile_size_test.dart` | file | 2026-09-18 | Test scaffolding is tedious and teaches no Flutter concept; the widget under test is author-written. |
+| `test/shared/widgets/tile_widget_test.dart` | file | 2026-09-18 | Test scaffolding is tedious and teaches no Flutter concept; the widget under test is author-written. |
+| `test/shared/widgets/tile_widget_golden_test.dart` | file | 2026-09-18 | Test scaffolding is tedious and teaches no Flutter concept; the widget under test is author-written. |
+| `test/shared/widgets/goldens/tile_regular_correct_dark.png` | file (no marker; golden from `flutter test --update-goldens`) | 2026-09-18 | Test scaffolding is tedious and teaches no Flutter concept; the widget under test is author-written. |
+| `test/shared/widgets/goldens/tile_regular_correct_light.png` | file (no marker; golden from `flutter test --update-goldens`) | 2026-09-18 | Test scaffolding is tedious and teaches no Flutter concept; the widget under test is author-written. |
+| `test/shared/widgets/goldens/tile_regular_faceDown_dark.png` | file (no marker; golden from `flutter test --update-goldens`) | 2026-09-18 | Test scaffolding is tedious and teaches no Flutter concept; the widget under test is author-written. |
+| `test/shared/widgets/goldens/tile_regular_faceDown_light.png` | file (no marker; golden from `flutter test --update-goldens`) | 2026-09-18 | Test scaffolding is tedious and teaches no Flutter concept; the widget under test is author-written. |
+| `test/shared/widgets/goldens/tile_regular_highlighted_dark.png` | file (no marker; golden from `flutter test --update-goldens`) | 2026-09-18 | Test scaffolding is tedious and teaches no Flutter concept; the widget under test is author-written. |
+| `test/shared/widgets/goldens/tile_regular_highlighted_light.png` | file (no marker; golden from `flutter test --update-goldens`) | 2026-09-18 | Test scaffolding is tedious and teaches no Flutter concept; the widget under test is author-written. |
+| `test/shared/widgets/goldens/tile_regular_incorrect_dark.png` | file (no marker; golden from `flutter test --update-goldens`) | 2026-09-18 | Test scaffolding is tedious and teaches no Flutter concept; the widget under test is author-written. |
+| `test/shared/widgets/goldens/tile_regular_incorrect_light.png` | file (no marker; golden from `flutter test --update-goldens`) | 2026-09-18 | Test scaffolding is tedious and teaches no Flutter concept; the widget under test is author-written. |
+| `test/shared/widgets/goldens/tile_regular_normal_dark.png` | file (no marker; golden from `flutter test --update-goldens`) | 2026-09-18 | Test scaffolding is tedious and teaches no Flutter concept; the widget under test is author-written. |
+| `test/shared/widgets/goldens/tile_regular_normal_light.png` | file (no marker; golden from `flutter test --update-goldens`) | 2026-09-18 | Test scaffolding is tedious and teaches no Flutter concept; the widget under test is author-written. |
+| `test/shared/widgets/goldens/tile_regular_selected_dark.png` | file (no marker; golden from `flutter test --update-goldens`) | 2026-09-18 | Test scaffolding is tedious and teaches no Flutter concept; the widget under test is author-written. |
+| `test/shared/widgets/goldens/tile_regular_selected_light.png` | file (no marker; golden from `flutter test --update-goldens`) | 2026-09-18 | Test scaffolding is tedious and teaches no Flutter concept; the widget under test is author-written. |
 
 Not listed: `design/handoff/` (designer's export, not code), `assets/fonts/`
 (third-party fonts under OFL), generated `*.g.dart` / `*.freezed.dart`

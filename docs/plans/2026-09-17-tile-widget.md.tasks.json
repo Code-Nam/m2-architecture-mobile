@@ -72,7 +72,7 @@
     {
       "id": 9,
       "subject": "Task 9: Tests (test-writer agent)",
-      "status": "pending",
+      "status": "completed",
       "blockedBy": [
         7,
         8
@@ -89,5 +89,5 @@
       "description": "**Goal:** `/gallery` route rendering all states x sizes in a grid for screenshot comparison against `design/handoff/screenshots/`. Debug-only, cheap.\n**Acceptance:** route opens, every state visible side by side.\n**Verify:** `flutter run` then navigate\n```json:metadata\n{\"verifyCommand\": \"flutter analyze\", \"acceptanceCriteria\": [\"see description\"], \"modelTier\": \"standard\"}\n```"
     }
   ],
-  "lastUpdated": "2026-09-18T12:20:04.041777+00:00"
+  "lastUpdated": "2026-09-18T12:31:13.288893+00:00"
 }

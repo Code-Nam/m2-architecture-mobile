@@ -27,7 +27,7 @@ tokens, text theme, `ThemeData` wired) — committed `62d8664`.
 `home_screen`). Shared code lives under `lib/shared/` (`theme/`, `models/`,
 `widgets/`; committed `bc7e02d`). Subfolder names are the user's.
 
-**In progress: tile model + `TileWidget`.** Plan and task state:
+**Done: tile model + `TileWidget`** (2026-09-18). Plan and task state:
 [docs/plans/2026-09-17-tile-widget.md](plans/2026-09-17-tile-widget.md) +
 `.tasks.json`. Rebuild the task list from those files. Tasks 1-4 done
 (`lib/shared/models/tile.dart`, `lib/shared/widgets/{tile_state,tile_size,tile_widget}.dart`;
@@ -62,9 +62,13 @@ fixes with it: `AppColors.tileInk` (ink in both modes) for the symbol;
 `darkColors.successTint` now the light value so the tile does not change in
 dark (`successTintDark` removed). Both modes checked in the gallery against
 the handoff. Known deviation, not fixed: handoff wants a stronger drop shadow
-in dark; `AppTokens` shadows are mode-independent. **Remaining: 9** (tests,
-test-writer agent). Tasks 1-7 and 10 committed; Task 8 uncommitted at
-handover.
+in dark; `AppTokens` shadows are mode-independent. **Task 9 done 2026-09-18**
+(test-writer agent): 44 tests under `test/shared/{models,widgets}/`, 12 goldens
+(6 states x light/dark, regular size, `5pr`) in `test/shared/widgets/goldens/`.
+Fonts do not load under `flutter test`, so goldens lock geometry and colour,
+not glyphs; a `test/flutter_test_config.dart` loading the bundled TTFs would
+fix that later. **Tile plan complete.** Tasks 1-8 and 10 committed; Task 9
+files uncommitted at handover.
 
 **After the tile: Milestone 1 lesson slice** (plan to write when started,
 `docs/plans/<date>-lesson-slice.md`). Order, from the setup plan: lesson
