@@ -1,0 +1,95 @@
+{
+  "planPath": "docs/plans/2026-09-18-lesson-slice.md",
+  "tasks": [
+    {
+      "id": 1,
+      "subject": "Task 1: Lesson domain (freezed)",
+      "status": "pending",
+      "blockedBy": [],
+      "description": "**Files:** user's layout, see plan 'Folder decision'\n**Goal:** Three value types. `LessonBlock` as `@Freezed(unionKey: 'type') sealed class` with four `const factory` variants: `explanation({required String tile, required String title, required String body})` → `ExplanationBlock`, `quiz({required String question, required List<String> hand, required List<String> options, required int correctIndex, required String feedback})` → `QuizBlock`, `drill()` → `DrillBlock`, `interactive()` → `InteractiveBlock`; `fromJson`. `Lesson({required String id, required String title, required int xp, required List<LessonBlock> blocks})` and `Unit({required String id, required String title, required List<Lesson> lessons})`, both `abstract class` + `const factory` + `fromJson`. Tiles stay strings in the model (`Tile.parse` happens in the widget), so content errors surface at render, not at load; `Tile` is not JSON-serialisable today and this keeps the domain free of the widget layer.\n**Read:** CLAUDE.md freezed row; `~/.pub-cache/hosted/pub.dev/freezed_annotation-3.1.0/lib/freezed_annotation.dart` lines 282–330 (`unionKey`, `unionValueCase`; default value case is the constructor name, so `\"type\": \"explanation\"` needs no extra option).\n**Acceptance Criteria:** `dart run build_runner build -d` emits `lesson_block.freezed.dart` + `.g.dart` and the same for `lesson`, `unit`; `LessonBlock.fromJson({'type': 'quiz', …})` returns a `QuizBlock`; a `switch (block)` over the four variants compiles with no `default`.\n**Verify:** `dart run build_runner build -d && flutter analyze`\n```json:metadata\n{\"verifyCommand\": \"dart run build_runner build -d && flutter analyze\", \"acceptanceCriteria\": [\"see description\"], \"modelTier\": \"standard\", \"owner\": \"user (Claude tutors/reviews)\"}\n```"
+    },
+    {
+      "id": 2,
+      "subject": "Task 2: Authored unit 1 asset",
+      "status": "pending",
+      "blockedBy": [],
+      "description": "**Files:** user's layout, see plan 'Folder decision'\n**Goal:** `assets/lessons/unit_01_lire_les_tuiles.json` following the schema above: unit `unit_01` « Lire les tuiles » with **two** lessons so the unlock rule is observable. Lesson 1 = explanation (tile `5p`), quiz (13-tile hand, 4 options, feedback line), explanation. Lesson 2 = explanation, quiz. Pull the exact French strings from the handoff HTML (`design/handoff/Tenpai - Écrans.dc.html`, screens 6–8) where they exist; write short ones otherwise. Also author the other five units with `\"lessons\": []` (titles from handoff screen 5) so the path shows six nodes. Declare `assets/lessons/` in `pubspec.yaml` under `flutter: assets:`.\n**Read:** `flutter/packages/flutter/lib/src/services/asset_bundle.dart` (`rootBundle.loadString`); pubspec `assets:` takes a directory with trailing `/`.\n**Acceptance Criteria:** `python3 -m json.tool assets/lessons/*.json` succeeds; every `hand` has 13 codes; every `options` has 4; `flutter pub get` picks up the assets.\n**Verify:** `flutter pub get && flutter analyze`\n```json:metadata\n{\"verifyCommand\": \"flutter pub get && flutter analyze\", \"acceptanceCriteria\": [\"see description\"], \"modelTier\": \"standard\", \"owner\": \"user (Claude tutors/reviews)\"}\n```"
+    },
+    {
+      "id": 3,
+      "subject": "Task 3: LessonRepository + asset source + impl",
+      "status": "pending",
+      "blockedBy": [
+        1,
+        2
+      ],
+      "description": "**Files:** user's layout, see plan 'Folder decision'\n**Goal:** `abstract interface class LessonRepository { Future<List<Unit>> units(); Future<Lesson> lessonById(String id); }`. `LessonAssetSource` (constructor takes an `AssetBundle`, defaulting to `rootBundle`, so tests inject a fake) exposes `Future<List<Map<String, Object?>>> loadUnits()` reading a fixed list of asset paths (one const list in the source; no directory listing on device). `LessonRepositoryImpl(this._source)` maps JSON → `Unit.fromJson`, caches the list after first load, `lessonById` throws `ArgumentError` for an unknown id. Nothing else is public.\n**Read:** `dart:convert` `jsonDecode`; `AssetBundle.loadString` in the file above; CLAUDE.md §4 privacy rules (`this._source`).\n**Acceptance Criteria:** a throwaway `main()` or test prints six unit titles and lesson 1's block count = 3; `check_conventions` reports no new public-unused symbol besides what Task 5 will consume.\n**Verify:** `flutter analyze && dart run tool/check_conventions.dart`\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && dart run tool/check_conventions.dart\", \"acceptanceCriteria\": [\"see description\"], \"modelTier\": \"standard\", \"owner\": \"user (Claude tutors/reviews)\"}\n```"
+    },
+    {
+      "id": 4,
+      "subject": "Task 4: ProgressRepository + UserProgress + in-memory impl",
+      "status": "pending",
+      "blockedBy": [
+        1
+      ],
+      "description": "**Files:** user's layout, see plan 'Folder decision'\n**Goal:** `UserProgress({required Set<String> completedLessonIds, required int xp})` freezed, with `bool isCompleted(String lessonId)`. `abstract interface class ProgressRepository { Future<UserProgress> load(); Future<UserProgress> completeLesson(Lesson lesson); }` — takes the `Lesson` so XP comes from the data. `InMemoryProgressRepository` holds one `UserProgress` field, starts empty, is idempotent (completing twice adds XP once). **Unlock rule as one pure top-level function** in the same file as `UserProgress`: `LessonStatus statusOf(Unit unit, int lessonIndex, UserProgress progress)` with `enum LessonStatus { completed, current, locked }` — lesson `i` is `completed` if in the set, `current` if `i == 0` or lesson `i-1` is completed, else `locked`. Unit-level: a unit is playable only if the previous unit's last lesson is completed and it has lessons. This is the whole \"engine\" M1 allows; keep it a function so tests hit it directly.\n**Read:** CLAUDE.md §3 \"Progress is Firestore's…\" (M4 swaps this impl; the interface must not leak in-memory details).\n**Acceptance Criteria:** `completeLesson` on a fresh repo returns `xp == lesson.xp`; second call same lesson leaves XP unchanged; `statusOf` on lesson 2 flips locked → current once lesson 1 is completed.\n**Verify:** `dart run build_runner build -d && flutter analyze`\n```json:metadata\n{\"verifyCommand\": \"dart run build_runner build -d && flutter analyze\", \"acceptanceCriteria\": [\"see description\"], \"modelTier\": \"standard\", \"owner\": \"user (Claude tutors/reviews)\"}\n```"
+    },
+    {
+      "id": 5,
+      "subject": "Task 5: Providers",
+      "status": "pending",
+      "blockedBy": [
+        3,
+        4
+      ],
+      "description": "**Files:** user's layout, see plan 'Folder decision'\n**Goal:** One `lesson_providers.dart` (or split per your layout, all `*_providers.dart`): `lessonRepositoryProvider = Provider<LessonRepository>((ref) => LessonRepositoryImpl(LessonAssetSource()))`; `progressRepositoryProvider = Provider<ProgressRepository>((_) => InMemoryProgressRepository())`; `unitsProvider = FutureProvider<List<Unit>>((ref) => ref.watch(lessonRepositoryProvider).units())`; `lessonProvider = FutureProvider.family<Lesson, String>((ref, id) => …lessonById(id))`; `userProgressProvider = AsyncNotifierProvider<UserProgressNotifier, UserProgress>(UserProgressNotifier.new)` whose `build()` returns `repository.load()` and whose `Future<void> completeLesson(Lesson lesson)` sets `state = AsyncData(await repo.completeLesson(lesson))`; `currentLessonProvider = NotifierProvider.family<LessonSessionNotifier, LessonSession, String>(LessonSessionNotifier.new)` with `LessonSession({required int blockIndex, int? selectedOption, required bool isAnswered})` freezed, notifier methods `select(int)`, `check()`, `next()` (increments `blockIndex`, resets selection). The screen, not the notifier, decides \"last block reached\". Provider names say what they expose; class names may end in `Notifier`.\n**Read:** `~/.pub-cache/hosted/pub.dev/riverpod-3.4.3/lib/src/providers/notifier/orphan.dart` (`Notifier<T>.build()`), `async_notifier/orphan.dart`, `builder.dart` lines 498, 669, 819 (family builders: `NotifierT Function(ArgT arg) create` — the notifier gets the id in its **constructor**, there is no `FamilyNotifier` in Riverpod 3); CLAUDE.md riverpod row (no `legacy.dart`, `isAutoDispose:`).\n**Acceptance Criteria:** `flutter analyze` clean with riverpod_lint on; `ProviderContainer.test(overrides: [lessonRepositoryProvider.overrideWithValue(fake)])` resolves `unitsProvider` to the fake's units (Task 9 writes it; you can run it as a throwaway).\n**Verify:** `flutter analyze && dart run tool/check_conventions.dart`\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && dart run tool/check_conventions.dart\", \"acceptanceCriteria\": [\"see description\"], \"modelTier\": \"standard\", \"owner\": \"user (Claude tutors/reviews)\"}\n```"
+    },
+    {
+      "id": 6,
+      "subject": "Task 6: Router shell with four tabs + `/lesson/:id`",
+      "status": "pending",
+      "blockedBy": [],
+      "description": "**Files:** user's layout, see plan 'Folder decision'\n**Goal:** `router.dart` becomes `StatefulShellRoute.indexedStack(branches: [...4], builder: (context, state, shell) => _ShellScaffold(shell))` with branches `/apprendre` (→ `LessonPathScreen`, Task 7), `/yakus`, `/scanner`, `/profil` (three placeholder screens showing their title; put them where deleting them touches nothing else). `_ShellScaffold` = `Scaffold(body: shell, bottomNavigationBar: NavigationBar(selectedIndex: shell.currentIndex, onDestinationSelected: shell.goBranch, destinations: [...]))` with labels « Apprendre », « Yakus », « Scanner », « Profil » and Material icons (final icons pending from designer). `/lesson/:id` is a **top-level** `GoRoute` (outside the shell, so no tab bar, full-screen with its own close ×), `builder: (_, state) => LessonScreen(lessonId: state.pathParameters['id']!)`. `initialLocation: '/apprendre'`. Delete `HomeScreen` and `AppRoutes.home`; keep `/gallery` and move its debug button to the Profil placeholder under `kDebugMode`. `AppRoutes` gets `lesson(String id) => '/lesson/$id'`.\n**Read:** `~/.pub-cache/hosted/pub.dev/go_router-18.0.1/lib/src/route.dart` lines 848 (usage example), 931 (`indexedStack` params), 1123 (`StatefulShellBranch`), 1254 (`goBranch`); CLAUDE.md go_router row (`context.go/push`, ids in the path, never `extra`).\n**Acceptance Criteria:** app boots on the Apprendre tab; switching tabs preserves each branch's state; `context.push(AppRoutes.lesson('unit_01_lesson_01'))` opens a screen without the tab bar; back returns to the tab.\n**Verify:** `flutter analyze && flutter run`\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && flutter run\", \"acceptanceCriteria\": [\"see description\"], \"modelTier\": \"standard\", \"owner\": \"user (Claude tutors/reviews)\"}\n```"
+    },
+    {
+      "id": 7,
+      "subject": "Task 7: LessonPathScreen",
+      "status": "pending",
+      "blockedBy": [
+        5,
+        6
+      ],
+      "description": "**Files:** user's layout, see plan 'Folder decision'\n**Goal:** Handoff screen 5. Header row: streak (vermillion, shows `0` and a placeholder icon until M4), XP from `userProgressProvider`, settings icon (no action yet). Body: `ListView` of units **bottom-up** (`reverse: true`), each unit = title + its lessons as `_PathNode` circles: `completed` (bamboo fill + `Icons.check`), `current` (larger, ring, `\"3/6\"`-style counter = completed/total in the unit), `locked` (grey + `Icons.lock`). Status comes from `statusOf` (Task 4) and `unitsProvider` + `userProgressProvider`, pattern-matched on `AsyncData/AsyncLoading/AsyncError` (no generic spinner: loading = nothing or skeleton nodes; error = one line + retry that `ref.invalidate(unitsProvider)`). Tapping a `current` or `completed` node → `context.push(AppRoutes.lesson(lesson.id))`; locked does nothing. Colours and sizes from `AppColors` / `AppTokens` only; add tokens if a value is missing rather than writing a literal.\n**Read:** handoff README screen 5 and `05-apprendre-parcours*.png`; CLAUDE.md §5 (`ref.watch` in build, `ref.read` in callbacks); `AppColors` fields (`bambooDeep`, `iconInactive`, `track`, `vermillionText`…).\n**Acceptance Criteria:** with fresh progress, unit 1 lesson 1 is `current`, lesson 2 and units 2–6 are `locked`; screenshot side by side with `05-apprendre-parcours.png` in both modes (`adb exec-out screencap -p > /tmp/path.png`).\n**Verify:** `flutter analyze && dart run tool/check_conventions.dart`, then visual\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && dart run tool/check_conventions.dart\", \"acceptanceCriteria\": [\"see description\"], \"modelTier\": \"standard\", \"owner\": \"user (Claude tutors/reviews)\"}\n```"
+    },
+    {
+      "id": 8,
+      "subject": "Task 8: LessonScreen + block renderer + quiz feedback",
+      "status": "pending",
+      "blockedBy": [
+        5,
+        6
+      ],
+      "description": "**Files:** user's layout, see plan 'Folder decision'\n**Goal:** Handoff screens 6–8. `LessonScreen(lessonId:)` watches `lessonProvider(lessonId)` and `currentLessonProvider(lessonId)`. Top: thin progress bar (6 px, `track` / bamboo fill, `AppTokens.radiusProgress`, value = `(blockIndex + 1) / blocks.length`) + close × (`context.pop()`). Body = `switch (lesson.blocks[blockIndex])` with **no `default`**: `ExplanationBlock` → `_ExplanationBlockView` (big `TileWidget(Tile.parse(tile), size: TileSize.demo)` centred, title, 2–3 lines body, « Continuer » full width bottom); `QuizBlock` → `_QuizBlockView` (question, `_HandRow` of 13 `TileWidget(size: .small)`, options as a 2×2 grid of cards, tapping selects, « Vérifier » enables when selected, `check()` then a bottom panel slides up (`AnimatedSlide` or `AnimatedPositioned`, `AppTokens.duration/curve`, `radiusSheet` top corners): green « Bien joué ! » + feedback line + green CTA « Continuer », or vermillion « Pas tout à fait » + the correct option named + vermillion CTA; the chosen option card shows `correct` / `incorrect` state colour, the right one `highlighted` on a miss; no « Pourquoi ? » link yet); `DrillBlock` / `InteractiveBlock` → one centred line « Bientôt » + « Continuer ». « Continuer » on the last block: `await ref.read(userProgressProvider.notifier).completeLesson(lesson)` then `context.pop()`. Every string French, verbatim from the handoff. Private helper widgets are `_Underscored` and live in this file unless you decide to share `_HandRow` (then it becomes `HandRowWidget` under your widgets folder).\n**Read:** handoff README screens 6–8, \"Interactions & Behavior\" (feedback panel from the bottom, 24 px top corners, CTA lives in it), screenshots 06–08; `TileWidget`, `TileState`, `TileSize` (yours); `flutter/lib/src/widgets/implicit_animations.dart` (`AnimatedSlide`).\n**Acceptance Criteria:** play lesson 1 end to end on device: 3 blocks, wrong answer shows vermillion panel with the correct answer, right answer shows green panel, last « Continuer » returns to the path where lesson 1 is `completed` and lesson 2 `current`, XP header reads 10; screenshots match 06/07/08 light and dark.\n**Verify:** `flutter analyze && dart run tool/check_conventions.dart`, then visual\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && dart run tool/check_conventions.dart\", \"acceptanceCriteria\": [\"see description\"], \"modelTier\": \"standard\", \"owner\": \"user (Claude tutors/reviews)\"}\n```"
+    },
+    {
+      "id": 9,
+      "subject": "Task 9: Tests (test-writer agent)",
+      "status": "pending",
+      "blockedBy": [
+        7,
+        8
+      ],
+      "description": "**Files:** user's layout, see plan 'Folder decision'\n**Goal:** `test/` mirrors `lib/`: `lesson_block_test.dart` (JSON round-trip for all four variants, unknown `type` throws); `lesson_repository_impl_test.dart` with a hand-written fake `AssetBundle` under `test/fakes/` (six units, unknown id throws); `user_progress_test.dart` (`statusOf` table: fresh / after lesson 1 / after unit 1 complete; XP idempotence); `lesson_providers_test.dart` via `ProviderContainer.test(overrides: [...], retry: (_, _) => null)` with `FakeLessonRepository` and `FakeProgressRepository` under `test/fakes/`; `lesson_path_screen_test.dart` (node statuses, locked tap does nothing); `lesson_screen_test.dart` (select → « Vérifier » → panel text for wrong then right answer; last « Continuer » calls `completeLesson` on the fake). Widget tests wrap in `ProviderScope(overrides:, retry: (_, _) => null)` + material_ui `MaterialApp(theme: lightTheme())`, and pump a `GoRouter` only for the screens that call `context.push/pop`.\n**Read:** CLAUDE.md §5 tests row; existing `test/shared/widgets/tile_widget_test.dart` for the wrapper style.\n**Acceptance Criteria:** `flutter test` green; no mocktail; fakes under `test/fakes/`.\n**Verify:** `flutter test`\n```json:metadata\n{\"verifyCommand\": \"flutter test\", \"acceptanceCriteria\": [\"see description\"], \"modelTier\": \"standard\", \"owner\": \"test-writer agent\"}\n```"
+    },
+    {
+      "id": 10,
+      "subject": "Task 10: Device check + handover",
+      "status": "pending",
+      "blockedBy": [
+        9
+      ],
+      "description": "**Files:** user's layout, see plan 'Folder decision'\n**Goal:** Exit criteria from the setup plan: `flutter analyze` clean, `flutter test` green, `check_conventions` only the known `TenpaiApp` finding, complete a lesson on device, next lesson unlocks, hot restart resets progress (expected, in-memory). Screenshots of 05–08 light + dark compared with the handoff; deviations listed in `docs/ROADMAP.md` like the tile plan did. Update ROADMAP milestone 1 row and \"Next session starts here\" (M2 yaku is next). Flutter-reviewer pass on the whole slice before the last commit.\n**Acceptance Criteria:** ROADMAP + `.tasks.json` say done with the commit hash.\n**Verify:** `flutter analyze && flutter test && dart run tool/check_conventions.dart`\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && flutter test && dart run tool/check_conventions.dart\", \"acceptanceCriteria\": [\"see description\"], \"modelTier\": \"standard\", \"owner\": \"user (Claude tutors/reviews)\"}\n```"
+    }
+  ],
+  "lastUpdated": "2026-09-18T13:01:33.466206+00:00"
+}

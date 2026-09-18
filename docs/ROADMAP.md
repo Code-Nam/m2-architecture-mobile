@@ -51,9 +51,11 @@ Done: Phase 0 (`1d758d4`), theme port (`62d8664`), folder move to
 `.tasks.json`, tasks 1-10 all `completed`). `flutter analyze` clean,
 `flutter test` 44 green, `check_conventions` reports only `TenpaiApp` -> `App`.
 
-**Next: Milestone 1 lesson slice.** First action: write
-`docs/plans/<date>-lesson-slice.md` + `.tasks.json` (Claude drafts, user
-approves), then the user builds it task by task with Claude tutoring. Order,
+**Next: Milestone 1 lesson slice.** Plan drafted 2026-09-18:
+[docs/plans/2026-09-18-lesson-slice.md](plans/2026-09-18-lesson-slice.md) +
+`.tasks.json` (10 tasks, all `pending`), **awaiting the user's approval and
+the feature-folder decision** (plan section "Folder decision"). Then the user
+builds it task by task with Claude tutoring. Order,
 from the setup plan: lesson domain (`Lesson`, `Unit`, `LessonBlock` sealed
 freezed union) -> `LessonRepository` interface + `rootBundle` asset source +
 one authored `assets/lessons/unit_01_*.json` -> `ProgressRepository` interface
@@ -154,7 +156,7 @@ Plan: [docs/plans/2026-09-17-project-setup.md](plans/2026-09-17-project-setup.md
 
 | Milestone | Scope | Status |
 |-----------|-------|--------|
-| 1 — Architecture holds | Tile model + widget, learning vertical slice from JSON asset, in-memory progress, shell routes, tests | in progress: tile model + widget + tests done 2026-09-18 (`b105eb7`); lesson slice next, plan to write |
+| 1 — Architecture holds | Tile model + widget, learning vertical slice from JSON asset, in-memory progress, shell routes, tests | in progress: tile model + widget + tests done 2026-09-18 (`b105eb7`); lesson slice plan drafted 2026-09-18, awaiting approval |
 | 2 — Yaku | dio + REST yaku catalog, Yaku Dex screens | not started |
 | 3 — Scanner | image_picker single shot, fake identifier, scan result card | not started |
 | 4 — Firebase | `firebase_auth` + App Check + Firestore progress (offline persistence on, Security Rules written and tested) replacing the in-memory impl behind the existing repository interfaces; Isar for settings and scan history if not already added | not started |
