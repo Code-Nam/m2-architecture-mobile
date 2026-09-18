@@ -78,8 +78,8 @@ Rules:
 | `lib/app/app.dart` | file (marker pending, as above) | 2026-09-17 | Project tooling and setup so study time goes to Flutter code. |
 | `lib/app/router.dart` | file (marker pending, as above) | 2026-09-17 | Project tooling and setup so study time goes to Flutter code. |
 | `lib/app/home_screen.dart` | file (marker pending, as above) | 2026-09-17 | Project tooling and setup so study time goes to Flutter code. |
-| `lib/app/theme/app_colors.dart` | blocks: _Palette consts; AppColors fields + light/dark instances (schemes are author-written) | 2026-09-17 | Tedious data entry, no Flutter concept to learn. |
-| `lib/app/theme/app_theme.dart` | block: _textTheme (theme builders are author-written) | 2026-09-17 | Tedious data entry, no Flutter concept to learn. |
+| `lib/shared/theme/app_colors.dart` | blocks: _Palette consts; AppColors fields + light/dark instances (schemes are author-written) | 2026-09-17 | Tedious data entry, no Flutter concept to learn. |
+| `lib/shared/theme/app_theme.dart` | block: _textTheme (theme builders are author-written) | 2026-09-17 | Tedious data entry, no Flutter concept to learn. |
 
 Not listed: `design/handoff/` (designer's export, not code), `assets/fonts/`
 (third-party fonts under OFL), generated `*.g.dart` / `*.freezed.dart`

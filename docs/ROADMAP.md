@@ -21,20 +21,26 @@ Status truth for the project. Update this file and the matching
 ## Next session starts here
 
 Phase 0 committed (`1d758d4`). Theme port done 2026-09-17 (light + dark colours,
-tokens, text theme, `ThemeData` wired) — **uncommitted** at handover; the user
-commits. Nothing in flight.
+tokens, text theme, `ThemeData` wired) — committed `62d8664`.
+
+**Folder decision 2026-09-17:** `lib/app/` = shell only (`app`, `router`,
+`home_screen`). Shared code lives under `lib/shared/`; theme moved to
+`lib/shared/theme/` (move uncommitted at handover, analyze clean). Tile model
+and widget go under `lib/shared/` too; subfolder names are the user's.
 
 **Next: tile model + `TileWidget`.** Plan and task state:
 [docs/plans/2026-09-17-tile-widget.md](plans/2026-09-17-tile-widget.md) +
-`.tasks.json`. Rebuild the task list from those files. Before Task 1 the user
-decides the shared-code folder layout (open decision in the plan). First
-question to ask Claude: "how do I write a freezed class?"
+`.tasks.json`. Rebuild the task list from those files. **Task 1 done
+2026-09-17** (`lib/shared/models/tile.dart`, user-written, freezed; red five =
+`r` suffix, `5pr`; acceptance verified by script, uncommitted at handover).
+Next: Tasks 2 + 3 (`TileState`, `TileSize` enums, plain Dart, next to the
+future `TileWidget`), then Task 4.
 
 Small chores, user, non-blocking:
 
 1. `// Why: Tedious data entry, no Flutter concept to learn.` under the two
-   BEGIN markers in `lib/app/theme/app_colors.dart` (register already has it).
-2. `lib/app/theme/app_tokens.dart`: `sideMargin` doc is wrong (it is the 20 px
+   BEGIN markers in `lib/shared/theme/app_colors.dart` (register already has it).
+2. `lib/shared/theme/app_tokens.dart`: `sideMargin` doc is wrong (it is the 20 px
    screen margin); `space2-4` docs say "base unit"; add a comment on the
    literal-hex exception for shadows; `//*` -> `//`.
 3. Phase-0 housekeeping still open: `TenpaiApp` -> `App`, `AppRoutes` ->
@@ -79,7 +85,7 @@ Plan: [docs/plans/2026-09-17-project-setup.md](plans/2026-09-17-project-setup.md
 | Exports dropped into `design/` | done 2026-09-17 (`design/handoff/`) |
 | `design/README.md` inventory + token map | done |
 | Fonts: Outfit 400–700 + IBM Plex Mono 400/500 static TTFs in `assets/fonts/` with OFL licences, declared in pubspec | done 2026-09-17 |
-| Theme tokens (colours light+dark → spacing/radius/shadow → text theme → ThemeData) | done 2026-09-17: `lib/app/theme/{app_colors,app_tokens,app_theme}.dart`, wired in `MaterialApp.router`. Claude via `/implement`: `_Palette`, `AppColors` fields, `_textTheme` (marked). User: schemes, `AppTokens`, `ThemeData` builders. Open nits: Why markers in app_colors, `AppTokens` doc wording |
-| Component port, order in `design/README.md` (Tile first) | tile plan written 2026-09-17: `docs/plans/2026-09-17-tile-widget.md`, 10 tasks, none started |
+| Theme tokens (colours light+dark → spacing/radius/shadow → text theme → ThemeData) | done 2026-09-17: `lib/shared/theme/{app_colors,app_tokens,app_theme}.dart` (moved from `lib/app/theme/` same day), wired in `MaterialApp.router`. Claude via `/implement`: `_Palette`, `AppColors` fields, `_textTheme` (marked). User: schemes, `AppTokens`, `ThemeData` builders. Open nits: Why markers in app_colors, `AppTokens` doc wording |
+| Component port, order in `design/README.md` (Tile first) | tile plan `docs/plans/2026-09-17-tile-widget.md`, 10 tasks; Task 1 (model) done 2026-09-17, 2-10 pending |
 | Debug gallery route | not started |
 | Delete `design/handoff/` once every screen matches its screenshot (keep `design/README.md`) | after port |

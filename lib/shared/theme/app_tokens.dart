@@ -1,5 +1,5 @@
 import 'package:material_ui/material_ui.dart';
-import 'package:tenpai/app/theme/app_colors.dart';
+import 'package:tenpai/shared/theme/app_colors.dart';
 
 /// Mode-independent, so plain consts; colours live in [AppColors]
 abstract final class AppTokens {
