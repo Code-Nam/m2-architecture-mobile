@@ -56,14 +56,16 @@ Status truth for the project. Update this file and the matching
 
 ## Next session starts here
 
-**State on 2026-09-22:** lesson slice Tasks 1-4 done (`lib/shared/models/`
+**State on 2026-09-22:** lesson slice Tasks 1-5 done (`lib/shared/models/`
 lesson domain, `assets/lessons/` content, `lib/learning/lesson_{repository,
-asset_source,repository_impl}.dart`, `lib/progress/{user_progress,
-progress_repository,in_memory_progress_repository}.dart`, tests under
-`test/learning/`, `test/progress/`, `test/fakes/`). Folder layout decided:
-flat feature folders under `lib/` (see Decisions log). Next: Task 5
-(`lib/learning/lesson_providers.dart`) and Task 6 (router shell), independent;
-then Tasks 7-8 screens.
+asset_source,repository_impl,session,providers}.dart`, `lib/progress/
+{user_progress,progress_repository,in_memory_progress_repository,
+progress_providers}.dart`, tests under `test/learning/`, `test/progress/`,
+fakes under `test/fakes/`). Folder layout decided: flat feature folders under
+`lib/` (see Decisions log). Next: Task 6 (router shell, `StatefulShellRoute.
+indexedStack`, `/lesson/:id`), then Tasks 7-8 screens. Known
+`check_conventions` false positive: `UserProgressNotifier` is public only as
+the provider's type argument; tool fix pending.
 
 **Earlier state on 2026-09-18, all committed (`b105eb7`), working tree clean.**
 
@@ -183,7 +185,7 @@ Plan: [docs/plans/2026-09-17-project-setup.md](plans/2026-09-17-project-setup.md
 
 | Milestone | Scope | Status |
 |-----------|-------|--------|
-| 1 — Architecture holds | Tile model + widget, learning vertical slice from JSON asset, in-memory progress, shell routes, tests | in progress: tile model + widget + tests done 2026-09-18 (`b105eb7`); lesson slice plan approved 2026-09-18, Tasks 1-4 (lesson domain, unit 1 asset, `LessonRepository` + asset source + impl in `lib/learning/`, `UserProgress` + `ProgressRepository` + in-memory impl in `lib/progress/`) done 2026-09-22, Tasks 5 (providers) and 6 (router shell) next, independent |
+| 1 — Architecture holds | Tile model + widget, learning vertical slice from JSON asset, in-memory progress, shell routes, tests | in progress: tile model + widget + tests done 2026-09-18 (`b105eb7`); lesson slice plan approved 2026-09-18, Tasks 1-5 (lesson domain, unit 1 asset, `LessonRepository` + asset source + impl in `lib/learning/`, `UserProgress` + `ProgressRepository` + in-memory impl in `lib/progress/`, providers + `LessonSession` in `*_providers.dart`) done 2026-09-22, Task 6 (router shell) next, then 7-8 screens |
 | 2 — Yaku | dio + REST yaku catalog, Yaku Dex screens | not started |
 | 3 — Scanner | image_picker single shot, fake identifier, scan result card | not started |
 | 4 — Firebase | `firebase_auth` + App Check + Firestore progress (offline persistence on, Security Rules written and tested) replacing the in-memory impl behind the existing repository interfaces; Isar for settings and scan history if not already added | not started |
