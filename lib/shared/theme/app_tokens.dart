@@ -138,4 +138,18 @@ abstract final class AppTokens {
 
   /// Height of the bottom shade band; the widget scales both by tile height.
   static const bevelBottomHeight = 4.0;
+
+  //* Path (Apprendre)
+
+  /// Completed and locked node diameter.
+  static const pathNodeSize = 72.0;
+
+  /// Current node diameter, ring included.
+  static const pathNodeSizeCurrent = 96.0;
+
+  /// Progress ring stroke around the current node.
+  static const pathRingWidth = 5.0;
+
+  /// Horizontal zigzag as an `Alignment` x value; sign alternates per unit.
+  static const pathZigzag = 0.3;
 }
