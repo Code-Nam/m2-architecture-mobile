@@ -23,6 +23,7 @@ abstract final class _Palette {
   static const senseiPanel = Color(0xFFF7F2E7);
   static const successTint = Color(0xFFF2F8F4);
   static const successTintDeep = Color(0xFFDFEDE5);
+  static const successPanel = Color(0xFFF2F8F4);
   static const errorPanel = Color(0xFFF8E4E3);
   static const errorTint = Color(0xFFFCF1F0);
   static const errorTintDeep = Color(0xFFF5DFDD);
@@ -47,7 +48,7 @@ abstract final class _Palette {
   static const vermillionTextDark = Color(0xFFE05A56);
   static const senseiPanelDark = Color(0xFF2A2620);
   static const errorPanelDark = Color(0xFF38211F);
-  // static const successTintDark = Color(0xFF1F2E27);
+  static const successPanelDark = Color(0xFF1F2E27);
   static const iconInactiveDark = Color(0xFF4A453C);
 }
 // AI-GENERATED (Claude) END
@@ -101,6 +102,7 @@ final class AppColors extends ThemeExtension<AppColors> {
     required this.trackDeep,
     required this.iconInactive,
     required this.senseiPanel,
+    required this.successPanel,
     required this.successTint,
     required this.successTintDeep,
     required this.errorPanel,
@@ -146,7 +148,11 @@ final class AppColors extends ThemeExtension<AppColors> {
   /// Sensei panel background.
   final Color senseiPanel;
 
-  /// Success panel and correct-tile gradient start.
+  /// Success bottom sheet and the correct option card; dark in dark mode,
+  /// unlike the tile tints below.
+  final Color successPanel;
+
+  /// Correct-tile gradient start; same in both modes, the tile never changes.
   final Color successTint;
 
   /// Correct-tile gradient end.
@@ -197,6 +203,7 @@ final class AppColors extends ThemeExtension<AppColors> {
     Color? trackDeep,
     Color? iconInactive,
     Color? senseiPanel,
+    Color? successPanel,
     Color? successTint,
     Color? successTintDeep,
     Color? errorPanel,
@@ -221,6 +228,7 @@ final class AppColors extends ThemeExtension<AppColors> {
     trackDeep: trackDeep ?? this.trackDeep,
     iconInactive: iconInactive ?? this.iconInactive,
     senseiPanel: senseiPanel ?? this.senseiPanel,
+    successPanel: successPanel ?? this.successPanel,
     successTint: successTint ?? this.successTint,
     successTintDeep: successTintDeep ?? this.successTintDeep,
     errorPanel: errorPanel ?? this.errorPanel,
@@ -250,6 +258,7 @@ final class AppColors extends ThemeExtension<AppColors> {
           trackDeep: Color.lerp(trackDeep, other.trackDeep, t)!,
           iconInactive: Color.lerp(iconInactive, other.iconInactive, t)!,
           senseiPanel: Color.lerp(senseiPanel, other.senseiPanel, t)!,
+          successPanel: Color.lerp(successPanel, other.successPanel, t)!,
           successTint: Color.lerp(successTint, other.successTint, t)!,
           successTintDeep: Color.lerp(
             successTintDeep,
@@ -286,6 +295,7 @@ const lightColors = AppColors(
   trackDeep: _Palette.trackDeep,
   iconInactive: _Palette.iconInactive,
   senseiPanel: _Palette.senseiPanel,
+  successPanel: _Palette.successPanel,
   successTint: _Palette.successTint,
   successTintDeep: _Palette.successTintDeep,
   errorPanel: _Palette.errorPanel,
@@ -313,12 +323,13 @@ const darkColors = AppColors(
   trackDeep: _Palette.trackDeep,
   iconInactive: _Palette.iconInactiveDark,
   senseiPanel: _Palette.senseiPanelDark,
+  successPanel: _Palette.successPanelDark,
   successTint: _Palette.successTint,
   successTintDeep: _Palette.successTintDeep,
   errorPanel: _Palette.errorPanelDark,
   errorTint: _Palette.errorTint,
   errorTintDeep: _Palette.errorTintDeep,
-  errorCard: _Palette.errorCard,
+  errorCard: _Palette.errorPanelDark,
   tileFaceTop: _Palette.tileFaceTop,
   tileFaceBottom: _Palette.tileFaceBottom,
   tileBackTop: _Palette.tileBackTop,

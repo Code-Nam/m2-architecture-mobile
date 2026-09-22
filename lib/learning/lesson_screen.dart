@@ -314,12 +314,12 @@ class _FeedbackSheet extends StatelessWidget {
     final scheme = theme.colorScheme;
     final colors = theme.extension<AppColors>()!;
     final (bg, fg, title, line) = isCorrect
-        ? (colors.successTint, colors.bambooText, 'Bien joué !', feedback)
+        ? (colors.successPanel, colors.bambooText, 'Bien joué !', feedback)
         : (
             colors.errorPanel,
             colors.vermillionText,
             'Pas tout à fait',
-            'La bonne réponse était la tuile entourée de vert',
+            'La bonne réponse était la tuile entourée de vert.',
           );
 
     return DecoratedBox(
@@ -443,7 +443,7 @@ class _OptionCard extends StatelessWidget {
     final scheme = theme.colorScheme;
     final colors = theme.extension<AppColors>()!;
     final (bg, ring) = switch (state) {
-      .correct => (colors.successTint, scheme.primary),
+      .correct => (colors.successPanel, scheme.primary),
       .incorrect => (colors.errorCard, scheme.error),
       .selected || .highlighted => (scheme.surfaceContainer, scheme.primary),
       .normal || .faceDown => (scheme.surfaceContainer, Colors.transparent),

@@ -67,8 +67,15 @@ in_memory_progress_repository,progress_providers}.dart`, tab shell in
 feature folders under `lib/` (see Decisions log). Task 7 done: `lesson_path_screen.dart` renders
 one node per unit (handoff), helpers `unitStatusOf` / `completedCount` /
 `lessonToOpen` in `user_progress.dart`, path tokens in `AppTokens`. The
-`/lesson/:id` route is added with Task 8. Task 8 in progress (started 2026-09-22): `LessonScreen` +
-block renderer + quiz feedback, then Task 9 tests, Task 10 device check.
+`/lesson/:id` route is added with Task 8. Task 8 done (2026-09-23):
+`lib/learning/lesson_screen.dart` (`LessonScreen`, block switch, explanation /
+quiz / soon views, option grid, feedback sheet via `AnimatedSlide`),
+`lib/shared/widgets/retry_widget.dart` (shared `RetryWidget`), tokens
+`progressHeight` / `buttonHeight` / `handGap`, and `AppColors.successPanel`
+(dark sheet colour; `successTint` stays light in both modes because the tile
+gradient uses it). Verified on device light + dark against handoff 06/07/08;
+replay never double-counts XP. Next: Task 9 tests (test-writer), Task 10
+device check + handover.
 Known `check_conventions` false positive: `UserProgressNotifier` is public
 only as the provider's type argument; tool fix pending. Emulator: the netsh
 proxy occupies port 5555, so the emulator binds 5556/5557; the proxy now

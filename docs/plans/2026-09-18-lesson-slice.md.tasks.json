@@ -64,7 +64,7 @@
     {
       "id": 8,
       "subject": "Task 8: LessonScreen + block renderer + quiz feedback",
-      "status": "in_progress",
+      "status": "completed",
       "blockedBy": [
         5,
         6
@@ -91,5 +91,5 @@
       "description": "**Files:** user's layout, see plan 'Folder decision'\n**Goal:** Exit criteria from the setup plan: `flutter analyze` clean, `flutter test` green, `check_conventions` only the known `TenpaiApp` finding, complete a lesson on device, next lesson unlocks, hot restart resets progress (expected, in-memory). Screenshots of 05–08 light + dark compared with the handoff; deviations listed in `docs/ROADMAP.md` like the tile plan did. Update ROADMAP milestone 1 row and \"Next session starts here\" (M2 yaku is next). Flutter-reviewer pass on the whole slice before the last commit.\n**Acceptance Criteria:** ROADMAP + `.tasks.json` say done with the commit hash.\n**Verify:** `flutter analyze && flutter test && dart run tool/check_conventions.dart`\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && flutter test && dart run tool/check_conventions.dart\", \"acceptanceCriteria\": [\"see description\"], \"modelTier\": \"standard\", \"owner\": \"user (Claude tutors/reviews)\"}\n```"
     }
   ],
-  "lastUpdated": "2026-09-22T21:25:01.397821+00:00"
+  "lastUpdated": "2026-09-22T23:37:36.939277+00:00"
 }
