@@ -34,6 +34,17 @@ Status truth for the project. Update this file and the matching
   `flutter create . --platforms=<name>` when a platform is wanted.
 - **2026-09-18 — Lesson domain models live in `lib/shared/models/`** next to
   `tile.dart` (user). Repositories/providers/screens placement still open.
+- **2026-09-22 — Flat feature folders (user).** One folder per feature
+  directly under `lib/` (`lib/learning/`, `lib/progress/`, `lib/yaku/`,
+  `lib/scanner/`, `lib/profile/`), no `features/` wrapper, no layer
+  subfolders while a feature stays under ~10 files (split into `data/` +
+  `ui/` only past that). `lib/app/` stays shell, `lib/shared/` stays
+  cross-feature (models, theme, widgets). Role lives in the file suffix
+  (`_repository`, `_repository_impl`, `_source`, `_providers`, `_screen`),
+  not in a folder name, so `check_conventions` folder-name suffix checks do
+  not fire; file/class match and privacy checks still do. Reason: ~40 Dart
+  files projected at M6, 4–9 per feature; three nesting levels would hold
+  one or two files each.
 - **2026-09-18 — Screens placement.** `lib/app/` is shell only; product
   screens live under a feature folder (depth is the user's); throwaway
   screens sit where they can be deleted without touching anything else.

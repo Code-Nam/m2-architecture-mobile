@@ -21,16 +21,31 @@ computation (needs dates, M4), `drill` / `interactive` block bodies (M6),
 Yaku / Scanner / Profil tab content (M2, M3, M4). They get empty variants or
 placeholder screens only.
 
-## Folder decision (user, 2026-09-18, partial)
+## Folder decision (user, 2026-09-18 / 2026-09-22)
 
-**Decided:** lesson domain models (`lesson.dart`, `unit.dart`,
-`lesson_block.dart`) go in `lib/shared/models/` next to `tile.dart`. Still open:
-where repositories, providers and screens live.
+**Decided 2026-09-18:** lesson domain models (`lesson.dart`, `unit.dart`,
+`lesson_block.dart`) go in `lib/shared/models/` next to `tile.dart`.
 
-Your tree today: `lib/app/` (shell), `lib/shared/{models,theme,widgets}/`.
-This plan needs a **feature folder for learning**; its name and depth are
-yours. Below, `lib/learning/…` stands for whatever you pick. Only two things
-are fixed by the conventions checker (`tool/check_conventions.dart`):
+**Decided 2026-09-22 (flat feature folders):** every feature is one flat
+folder directly under `lib/`, no `features/` wrapper, no layer subfolders
+until a feature passes ~10 files. For this plan:
+
+```
+lib/learning/
+  lesson_repository.dart        # LessonRepository (Task 3)
+  lesson_repository_impl.dart   # LessonRepositoryImpl (Task 3)
+  lesson_asset_source.dart      # LessonAssetSource (Task 3)
+  lesson_providers.dart         # Task 5
+  lesson_path_screen.dart       # Task 7
+  lesson_screen.dart            # Task 8 (+ block widgets as needed)
+lib/progress/                   # Task 4: user_progress.dart,
+                                # progress_repository.dart, *_impl.dart
+```
+
+Role lives in the file suffix, not the folder, so the folder-name suffix
+checks below do not fire; file/class match and privacy checks still apply.
+Below, `lib/learning/…` is now literal. Only two things are fixed by the
+conventions checker (`tool/check_conventions.dart`):
 
 - folder *names* trigger suffix checks: `screens/` → `*_screen.dart` /
   `*Screen`; `repositories/` → `*_repository.dart` (interface) and
