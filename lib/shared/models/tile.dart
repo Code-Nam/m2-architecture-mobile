@@ -22,22 +22,24 @@ enum TileSuit {
   final String letter;
 }
 
-/// A model representing a Mahjong tile with its suit, number, and red tile status.
+/// The one tile model: suit, number, red-five flag. Everything that shows a
+/// tile takes this and hands it to `TileWidget`.
 @freezed
 abstract class Tile with _$Tile {
   const Tile._();
 
-  /// The number of the tile, which must be between 1 and 9 for man, pin, and sou suits, and between 1 and 7 for honor tiles.
+  /// Numbers run 1–9 for suits, 1–7 for honours (four winds, then three
+  /// dragons); the assert enforces it because content is hand-authored.
   @Assert('number >= 1 && number <= (suit == TileSuit.honor ? 7 : 9)')
-  /// Factory constructor for creating a Tile instance.
   const factory Tile({
     required TileSuit suit,
     required int number,
     @Default(false) bool isRed,
   }) = _Tile;
 
-  /// Factory method to parse a string representation of a tile into a Tile object.
-  /// example: "1m" for 1 of man, "9s" for 9 of sou, "5pr" for red 5 of pin
+  /// Parses content codes: `1m`, `9s`, `1z`, `5pr` (trailing `r` = red five).
+  /// No validation beyond the constructor assert; a bad code throws, which is
+  /// the right outcome for authored content.
   factory Tile.parse(String code) {
     final suit = TileSuit.values.firstWhere((s) => s.letter == code[1]);
     return Tile(
@@ -47,6 +49,6 @@ abstract class Tile with _$Tile {
     );
   }
 
-  /// Returns a string representation of the tile in the format "number + suit letter + 'r' if red".
+  /// Inverse of [Tile.parse]; also what the placeholder symbol renders.
   String get code => '$number${suit.letter}${isRed ? 'r' : ''}';
 }

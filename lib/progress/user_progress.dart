@@ -3,30 +3,33 @@ import 'package:tenpai/shared/models/unit.dart';
 
 part 'user_progress.freezed.dart';
 
-/// Represents the progress of a user through the lessons
+/// What the user has achieved: completed lesson ids and total XP.
+///
+/// Immutable; the repository returns a new instance on every change.
 @freezed
 abstract class UserProgress with _$UserProgress {
   const UserProgress._();
 
-  /// Creates a new [UserProgress] with the given [completedLessonIds] and [xp]
+  /// freezed stores [completedLessonIds] unmodifiable; build a new set to
+  /// add to it (see the repository implementations).
   const factory UserProgress({
     required Set<String> completedLessonIds,
     required int xp,
   }) = _UserProgress;
 
-  /// Returns true if the lesson with the given [lessonId] is completed
+  /// Source of truth for [statusOf] and [isUnitPlayable].
   bool isCompleted(String lessonId) => completedLessonIds.contains(lessonId);
 }
 
-/// An enum representing the status of a lesson for a user
+/// How a lesson shows on the path screen.
 enum LessonStatus {
-  /// Completed lessons
+  /// Done; stays replayable.
   completed,
 
-  /// Next playable lesson, not started
+  /// Next playable lesson, not started.
   current,
 
-  /// Locked lessons
+  /// Not reachable until the previous lesson is completed.
   locked,
 }
 

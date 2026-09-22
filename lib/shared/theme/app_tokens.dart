@@ -4,19 +4,19 @@ import 'package:tenpai/shared/theme/app_colors.dart';
 /// Mode-independent, so plain consts; colours live in [AppColors]
 abstract final class AppTokens {
   //* Spacing
-  /// Base unit spacing
+  /// The 8 px base unit; every other spacing is a multiple of it.
   static const space1 = 8.0;
 
-  /// Base unit spacing for small elements.
+  /// 2 units.
   static const space2 = 16.0;
 
-  /// Base unit spacing for medium elements.
+  /// 3 units.
   static const space3 = 24.0;
 
-  /// Base unit spacing for large elements.
+  /// 4 units.
   static const space4 = 32.0;
 
-  /// Base unit spacing for extra large elements.
+  /// Screen edge margin. Off the 8 px grid on purpose: the handoff sets 20.
   static const sideMargin = 20.0;
 
   //* Radius
@@ -38,6 +38,10 @@ abstract final class AppTokens {
   //* Shadows
 
   /// Surface: 0 2 12 ink 6 %.
+  ///
+  /// Shadows are the one place literal hex is allowed: they are the same in
+  /// both modes and `BoxShadow` must be `const`, so they cannot come from
+  /// `AppColors`.
   static const shadowSurface = [
     BoxShadow(offset: Offset(0, 2), blurRadius: 12, color: Color(0x0F1C1A17)),
   ];
@@ -84,10 +88,11 @@ abstract final class AppTokens {
 
   //* Badge
 
-  /// Size of the badge, which is a circle with this diameter
+  /// Badge diameter. One size for every [TileSize]: a known deviation from
+  /// the handoff, accepted until SVG art lands.
   static const badgeSize = 22.0;
 
-  /// Overhang of the badge, which is how much it extends beyond the corner of the tile
+  /// How far the badge sticks out past the tile's top-right corner.
   static const badgeOverhang = 9.0;
 
   /// Shadow of the badge has 0 2 6 ink 20 %
@@ -100,35 +105,37 @@ abstract final class AppTokens {
 
   //* Tile bevel and back
 
-  /// color of the tile back frame, which is a semi-transparent white overlay on the tile back
+  /// Stroke of the inner frame on a face-down tile: translucent white over
+  /// the green back gradient.
   static const backFrame = Color(0x2EFFFFFF);
 
-  /// Width of the tile back frame
+  /// Stroke width of that frame.
   static const backFrameWidth = 1.5;
 
-  /// factor of the back tile radius
+  /// Frame corner radius as a fraction of the tile radius.
   static const backFrameRadiusFactor = 0.6;
 
-  /// factor of the back tile width
+  /// Frame width as a fraction of tile width (30 of 64 in the handoff).
   static const backFrameWidthFactor = 30 / 64;
 
-  /// factor of the back tile height
+  /// Frame height as a fraction of tile height (44 of 88 in the handoff).
   static const backFrameHeightFactor = 44 / 88;
 
   //* Bevel
 
-  /// Color of the top bevel
+  /// Top edge highlight of a face-up tile, drawn as a foreground gradient.
   static const bevelTop = Color(0xF2FFFFFF);
 
-  /// Color of the bottom bevel
+  /// Bottom edge shade of a face-up tile.
   static const bevelBottom = Color(0x171C1A17);
 
-  /// Color of the back highlight
+  /// Top edge highlight of a face-down tile; softer than [bevelTop] because
+  /// the back is dark.
   static const backHighlight = Color(0x2EFFFFFF);
 
-  /// Height of the top bevel
+  /// Height of the top highlight band.
   static const bevelTopHeight = 2.0;
 
-  /// Height of the bottom bevel
+  /// Height of the bottom shade band; the widget scales both by tile height.
   static const bevelBottomHeight = 4.0;
 }

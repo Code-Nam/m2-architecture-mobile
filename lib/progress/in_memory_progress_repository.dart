@@ -2,7 +2,8 @@ import 'package:tenpai/progress/progress_repository.dart';
 import 'package:tenpai/progress/user_progress.dart';
 import 'package:tenpai/shared/models/lesson.dart';
 
-/// An in-memory implementation of [ProgressRepository] until Firestore is implemented
+/// Milestone 1 progress store: lives as long as the app process, nothing is
+/// persisted. Firestore replaces it at milestone 4 behind the same interface.
 class InMemoryProgressRepository implements ProgressRepository {
   UserProgress _progress = const UserProgress(completedLessonIds: {}, xp: 0);
 

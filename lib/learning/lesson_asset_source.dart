@@ -2,9 +2,12 @@ import 'dart:convert';
 
 import 'package:flutter/services.dart';
 
-/// A source of lesson assets
+/// Reads the unit JSON files bundled under `assets/lessons/`.
+///
+/// The paths are a fixed list because Flutter cannot list an asset directory
+/// at runtime; their order is the order of units on the path screen.
 class LessonAssetSource {
-  /// Creates a new [LessonAssetSource] with the given [bundle]
+  /// [bundle] defaults to [rootBundle]; tests pass a fake bundle instead.
   LessonAssetSource({AssetBundle? bundle}) : _bundle = bundle ?? rootBundle;
 
   final AssetBundle _bundle;
@@ -18,7 +21,10 @@ class LessonAssetSource {
     'assets/lessons/unit_06_le_score.json',
   ];
 
-  /// Loads the units from the asset bundle
+  /// One decoded JSON object per unit, in path order.
+  ///
+  /// Throws when an asset is missing or not valid JSON: content is authored,
+  /// so that is a build-time bug, not a runtime state to handle.
   Future<List<Map<String, Object?>>> loadUnits() async => [
     for (final path in _paths)
       jsonDecode(await _bundle.loadString(path)) as Map<String, Object?>,

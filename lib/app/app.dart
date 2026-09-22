@@ -2,9 +2,10 @@ import 'package:material_ui/material_ui.dart';
 import 'package:tenpai/app/router.dart';
 import 'package:tenpai/shared/theme/app_theme.dart';
 
-/// The main entry point for the Tenpai application.
+/// Root widget: wires theme and router. The Riverpod scope sits above it in
+/// `main.dart`, so tests can wrap this widget in their own scope.
 class TenpaiApp extends StatelessWidget {
-  /// Creates the application shell.
+  /// No parameters on purpose: everything it needs comes from providers.
   const TenpaiApp({super.key});
 
   @override

@@ -120,6 +120,20 @@ Rules:
 | `test/fakes/fake_progress_repository.dart` | file | 2026-09-22 | Test scaffolding is tedious and teaches no Flutter concept; the code under test is author-written. |
 | `test/learning/lesson_providers_test.dart` | file | 2026-09-22 | Test scaffolding is tedious and teaches no Flutter concept; the code under test is author-written. |
 | `test/progress/progress_providers_test.dart` | file | 2026-09-22 | Test scaffolding is tedious and teaches no Flutter concept; the code under test is author-written. |
+| `lib/app/app.dart` | dartdoc | 2026-09-22 | Docs are time-consuming for the author; code stays author-written. |
+| `lib/learning/lesson_asset_source.dart` | dartdoc | 2026-09-22 | Docs are time-consuming for the author; code stays author-written. |
+| `lib/learning/lesson_providers.dart` | dartdoc | 2026-09-22 | Docs are time-consuming for the author; code stays author-written. |
+| `lib/learning/lesson_repository.dart` | dartdoc | 2026-09-22 | Docs are time-consuming for the author; code stays author-written. |
+| `lib/learning/lesson_repository_impl.dart` | dartdoc | 2026-09-22 | Docs are time-consuming for the author; code stays author-written. |
+| `lib/learning/lesson_session.dart` | dartdoc | 2026-09-22 | Docs are time-consuming for the author; code stays author-written. |
+| `lib/progress/in_memory_progress_repository.dart` | dartdoc | 2026-09-22 | Docs are time-consuming for the author; code stays author-written. |
+| `lib/progress/progress_providers.dart` | dartdoc | 2026-09-22 | Docs are time-consuming for the author; code stays author-written. |
+| `lib/progress/progress_repository.dart` | dartdoc | 2026-09-22 | Docs are time-consuming for the author; code stays author-written. |
+| `lib/progress/user_progress.dart` | dartdoc | 2026-09-22 | Docs are time-consuming for the author; code stays author-written. |
+| `lib/shared/models/lesson_block.dart` | dartdoc | 2026-09-22 | Docs are time-consuming for the author; code stays author-written. |
+| `lib/shared/models/tile.dart` | dartdoc | 2026-09-22 | Docs are time-consuming for the author; code stays author-written. |
+| `lib/shared/widgets/tile_state.dart` | dartdoc | 2026-09-22 | Docs are time-consuming for the author; code stays author-written. |
+| `lib/shared/theme/app_tokens.dart` | dartdoc | 2026-09-22 | Docs are time-consuming for the author; code stays author-written. |
 
 Not listed: `design/handoff/` (designer's export, not code), `assets/fonts/`
 (third-party fonts under OFL), generated `*.g.dart` / `*.freezed.dart`

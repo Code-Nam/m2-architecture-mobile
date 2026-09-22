@@ -3,13 +3,15 @@ import 'package:tenpai/learning/lesson_repository.dart';
 import 'package:tenpai/shared/models/lesson.dart';
 import 'package:tenpai/shared/models/unit.dart';
 
-/// An implementation of [LessonRepository] that loads lessons from assets
+/// Loads every unit once from [LessonAssetSource], then serves from memory.
 class LessonRepositoryImpl implements LessonRepository {
-  /// Creates a new [LessonRepositoryImpl] with the given [source]
+  /// The source is injected, not built here, so providers own the wiring and
+  /// tests can feed JSON through a fake bundle.
   LessonRepositoryImpl(this._source);
   final LessonAssetSource _source;
 
-  /// cached Future of units so only one asset read even under concurrent calls
+  /// Cached as a `Future`, not a list: concurrent first calls share one
+  /// asset read instead of each starting their own.
   Future<List<Unit>>? _units;
 
   @override

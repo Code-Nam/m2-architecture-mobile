@@ -1,4 +1,6 @@
-/// Enumeration representing the possible states of a tile.
+/// Visual variants of `TileWidget`; the widget maps each to a gradient, a
+/// ring or halo, and an optional badge. Red five is not a state: it comes
+/// from the tile itself.
 enum TileState {
   /// Default state
   normal,
@@ -12,9 +14,9 @@ enum TileState {
   /// Answered wrong
   incorrect,
 
-  /// Highlighted state
+  /// Soft green halo: the tile an explanation is talking about.
   highlighted,
 
-  /// Face down state
+  /// Back shown, symbol hidden.
   faceDown,
 }

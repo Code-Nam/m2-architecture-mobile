@@ -4,24 +4,26 @@ import 'package:tenpai/progress/progress_repository.dart';
 import 'package:tenpai/progress/user_progress.dart';
 import 'package:tenpai/shared/models/lesson.dart';
 
-/// A provider for the [ProgressRepository]
+/// Swap point for the progress store: in memory now, Firestore at milestone
+/// 4, a fake in tests.
 final progressRepositoryProvider = Provider<ProgressRepository>(
   (_) => InMemoryProgressRepository(),
 );
 
-/// The user's progress as an [AsyncValue]
-/// call [UserProgressNotifier.completeLesson] on its notifier
+/// The user's progress, loaded once from the repository. Screens watch it;
+/// the only write path is [UserProgressNotifier.completeLesson].
 final userProgressProvider =
     AsyncNotifierProvider<UserProgressNotifier, UserProgress>(
       UserProgressNotifier.new,
     );
 
-/// A notifier for the [UserProgress]
+/// Owns the loaded progress and is its only writer.
 class UserProgressNotifier extends AsyncNotifier<UserProgress> {
   @override
   Future<UserProgress> build() => ref.watch(progressRepositoryProvider).load();
 
-  /// Marks [lesson] completed, adds its XP once, returns the new progress
+  /// Replaces the state with the repository's answer. Idempotency (XP added
+  /// once per lesson) is the repository's guarantee, not re-checked here.
   Future<void> completeLesson(Lesson lesson) async {
     final repository = ref.read(progressRepositoryProvider);
     state = AsyncData(await repository.completeLesson(lesson));
