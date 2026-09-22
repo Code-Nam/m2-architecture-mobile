@@ -64,8 +64,11 @@ in_memory_progress_repository,progress_providers}.dart`, tab shell in
 `lib/app/router.dart` with placeholders `lib/{yaku,scanner,profile}/
 *_screen.dart`, `home_screen.dart` deleted; tests under `test/learning/`,
 `test/progress/`, fakes under `test/fakes/`). Folder layout decided: flat
-feature folders under `lib/` (see Decisions log). `/lesson/:id` route is
-added with Task 8. Next: Task 7 `LessonPathScreen`, Task 8 `LessonScreen`.
+feature folders under `lib/` (see Decisions log). Task 7 done: `lesson_path_screen.dart` renders
+one node per unit (handoff), helpers `unitStatusOf` / `completedCount` /
+`lessonToOpen` in `user_progress.dart`, path tokens in `AppTokens`. The
+`/lesson/:id` route is added with Task 8. Next: Task 8 `LessonScreen` +
+block renderer + quiz feedback, then Task 9 tests, Task 10 device check.
 Known `check_conventions` false positive: `UserProgressNotifier` is public
 only as the provider's type argument; tool fix pending. Emulator: the netsh
 proxy occupies port 5555, so the emulator binds 5556/5557; the proxy now
@@ -189,7 +192,7 @@ Plan: [docs/plans/2026-09-17-project-setup.md](plans/2026-09-17-project-setup.md
 
 | Milestone | Scope | Status |
 |-----------|-------|--------|
-| 1 — Architecture holds | Tile model + widget, learning vertical slice from JSON asset, in-memory progress, shell routes, tests | in progress: tile model + widget + tests done 2026-09-18 (`b105eb7`); lesson slice plan approved 2026-09-18, Tasks 1-5 (lesson domain, unit 1 asset, `LessonRepository` + asset source + impl in `lib/learning/`, `UserProgress` + `ProgressRepository` + in-memory impl in `lib/progress/`, providers + `LessonSession` in `*_providers.dart`, tab shell + placeholders in `lib/app/router.dart`) done 2026-09-22, Tasks 7-8 (path screen, lesson screen) next |
+| 1 — Architecture holds | Tile model + widget, learning vertical slice from JSON asset, in-memory progress, shell routes, tests | in progress: tile model + widget + tests done 2026-09-18 (`b105eb7`); lesson slice plan approved 2026-09-18, Tasks 1-5 (lesson domain, unit 1 asset, `LessonRepository` + asset source + impl in `lib/learning/`, `UserProgress` + `ProgressRepository` + in-memory impl in `lib/progress/`, providers + `LessonSession` in `*_providers.dart`, tab shell + placeholders in `lib/app/router.dart`, `LessonPathScreen` with one node per unit) done 2026-09-22, Task 8 (`LessonScreen` + `/lesson/:id` route) next |
 | 2 — Yaku | dio + REST yaku catalog, Yaku Dex screens | not started |
 | 3 — Scanner | image_picker single shot, fake identifier, scan result card | not started |
 | 4 — Firebase | `firebase_auth` + App Check + Firestore progress (offline persistence on, Security Rules written and tested) replacing the in-memory impl behind the existing repository interfaces; Isar for settings and scan history if not already added | not started |

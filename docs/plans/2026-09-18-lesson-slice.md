@@ -152,6 +152,11 @@ Blocked by: none (can start any time; screens plug in later)
 
 Blocked by: 5, 6
 
+**Amendment (2026-09-22):** the handoff shows **one node per unit**, not one
+per lesson; built that way. Unit status comes from `unitStatusOf`, the
+counter from `completedCount`, and a tap opens `lessonToOpen(unit, progress)`
+(first `current` lesson, or the first lesson to replay a completed unit).
+
 **Goal:** Handoff screen 5. Header row: streak (vermillion, shows `0` and a placeholder icon until M4), XP from `userProgressProvider`, settings icon (no action yet). Body: `ListView` of units **bottom-up** (`reverse: true`), each unit = title + its lessons as `_PathNode` circles: `completed` (bamboo fill + `Icons.check`), `current` (larger, ring, `"3/6"`-style counter = completed/total in the unit), `locked` (grey + `Icons.lock`). Status comes from `statusOf` (Task 4) and `unitsProvider` + `userProgressProvider`, pattern-matched on `AsyncData/AsyncLoading/AsyncError` (no generic spinner: loading = nothing or skeleton nodes; error = one line + retry that `ref.invalidate(unitsProvider)`). Tapping a `current` or `completed` node → `context.push(AppRoutes.lesson(lesson.id))`; locked does nothing. Colours and sizes from `AppColors` / `AppTokens` only; add tokens if a value is missing rather than writing a literal.
 **Read:** handoff README screen 5 and `05-apprendre-parcours*.png`; CLAUDE.md §5 (`ref.watch` in build, `ref.read` in callbacks); `AppColors` fields (`bambooDeep`, `iconInactive`, `track`, `vermillionText`…).
 **Acceptance:** with fresh progress, unit 1 lesson 1 is `current`, lesson 2 and units 2–6 are `locked`; screenshot side by side with `05-apprendre-parcours.png` in both modes (`adb exec-out screencap -p > /tmp/path.png`).
