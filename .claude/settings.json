@@ -1,4 +1,13 @@
 {
+  "permissions": {
+    "allow": [
+      "Bash(flutter analyze)",
+      "Bash(flutter analyze *)",
+      "Bash(dart run tool/check_conventions.dart)",
+      "Bash(dart format --output=none *)",
+      "Bash(flutter test)"
+    ]
+  },
   "hooks": {
     "UserPromptSubmit": [
       {
