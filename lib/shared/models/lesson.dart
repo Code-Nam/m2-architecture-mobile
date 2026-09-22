@@ -16,4 +16,4 @@ abstract class Lesson with _$Lesson {
 
   /// Reads a lesson from one entry of a unit JSON file.
   factory Lesson.fromJson(Map<String, Object?> json) => _$LessonFromJson(json);
-} 
+}
