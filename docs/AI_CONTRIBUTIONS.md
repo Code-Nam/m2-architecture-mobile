@@ -108,6 +108,8 @@ Rules:
 | `test/shared/widgets/goldens/tile_regular_normal_light.png` | file (no marker; golden from `flutter test --update-goldens`) | 2026-09-18 | Test scaffolding is tedious and teaches no Flutter concept; the widget under test is author-written. |
 | `test/shared/widgets/goldens/tile_regular_selected_dark.png` | file (no marker; golden from `flutter test --update-goldens`) | 2026-09-18 | Test scaffolding is tedious and teaches no Flutter concept; the widget under test is author-written. |
 | `test/shared/widgets/goldens/tile_regular_selected_light.png` | file (no marker; golden from `flutter test --update-goldens`) | 2026-09-18 | Test scaffolding is tedious and teaches no Flutter concept; the widget under test is author-written. |
+| `test/fakes/fake_asset_bundle.dart` | file | 2026-09-22 | Test scaffolding is tedious and teaches no Flutter concept; the code under test is author-written. |
+| `test/learning/lesson_repository_impl_test.dart` | file | 2026-09-22 | Test scaffolding is tedious and teaches no Flutter concept; the code under test is author-written. |
 
 Not listed: `design/handoff/` (designer's export, not code), `assets/fonts/`
 (third-party fonts under OFL), generated `*.g.dart` / `*.freezed.dart`
