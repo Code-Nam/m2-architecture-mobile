@@ -112,6 +112,10 @@ Rules:
 | `test/learning/lesson_repository_impl_test.dart` | file | 2026-09-22 | Test scaffolding is tedious and teaches no Flutter concept; the code under test is author-written. |
 | `test/progress/user_progress_test.dart` | file | 2026-09-22 | Test scaffolding is tedious and teaches no Flutter concept; the code under test is author-written. |
 | `test/progress/in_memory_progress_repository_test.dart` | file | 2026-09-22 | Test scaffolding is tedious and teaches no Flutter concept; the code under test is author-written. |
+| `test/fakes/fake_lesson_repository.dart` | file | 2026-09-22 | Test scaffolding is tedious and teaches no Flutter concept; the code under test is author-written. |
+| `test/fakes/fake_progress_repository.dart` | file | 2026-09-22 | Test scaffolding is tedious and teaches no Flutter concept; the code under test is author-written. |
+| `test/learning/lesson_providers_test.dart` | file | 2026-09-22 | Test scaffolding is tedious and teaches no Flutter concept; the code under test is author-written. |
+| `test/progress/progress_providers_test.dart` | file | 2026-09-22 | Test scaffolding is tedious and teaches no Flutter concept; the code under test is author-written. |
 
 Not listed: `design/handoff/` (designer's export, not code), `assets/fonts/`
 (third-party fonts under OFL), generated `*.g.dart` / `*.freezed.dart`
