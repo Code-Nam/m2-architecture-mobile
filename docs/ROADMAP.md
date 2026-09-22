@@ -74,7 +74,7 @@ quiz / soon views, option grid, feedback sheet via `AnimatedSlide`),
 `progressHeight` / `buttonHeight` / `handGap`, and `AppColors.successPanel`
 (dark sheet colour; `successTint` stays light in both modes because the tile
 gradient uses it). Verified on device light + dark against handoff 06/07/08;
-replay never double-counts XP. Next: Task 9 tests (test-writer), Task 10
+replay never double-counts XP. Task 9 done (2026-09-23): `test/shared/models/lesson_block_test.dart`, `test/learning/lesson_path_screen_test.dart`, `test/learning/lesson_screen_test.dart` (test-writer), 98 tests green. Next: Task 10
 device check + handover.
 Known `check_conventions` false positive: `UserProgressNotifier` is public
 only as the provider's type argument; tool fix pending. Emulator: the netsh

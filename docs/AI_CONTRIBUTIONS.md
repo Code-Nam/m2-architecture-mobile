@@ -139,6 +139,9 @@ Rules:
 | `lib/yaku/yaku_screen.dart` | dartdoc | 2026-09-22 | Docs are time-consuming for the author; code stays author-written. |
 | `lib/app/router.dart` | dartdoc | 2026-09-22 | Docs are time-consuming for the author; code stays author-written. |
 | `lib/learning/lesson_screen.dart` | dartdoc; block-free edit 2026-09-23: two call sites switched to `successPanel` (/implement) | 2026-09-22 | Docs are time-consuming for the author; code stays author-written. |
+| `test/shared/models/lesson_block_test.dart` | file | 2026-09-23 | Test scaffolding is tedious and teaches no Flutter concept; the code under test is author-written. |
+| `test/learning/lesson_path_screen_test.dart` | file | 2026-09-23 | Test scaffolding is tedious and teaches no Flutter concept; the code under test is author-written. |
+| `test/learning/lesson_screen_test.dart` | file | 2026-09-23 | Test scaffolding is tedious and teaches no Flutter concept; the code under test is author-written. |
 | `lib/shared/widgets/retry_widget.dart` | dartdoc | 2026-09-22 | Docs are time-consuming for the author; code stays author-written. |
 
 Not listed: `design/handoff/` (designer's export, not code), `assets/fonts/`
