@@ -49,8 +49,9 @@ app.*.map.json
 
 # AI-GENERATED (Claude) BEGIN — tutor-mode entries
 # Why: Project tooling and setup so study time goes to Flutter code.
-# single-turn grant for lib/ writes, and per-machine Claude permissions
+# single-turn grants for lib/ writes, and per-machine Claude permissions
 .claude/.implement-grant
+.claude/.dartdoc-grant
 .claude/settings.local.json
 # AI-GENERATED (Claude) END
 

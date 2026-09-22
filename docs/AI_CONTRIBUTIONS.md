@@ -40,6 +40,10 @@ Rules:
 - The optional `Why:` line goes directly under the header or BEGIN line.
   Claude asks the author once per task whether why-lines are wanted; it does
   not invent reasons.
+- Dartdoc (`///` lines) that Claude writes during a `review` turn carries no
+  marker: a marker per comment would drown the code. The file gets one row
+  below with scope `dartdoc`, added the first time and never duplicated. The
+  code under those comments stays author-written.
 - Files that cannot hold comments (JSON, binaries) are listed below with
   scope `file (no marker)`.
 - Every file with a header marker must appear in the table below; every path

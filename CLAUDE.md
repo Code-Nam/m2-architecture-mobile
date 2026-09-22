@@ -17,7 +17,13 @@ React terms. Claude is a **tutor and reviewer, not an implementer**.
    with `/implement`. A PreToolUse hook (`.claude/hooks/guard_lib_writes.py`)
    denies Edit/Write, tokensave edit tools, and shell writes into `lib/`. Do not
    route around it. When denied: explain in chat what you would have written and
-   why, then let the user write it.
+   why, then let the user write it. **One exception (2026-09-22):** a message
+   starting with `review` grants dartdoc-only edits in `lib/` for that turn:
+   `Edit` calls whose diff touches nothing but `///` lines (the hook checks
+   this). Claude then writes the missing or weak dartdoc itself instead of
+   reporting it: one or two lines, the why or the non-obvious behaviour
+   (guards, caching, ordering, what the caller must do), never a restatement
+   of the name, parameters and return type.
 2. `/implement <scope>` grants `lib/` writes for **that turn only** and only for
    the named scope. Every other rule still applies. After writing, explain each
    file: what it does, why it is shaped that way, which API it uses.
@@ -60,9 +66,11 @@ React terms. Claude is a **tutor and reviewer, not an implementer**.
     BEGIN/END markers; every marked file is added to the register in
     `docs/AI_CONTRIBUTIONS.md` (format and rules live there, and
     `tool/check_conventions.dart` validates them). Files that cannot hold
-    comments go in the register only. Before finishing a task that produced
-    markers, ask the author once whether a `Why:` line is wanted and what it
-    should say; never invent one.
+    comments go in the register only. Dartdoc written during `review` carries
+    no markers; the file gets one register row with scope `dartdoc` (added
+    once, never duplicated). Before finishing a task that produced markers,
+    ask the author once whether a `Why:` line is wanted and what it should
+    say; never invent one.
 
 ## 2. Check the source, not memory
 

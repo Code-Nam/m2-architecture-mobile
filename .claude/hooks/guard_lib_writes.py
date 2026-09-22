@@ -5,7 +5,9 @@
 
 Denies any tool call that would write under ``lib/`` unless the user granted
 implementation for this turn by starting their prompt with ``/implement``
-(see ``implement_grant.py``). Also confines subagents to their write scope:
+(see ``implement_grant.py``). A prompt starting with ``review`` grants a
+narrower right: ``Edit`` calls under ``lib/`` whose old and new strings differ
+only in ``///`` dartdoc lines. Also confines subagents to their write scope:
 
   test-writer   -> test/**
   doc-reviewer  -> README.md
@@ -24,7 +26,9 @@ import time
 from pathlib import Path
 
 GRANT_FILE = Path(".claude/.implement-grant")
+DARTDOC_GRANT_FILE = Path(".claude/.dartdoc-grant")
 GRANT_TTL_SECONDS = 60 * 60
+DARTDOC_LINE = re.compile(r"^\s*///")
 
 EDIT_TOOLS = {"Edit", "Write", "MultiEdit", "NotebookEdit"}
 TOKENSAVE_EDIT_TOOLS = {
@@ -74,14 +78,43 @@ DENY_AGENT = (
     "Tenpai tutor mode: the {agent} agent may only write under {scope}. Report "
     "what should change and where; do not write it."
 )
+DENY_DARTDOC = (
+    "Tenpai review mode: this turn may only add or rewrite `///` dartdoc lines "
+    "under lib/ with the Edit tool (old_string and new_string must be identical "
+    "once `///` lines are removed). Report any code change as a finding for "
+    "the user instead."
+)
 
 
 def _grant_active() -> bool:
+    return _fresh(GRANT_FILE)
+
+
+def _dartdoc_grant_active() -> bool:
+    return _fresh(DARTDOC_GRANT_FILE)
+
+
+def _fresh(grant: Path) -> bool:
     try:
-        age = time.time() - GRANT_FILE.stat().st_mtime
+        age = time.time() - grant.stat().st_mtime
     except OSError:
         return False
     return age < GRANT_TTL_SECONDS
+
+
+def _without_dartdoc(text: str) -> str:
+    return "\n".join(l for l in text.splitlines() if not DARTDOC_LINE.match(l))
+
+
+def _dartdoc_only(tool: str, tool_input) -> bool:
+    """True when an Edit changes nothing but `///` lines."""
+    if tool != "Edit" or not isinstance(tool_input, dict):
+        return False
+    old = tool_input.get("old_string")
+    new = tool_input.get("new_string")
+    if not isinstance(old, str) or not isinstance(new, str):
+        return False
+    return _without_dartdoc(old) == _without_dartdoc(new)
 
 
 def _relative(path: str, cwd: str) -> str:
@@ -129,7 +162,7 @@ def _deny(reason: str) -> None:
     )
 
 
-def _check_file_tool(targets, agent, cwd):
+def _check_file_tool(tool, tool_input, targets, agent, cwd):
     rels = [r for r in (_relative(t, cwd) for t in targets) if r]
     if agent in AGENT_SCOPES:
         scope = AGENT_SCOPES[agent]
@@ -138,8 +171,13 @@ def _check_file_tool(targets, agent, cwd):
             shown = ", ".join(scope) or "nothing"
             _deny(DENY_AGENT.format(agent=agent, scope=shown) + f" (target: {bad[0]})")
             return
-    if any(r.startswith("lib/") for r in rels) and not _grant_active():
-        _deny(DENY_LIB)
+    if not any(r.startswith("lib/") for r in rels) or _grant_active():
+        return
+    if _dartdoc_grant_active() and agent is None:
+        if not _dartdoc_only(tool, tool_input):
+            _deny(DENY_DARTDOC)
+        return
+    _deny(DENY_LIB)
 
 
 def _check_bash(command: str, agent):
@@ -168,7 +206,7 @@ def main() -> None:
     agent = data.get("agent_type")
 
     if tool in EDIT_TOOLS or tool in TOKENSAVE_EDIT_TOOLS:
-        _check_file_tool(_paths_in(tool_input), agent, cwd)
+        _check_file_tool(tool, tool_input, _paths_in(tool_input), agent, cwd)
     elif tool == "Bash":
         _check_bash(str(tool_input.get("command", "")), agent)
 
