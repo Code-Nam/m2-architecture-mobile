@@ -90,4 +90,72 @@ void main() {
       expect(isUnitPlayable(units, 3, all), isFalse);
     });
   });
+
+  group('unitStatusOf', () {
+    final units = [
+      _unit('u1', ['l1', 'l2']),
+      _unit('u2', ['l3']),
+      _unit('u3', const []),
+    ];
+
+    test('first unit is current on fresh progress, the rest locked', () {
+      expect(unitStatusOf(units, 0, _fresh), LessonStatus.current);
+      expect(unitStatusOf(units, 1, _fresh), LessonStatus.locked);
+      expect(unitStatusOf(units, 2, _fresh), LessonStatus.locked);
+    });
+
+    test('a unit stays current until its last lesson is done', () {
+      const partial = UserProgress(completedLessonIds: {'l1'}, xp: 10);
+
+      expect(unitStatusOf(units, 0, partial), LessonStatus.current);
+      expect(unitStatusOf(units, 1, partial), LessonStatus.locked);
+    });
+
+    test('a finished unit is completed and unlocks the next', () {
+      const done = UserProgress(completedLessonIds: {'l1', 'l2'}, xp: 20);
+
+      expect(unitStatusOf(units, 0, done), LessonStatus.completed);
+      expect(unitStatusOf(units, 1, done), LessonStatus.current);
+    });
+
+    test('an empty unit is locked, never completed', () {
+      const all = UserProgress(completedLessonIds: {'l1', 'l2', 'l3'}, xp: 30);
+
+      expect(unitStatusOf(units, 2, all), LessonStatus.locked);
+    });
+  });
+
+  group('completedCount', () {
+    final unit = _unit('u1', ['l1', 'l2', 'l3']);
+
+    test('counts only this unit\'s completed lessons', () {
+      const progress = UserProgress(
+        completedLessonIds: {'l1', 'l3', 'other'},
+        xp: 30,
+      );
+
+      expect(completedCount(unit, _fresh), 0);
+      expect(completedCount(unit, progress), 2);
+    });
+  });
+
+  group('lessonToOpen', () {
+    final unit = _unit('u1', ['l1', 'l2', 'l3']);
+
+    test('opens the first lesson on fresh progress', () {
+      expect(lessonToOpen(unit, _fresh).id, 'l1');
+    });
+
+    test('opens the first current lesson after some are done', () {
+      const progress = UserProgress(completedLessonIds: {'l1'}, xp: 10);
+
+      expect(lessonToOpen(unit, progress).id, 'l2');
+    });
+
+    test('replays from the first lesson when the unit is completed', () {
+      const done = UserProgress(completedLessonIds: {'l1', 'l2', 'l3'}, xp: 30);
+
+      expect(lessonToOpen(unit, done).id, 'l1');
+    });
+  });
 }
