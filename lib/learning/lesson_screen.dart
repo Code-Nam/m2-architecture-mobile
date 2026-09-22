@@ -222,23 +222,117 @@ class _QuizBlockView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final notifier = ref.read(currentLessonProvider(session.lessonId).notifier);
     final theme = Theme.of(context);
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: AppTokens.sideMargin),
-      child: Column(
-        crossAxisAlignment: .start,
-        children: [
-          Text(block.question, style: theme.textTheme.headlineSmall),
-          const SizedBox(height: AppTokens.space3),
-          _HandRow(hand: block.hand),
-          const SizedBox(height: AppTokens.space3),
-          _OptionGrid(
-            block: block,
-            session: session,
-            onSelect: session.isAnswered ? null : notifier.select,
+    return Stack(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: AppTokens.sideMargin),
+          child: Column(
+            crossAxisAlignment: .start,
+            children: [
+              Text(block.question, style: theme.textTheme.headlineSmall),
+              const SizedBox(height: AppTokens.space3),
+              _HandRow(hand: block.hand),
+              const SizedBox(height: AppTokens.space3),
+              _OptionGrid(
+                block: block,
+                session: session,
+                onSelect: session.isAnswered ? null : notifier.select,
+              ),
+              const Spacer(),
+              SafeArea(
+                top: false,
+                child: _PrimaryButton(
+                  label: 'Vérifier',
+                  onPressed: session.selectedOption == null
+                      ? null
+                      : notifier.check,
+                ),
+              ),
+            ],
           ),
-          const Spacer(),
-          const SafeArea(top: false, child: _PrimaryButton(label: 'Vérifier')),
-        ],
+        ),
+        Positioned(
+          left: 0,
+          right: 0,
+          bottom: 0,
+          child: AnimatedSlide(
+            offset: session.isAnswered ? Offset.zero : const Offset(0, 1),
+            duration: AppTokens.duration,
+            curve: AppTokens.curve,
+            child: _FeedbackSheet(
+              isCorrect: session.selectedOption == block.correctIndex,
+              feedback: block.feedback,
+              onContinue: onContinue,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+/// Bottom sheet of handoff screens 7–8; the « Continuer » CTA lives in it.
+/// Always in the tree, slid off-screen by the parent until the block is
+/// answered, so opening animates instead of popping in. Sized to content
+/// (`mainAxisSize: .min`), never to the screen.
+class _FeedbackSheet extends StatelessWidget {
+  const _FeedbackSheet({
+    required this.isCorrect,
+    required this.feedback,
+    required this.onContinue,
+  });
+  
+  /// Picks tint, title and CTA colour; the parent derives it from the session
+  /// so the sheet never re-checks the answer itself.
+  final bool isCorrect;
+
+  /// The authored line, shown only on a hit; a miss shows the fixed sentence
+  /// pointing at the highlighted card. The « Pourquoi ? » link comes later.
+  final String feedback;
+
+  /// The same callback as the block's own « Continuer »: advances or, on the
+  /// last block, completes the lesson.
+  final VoidCallback onContinue;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final scheme = theme.colorScheme;
+    final colors = theme.extension<AppColors>()!;
+    final (bg, fg, title, line) = isCorrect
+        ? (colors.successTint, colors.bambooText, 'Bien joué !', feedback)
+        : (
+            colors.errorPanel,
+            colors.vermillionText,
+            'Pas tout à fait',
+            'La bonne réponse était la tuile entourée de vert',
+          );
+
+    return DecoratedBox(
+      decoration: BoxDecoration(color: bg, borderRadius: AppTokens.radiusSheet),
+      child: Padding(
+        padding: const EdgeInsets.all(AppTokens.sideMargin),
+        child: SafeArea(
+          top: false,
+          child: Column(
+            mainAxisSize: .min,
+            crossAxisAlignment: .start,
+            children: [
+              Text(
+                title,
+                style: theme.textTheme.titleLarge?.copyWith(color: fg),
+              ),
+              const SizedBox(height: AppTokens.space1),
+              Text(line, style: theme.textTheme.bodyMedium),
+              const SizedBox(height: AppTokens.space2),
+              _PrimaryButton(
+                label: 'Continuer',
+                onPressed: onContinue,
+                color: isCorrect ? null : scheme.error,
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
