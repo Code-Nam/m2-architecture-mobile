@@ -22,6 +22,12 @@ abstract final class AppTokens {
   /// Lesson progress bar height (handoff: 6 px, radius 3 = radiusProgress).
   static const progressHeight = 6.0;
 
+  /// Full-width CTA height (handoff screens 6–8).
+  static const buttonHeight = 56.0;
+
+  /// Gap between hand tiles: 13 × 24 + 12 × 2 = 336 must fit 350 dp.
+  static const handGap = 2.0;
+
   //* Radius
   /// Cards and buttons
   static const radiusCard = BorderRadius.all(Radius.circular(16));

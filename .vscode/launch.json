@@ -6,7 +6,7 @@
       "request": "launch",
       "type": "dart",
       "program": "lib/main.dart",
-      "deviceId": "emulator-5554",
+      "deviceId": "172.29.96.1:5555",
       "flutterMode": "debug"
     },
     {
@@ -14,7 +14,7 @@
       "request": "launch",
       "type": "dart",
       "program": "lib/main.dart",
-      "deviceId": "emulator-5554",
+      "deviceId": "172.29.96.1:5555",
       "flutterMode": "debug",
       "args": ["--route", "/gallery"]
     },
@@ -23,7 +23,7 @@
       "request": "launch",
       "type": "dart",
       "program": "lib/main.dart",
-      "deviceId": "emulator-5554",
+      "deviceId": "172.29.96.1:5555",
       "flutterMode": "profile"
     }
   ]
