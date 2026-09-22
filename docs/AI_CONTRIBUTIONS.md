@@ -91,7 +91,6 @@ Rules:
 | `lib/main.dart` | file (marker pending: lib/ is author-owned, add the header yourself) | 2026-09-17 | Project tooling and setup so study time goes to Flutter code. |
 | `lib/app/app.dart` | file (marker pending, as above) | 2026-09-17 | Project tooling and setup so study time goes to Flutter code. |
 | `lib/app/router.dart` | file (marker pending, as above) | 2026-09-17 | Project tooling and setup so study time goes to Flutter code. |
-| `lib/app/home_screen.dart` | file (marker pending, as above) | 2026-09-17 | Project tooling and setup so study time goes to Flutter code. |
 | `lib/shared/theme/app_colors.dart` | blocks: _Palette consts; AppColors fields + light/dark instances (schemes are author-written) | 2026-09-17 | Tedious data entry, no Flutter concept to learn. |
 | `lib/shared/theme/app_theme.dart` | block: _textTheme (theme builders are author-written) | 2026-09-17 | Tedious data entry, no Flutter concept to learn. |
 | `.vscode/launch.json` | file (no marker) | 2026-09-18 | Editor launch config, no Flutter concept to learn. |
@@ -134,6 +133,11 @@ Rules:
 | `lib/shared/models/tile.dart` | dartdoc | 2026-09-22 | Docs are time-consuming for the author; code stays author-written. |
 | `lib/shared/widgets/tile_state.dart` | dartdoc | 2026-09-22 | Docs are time-consuming for the author; code stays author-written. |
 | `lib/shared/theme/app_tokens.dart` | dartdoc | 2026-09-22 | Docs are time-consuming for the author; code stays author-written. |
+| `lib/learning/lesson_path_screen.dart` | dartdoc | 2026-09-22 | Docs are time-consuming for the author; code stays author-written. |
+| `lib/profile/profile_screen.dart` | dartdoc | 2026-09-22 | Docs are time-consuming for the author; code stays author-written. |
+| `lib/scanner/scanner_screen.dart` | dartdoc | 2026-09-22 | Docs are time-consuming for the author; code stays author-written. |
+| `lib/yaku/yaku_screen.dart` | dartdoc | 2026-09-22 | Docs are time-consuming for the author; code stays author-written. |
+| `lib/app/router.dart` | dartdoc | 2026-09-22 | Docs are time-consuming for the author; code stays author-written. |
 
 Not listed: `design/handoff/` (designer's export, not code), `assets/fonts/`
 (third-party fonts under OFL), generated `*.g.dart` / `*.freezed.dart`
