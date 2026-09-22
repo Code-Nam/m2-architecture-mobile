@@ -128,9 +128,15 @@ persist across reboots):
 
 ```powershell
 & "$env:LOCALAPPDATA\Android\Sdk\platform-tools\adb.exe" devices   # must list emulator-5554
-netsh interface portproxy add v4tov4 listenaddress=0.0.0.0 listenport=5555 connectaddress=127.0.0.1 connectport=5555
+netsh interface portproxy add v4tov4 listenaddress=0.0.0.0 listenport=5555 connectaddress=127.0.0.1 connectport=5557
 New-NetFirewallRule -DisplayName "adb emulator from WSL" -Direction Inbound -Protocol TCP -LocalPort 5555 -Action Allow
 ```
+
+The proxy targets 5557, not 5555: the listener on `0.0.0.0:5555` takes that
+port, so the emulator started afterwards binds console 5556 and adb 5557 (it
+shows as `emulator-5556` in Android Studio). If the rule was created with 5555
+earlier, fix it with `netsh interface portproxy set v4tov4 listenport=5555
+listenaddress=0.0.0.0 connectport=5557 connectaddress=127.0.0.1`.
 
 One-time setup in WSL: Flutter under `~/flutter`, the Android command-line
 tools under `~/Android/Sdk` (`platform-tools`, `platforms;android-36`,
@@ -147,7 +153,12 @@ once and `flutter run` as usual. The device shows up as `<host-ip>:5555`, not
 address can change after a Windows reboot. The first connection triggers an
 "Allow USB debugging?" dialog in the emulator: tick *Always allow* and accept.
 If `flutter devices` lists nothing, the emulator is not booted or
-`emu-connect` has not been run yet.
+`emu-connect` has not been run yet. If `adb devices` in WSL shows the device
+as `offline`, two adb servers are fighting over the emulator: on Windows run
+`adb disconnect` (a stale `connect <host-ip>:5555` entry there dials through
+the proxy into the same emulator), then `emu-connect` again from WSL. Check
+`netstat -an | findstr :555` on Windows to see which ports the emulator
+actually opened.
 
 ### Develop
 
