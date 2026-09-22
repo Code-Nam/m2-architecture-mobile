@@ -10,6 +10,7 @@ import 'package:tenpai/shared/models/tile.dart';
 import 'package:tenpai/shared/theme/app_colors.dart';
 import 'package:tenpai/shared/theme/app_tokens.dart';
 import 'package:tenpai/shared/widgets/retry_widget.dart';
+import 'package:tenpai/shared/widgets/tile_state.dart';
 import 'package:tenpai/shared/widgets/tile_widget.dart';
 
 /// Full-screen lesson player, pushed over the tab shell from the path.
@@ -207,7 +208,7 @@ class _PrimaryButton extends StatelessWidget {
 
 /// Handoff screens 7–8. Reads [session] only; every change goes through the
 /// notifier so the option state and the feedback sheet cannot disagree.
-class _QuizBlockView extends StatelessWidget {
+class _QuizBlockView extends ConsumerWidget {
   const _QuizBlockView({
     required this.block,
     required this.session,
@@ -218,7 +219,8 @@ class _QuizBlockView extends StatelessWidget {
   final VoidCallback onContinue;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final notifier = ref.read(currentLessonProvider(session.lessonId).notifier);
     final theme = Theme.of(context);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: AppTokens.sideMargin),
@@ -229,7 +231,12 @@ class _QuizBlockView extends StatelessWidget {
           const SizedBox(height: AppTokens.space3),
           _HandRow(hand: block.hand),
           const SizedBox(height: AppTokens.space3),
-          const Expanded(child: Placeholder()),
+          _OptionGrid(
+            block: block,
+            session: session,
+            onSelect: session.isAnswered ? null : notifier.select,
+          ),
+          const Spacer(),
           const SafeArea(top: false, child: _PrimaryButton(label: 'Vérifier')),
         ],
       ),
@@ -251,4 +258,104 @@ class _HandRow extends StatelessWidget {
       for (final code in hand) TileWidget(tile: Tile.parse(code), size: .small),
     ],
   );
+}
+
+/// The 2×2 option cards. Riverpod-free: selection goes out through
+/// [onSelect], so this widget can be tested with a plain [LessonSession].
+class _OptionGrid extends StatelessWidget {
+  const _OptionGrid({
+    required this.block,
+    required this.session,
+    this.onSelect,
+  });
+  final QuizBlock block;
+  final LessonSession session;
+
+  /// Null once answered: cards stop reacting to taps.
+  final ValueChanged<int>? onSelect;
+
+  @override
+  Widget build(BuildContext context) => Column(
+    spacing: AppTokens.space2,
+    children: [
+      for (final row in [(0, 1), (2, 3)])
+        Row(
+          spacing: AppTokens.space2,
+          children: [
+            for (final i in [row.$1, row.$2])
+              Expanded(
+                child: _OptionCard(
+                  tile: Tile.parse(block.options[i]),
+                  state: _stateOf(i),
+                  onTap: onSelect == null ? null : () => onSelect!(i),
+                ),
+              ),
+          ],
+        ),
+    ],
+  );
+
+  /// Before checking only the pick shows; after, the pick turns correct or
+  /// incorrect and, on a miss, the right answer is highlighted as well.
+  TileState _stateOf(int i) => switch ((
+    session.isAnswered,
+    session.selectedOption == i,
+    i == block.correctIndex,
+  )) {
+    (false, true, _) => .selected,
+    (true, true, true) => .correct,
+    (true, true, false) => .incorrect,
+    (true, false, true) => .highlighted,
+    _ => .normal,
+  };
+}
+
+/// One option card (handoff screens 7–8). The ring is always drawn,
+/// transparent when idle, so a card never shifts by its width on select.
+class _OptionCard extends StatelessWidget {
+  const _OptionCard({
+    required this.tile,
+    required this.state,
+    required this.onTap,
+  });
+
+  /// The option itself; options are tile codes, never text.
+  final Tile tile;
+
+  /// Shared with the inner [TileWidget]: the card picks tint and ring from
+  /// it, the tile draws its own ring and badge, so both always agree.
+  final TileState state;
+
+  /// Null once the block is answered, so the card stops reacting.
+  final VoidCallback? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final scheme = theme.colorScheme;
+    final colors = theme.extension<AppColors>()!;
+    final (bg, ring) = switch (state) {
+      .correct => (colors.successTint, scheme.primary),
+      .incorrect => (colors.errorCard, scheme.error),
+      .selected || .highlighted => (scheme.surfaceContainer, scheme.primary),
+      .normal || .faceDown => (scheme.surfaceContainer, Colors.transparent),
+    };
+    return GestureDetector(
+      onTap: onTap,
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          color: bg,
+          boxShadow: AppTokens.shadowSurface,
+          borderRadius: AppTokens.radiusCard,
+          border: Border.all(color: ring, width: AppTokens.ringWidth),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(AppTokens.space2),
+          child: Center(
+            child: TileWidget(tile: tile, state: state, size: .option),
+          ),
+        ),
+      ),
+    );
+  }
 }
