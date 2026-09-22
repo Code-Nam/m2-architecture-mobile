@@ -132,9 +132,23 @@ class _SoonBlockView extends StatelessWidget {
   final VoidCallback onContinue;
 
   @override
-  Widget build(BuildContext context) => Center(
-    child: FilledButton(onPressed: onContinue, child: const Text('Continuer')),
-  );
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: AppTokens.sideMargin),
+      child: Column(
+        children: [
+          const Spacer(),
+          Text('Bientôt', style: theme.textTheme.headlineSmall),
+          const Spacer(),
+          SafeArea(
+            top: false,
+            child: _PrimaryButton(label: 'Continuer', onPressed: onContinue),
+          ),
+        ],
+      ),
+    );
+  }
 }
 
 /// Handoff screen 6: two [Spacer]s centre the tile group in the free height
@@ -281,7 +295,7 @@ class _FeedbackSheet extends StatelessWidget {
     required this.feedback,
     required this.onContinue,
   });
-  
+
   /// Picks tint, title and CTA colour; the parent derives it from the session
   /// so the sheet never re-checks the answer itself.
   final bool isCorrect;
