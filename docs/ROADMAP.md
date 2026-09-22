@@ -67,7 +67,7 @@ in_memory_progress_repository,progress_providers}.dart`, tab shell in
 feature folders under `lib/` (see Decisions log). Task 7 done: `lesson_path_screen.dart` renders
 one node per unit (handoff), helpers `unitStatusOf` / `completedCount` /
 `lessonToOpen` in `user_progress.dart`, path tokens in `AppTokens`. The
-`/lesson/:id` route is added with Task 8. Next: Task 8 `LessonScreen` +
+`/lesson/:id` route is added with Task 8. Task 8 in progress (started 2026-09-22): `LessonScreen` +
 block renderer + quiz feedback, then Task 9 tests, Task 10 device check.
 Known `check_conventions` false positive: `UserProgressNotifier` is public
 only as the provider's type argument; tool fix pending. Emulator: the netsh

@@ -138,6 +138,8 @@ Rules:
 | `lib/scanner/scanner_screen.dart` | dartdoc | 2026-09-22 | Docs are time-consuming for the author; code stays author-written. |
 | `lib/yaku/yaku_screen.dart` | dartdoc | 2026-09-22 | Docs are time-consuming for the author; code stays author-written. |
 | `lib/app/router.dart` | dartdoc | 2026-09-22 | Docs are time-consuming for the author; code stays author-written. |
+| `lib/learning/lesson_screen.dart` | dartdoc | 2026-09-22 | Docs are time-consuming for the author; code stays author-written. |
+| `lib/shared/widgets/retry_widget.dart` | dartdoc | 2026-09-22 | Docs are time-consuming for the author; code stays author-written. |
 
 Not listed: `design/handoff/` (designer's export, not code), `assets/fonts/`
 (third-party fonts under OFL), generated `*.g.dart` / `*.freezed.dart`

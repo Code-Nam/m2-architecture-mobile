@@ -9,6 +9,7 @@ import 'package:tenpai/shared/models/tile.dart';
 import 'package:tenpai/shared/models/unit.dart';
 import 'package:tenpai/shared/theme/app_colors.dart';
 import 'package:tenpai/shared/theme/app_tokens.dart';
+import 'package:tenpai/shared/widgets/retry_widget.dart';
 import 'package:tenpai/shared/widgets/tile_widget.dart';
 
 /// Apprendre tab: one node per unit, bottom-up, as in handoff screen 5.
@@ -27,29 +28,14 @@ class LessonPathScreen extends ConsumerWidget {
       body: switch ((units, progress)) {
         (AsyncData(value: final units), AsyncData(value: final progress)) =>
           _Path(units: units, progress: progress),
-        (AsyncError(), _) || (_, AsyncError()) => _Retry(
+        (AsyncError(), _) || (_, AsyncError()) => RetryWidget(
+          message: 'Impossible de charger le parcours',
           onRetry: () => ref.invalidate(unitsProvider),
         ),
         _ => const SizedBox.shrink(),
       },
     );
   }
-}
-
-class _Retry extends StatelessWidget {
-  const _Retry({required this.onRetry});
-  final VoidCallback onRetry;
-
-  @override
-  Widget build(BuildContext context) => Center(
-    child: Column(
-      mainAxisSize: .min,
-      children: [
-        const Text('Impossible de charger le parcours'),
-        TextButton(onPressed: onRetry, child: const Text('Réessayer')),
-      ],
-    ),
-  );
 }
 
 class _Path extends StatelessWidget {

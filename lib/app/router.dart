@@ -2,6 +2,7 @@ import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:tenpai/app/tile_gallery_screen.dart';
 import 'package:tenpai/learning/lesson_path_screen.dart';
+import 'package:tenpai/learning/lesson_screen.dart';
 import 'package:tenpai/profile/profile_screen.dart';
 import 'package:tenpai/scanner/scanner_screen.dart';
 import 'package:tenpai/yaku/yaku_screen.dart';
@@ -76,6 +77,11 @@ final appRouter = GoRouter(
     GoRoute(
       path: AppRoutes.gallery,
       builder: (context, state) => const TileGalleryScreen(),
+    ),
+    GoRoute(
+      path: AppRoutes.lesson(':id'),
+      builder: (context, state) =>
+          LessonScreen(lessonId: state.pathParameters['id']!),
     ),
   ],
 );
