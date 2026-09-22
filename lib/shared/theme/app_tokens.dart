@@ -19,6 +19,9 @@ abstract final class AppTokens {
   /// Screen edge margin. Off the 8 px grid on purpose: the handoff sets 20.
   static const sideMargin = 20.0;
 
+  /// Lesson progress bar height (handoff: 6 px, radius 3 = radiusProgress).
+  static const progressHeight = 6.0;
+
   //* Radius
   /// Cards and buttons
   static const radiusCard = BorderRadius.all(Radius.circular(16));
