@@ -1,0 +1,116 @@
+{
+  "planPath": "docs/plans/2026-09-23-firebase.md",
+  "tasks": [
+    {
+      "id": 0,
+      "subject": "Task 0: Console + CLI prep (user, non-code)",
+      "status": "in_progress",
+      "blockedBy": [],
+      "description": "**Files:** see plan Layout\n**Goal:** Firebase project; Android app `io.github.codenam.tenpai` with the debug SHA-1 (`keytool -list -v -keystore ~/.android/debug.keystore -alias androiddebugkey -storepass android`); Authentication → Email/Password + Google enabled; Firestore production mode, region europe-west/eur3; App Check → Play Integrity (debug token registered in Task 1). Install `npm i -g firebase-tools`, `dart pub global activate flutterfire_cli`; `firebase login`; `firebase init firestore` at repo root (firebase.json, .firebaserc, firestore.rules, firestore.indexes.json); `flutterfire configure --platforms=android`.\n**Acceptance Criteria:** android/app/google-services.json and lib/firebase_options.dart exist; git status does not list them (git-ignored); firebase.json + .firebaserc committed\n**Verify:** ls android/app/google-services.json lib/firebase_options.dart && git status --short\n```json:metadata\n{\"verifyCommand\": \"ls android/app/google-services.json lib/firebase_options.dart && git status --short\", \"acceptanceCriteria\": [\"android/app/google-services.json and lib/firebase_options.dart exist\", \"git status does not list them (git-ignored)\", \"firebase.json + .firebaserc committed\"], \"modelTier\": \"mechanical\", \"owner\": \"user\"}\n```"
+    },
+    {
+      "id": 1,
+      "subject": "Task 1: Dependencies + Firebase bootstrap",
+      "status": "pending",
+      "blockedBy": [
+        0
+      ],
+      "description": "**Files:** see plan Layout\n**Goal:** `flutter pub add firebase_core firebase_auth cloud_firestore firebase_app_check` (approved: CLAUDE.md §1.10). Read pub-cache: `firebase_auth-6.7.0/lib/src/firebase_auth.dart` for `signInWithProvider`, `firebase_app_check` for `AndroidProvider`. `main.dart`: `WidgetsFlutterBinding.ensureInitialized()`, `await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform)`, `await FirebaseAppCheck.instance.activate(androidProvider: kDebugMode ? AndroidProvider.debug : AndroidProvider.playIntegrity)`. Confirm minSdk ≥ 23.\n**Acceptance Criteria:** app boots on the emulator; logcat prints the App Check debug token; token registered in the console; signInWithProvider on Android confirmed in source (else stop: google_sign_in needs approval)\n**Verify:** flutter analyze && dart run tool/check_conventions.dart && flutter run\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && dart run tool/check_conventions.dart && flutter run\", \"acceptanceCriteria\": [\"app boots on the emulator\", \"logcat prints the App Check debug token; token registered in the console\", \"signInWithProvider on Android confirmed in source (else stop: google_sign_in needs approval)\"], \"modelTier\": \"mechanical\", \"owner\": \"user\"}\n```"
+    },
+    {
+      "id": 2,
+      "subject": "Task 2: Auth layer (model, failure, repository, impl, providers)",
+      "status": "pending",
+      "blockedBy": [
+        1
+      ],
+      "description": "**Files:** see plan Layout\n**Goal:** `lib/auth/auth_user.dart` (freezed: uid, email, providerId), `auth_failure.dart` (enum invalidCredentials/emailInUse/weakPassword/invalidEmail/network/cancelled/unknown, French `message`, `fromCode`), `auth_repository.dart` (`Stream<AuthUser?> authState()`, `signIn`, `signUp`, `signInWithGoogle`, `sendPasswordReset`, `signOut`; throws AuthFailure only), `firebase_auth_repository.dart` (`FirebaseAuthRepository(this._auth)`), `auth_providers.dart` (`authRepositoryProvider`, `authStateProvider = StreamProvider<AuthUser?>`).\n**Acceptance Criteria:** unit test with a fake: codes map to failures; authStateProvider emits the fake's stream\n**Verify:** flutter analyze && dart run tool/check_conventions.dart\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && dart run tool/check_conventions.dart\", \"acceptanceCriteria\": [\"unit test with a fake: codes map to failures\", \"authStateProvider emits the fake's stream\"], \"modelTier\": \"standard\", \"owner\": \"user\"}\n```"
+    },
+    {
+      "id": 3,
+      "subject": "Task 3: Profile layer (model, repository, Firestore impl, providers)",
+      "status": "pending",
+      "blockedBy": [
+        1
+      ],
+      "description": "**Files:** see plan Layout\n**Goal:** `lib/profile/user_profile.dart` (`MahjongLevel {never, seen, some}` with wireName; `UserProfile` freezed: level, dailyGoalMinutes, createdAt; toMap/fromMap by hand, no json_serializable on Timestamp), `profile_repository.dart` (`Future<UserProfile?> load()`, `Future<void> save(UserProfile)`), `firestore_profile_repository.dart` (`FirestoreProfileRepository(this._db, this._uid)` on `users/{uid}`), `profile_providers.dart` (`profileRepositoryProvider` from the uid, `userProfileProvider` AsyncNotifier<UserProfile?> with `complete({level, dailyGoalMinutes})`).\n**Acceptance Criteria:** providers test with a fake: null → complete → value\n**Verify:** flutter analyze && dart run tool/check_conventions.dart\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && dart run tool/check_conventions.dart\", \"acceptanceCriteria\": [\"providers test with a fake: null → complete → value\"], \"modelTier\": \"standard\", \"owner\": \"user\"}\n```"
+    },
+    {
+      "id": 4,
+      "subject": "Task 4: Firestore progress repository",
+      "status": "pending",
+      "blockedBy": [
+        1
+      ],
+      "description": "**Files:** see plan Layout\n**Goal:** `lib/progress/firestore_progress_repository.dart`: `FirestoreProgressRepository(this._db, this._uid)` on `users/{uid}/progress/current`; `load()` = get, missing doc → empty; `completeLesson` guards isCompleted then one merge set with arrayUnion + FieldValue.increment + serverTimestamp, returns the value computed locally. `progressRepositoryProvider` builds it from the uid; delete `in_memory_progress_repository.dart` (tests use FakeProgressRepository).\n**Acceptance Criteria:** completing a lesson creates users/{uid}/progress/current in the console; airplane mode: completion shows locally, syncs when back online; restart keeps progress\n**Verify:** flutter analyze && dart run tool/check_conventions.dart, then device\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && dart run tool/check_conventions.dart, then device\", \"acceptanceCriteria\": [\"completing a lesson creates users/{uid}/progress/current in the console\", \"airplane mode: completion shows locally, syncs when back online\", \"restart keeps progress\"], \"modelTier\": \"standard\", \"owner\": \"user\"}\n```"
+    },
+    {
+      "id": 5,
+      "subject": "Task 5: Security Rules (user) + emulator tests (Claude)",
+      "status": "pending",
+      "blockedBy": [
+        4
+      ],
+      "description": "**Files:** see plan Layout\n**Goal:** `firestore.rules` per the plan's Security Rules section (owner only; profile keys/level/goal validated; progress: hasOnly keys, ids grow by exactly one and keep the old ones, xp +1..+100, updatedAt == request.time). Claude, on explicit OK for `firebase/`: `firebase/rules-test/package.json` (@firebase/rules-unit-testing) + `rules.test.mjs` (owner ok; other uid denied; bad level; xp +101; removed id; wrong updatedAt). Deploy: `firebase deploy --only firestore:rules` (user).\n**Acceptance Criteria:** all rules tests green under the emulator; rules deployed\n**Verify:** firebase emulators:exec --only firestore \"node --test firebase/rules-test\"\n```json:metadata\n{\"verifyCommand\": \"firebase emulators:exec --only firestore \\\"node --test firebase/rules-test\\\"\", \"acceptanceCriteria\": [\"all rules tests green under the emulator\", \"rules deployed\"], \"modelTier\": \"standard\", \"owner\": \"user rules, Claude harness\"}\n```"
+    },
+    {
+      "id": 6,
+      "subject": "Task 6: Router as provider + auth/onboarding redirect",
+      "status": "pending",
+      "blockedBy": [
+        2,
+        3
+      ],
+      "description": "**Files:** see plan Layout\n**Goal:** `lib/app/router.dart`: `routerProvider = Provider<GoRouter>`, `_RouterRefresh extends ChangeNotifier` poked by `ref.listen` on authStateProvider + userProfileProvider, passed as `refreshListenable`; routes `/splash` (initial, logo tile), `/welcome`, `/login`, `/onboarding/level`, `/onboarding/goal`; redirect table from the plan (auth loading → splash; no user → welcome/login only; profile null → onboarding; profile set → tabs, entry routes blocked). `TenpaiApp` → ConsumerWidget watching routerProvider. Read go_router-18.0.1/lib/src/router.dart.\n**Acceptance Criteria:** widget test with fakes: no user → /welcome; user + null profile → /onboarding/level; user + profile → /apprendre; sign-out from tabs → /welcome\n**Verify:** flutter analyze && dart run tool/check_conventions.dart\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && dart run tool/check_conventions.dart\", \"acceptanceCriteria\": [\"widget test with fakes: no user → /welcome\", \"user + null profile → /onboarding/level\", \"user + profile → /apprendre\", \"sign-out from tabs → /welcome\"], \"modelTier\": \"standard\", \"owner\": \"user\"}\n```"
+    },
+    {
+      "id": 7,
+      "subject": "Task 7: Welcome + login screens (handoff 01, 02)",
+      "status": "pending",
+      "blockedBy": [
+        6
+      ],
+      "description": "**Files:** see plan Layout\n**Goal:** `lib/auth/welcome_screen.dart`: fan of five TileWidgets (Transform.rotate, tokens), display title, subtitle « Le mahjong japonais, expliqué depuis zéro. Dix minutes par jour. », « Commencer » → /login?mode=signup, « J'ai déjà un compte » → /login. `lib/auth/login_screen.dart`: segmented Connexion | Inscription, email + password fields in cards (mono uppercase labels), « Afficher », « Mot de passe oublié ? » (reset + SnackBar), CTA « Se connecter » / « Créer un compte », « ou », « Continuer avec Google », « Continuer avec Apple » disabled, legal line; inline AuthFailure.message; CTA disabled while a call runs; no navigation in the screen.\n**Acceptance Criteria:** screenshots vs 01/02 light + dark; wrong password shows the French line; Google opens the account chooser\n**Verify:** flutter analyze && dart run tool/check_conventions.dart, then visual\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && dart run tool/check_conventions.dart, then visual\", \"acceptanceCriteria\": [\"screenshots vs 01/02 light + dark\", \"wrong password shows the French line\", \"Google opens the account chooser\"], \"modelTier\": \"standard\", \"owner\": \"user\"}\n```"
+    },
+    {
+      "id": 8,
+      "subject": "Task 8: Level + goal screens (handoff 03, 04)",
+      "status": "pending",
+      "blockedBy": [
+        6
+      ],
+      "description": "**Files:** see plan Layout\n**Goal:** `lib/onboarding/level_screen.dart`: « Vous connaissez déjà le mahjong ? » / « Pour choisir votre point de départ. », cards Jamais joué / J'ai vu jouer / Je connais un peu with their lines, selection ring, « Continuer » → /onboarding/goal?level=. `lib/onboarding/goal_screen.dart`: « Votre objectif quotidien » / « Des leçons courtes suffisent. Vous pourrez changer plus tard. », 5/10/15/20 min / jour (Tranquille / Régulier / Sérieux / Intensif), « C'est parti » → userProfileProvider.complete. Back arrow on both.\n**Acceptance Criteria:** screenshots vs 03/04 light + dark; sign-in with an existing profile skips both\n**Verify:** flutter analyze && dart run tool/check_conventions.dart, then visual\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && dart run tool/check_conventions.dart, then visual\", \"acceptanceCriteria\": [\"screenshots vs 03/04 light + dark\", \"sign-in with an existing profile skips both\"], \"modelTier\": \"standard\", \"owner\": \"user\"}\n```"
+    },
+    {
+      "id": 9,
+      "subject": "Task 9: Profil minimal",
+      "status": "pending",
+      "blockedBy": [
+        6
+      ],
+      "description": "**Files:** see plan Layout\n**Goal:** `lib/profile/profile_screen.dart` replaces the placeholder: account line (email or « Compte Google »), level + daily goal from userProfileProvider, XP + completed lessons from userProgressProvider, « Se déconnecter » (signOut; redirect handles the rest), debug gallery button kept under kDebugMode.\n**Acceptance Criteria:** sign-out lands on welcome; signing back in shows the same XP\n**Verify:** flutter analyze && dart run tool/check_conventions.dart\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && dart run tool/check_conventions.dart\", \"acceptanceCriteria\": [\"sign-out lands on welcome\", \"signing back in shows the same XP\"], \"modelTier\": \"standard\", \"owner\": \"user\"}\n```"
+    },
+    {
+      "id": 10,
+      "subject": "Task 10: Tests (test-writer)",
+      "status": "pending",
+      "blockedBy": [
+        7,
+        8,
+        9
+      ],
+      "description": "**Files:** see plan Layout\n**Goal:** Fakes `test/fakes/fake_auth_repository.dart` (scripted stream + failures), `fake_profile_repository.dart`; `test/auth/{auth_failure,auth_providers,login_screen,welcome_screen}_test.dart`, `test/onboarding/{level_screen,goal_screen}_test.dart`, `test/profile/{profile_providers,profile_screen}_test.dart`, `test/app/router_test.dart`. Firestore impls not unit-tested (no fake_cloud_firestore).\n**Acceptance Criteria:** flutter test green; every new file registered\n**Verify:** flutter test\n```json:metadata\n{\"verifyCommand\": \"flutter test\", \"acceptanceCriteria\": [\"flutter test green\", \"every new file registered\"], \"modelTier\": \"standard\", \"owner\": \"test-writer agent\"}\n```"
+    },
+    {
+      "id": 11,
+      "subject": "Task 11: Device check + review + handover (Claude drives adb)",
+      "status": "pending",
+      "blockedBy": [
+        5,
+        10
+      ],
+      "description": "**Files:** see plan Layout\n**Goal:** Sign-up → level → goal → tabs; lesson completion in the console; sign-out → welcome; sign-in → tabs; Google sign-in; offline completion queued then synced; App Check enforcement on for Firestore, app still works; screenshots 01–04 + 18 light/dark. flutter-reviewer on lib/auth, lib/onboarding, lib/profile, progress repository, router. ROADMAP milestone 4 row + state block + deviations, README fix (google-services line, setup steps), tasks.json done with hash.\n**Acceptance Criteria:** ROADMAP + tasks.json say done with the commit hash; reviewer findings applied\n**Verify:** flutter analyze && flutter test && dart run tool/check_conventions.dart, then visual\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && flutter test && dart run tool/check_conventions.dart, then visual\", \"acceptanceCriteria\": [\"ROADMAP + tasks.json say done with the commit hash\", \"reviewer findings applied\"], \"modelTier\": \"standard\", \"owner\": \"user (Claude drives adb)\"}\n```"
+    }
+  ],
+  "lastUpdated": "2026-09-23T15:08:25.004515+00:00"
+}

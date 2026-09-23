@@ -126,13 +126,13 @@ des tuiles » (no tile catalogue); if Android kills `MainActivity` behind the
 camera the photo is lost (`retrieveLostData` not wired) and the user lands on
 idle. Isar (settings, scan history, cached catalog) is M4 with Firebase.
 
-**Next: milestone 4, Firebase.** Non-code prep first (Firebase project,
-Android app registered with `io.github.codenam.tenpai`, Auth, Firestore, App
-Check, AI Logic enabled), then a plan `docs/plans/<date>-firebase.md`:
-`firebase_core` + `firebase_auth` (anonymous) + `firebase_app_check` +
-`cloud_firestore` progress repository behind the existing
-`ProgressRepository`, Security Rules + rules tests, Isar for settings and
-scan history. No SDK until the plan is approved.
+**Next: milestone 4, Firebase.** Plan approved 2026-09-23:
+`docs/plans/2026-09-23-firebase.md` (12 tasks, ids 0–11; gate at launch, email +
+Google sign-in, onboarding 01–04, two Firestore docs per user, rules + emulator
+tests, minimal Profil; Isar and full Profil 18 later). **Resume at Task 0**
+(console + CLI prep, user, non-code): nothing in `lib/` changes before
+`google-services.json` and `firebase_options.dart` exist. Decisions in the
+plan's Context section.
 
 **Earlier state on 2026-09-22:** lesson slice Tasks 1-6 done (`lib/shared/models/`
 lesson domain, `assets/lessons/` content, `lib/learning/lesson_{repository,
@@ -280,7 +280,7 @@ Plan: [docs/plans/2026-09-17-project-setup.md](plans/2026-09-17-project-setup.md
 | 1 — Architecture holds | Tile model + widget, learning vertical slice from JSON asset, in-memory progress, shell routes, tests | done 2026-09-23 (`69b74f0`): tile plan `b105eb7`; lesson slice Tasks 1–10 (`lib/shared/models/` lesson domain, six unit assets, `lib/learning/` repository + providers + `LessonPathScreen` + `LessonScreen`, `lib/progress/` in-memory progress, tab shell + `/lesson/:id`), device-checked light + dark vs handoff 05–08, flutter-reviewer pass applied (`06c5a64`, `69b74f0`), 99 tests |
 | 2 — Yaku | dio + REST yaku catalog, Yaku Dex screens | done 2026-09-23 (`56e9fa1`): catalog on GitHub Pages (`Code-Nam/tenpai-api`, `114da4a`), `YAKU_BASE_URL` via `--dart-define`, `lib/app/app_config.dart`, `lib/yaku/` (model, remote source, repository with failure-dropping cache and tile validation, six providers, `YakuScreen`), chip + input themes in `app_theme.dart`, `hasError` guards on all three data screens; device-checked light/dark incl. offline retry; reviewer pass applied; 29 new tests, suite at 128 |
 | 3 — Scanner | image_picker single shot, fake identifier, scan result card | done 2026-09-23 (`c091442`): `image_picker ^1.2.3` (no manifest change), `lib/scanner/` (sealed `ScanState`, French tile labels, `TilePhotoSource` + impl, `TileIdentifier` + deterministic fake, three providers + `ScanNotifier`, `ScannerScreen` with viewfinder + result/failure sheets), `PrimaryButtonWidget` shared, scanner tokens; device-checked light/dark vs handoff 14/16/17; reviewer pass applied; 28 new tests, suite at 156 |
-| 4 — Firebase | `firebase_auth` + App Check + Firestore progress (offline persistence on, Security Rules written and tested) replacing the in-memory impl behind the existing repository interfaces; Isar for settings and scan history if not already added | not started |
+| 4 — Firebase | `firebase_auth` (email + Google) + App Check + Firestore progress (offline persistence on, Security Rules written and tested) behind the existing repository interfaces; onboarding 01–04; minimal Profil. Isar for settings and scan history deferred to its own plan | in progress: plan `docs/plans/2026-09-23-firebase.md` approved 2026-09-23, Task 0 (console + CLI prep) next |
 | 5 — AI | Firebase AI Logic (`firebase_ai`) behind App Check; explanation + tile identification | not started |
 | 6 — Content + polish | remaining units, drill/interactive blocks, gallery parity | not started |
 
