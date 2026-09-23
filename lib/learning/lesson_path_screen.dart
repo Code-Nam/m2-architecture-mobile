@@ -24,17 +24,26 @@ class LessonPathScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final units = ref.watch(unitsProvider);
     final progress = ref.watch(userProgressProvider);
-    return Scaffold(
-      body: switch ((units, progress)) {
-        (AsyncData(value: final units), AsyncData(value: final progress)) =>
-          _Path(units: units, progress: progress),
-        (AsyncError(), _) || (_, AsyncError()) => RetryWidget(
+    // AI-GENERATED (Claude) BEGIN — hasError guard, milestone 2 review
+    // `hasError` rather than `AsyncError` arms: during Riverpod's auto-retry
+    // the state is `AsyncLoading` carrying the error, which a type match
+    // would read as loading and hide « Réessayer ».
+    if (units.hasError || progress.hasError) {
+      return Scaffold(
+        body: RetryWidget(
           message: 'Impossible de charger le parcours',
           onRetry: () {
             ref.invalidate(unitsProvider);
             ref.invalidate(userProgressProvider);
           },
         ),
+      );
+    }
+    // AI-GENERATED (Claude) END
+    return Scaffold(
+      body: switch ((units, progress)) {
+        (AsyncData(value: final units), AsyncData(value: final progress)) =>
+          _Path(units: units, progress: progress),
         _ => const SizedBox.shrink(),
       },
     );

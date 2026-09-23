@@ -153,6 +153,17 @@ void main() {
       expect(rows.map((r) => r.yaku.id), ['riichi']);
     });
 
+    test(
+      'query matches the nickname with surrounding spaces and its own accent',
+      () async {
+        container.read(yakuQueryProvider.notifier).query = '  prête ';
+
+        final rows = await cards(container);
+
+        expect(rows.map((r) => r.yaku.id), ['riichi']);
+      },
+    );
+
     test('query matches the kanji', () async {
       container.read(yakuQueryProvider.notifier).query = '平和';
 
@@ -180,18 +191,21 @@ void main() {
   });
 
   group('yakuCardsProvider unlocked flag', () {
-    test('a null unlockUnit is always unlocked, even on fresh progress', () async {
-      final container = makeContainer(
-        yakuRepository: FakeYakuRepository(_yakus),
-      );
+    test(
+      'a null unlockUnit is always unlocked, even on fresh progress',
+      () async {
+        final container = makeContainer(
+          yakuRepository: FakeYakuRepository(_yakus),
+        );
 
-      final rows = await cards(container);
+        final rows = await cards(container);
 
-      final riichi = rows.firstWhere((r) => r.yaku.id == 'riichi');
-      final chinitsu = rows.firstWhere((r) => r.yaku.id == 'chinitsu');
-      expect(riichi.unlocked, isTrue);
-      expect(chinitsu.unlocked, isTrue);
-    });
+        final riichi = rows.firstWhere((r) => r.yaku.id == 'riichi');
+        final chinitsu = rows.firstWhere((r) => r.yaku.id == 'chinitsu');
+        expect(riichi.unlocked, isTrue);
+        expect(chinitsu.unlocked, isTrue);
+      },
+    );
 
     test('an unlockUnit is locked on fresh progress', () async {
       final container = makeContainer(
@@ -206,19 +220,22 @@ void main() {
       expect(pinfu.unlocked, isFalse);
     });
 
-    test('an unlockUnit is unlocked once both its lessons are completed', () async {
-      final container = makeContainer(
-        yakuRepository: FakeYakuRepository(_yakus),
-        progress: _unit01CompletedProgress,
-      );
+    test(
+      'an unlockUnit is unlocked once both its lessons are completed',
+      () async {
+        final container = makeContainer(
+          yakuRepository: FakeYakuRepository(_yakus),
+          progress: _unit01CompletedProgress,
+        );
 
-      final rows = await cards(container);
+        final rows = await cards(container);
 
-      final tanyao = rows.firstWhere((r) => r.yaku.id == 'tanyao');
-      final pinfu = rows.firstWhere((r) => r.yaku.id == 'pinfu');
-      expect(tanyao.unlocked, isTrue);
-      expect(pinfu.unlocked, isTrue);
-    });
+        final tanyao = rows.firstWhere((r) => r.yaku.id == 'tanyao');
+        final pinfu = rows.firstWhere((r) => r.yaku.id == 'pinfu');
+        expect(tanyao.unlocked, isTrue);
+        expect(pinfu.unlocked, isTrue);
+      },
+    );
 
     test('an unknown unlockUnit stays locked even after progress', () async {
       final container = makeContainer(
@@ -250,33 +267,32 @@ void main() {
       );
     });
 
-    test(
-      'with the default retry, it still reads as AsyncError while the '
-      'catalog provider is loading-with-error underneath',
-      () async {
-        final container = makeContainer(
-          yakuRepository: FakeYakuRepository(_yakus, error: Exception('boom')),
-          disableRetry: false,
-        );
+    test('with the default retry, it still reads as AsyncError while the '
+        'catalog provider is loading-with-error underneath', () async {
+      final container = makeContainer(
+        yakuRepository: FakeYakuRepository(_yakus, error: Exception('boom')),
+        disableRetry: false,
+      );
 
-        // Start the build without awaiting `.future`: with a retry pending,
-        // `.future` stays deliberately unresolved until retries are
-        // exhausted (minutes away), so only a microtask flush is awaited
-        // here for the first attempt to fail and set the retrying state.
-        container.read(yakuCatalogProvider);
-        await Future<void>.delayed(Duration.zero);
+      // Start the build without awaiting `.future`: with a retry pending,
+      // `.future` stays deliberately unresolved until retries are
+      // exhausted (minutes away), so only a microtask flush is awaited
+      // here for the first attempt to fail and set the retrying state.
+      container.read(yakuCatalogProvider);
+      await Future<void>.delayed(Duration.zero);
 
-        final catalogState = container.read(yakuCatalogProvider);
-        expect(catalogState.hasError, isTrue);
-        expect(catalogState.isLoading, isTrue);
+      final catalogState = container.read(yakuCatalogProvider);
+      expect(catalogState.hasError, isTrue);
+      expect(catalogState.isLoading, isTrue);
 
-        expect(
-          container.read(yakuCardsProvider),
-          isA<AsyncError<List<YakuCard>>>(),
-        );
+      expect(
+        container.read(yakuCardsProvider),
+        isA<AsyncError<List<YakuCard>>>(),
+      );
 
-        container.dispose();
-      },
-    );
+      // No manual dispose: `ProviderContainer.test` already registers
+      // `addTearDown(container.dispose)`, which cancels the pending retry
+      // timer before the next test runs.
+    });
   });
 }

@@ -28,13 +28,22 @@ class LessonScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final asyncLesson = ref.watch(lessonProvider(lessonId));
-    return Scaffold(
-      body: switch (asyncLesson) {
-        AsyncData(value: final lesson) => _LessonBody(lesson: lesson),
-        AsyncError() => RetryWidget(
+    // AI-GENERATED (Claude) BEGIN — hasError guard, milestone 2 review
+    // `hasError` rather than an `AsyncError` arm: while Riverpod auto-retries
+    // a failed provider the state is `AsyncLoading` carrying the error, and a
+    // type match would hide « Réessayer » for the whole retry window.
+    if (asyncLesson.hasError) {
+      return Scaffold(
+        body: RetryWidget(
           message: 'Impossible de charger la leçon',
           onRetry: () => ref.invalidate(lessonProvider(lessonId)),
         ),
+      );
+    }
+    // AI-GENERATED (Claude) END
+    return Scaffold(
+      body: switch (asyncLesson) {
+        AsyncData(value: final lesson) => _LessonBody(lesson: lesson),
         _ => const SizedBox.shrink(),
       },
     );

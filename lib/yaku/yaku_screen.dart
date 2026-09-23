@@ -77,37 +77,24 @@ class _SearchField extends ConsumerWidget {
   const _SearchField();
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final theme = Theme.of(context);
-    final scheme = theme.colorScheme;
-    final colors = theme.extension<AppColors>()!;
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: AppTokens.sideMargin),
-      child: DecoratedBox(
-        decoration: const BoxDecoration(
-          borderRadius: AppTokens.radiusCard,
-          boxShadow: AppTokens.shadowSurface,
-        ),
-        child: TextField(
-          onChanged: (text) =>
-              ref.read(yakuQueryProvider.notifier).query = text,
-          decoration: InputDecoration(
-            hintText: 'Rechercher un yaku',
-            hintStyle: theme.textTheme.bodyMedium?.copyWith(
-              color: colors.mutedStrong,
-            ),
-            prefixIcon: const Icon(Icons.search),
-            filled: true,
-            fillColor: scheme.surfaceContainer,
-            border: const OutlineInputBorder(
-              borderRadius: AppTokens.radiusCard,
-              borderSide: BorderSide.none,
-            ),
-          ),
+  Widget build(BuildContext context, WidgetRef ref) => Padding(
+    padding: const EdgeInsets.symmetric(horizontal: AppTokens.sideMargin),
+    child: DecoratedBox(
+      decoration: const BoxDecoration(
+        borderRadius: AppTokens.radiusCard,
+        boxShadow: AppTokens.shadowSurface,
+      ),
+      // Fill, radius and hint colour come from the theme's
+      // inputDecorationTheme; only the copy and the icon are this field's.
+      child: TextField(
+        onChanged: (text) => ref.read(yakuQueryProvider.notifier).query = text,
+        decoration: const InputDecoration(
+          hintText: 'Rechercher un yaku',
+          prefixIcon: Icon(Icons.search),
         ),
       ),
-    );
-  }
+    ),
+  );
 }
 
 class _TierChips extends ConsumerWidget {
@@ -116,8 +103,7 @@ class _TierChips extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final active = ref.watch(yakuTierFilterProvider);
-    final theme = Theme.of(context);
-    final scheme = theme.colorScheme;
+    // Pill shape, colours and label style come from the theme's chipTheme.
     return SingleChildScrollView(
       scrollDirection: .horizontal,
       padding: const EdgeInsets.symmetric(horizontal: AppTokens.sideMargin),
@@ -126,32 +112,25 @@ class _TierChips extends ConsumerWidget {
         children: [
           for (final tier in [null, ...YakuTier.values])
             ChoiceChip(
-              label: Text(_label(tier)),
+              label: Text(_tierLabel(tier)),
               selected: active == tier,
               onSelected: (_) =>
                   ref.read(yakuTierFilterProvider.notifier).tier = tier,
-              showCheckmark: false,
-              shape: const StadiumBorder(),
-              side: BorderSide.none,
-              selectedColor: scheme.primary,
-              backgroundColor: scheme.surfaceContainer,
-              labelStyle: theme.textTheme.labelLarge?.copyWith(
-                color: active == tier ? scheme.onPrimary : scheme.onSurface,
-              ),
-              elevation: AppTokens.chipElevation,
             ),
         ],
       ),
     );
   }
-
-  String _label(YakuTier? tier) => switch (tier) {
-    null => 'Tous',
-    .essential => 'Essentiels',
-    .common => 'Courants',
-    .rare => 'Rares',
-  };
 }
+
+/// Chip copy from the handoff; the enum keeps its wire names. Top-level: a
+/// pure mapping, not a behaviour of the chip row.
+String _tierLabel(YakuTier? tier) => switch (tier) {
+  null => 'Tous',
+  .essential => 'Essentiels',
+  .common => 'Courants',
+  .rare => 'Rares',
+};
 
 class _YakuList extends StatelessWidget {
   const _YakuList({required this.rows});

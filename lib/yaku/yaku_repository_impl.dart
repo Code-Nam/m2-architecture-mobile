@@ -1,3 +1,4 @@
+import 'package:tenpai/shared/models/tile.dart';
 import 'package:tenpai/yaku/yaku.dart';
 import 'package:tenpai/yaku/yaku_remote_source.dart';
 import 'package:tenpai/yaku/yaku_repository.dart';
@@ -21,6 +22,16 @@ class YakuRepositoryImpl implements YakuRepository {
     }
   }
 
-  Future<List<Yaku>> _load() async =>
-      (await _source.fetchYakus()).map(Yaku.fromJson).toList();
+  /// Parses, then validates every tile code here rather than in `build`: the
+  /// catalog is untrusted input, and a throw inside the cached future becomes
+  /// the retry state instead of a red screen on the Yakus tab.
+  Future<List<Yaku>> _load() async {
+    final yakus = (await _source.fetchYakus()).map(Yaku.fromJson).toList();
+    // AI-GENERATED (Claude) BEGIN — tile validation, milestone 2 review
+    for (final yaku in yakus) {
+      yaku.tiles.forEach(Tile.parse);
+    }
+    // AI-GENERATED (Claude) END
+    return yakus;
+  }
 }

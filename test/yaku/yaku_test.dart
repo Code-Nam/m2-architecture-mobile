@@ -39,12 +39,15 @@ void main() {
       expect(yaku.unlockUnit, 'unit_01');
     });
 
-    test('hanOpen and unlockUnit are both null when the JSON has them null', () {
-      final yaku = Yaku.fromJson(_json());
+    test(
+      'hanOpen and unlockUnit are both null when the JSON has them null',
+      () {
+        final yaku = Yaku.fromJson(_json());
 
-      expect(yaku.hanOpen, isNull);
-      expect(yaku.unlockUnit, isNull);
-    });
+        expect(yaku.hanOpen, isNull);
+        expect(yaku.unlockUnit, isNull);
+      },
+    );
 
     test('maps every tier string to its enum value', () {
       expect(Yaku.fromJson(_json(tier: 'essential')).tier, YakuTier.essential);

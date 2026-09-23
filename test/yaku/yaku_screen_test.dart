@@ -90,6 +90,12 @@ final _units = [
         xp: 10,
         blocks: const [LessonBlock.drill()],
       ),
+      Lesson(
+        id: 'l2',
+        title: 'two',
+        xp: 10,
+        blocks: const [LessonBlock.drill()],
+      ),
     ],
   ),
 ];
@@ -131,9 +137,7 @@ void main() {
       }
     });
 
-    testWidgets('typing in the search field filters the list', (
-      tester,
-    ) async {
+    testWidgets('typing in the search field filters the list', (tester) async {
       await _pumpYakuScreen(tester);
 
       await tester.enterText(find.byType(TextField), 'tan');
@@ -146,27 +150,28 @@ void main() {
       expect(find.text('Kazoe yakuman'), findsNothing);
     });
 
-    testWidgets('tapping the Rares chip shows only rare yakus, Tous restores all', (
-      tester,
-    ) async {
-      await _pumpYakuScreen(tester);
+    testWidgets(
+      'tapping the Rares chip shows only rare yakus, Tous restores all',
+      (tester) async {
+        await _pumpYakuScreen(tester);
 
-      await tester.tap(find.widgetWithText(ChoiceChip, 'Rares'));
-      await tester.pumpAndSettle();
+        await tester.tap(find.widgetWithText(ChoiceChip, 'Rares'));
+        await tester.pumpAndSettle();
 
-      expect(find.text('Chinitsu'), findsOneWidget);
-      expect(find.text('Kazoe yakuman'), findsOneWidget);
-      expect(find.text('Riichi'), findsNothing);
-      expect(find.text('Tanyao'), findsNothing);
-      expect(find.text('Pinfu'), findsNothing);
+        expect(find.text('Chinitsu'), findsOneWidget);
+        expect(find.text('Kazoe yakuman'), findsOneWidget);
+        expect(find.text('Riichi'), findsNothing);
+        expect(find.text('Tanyao'), findsNothing);
+        expect(find.text('Pinfu'), findsNothing);
 
-      await tester.tap(find.widgetWithText(ChoiceChip, 'Tous'));
-      await tester.pumpAndSettle();
+        await tester.tap(find.widgetWithText(ChoiceChip, 'Tous'));
+        await tester.pumpAndSettle();
 
-      for (final yaku in _yakus) {
-        expect(find.text(yaku.name), findsOneWidget);
-      }
-    });
+        for (final yaku in _yakus) {
+          expect(find.text(yaku.name), findsOneWidget);
+        }
+      },
+    );
 
     testWidgets('a locked yaku shows a lock icon and face-down tiles', (
       tester,
@@ -230,6 +235,94 @@ void main() {
 
         expect(repository.callCount, 2);
         expect(find.text('Riichi'), findsOneWidget);
+      },
+    );
+
+    testWidgets(
+      'with the default retry active, the error still shows immediately and '
+      'Réessayer cancels the pending retry and refetches',
+      (tester) async {
+        final repository = FakeYakuRepository(_yakus, error: Exception('boom'));
+        await tester.binding.setSurfaceSize(const Size(800, 2000));
+        addTearDown(() => tester.binding.setSurfaceSize(null));
+        await tester.pumpWidget(
+          ProviderScope(
+            overrides: [
+              yakuRepositoryProvider.overrideWithValue(repository),
+              lessonRepositoryProvider.overrideWithValue(
+                FakeLessonRepository(_units),
+              ),
+              progressRepositoryProvider.overrideWithValue(
+                FakeProgressRepository(),
+              ),
+            ],
+            // No `retry:` override: this is the point of the test. Do not
+            // `pumpAndSettle` before the retry timer is cancelled below, it
+            // would wait out the (minutes-long) default retry delay.
+            child: MaterialApp(theme: lightTheme(), home: const YakuScreen()),
+          ),
+        );
+        await tester.pump(Duration.zero);
+
+        expect(find.text('Impossible de charger les yakus'), findsOneWidget);
+        expect(find.widgetWithText(TextButton, 'Réessayer'), findsOneWidget);
+
+        repository.error = null;
+        await tester.tap(find.widgetWithText(TextButton, 'Réessayer'));
+        await tester.pumpAndSettle();
+
+        expect(find.text('Riichi'), findsOneWidget);
+      },
+    );
+
+    testWidgets(
+      'unlocking a yaku through progress updates its card without a widget rebuild',
+      (tester) async {
+        await _pumpYakuScreen(tester);
+
+        final lockedCard = find.ancestor(
+          of: find.text('Tanyao'),
+          matching: find.byType(Padding),
+        );
+        expect(
+          find.descendant(
+            of: lockedCard.first,
+            matching: find.byIcon(Icons.lock),
+          ),
+          findsOneWidget,
+        );
+
+        final progress = tester.container().read(userProgressProvider.notifier);
+        for (final lesson in _units.first.lessons) {
+          await progress.completeLesson(lesson);
+        }
+        await tester.pumpAndSettle();
+
+        final unlockedCard = find.ancestor(
+          of: find.text('Tanyao'),
+          matching: find.byType(Padding),
+        );
+        expect(
+          find.descendant(
+            of: unlockedCard.first,
+            matching: find.byIcon(Icons.lock),
+          ),
+          findsNothing,
+        );
+        expect(
+          find.descendant(of: unlockedCard.first, matching: find.text('1 han')),
+          findsOneWidget,
+        );
+        final tiles = tester.widgetList<TileWidget>(
+          find.descendant(
+            of: unlockedCard.first,
+            matching: find.byType(TileWidget),
+          ),
+        );
+        expect(tiles, isNotEmpty);
+        for (final tile in tiles) {
+          expect(tile.state, TileState.normal);
+        }
       },
     );
   });

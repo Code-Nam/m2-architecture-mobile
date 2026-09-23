@@ -46,16 +46,19 @@ void main() {
       ]);
     });
 
-    test('a second call returns the same list without a second request', () async {
-      final adapter = FakeHttpClientAdapter([(200, _catalogBody(2))]);
-      final repository = YakuRepositoryImpl(YakuRemoteSource(_dio(adapter)));
+    test(
+      'a second call returns the same list without a second request',
+      () async {
+        final adapter = FakeHttpClientAdapter([(200, _catalogBody(2))]);
+        final repository = YakuRepositoryImpl(YakuRemoteSource(_dio(adapter)));
 
-      final first = await repository.catalog();
-      final second = await repository.catalog();
+        final first = await repository.catalog();
+        final second = await repository.catalog();
 
-      expect(second, same(first));
-      expect(adapter.requestedPaths, hasLength(1));
-    });
+        expect(second, same(first));
+        expect(adapter.requestedPaths, hasLength(1));
+      },
+    );
 
     test('a failure is not cached, so the next call retries', () async {
       final adapter = FakeHttpClientAdapter([
@@ -74,6 +77,20 @@ void main() {
           ),
         ),
       );
+      final yakus = await repository.catalog();
+
+      expect(yakus, hasLength(1));
+      expect(adapter.requestedPaths, hasLength(2));
+    });
+
+    test('a wrong-shape body (missing `yakus`) is not cached, so the next call retries', () async {
+      final adapter = FakeHttpClientAdapter([
+        (200, jsonEncode(<String, Object?>{})),
+        (200, _catalogBody(1)),
+      ]);
+      final repository = YakuRepositoryImpl(YakuRemoteSource(_dio(adapter)));
+
+      await expectLater(repository.catalog(), throwsA(isA<TypeError>()));
       final yakus = await repository.catalog();
 
       expect(yakus, hasLength(1));
