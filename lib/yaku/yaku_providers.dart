@@ -73,11 +73,24 @@ typedef YakuCard = ({Yaku yaku, bool unlocked});
 /// tagged unlocked or not. A catalog error is the retry state; units or
 /// progress still loading (or failing, already shown on the path tab) reads
 /// as loading here so the two tabs never show two retry buttons.
+///
+/// The error check comes before the switch on purpose: while Riverpod
+/// auto-retries a failed provider its state is `AsyncLoading` *carrying* the
+/// error (element.dart, `retrying: true`), never `AsyncError`, so matching
+/// on type alone would hide « Réessayer » for the whole retry minute.
 final yakuCardsProvider = Provider<AsyncValue<List<YakuCard>>>((ref) {
   final query = ref.watch(yakuQueryProvider);
   final tier = ref.watch(yakuTierFilterProvider);
+  final catalog = ref.watch(yakuCatalogProvider);
+  if (catalog case AsyncValue(
+    hasError: true,
+    :final error?,
+    :final stackTrace?,
+  )) {
+    return AsyncError(error, stackTrace);
+  }
   return switch ((
-    ref.watch(yakuCatalogProvider),
+    catalog,
     ref.watch(unitsProvider),
     ref.watch(userProgressProvider),
   )) {
@@ -91,10 +104,6 @@ final yakuCardsProvider = Provider<AsyncValue<List<YakuCard>>>((ref) {
           if ((tier == null || y.tier == tier) && _matches(y, query))
             (yaku: y, unlocked: _isUnlocked(y, units, progress)),
       ]),
-    (AsyncError(:final error, :final stackTrace), _, _) => AsyncError(
-      error,
-      stackTrace,
-    ),
     _ => const AsyncLoading(),
   };
 });

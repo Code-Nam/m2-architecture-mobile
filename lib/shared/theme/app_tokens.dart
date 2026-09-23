@@ -70,6 +70,9 @@ abstract final class AppTokens {
     BoxShadow(offset: Offset(0, 10), blurRadius: 18, color: Color(0x291C1A17)),
   ];
 
+  /// Chip lift; the closest a Material chip gets to the surface shadow.
+  static const chipElevation = 2.0;
+
   //* Motion
 
   /// Motion duration for all transitions
@@ -165,4 +168,9 @@ abstract final class AppTokens {
 
   /// Horizontal zigzag as an `Alignment` x value; sign alternates per unit.
   static const pathZigzag = 0.3;
+
+  //* Yaku Dex
+
+  /// Dimming of a locked yaku card (handoff: « atténués »).
+  static const lockedOpacity = 0.55;
 }
