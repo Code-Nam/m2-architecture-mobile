@@ -64,12 +64,12 @@
     {
       "id": 8,
       "subject": "Task 8: Device check + handover",
-      "status": "in_progress",
+      "status": "completed",
       "blockedBy": [
         7
       ],
-      "description": "**Files:** see plan Layout\n**Goal:** Real endpoint on the emulator: 20 cards; search « tan » → Tanyao; chip Rares → 7; complete unit 1 → its yakus unlock; airplane mode → « Réessayer » → back online → recovers. Screenshots 13 light + dark vs handoff. flutter-reviewer pass on lib/yaku/ + app_config. ROADMAP milestone 2 row + next-session block (M3 scanner next), deviations listed. tasks.json done with the commit hash.\n**Acceptance Criteria:** ROADMAP + tasks.json say done with the commit hash\n**Verify:** flutter analyze && flutter test && dart run tool/check_conventions.dart, then visual\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && flutter test && dart run tool/check_conventions.dart, then visual\", \"acceptanceCriteria\": [\"ROADMAP + tasks.json say done with the commit hash\"], \"modelTier\": \"standard\", \"owner\": \"user (Claude drives adb)\"}\n```"
+      "description": "**Files:** see plan Layout\n**Goal:** Real endpoint on the emulator: 20 cards; search « tan » → Tanyao; chip Rares → 7; complete unit 1 → its yakus unlock; airplane mode → « Réessayer » → back online → recovers. Screenshots 13 light + dark vs handoff. flutter-reviewer pass on lib/yaku/ + app_config. ROADMAP milestone 2 row + next-session block (M3 scanner next), deviations listed. tasks.json done with the commit hash.\n**Acceptance Criteria:** ROADMAP + tasks.json say done with the commit hash\n**Verify:** flutter analyze && flutter test && dart run tool/check_conventions.dart, then visual\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && flutter test && dart run tool/check_conventions.dart, then visual\", \"acceptanceCriteria\": [\"ROADMAP + tasks.json say done with the commit hash\"], \"modelTier\": \"standard\", \"owner\": \"user (Claude drives adb)\"}\n```\n**Done 2026-09-23 at `56e9fa1`** (device pass light/dark, offline retry, flutter-reviewer findings applied `56e9fa1`; slice commits `b9a6ca3`…`56e9fa1`; tests `0b85ec9`, suite at 128)."
     }
   ],
-  "lastUpdated": "2026-09-23T12:18:10.600428+00:00"
+  "lastUpdated": "2026-09-23T13:21:13.557820+00:00"
 }

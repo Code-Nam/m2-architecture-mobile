@@ -81,11 +81,33 @@ lesson-specific tail is the Sensei's (M5); no « Pourquoi ? » link (M5);
 streak chip shows a red pill and `0` until Firestore (M4); settings gear has
 no target; tab icons are Material stand-ins.
 
-**Next: milestone 2, Yaku Dex.** Catalog hosted (`Code-Nam/tenpai-api`,
-GitHub Pages, `application/json`), `YAKU_BASE_URL` wired in `launch.json` and
-README. Plan approved: `docs/plans/2026-09-23-yaku.md` (8 tasks, user builds
-`lib/app/app_config.dart` + `lib/yaku/`; Claude does the catalog fields).
-Start at Task 1/2. Isar cache of the catalog is M4 or later.
+**State on 2026-09-23 (later):** milestone 2 Yaku Dex complete at `56e9fa1`,
+Tasks 1–8 of `docs/plans/2026-09-23-yaku.md` done. Play path: Yakus tab →
+`YakuScreen` (search, tier chips, cards with han badge and mini tiles; locked
+cards dimmed with lock and face-down tiles; « Réessayer » on catalog
+failure). Data: `tenpai-api` Pages JSON → `YakuRemoteSource` (dio, base URL
+from `AppConfig.yakuBaseUrl`) → `YakuRepositoryImpl` → `yakuCatalogProvider`
+→ `yakuCardsProvider` (filters + unlock from `unitsProvider` +
+`userProgressProvider`). Lessons learned, now applied everywhere: Riverpod 3
+keeps a failed provider in `AsyncLoading`-with-error while it auto-retries,
+so screens test `hasError`, not the `AsyncError` type; a repository must
+drop a failed cached `Future`; content from the network is validated inside
+that future, never in `build`.
+
+**Known deviations from the handoff (Yaku Dex), deliberate:** long French
+nicknames ellipsise beside the name (kept, 2026-09-23); chip lift is Material
+`elevation`, not the exact surface shadow; no detail screen (none in the
+handoff); placeholder tile glyph drops the `m` suffix until SVG art; the
+search field keeps its text only because the tab shell is an `IndexedStack`
+(a controller seeded from `yakuQueryProvider` would close that); locked cards
+use `Opacity`, fine with a lazy list.
+
+**Next: milestone 3, Scanner.** `image_picker` (approved, not yet added:
+say which and why before `pub add`), single-shot photo → fake identifier →
+result card (handoff screens 14–17, Sensei states are M5). Plan first:
+`docs/plans/<date>-scanner.md` + `.tasks.json`, `lib/scanner/` flat. Camera
+permission goes in `android/app/src/main/AndroidManifest.xml`. Isar (settings,
+scan history, cached catalog) is M4 with Firebase.
 
 **Earlier state on 2026-09-22:** lesson slice Tasks 1-6 done (`lib/shared/models/`
 lesson domain, `assets/lessons/` content, `lib/learning/lesson_{repository,
@@ -231,7 +253,7 @@ Plan: [docs/plans/2026-09-17-project-setup.md](plans/2026-09-17-project-setup.md
 | Milestone | Scope | Status |
 |-----------|-------|--------|
 | 1 — Architecture holds | Tile model + widget, learning vertical slice from JSON asset, in-memory progress, shell routes, tests | done 2026-09-23 (`69b74f0`): tile plan `b105eb7`; lesson slice Tasks 1–10 (`lib/shared/models/` lesson domain, six unit assets, `lib/learning/` repository + providers + `LessonPathScreen` + `LessonScreen`, `lib/progress/` in-memory progress, tab shell + `/lesson/:id`), device-checked light + dark vs handoff 05–08, flutter-reviewer pass applied (`06c5a64`, `69b74f0`), 99 tests |
-| 2 — Yaku | dio + REST yaku catalog, Yaku Dex screens | in progress: catalog hosted on GitHub Pages (`Code-Nam/tenpai-api`, `22cf7ff` wires `YAKU_BASE_URL`); plan `docs/plans/2026-09-23-yaku.md` approved 2026-09-23, Tasks 1–6 done 2026-09-23 (catalog fields `114da4a` in tenpai-api; config + dio `b9a6ca3`; model `354af1c`; source + repository `946ce0c`; providers `1e88ae5`; `YakuScreen` device-checked light/dark incl. offline retry, commit pending); Task 7 tests done (25 tests, suite at 124); Task 8 device check + handover in progress |
+| 2 — Yaku | dio + REST yaku catalog, Yaku Dex screens | done 2026-09-23 (`56e9fa1`): catalog on GitHub Pages (`Code-Nam/tenpai-api`, `114da4a`), `YAKU_BASE_URL` via `--dart-define`, `lib/app/app_config.dart`, `lib/yaku/` (model, remote source, repository with failure-dropping cache and tile validation, six providers, `YakuScreen`), chip + input themes in `app_theme.dart`, `hasError` guards on all three data screens; device-checked light/dark incl. offline retry; reviewer pass applied; 29 new tests, suite at 128 |
 | 3 — Scanner | image_picker single shot, fake identifier, scan result card | not started |
 | 4 — Firebase | `firebase_auth` + App Check + Firestore progress (offline persistence on, Security Rules written and tested) replacing the in-memory impl behind the existing repository interfaces; Isar for settings and scan history if not already added | not started |
 | 5 — AI | Firebase AI Logic (`firebase_ai`) behind App Check; explanation + tile identification | not started |
