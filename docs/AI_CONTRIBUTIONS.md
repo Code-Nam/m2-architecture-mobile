@@ -148,6 +148,7 @@ Rules:
 | `lib/app/app_config.dart` | dartdoc | 2026-09-23 | Docs are time-consuming for the author; code stays author-written. |
 | `lib/sensei/sensei_request.dart` | dartdoc | 2026-09-23 | Docs are time-consuming for the author; code stays author-written. |
 | `lib/sensei/sensei_state.dart` | dartdoc | 2026-09-23 | Docs are time-consuming for the author; code stays author-written. |
+| `lib/sensei/sensei_repository.dart` | dartdoc | 2026-09-23 | Docs are time-consuming for the author; code stays author-written. |
 | `lib/shared/models/lesson.dart` | block: `@Assert` on the factory (`const` dropped) | 2026-09-23 | Content invariant from the milestone 1 review; plumbing, no Flutter concept to learn. |
 | `lib/progress/user_progress.dart` | dartdoc; block-free edit 2026-09-23: `statusOf` / `isUnitPlayable` made private (/implement, review finding) | 2026-09-22 | Docs are time-consuming for the author; code stays author-written. |
 | `lib/shared/models/lesson_block.dart` | dartdoc; block: `@Assert` on `quiz` (2026-09-23, `const` dropped on that factory) | 2026-09-22 | Docs are time-consuming for the author; code stays author-written. |
@@ -159,7 +160,7 @@ Rules:
 | `lib/scanner/scanner_screen.dart` | dartdoc | 2026-09-22 | Docs are time-consuming for the author; code stays author-written. |
 | `lib/yaku/yaku_screen.dart` | dartdoc; block-free edit 2026-09-23: search field and tier chips simplified to theme defaults, `_tierLabel` top-level (/implement) | 2026-09-22 | Docs are time-consuming for the author; code stays author-written. |
 | `lib/yaku/yaku_providers.dart` | dartdoc | 2026-09-23 | Docs are time-consuming for the author; code stays author-written. |
-| `lib/scanner/tile_labels.dart` | dartdoc | 2026-09-23 | Docs are time-consuming for the author; code stays author-written. |
+| `lib/shared/models/tile_labels.dart` (moved from `lib/scanner/` 2026-09-23) | dartdoc | 2026-09-23 | Docs are time-consuming for the author; code stays author-written. |
 | `lib/scanner/scan_state.dart` | dartdoc | 2026-09-23 | Docs are time-consuming for the author; code stays author-written. |
 | `lib/yaku/yaku.dart` | dartdoc | 2026-09-23 | Docs are time-consuming for the author; code stays author-written. |
 | `lib/yaku/yaku_repository_impl.dart` | dartdoc; block: tile validation in `_load` (2026-09-23, /implement) | 2026-09-23 | Docs are time-consuming for the author; code stays author-written. |

@@ -166,7 +166,7 @@ reads XP with the registered debug token. Test account `nobody@tenpai.test`
 exists in Auth (delete or keep as demo).
 
 **State on 2026-09-23 (M5 planned):** brainstorming done, plan approved:
-`docs/plans/2026-09-23-sensei.md` + `.tasks.json`. Tasks 0–1 done 2026-09-23 (API enabled, AI monitoring on, `firebase_ai ^4.0.0` added, SDK facts verified and recorded in the plan Context: App Check automatic, `SocketException` for offline, `Schema.enumString` for the tile code); Task 2 done (request/state, config, tokens, colours); Task 3 in progress (repository + identifier); Tasks 4–9 `pending`.
+`docs/plans/2026-09-23-sensei.md` + `.tasks.json`. Tasks 0–1 done 2026-09-23 (API enabled, AI monitoring on, `firebase_ai ^4.0.0` added, SDK facts verified and recorded in the plan Context: App Check automatic, `SocketException` for offline, `Schema.enumString` for the tile code); Task 2 done (request/state, config, tokens, colours); Task 3 done (repository interface, Firebase repository + identifier via /implement; `tile_labels.dart` moved to `lib/shared/models/`); Task 4 in progress (providers + notifier, emulator hand-run); Tasks 5–9 `pending`.
 Decisions: Gemini Developer API backend (Spark); scanner in two calls
 (JSON `{code}` identify, then streamed context); offline without a new
 dependency (network-class failure → offline note, link never pre-dimmed);
