@@ -38,16 +38,15 @@ void main() {
       expect(find.text('login mode=signup'), findsOneWidget);
     });
 
-    testWidgets(
-      '« J\'ai déjà un compte » navigates to login without a mode',
-      (tester) async {
-        await _pumpWelcome(tester);
+    testWidgets('« J\'ai déjà un compte » navigates to login without a mode', (
+      tester,
+    ) async {
+      await _pumpWelcome(tester);
 
-        await tester.tap(find.text("J'ai déjà un compte"));
-        await tester.pumpAndSettle();
+      await tester.tap(find.text("J'ai déjà un compte"));
+      await tester.pumpAndSettle();
 
-        expect(find.text('login mode=null'), findsOneWidget);
-      },
-    );
+      expect(find.text('login mode=null'), findsOneWidget);
+    });
   });
 }

@@ -18,6 +18,9 @@ class FirestoreProfileRepository implements ProfileRepository {
     return data == null ? null : UserProfile.fromMap(data);
   }
 
+  /// Whole-document `set`, called once from onboarding. A second call would
+  /// resend `createdAt` and the rules would refuse it: when a settings
+  /// screen edits the answers, switch to a merge without `createdAt`.
   @override
   Future<void> save(UserProfile profile) =>
       _doc.set({...profile.toMap(), 'createdAt': FieldValue.serverTimestamp()});

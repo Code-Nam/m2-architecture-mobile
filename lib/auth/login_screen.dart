@@ -133,7 +133,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     try {
       await action();
     } on AuthFailure catch (failure) {
-      if (failure != AuthFailure.cancelled) {
+      if (mounted && failure != AuthFailure.cancelled) {
         setState(() => _failure = failure);
       }
     } finally {

@@ -65,7 +65,7 @@ GoRouter createRouter(Ref ref) {
   return GoRouter(
     initialLocation: AppRoutes.splash,
     refreshListenable: refresh,
-    redirect: (_, state) => _redirect(ref, state.uri.path),
+    redirect: (_, state) => _redirect(ref, state.uri),
     routes: [
       GoRoute(path: AppRoutes.splash, builder: (_, _) => const SplashScreen()),
       GoRoute(
@@ -84,9 +84,7 @@ GoRouter createRouter(Ref ref) {
       GoRoute(
         path: AppRoutes.onboardingGoal,
         builder: (_, state) => GoalScreen(
-          level: MahjongLevel.fromWire(
-            state.uri.queryParameters['level'] ?? 'never',
-          ),
+          level: MahjongLevel.fromWire(state.uri.queryParameters['level'])!,
         ),
       ),
       StatefulShellRoute.indexedStack(
@@ -157,9 +155,10 @@ bool _onboarding(String path) => path.startsWith('/onboarding');
 /// Redirect to [target] unless already there (go_router loops otherwise).
 String? _only(String path, String target) => path == target ? null : target;
 
-/// Pure function of auth + profile state and the requested path. Null =
+/// Pure function of auth + profile state and the requested URL. Null =
 /// allowed. Order matters: auth, then profile, then the gates.
-String? _redirect(Ref ref, String path) {
+String? _redirect(Ref ref, Uri uri) {
+  final path = uri.path;
   final auth = ref.read(authStateProvider);
   if (auth.isLoading) return _only(path, AppRoutes.splash);
   if (auth.value == null) {
@@ -170,6 +169,10 @@ String? _redirect(Ref ref, String path) {
     return _only(path, AppRoutes.splash);
   }
   if (profile.value == null) {
+    final level = MahjongLevel.fromWire(uri.queryParameters['level']);
+    if (path == AppRoutes.onboardingGoal && level == null) {
+      return AppRoutes.onboardingLevel;
+    }
     return _onboarding(path) ? null : AppRoutes.onboardingLevel;
   }
   final gated =

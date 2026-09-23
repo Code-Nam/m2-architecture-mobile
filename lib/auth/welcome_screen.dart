@@ -69,7 +69,7 @@ class _TileFan extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => SizedBox(
-    height: TileSize.regular.height * 1.6,
+    height: TileSize.regular.height * AppTokens.fanHeightFactor,
     child: Stack(
       alignment: .center,
       children: [

@@ -43,11 +43,12 @@ service cloud.firestore {
         }
 
         allow read: if isOwner(uid);
-        // First completion creates the document: at most one lesson, its XP.
+        // First completion creates the document: exactly one lesson and its
+        // XP, same bounds as every later step.
         allow create: if isOwner(uid)
           && validProgress(incoming())
-          && incoming().completedLessonIds.size() <= 1
-          && incoming().xp >= 0
+          && incoming().completedLessonIds.size() == 1
+          && incoming().xp >= 1
           && incoming().xp <= 100;
         // Every later write adds exactly one new lesson and 1..100 XP; ids
         // never disappear, XP never goes down.

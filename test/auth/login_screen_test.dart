@@ -23,7 +23,10 @@ Future<FakeAuthRepository> _pumpLogin(
     ProviderScope(
       overrides: [authRepositoryProvider.overrideWithValue(repository)],
       retry: (_, _) => null,
-      child: MaterialApp(theme: lightTheme(), home: LoginScreen(signUp: signUp)),
+      child: MaterialApp(
+        theme: lightTheme(),
+        home: LoginScreen(signUp: signUp),
+      ),
     ),
   );
   await tester.pumpAndSettle();
@@ -66,29 +69,28 @@ void main() {
       },
     );
 
-    testWidgets(
-      'switching to Inscription changes the CTA and submits signUp',
-      (tester) async {
-        final repository = await _pumpLogin(tester, signUp: false);
+    testWidgets('switching to Inscription changes the CTA and submits signUp', (
+      tester,
+    ) async {
+      final repository = await _pumpLogin(tester, signUp: false);
 
-        await tester.tap(find.text('Inscription'));
-        await tester.pumpAndSettle();
+      await tester.tap(find.text('Inscription'));
+      await tester.pumpAndSettle();
 
-        expect(
-          find.widgetWithText(FilledButton, 'Créer un compte'),
-          findsOneWidget,
-        );
+      expect(
+        find.widgetWithText(FilledButton, 'Créer un compte'),
+        findsOneWidget,
+      );
 
-        await tester.enterText(find.byType(TextField).at(0), 'new@b.com');
-        await tester.enterText(find.byType(TextField).at(1), 'secret1');
-        await tester.tap(find.widgetWithText(FilledButton, 'Créer un compte'));
-        await tester.pumpAndSettle();
+      await tester.enterText(find.byType(TextField).at(0), 'new@b.com');
+      await tester.enterText(find.byType(TextField).at(1), 'secret1');
+      await tester.tap(find.widgetWithText(FilledButton, 'Créer un compte'));
+      await tester.pumpAndSettle();
 
-        expect(repository.signUpCalls, [
-          (email: 'new@b.com', password: 'secret1'),
-        ]);
-      },
-    );
+      expect(repository.signUpCalls, [
+        (email: 'new@b.com', password: 'secret1'),
+      ]);
+    });
 
     testWidgets(
       '« Mot de passe oublié ? » with an empty email shows invalidEmail '

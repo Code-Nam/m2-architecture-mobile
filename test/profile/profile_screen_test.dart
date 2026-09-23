@@ -16,7 +16,11 @@ import '../fakes/fake_auth_repository.dart';
 import '../fakes/fake_profile_repository.dart';
 import '../fakes/fake_progress_repository.dart';
 
-const _user = AuthUser(uid: 'u1', email: 'joueuse@example.com', providerId: 'password');
+const _user = AuthUser(
+  uid: 'u1',
+  email: 'joueuse@example.com',
+  providerId: 'password',
+);
 
 Future<FakeAuthRepository> _pumpProfile(WidgetTester tester) async {
   final authRepository = FakeAuthRepository();

@@ -19,10 +19,14 @@ enum MahjongLevel {
   /// String stored in Firestore; the rules whitelist exactly these three.
   final String wireName;
 
-  /// Throws on an unknown string: the rules make that impossible, so a
-  /// throw here means the rules changed and this enum did not.
-  static MahjongLevel fromWire(String s) =>
-      values.firstWhere((v) => v.wireName == s);
+  /// Null for anything the rules would not store, including a hand-typed
+  /// route query; callers decide whether that is a redirect or a bug.
+  static MahjongLevel? fromWire(String? s) {
+    for (final level in values) {
+      if (level.wireName == s) return level;
+    }
+    return null;
+  }
 }
 
 /// What onboarding 03/04 produced. [createdAt] is null between `save` and
@@ -39,9 +43,13 @@ abstract class UserProfile with _$UserProfile {
     DateTime? createdAt,
   }) = _UserProfile;
 
-  /// From `users/{uid}`; a missing or pending `createdAt` reads as null.
+  /// From `users/{uid}`; a missing or pending `createdAt` reads as null. An
+  /// unknown level cannot come from the rules, so it throws like a bad
+  /// authored tile code: data corruption is a bug, not a state.
   factory UserProfile.fromMap(Map<String, Object?> map) => UserProfile(
-    level: MahjongLevel.fromWire(map['level']! as String),
+    level:
+        MahjongLevel.fromWire(map['level'] as String?) ??
+        (throw ArgumentError.value(map['level'], 'level', 'unknown level')),
     dailyGoalMinutes: map['dailyGoalMinutes']! as int,
     createdAt: (map['createdAt'] as Timestamp?)?.toDate(),
   );

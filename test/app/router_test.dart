@@ -53,9 +53,7 @@ Future<FakeAuthRepository> _pumpApp(
         profileRepositoryProvider.overrideWithValue(
           profileRepository ?? FakeProfileRepository(),
         ),
-        progressRepositoryProvider.overrideWithValue(
-          FakeProgressRepository(),
-        ),
+        progressRepositoryProvider.overrideWithValue(FakeProgressRepository()),
         lessonRepositoryProvider.overrideWithValue(
           FakeLessonRepository(_units),
         ),
@@ -80,17 +78,16 @@ void main() {
       expect(find.text('Commencer'), findsOneWidget);
     });
 
-    testWidgets(
-      'a signed-in user with no profile is sent to onboarding',
-      (tester) async {
-        final auth = await _pumpApp(tester);
+    testWidgets('a signed-in user with no profile is sent to onboarding', (
+      tester,
+    ) async {
+      final auth = await _pumpApp(tester);
 
-        auth.emit(_signedInUser);
-        await tester.pumpAndSettle();
+      auth.emit(_signedInUser);
+      await tester.pumpAndSettle();
 
-        expect(find.text('Vous connaissez déjà le mahjong ?'), findsOneWidget);
-      },
-    );
+      expect(find.text('Vous connaissez déjà le mahjong ?'), findsOneWidget);
+    });
 
     testWidgets('a signed-in user with a profile sees the lesson path', (
       tester,
@@ -111,9 +108,7 @@ void main() {
       expect(find.text('Lire les tuiles'), findsOneWidget);
     });
 
-    testWidgets('signing out from the tabs returns to welcome', (
-      tester,
-    ) async {
+    testWidgets('signing out from the tabs returns to welcome', (tester) async {
       final auth = await _pumpApp(
         tester,
         profileRepository: FakeProfileRepository(

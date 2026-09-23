@@ -206,6 +206,12 @@ abstract final class AppTokens {
   /// (about 12.6°); the outer tiles get twice that.
   static const fanTileAngle = 0.22;
 
+  // AI-GENERATED (Claude) BEGIN — fan height, milestone 4 review
+  /// Height of the fan box as a multiple of a regular tile: room for the
+  /// rotated, dropped outer tiles, since `Transform` does not grow layout.
+  static const fanHeightFactor = 1.6;
+  // AI-GENERATED (Claude) END
+
   /// Horizontal distance between fanned tile centres; less than a tile
   /// width so they overlap like a held hand.
   static const fanTileOffset = 44.0;

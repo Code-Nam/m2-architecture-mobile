@@ -27,8 +27,9 @@ class UserProfileNotifier extends AsyncNotifier<UserProfile?> {
   @override
   Future<UserProfile?> build() => ref.watch(profileRepositoryProvider).load();
 
-  /// Called once, from onboarding 04. Sets state from the saved value rather
-  /// than re-reading, so it also works offline (write queued by Firestore).
+  /// Called once, from onboarding 04. Awaits the server ack (sign-up needs
+  /// the network anyway), then sets state from the saved value rather than
+  /// re-reading. The mounted check covers a sign-out during the save.
   Future<void> complete({
     required MahjongLevel level,
     required int dailyGoalMinutes,
@@ -38,6 +39,7 @@ class UserProfileNotifier extends AsyncNotifier<UserProfile?> {
       dailyGoalMinutes: dailyGoalMinutes,
     );
     await ref.read(profileRepositoryProvider).save(profile);
+    if (!ref.mounted) return;
     state = AsyncData(profile);
   }
 }

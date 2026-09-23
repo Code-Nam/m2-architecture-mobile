@@ -42,20 +42,19 @@ void main() {
       expect(cta.onPressed, isNull);
     });
 
-    testWidgets(
-      "tapping 10 min / jour then C'est parti saves the profile",
-      (tester) async {
-        final repository = await _pumpGoal(tester);
+    testWidgets("tapping 10 min / jour then C'est parti saves the profile", (
+      tester,
+    ) async {
+      final repository = await _pumpGoal(tester);
 
-        await tester.tap(find.text('10 min / jour'));
-        await tester.pumpAndSettle();
-        await tester.tap(find.widgetWithText(FilledButton, "C'est parti"));
-        await tester.pumpAndSettle();
+      await tester.tap(find.text('10 min / jour'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.widgetWithText(FilledButton, "C'est parti"));
+      await tester.pumpAndSettle();
 
-        expect(repository.saveCalls, [
-          const UserProfile(level: MahjongLevel.seen, dailyGoalMinutes: 10),
-        ]);
-      },
-    );
+      expect(repository.saveCalls, [
+        const UserProfile(level: MahjongLevel.seen, dailyGoalMinutes: 10),
+      ]);
+    });
   });
 }

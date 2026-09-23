@@ -54,6 +54,13 @@ class _GoalScreenState extends ConsumerState<GoalScreen> {
       await ref
           .read(userProfileProvider.notifier)
           .complete(level: widget.level, dailyGoalMinutes: _minutes!);
+    } on Exception catch (e) {
+      debugPrint('profile save failed: $e');
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Impossible d'enregistrer. Réessayez.")),
+        );
+      }
     } finally {
       if (mounted) setState(() => _busy = false);
     }

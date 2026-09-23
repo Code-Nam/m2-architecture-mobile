@@ -5,7 +5,11 @@ import 'package:tenpai/auth/auth_failure.dart';
 
 void main() {
   group('AuthFailure.fromCode', () {
-    for (final code in ['invalid-credential', 'wrong-password', 'user-not-found']) {
+    for (final code in [
+      'invalid-credential',
+      'wrong-password',
+      'user-not-found',
+    ]) {
       test('maps "$code" to invalidCredentials', () {
         expect(AuthFailure.fromCode(code), AuthFailure.invalidCredentials);
       });

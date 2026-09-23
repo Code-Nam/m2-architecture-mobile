@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:tenpai/progress/progress_repository.dart';
 import 'package:tenpai/progress/user_progress.dart';
 import 'package:tenpai/shared/models/lesson.dart';
@@ -35,16 +36,27 @@ class FirestoreProgressRepository implements ProgressRepository {
   @override
   Future<UserProgress> completeLesson(Lesson lesson) async {
     if (_current.isCompleted(lesson.id)) return _current;
-    unawaited(
-      _doc.set({
-        'completedLessonIds': FieldValue.arrayUnion([lesson.id]),
-        'xp': FieldValue.increment(lesson.xp),
-        'updatedAt': FieldValue.serverTimestamp(),
-      }, SetOptions(merge: true)),
-    );
+    unawaited(_push(lesson));
     return _current = _current.copyWith(
       completedLessonIds: {..._current.completedLessonIds, lesson.id},
       xp: _current.xp + lesson.xp,
     );
+  }
+
+  /// The queued write. If the rules refuse it (a stale [_current] after a
+  /// failed load, an out-of-bounds XP), the local copy would drift from the
+  /// server until the next cold start; re-reading puts the server back in
+  /// charge. Offline, `set` simply waits: no exception, no re-sync.
+  Future<void> _push(Lesson lesson) async {
+    try {
+      await _doc.set({
+        'completedLessonIds': FieldValue.arrayUnion([lesson.id]),
+        'xp': FieldValue.increment(lesson.xp),
+        'updatedAt': FieldValue.serverTimestamp(),
+      }, SetOptions(merge: true));
+    } on FirebaseException catch (e) {
+      debugPrint('progress write rejected (${e.code}): re-syncing');
+      await load();
+    }
   }
 }

@@ -9,10 +9,7 @@ import 'package:tenpai/shared/theme/app_theme.dart';
 GoRouter _buildRouter() => GoRouter(
   initialLocation: '/onboarding/level',
   routes: [
-    GoRoute(
-      path: '/onboarding/level',
-      builder: (_, _) => const LevelScreen(),
-    ),
+    GoRoute(path: '/onboarding/level', builder: (_, _) => const LevelScreen()),
     GoRoute(
       path: '/onboarding/goal',
       builder: (_, state) =>
