@@ -89,8 +89,12 @@ Rules:
 | `android/app/build.gradle.kts` | block: application id | 2026-09-17 | Project tooling and setup so study time goes to Flutter code. |
 | `android/app/src/main/kotlin/io/github/codenam/tenpai/MainActivity.kt` | file (template moved and repackaged) | 2026-09-17 | Project tooling and setup so study time goes to Flutter code. |
 | `lib/main.dart` | file (marker pending: lib/ is author-owned, add the header yourself); dartdoc (2026-09-23) | 2026-09-17 | Project tooling and setup so study time goes to Flutter code. |
-| `lib/app/app.dart` | file (marker pending, as above) | 2026-09-17 | Project tooling and setup so study time goes to Flutter code. |
-| `lib/app/router.dart` | file (marker pending, as above) | 2026-09-17 | Project tooling and setup so study time goes to Flutter code. |
+| `lib/app/splash_screen.dart` | dartdoc | 2026-09-23 | Docs are time-consuming for the author; code stays author-written. |
+| `lib/auth/login_screen.dart` | dartdoc | 2026-09-23 | Docs are time-consuming for the author; code stays author-written. |
+| `lib/onboarding/level_screen.dart` | dartdoc | 2026-09-23 | Docs are time-consuming for the author; code stays author-written. |
+| `lib/onboarding/goal_screen.dart` | dartdoc | 2026-09-23 | Docs are time-consuming for the author; code stays author-written. |
+| `lib/app/app.dart` | file (marker pending, as above); dartdoc (2026-09-22) | 2026-09-17 | Project tooling and setup so study time goes to Flutter code. |
+| `lib/app/router.dart` | file (marker pending, as above); dartdoc (2026-09-22, 2026-09-23) | 2026-09-17 | Project tooling and setup so study time goes to Flutter code. |
 | `lib/shared/theme/app_colors.dart` | blocks: _Palette consts; AppColors fields + light/dark instances (schemes are author-written) | 2026-09-17 | Tedious data entry, no Flutter concept to learn. |
 | `lib/shared/theme/app_theme.dart` | blocks: _textTheme, `_chipTheme` / `_inputTheme` (2026-09-23, /implement); theme builders are author-written | 2026-09-17 | Tedious data entry, no Flutter concept to learn. |
 | `.vscode/launch.json` | file (no marker) | 2026-09-18 | Editor launch config, no Flutter concept to learn. |
@@ -118,7 +122,6 @@ Rules:
 | `test/fakes/fake_progress_repository.dart` | file | 2026-09-22 | Test scaffolding is tedious and teaches no Flutter concept; the code under test is author-written. |
 | `test/learning/lesson_providers_test.dart` | file | 2026-09-22 | Test scaffolding is tedious and teaches no Flutter concept; the code under test is author-written. |
 | `test/progress/progress_providers_test.dart` | file | 2026-09-22 | Test scaffolding is tedious and teaches no Flutter concept; the code under test is author-written. |
-| `lib/app/app.dart` | dartdoc | 2026-09-22 | Docs are time-consuming for the author; code stays author-written. |
 | `lib/learning/lesson_asset_source.dart` | dartdoc | 2026-09-22 | Docs are time-consuming for the author; code stays author-written. |
 | `lib/learning/lesson_providers.dart` | dartdoc | 2026-09-22 | Docs are time-consuming for the author; code stays author-written. |
 | `lib/learning/lesson_repository.dart` | dartdoc | 2026-09-22 | Docs are time-consuming for the author; code stays author-written. |
@@ -147,7 +150,6 @@ Rules:
 | `lib/profile/profile_screen.dart` | dartdoc | 2026-09-22 | Docs are time-consuming for the author; code stays author-written. |
 | `lib/scanner/scanner_screen.dart` | dartdoc | 2026-09-22 | Docs are time-consuming for the author; code stays author-written. |
 | `lib/yaku/yaku_screen.dart` | dartdoc; block-free edit 2026-09-23: search field and tier chips simplified to theme defaults, `_tierLabel` top-level (/implement) | 2026-09-22 | Docs are time-consuming for the author; code stays author-written. |
-| `lib/app/router.dart` | dartdoc | 2026-09-22 | Docs are time-consuming for the author; code stays author-written. |
 | `lib/yaku/yaku_providers.dart` | dartdoc | 2026-09-23 | Docs are time-consuming for the author; code stays author-written. |
 | `lib/scanner/tile_labels.dart` | dartdoc | 2026-09-23 | Docs are time-consuming for the author; code stays author-written. |
 | `lib/scanner/scan_state.dart` | dartdoc | 2026-09-23 | Docs are time-consuming for the author; code stays author-written. |

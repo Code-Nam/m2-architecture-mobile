@@ -34,6 +34,11 @@ Status truth for the project. Update this file and the matching
   `flutter create . --platforms=<name>` when a platform is wanted.
 - **2026-09-18 — Lesson domain models live in `lib/shared/models/`** next to
   `tile.dart` (user). Repositories/providers/screens placement still open.
+- **2026-09-23 — Router split (user).** `lib/app/router.dart` keeps
+  `AppRoutes`, the routes and the redirect behind `createRouter(Ref)`;
+  `lib/app/app_providers.dart` holds `routerProvider`. Reason: the
+  `*_providers.dart` rule from `check_conventions`, without a routes file
+  named "providers".
 - **2026-09-22 — Flat feature folders (user).** One folder per feature
   directly under `lib/` (`lib/learning/`, `lib/progress/`, `lib/yaku/`,
   `lib/scanner/`, `lib/profile/`), no `features/` wrapper, no layer
@@ -147,7 +152,11 @@ uid; in-memory repository deleted; suite 150). Task 5 done 2026-09-23 (`firestor
 `firebase/rules-test/` node harness, 17 emulator tests, deployed; both written
 by Claude at the author's request). Run:
 `firebase emulators:exec --only firestore "npm --prefix firebase/rules-test test"`.
-**Resume at Task 6** (router as provider + auth/onboarding redirect). Decisions in the
+Task 6 done 2026-09-23 (`createRouter(Ref)` + `_redirect` in `router.dart`,
+`routerProvider` in new `lib/app/app_providers.dart` because providers live
+in `*_providers.dart`; `SplashScreen`; placeholders for welcome / login /
+level / goal; device: splash → welcome). **Resume at Task 7** (welcome +
+login screens, handoff 01/02). Decisions in the
 plan's Context section.
 
 **Earlier state on 2026-09-22:** lesson slice Tasks 1-6 done (`lib/shared/models/`
