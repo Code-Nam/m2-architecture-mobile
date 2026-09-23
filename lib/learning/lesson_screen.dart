@@ -9,6 +9,7 @@ import 'package:tenpai/shared/models/lesson_block.dart';
 import 'package:tenpai/shared/models/tile.dart';
 import 'package:tenpai/shared/theme/app_colors.dart';
 import 'package:tenpai/shared/theme/app_tokens.dart';
+import 'package:tenpai/shared/widgets/primary_button_widget.dart';
 import 'package:tenpai/shared/widgets/retry_widget.dart';
 import 'package:tenpai/shared/widgets/tile_state.dart';
 import 'package:tenpai/shared/widgets/tile_widget.dart';
@@ -152,7 +153,10 @@ class _SoonBlockView extends StatelessWidget {
           const Spacer(),
           SafeArea(
             top: false,
-            child: _PrimaryButton(label: 'Continuer', onPressed: onContinue),
+            child: PrimaryButtonWidget(
+              label: 'Continuer',
+              onPressed: onContinue,
+            ),
           ),
         ],
       ),
@@ -194,39 +198,15 @@ class _ExplanationBlockView extends StatelessWidget {
           const Spacer(),
           SafeArea(
             top: false,
-            child: _PrimaryButton(label: 'Continuer', onPressed: onContinue),
+            child: PrimaryButtonWidget(
+              label: 'Continuer',
+              onPressed: onContinue,
+            ),
           ),
         ],
       ),
     );
   }
-}
-
-/// The one full-width CTA of every lesson screen (handoff: one primary action
-/// per screen). `Size.fromHeight` already means infinite width, and the
-/// explicit shape is needed because a FilledButton defaults to a stadium.
-class _PrimaryButton extends StatelessWidget {
-  const _PrimaryButton({required this.label, this.onPressed, this.color});
-
-  /// French, verbatim from the handoff (« Continuer », « Vérifier »).
-  final String label;
-
-  /// Null renders the disabled style: « Vérifier » before an option is picked.
-  final VoidCallback? onPressed;
-
-  /// Null keeps the theme primary; the error sheet passes `scheme.error`.
-  final Color? color;
-
-  @override
-  Widget build(BuildContext context) => FilledButton(
-    onPressed: onPressed,
-    style: FilledButton.styleFrom(
-      backgroundColor: color,
-      minimumSize: const Size.fromHeight(AppTokens.buttonHeight),
-      shape: const RoundedRectangleBorder(borderRadius: AppTokens.radiusCard),
-    ),
-    child: Text(label),
-  );
 }
 
 /// Handoff screens 7–8. Reads [session] only; every change goes through the
@@ -264,7 +244,7 @@ class _QuizBlockView extends ConsumerWidget {
               const Spacer(),
               SafeArea(
                 top: false,
-                child: _PrimaryButton(
+                child: PrimaryButtonWidget(
                   label: 'Vérifier',
                   onPressed:
                       session.selectedOption == null || session.isAnswered
@@ -349,7 +329,7 @@ class _FeedbackSheet extends StatelessWidget {
               const SizedBox(height: AppTokens.space1),
               Text(line, style: theme.textTheme.bodyMedium),
               const SizedBox(height: AppTokens.space2),
-              _PrimaryButton(
+              PrimaryButtonWidget(
                 label: 'Continuer',
                 onPressed: onContinue,
                 color: isCorrect ? null : scheme.error,
