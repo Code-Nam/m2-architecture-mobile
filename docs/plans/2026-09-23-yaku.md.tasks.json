@@ -55,21 +55,21 @@
     {
       "id": 7,
       "subject": "Task 7: Tests (test-writer agent)",
-      "status": "in_progress",
+      "status": "completed",
       "blockedBy": [
         6
       ],
-      "description": "**Files:** see plan Layout\n**Goal:** test/yaku/yaku_test.dart (JSON), test/yaku/yaku_repository_impl_test.dart with test/fakes/fake_http_client_adapter.dart (hand-written HttpClientAdapter serving canned responses), test/yaku/yaku_providers_test.dart with test/fakes/fake_yaku_repository.dart, test/yaku/yaku_screen_test.dart (search, chips, locked rendering, retry). ProviderScope/ProviderContainer.test with retry: (_, _) => null. No mocktail.\n**Acceptance Criteria:** flutter test green; fakes under test/fakes/, every new file registered\n**Verify:** flutter test\n```json:metadata\n{\"verifyCommand\": \"flutter test\", \"acceptanceCriteria\": [\"flutter test green\", \"fakes under test/fakes/, every new file registered\"], \"modelTier\": \"standard\", \"owner\": \"test-writer agent\"}\n```"
+      "description": "**Files:** see plan Layout\n**Goal:** test/yaku/yaku_test.dart (JSON), test/yaku/yaku_repository_impl_test.dart with test/fakes/fake_http_client_adapter.dart (hand-written HttpClientAdapter serving canned responses), test/yaku/yaku_providers_test.dart with test/fakes/fake_yaku_repository.dart, test/yaku/yaku_screen_test.dart (search, chips, locked rendering, retry). ProviderScope/ProviderContainer.test with retry: (_, _) => null. No mocktail.\n**Acceptance Criteria:** flutter test green; fakes under test/fakes/, every new file registered\n**Verify:** flutter test\n```json:metadata\n{\"verifyCommand\": \"flutter test\", \"acceptanceCriteria\": [\"flutter test green\", \"fakes under test/fakes/, every new file registered\"], \"modelTier\": \"standard\", \"owner\": \"test-writer agent\"}\n```\n**Done 2026-09-23** (test-writer; 25 tests, suite at 124)."
     },
     {
       "id": 8,
       "subject": "Task 8: Device check + handover",
-      "status": "pending",
+      "status": "in_progress",
       "blockedBy": [
         7
       ],
       "description": "**Files:** see plan Layout\n**Goal:** Real endpoint on the emulator: 20 cards; search « tan » → Tanyao; chip Rares → 7; complete unit 1 → its yakus unlock; airplane mode → « Réessayer » → back online → recovers. Screenshots 13 light + dark vs handoff. flutter-reviewer pass on lib/yaku/ + app_config. ROADMAP milestone 2 row + next-session block (M3 scanner next), deviations listed. tasks.json done with the commit hash.\n**Acceptance Criteria:** ROADMAP + tasks.json say done with the commit hash\n**Verify:** flutter analyze && flutter test && dart run tool/check_conventions.dart, then visual\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && flutter test && dart run tool/check_conventions.dart, then visual\", \"acceptanceCriteria\": [\"ROADMAP + tasks.json say done with the commit hash\"], \"modelTier\": \"standard\", \"owner\": \"user (Claude drives adb)\"}\n```"
     }
   ],
-  "lastUpdated": "2026-09-23T12:06:09.315774+00:00"
+  "lastUpdated": "2026-09-23T12:18:10.600428+00:00"
 }

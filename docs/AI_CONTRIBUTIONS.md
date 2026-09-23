@@ -151,6 +151,12 @@ Rules:
 | `test/shared/models/lesson_block_test.dart` | file | 2026-09-23 | Test scaffolding is tedious and teaches no Flutter concept; the code under test is author-written. |
 | `test/learning/lesson_path_screen_test.dart` | file | 2026-09-23 | Test scaffolding is tedious and teaches no Flutter concept; the code under test is author-written. |
 | `test/learning/lesson_screen_test.dart` | file | 2026-09-23 | Test scaffolding is tedious and teaches no Flutter concept; the code under test is author-written. |
+| `test/yaku/yaku_screen_test.dart` | file | 2026-09-23 | Test scaffolding is tedious and teaches no Flutter concept; the code under test is author-written. |
+| `test/yaku/yaku_providers_test.dart` | file | 2026-09-23 | Test scaffolding is tedious and teaches no Flutter concept; the code under test is author-written. |
+| `test/yaku/yaku_repository_impl_test.dart` | file | 2026-09-23 | Test scaffolding is tedious and teaches no Flutter concept; the code under test is author-written. |
+| `test/yaku/yaku_test.dart` | file | 2026-09-23 | Test scaffolding is tedious and teaches no Flutter concept; the code under test is author-written. |
+| `test/fakes/fake_yaku_repository.dart` | file | 2026-09-23 | Test scaffolding is tedious and teaches no Flutter concept; the code under test is author-written. |
+| `test/fakes/fake_http_client_adapter.dart` | file | 2026-09-23 | Test scaffolding is tedious and teaches no Flutter concept; the code under test is author-written. |
 | `lib/shared/widgets/retry_widget.dart` | dartdoc | 2026-09-22 | Docs are time-consuming for the author; code stays author-written. |
 
 Not listed: `design/handoff/` (designer's export, not code), `assets/fonts/`
