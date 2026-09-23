@@ -138,8 +138,11 @@ Task 1 done 2026-09-23 (`firebase_core` 4.15, `firebase_auth` 6.7,
 `cloud_firestore` 6.10, `firebase_app_check` 0.4.8; `main.dart` boots Firebase
 + App Check debug provider; token registered). Task 2 done 2026-09-23 (`lib/auth/`: `AuthUser`, `AuthFailure` enum with
 French copy + `fromCode`, `AuthRepository`, `FirebaseAuthRepository` with one
-`_guard`, `authRepositoryProvider` + `authStateProvider`). **Resume at Task 3**
-(profile layer in `lib/profile/`). Decisions in the
+`_guard`, `authRepositoryProvider` + `authStateProvider`). Task 3 done 2026-09-23 (`lib/profile/`: `MahjongLevel` + `UserProfile`
+with hand mappers, `ProfileRepository`, Firestore impl on `users/{uid}` with a
+server `createdAt`, `profileRepositoryProvider` keyed on the uid +
+`userProfileProvider.complete`). **Resume at Task 4** (Firestore progress
+repository, delete the in-memory one). Decisions in the
 plan's Context section.
 
 **Earlier state on 2026-09-22:** lesson slice Tasks 1-6 done (`lib/shared/models/`
