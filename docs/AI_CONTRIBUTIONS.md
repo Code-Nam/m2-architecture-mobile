@@ -114,7 +114,6 @@ Rules:
 | `test/fakes/fake_asset_bundle.dart` | file | 2026-09-22 | Test scaffolding is tedious and teaches no Flutter concept; the code under test is author-written. |
 | `test/learning/lesson_repository_impl_test.dart` | file | 2026-09-22 | Test scaffolding is tedious and teaches no Flutter concept; the code under test is author-written. |
 | `test/progress/user_progress_test.dart` | file | 2026-09-22 | Test scaffolding is tedious and teaches no Flutter concept; the code under test is author-written. |
-| `test/progress/in_memory_progress_repository_test.dart` | file | 2026-09-22 | Test scaffolding is tedious and teaches no Flutter concept; the code under test is author-written. |
 | `test/fakes/fake_lesson_repository.dart` | file | 2026-09-22 | Test scaffolding is tedious and teaches no Flutter concept; the code under test is author-written. |
 | `test/fakes/fake_progress_repository.dart` | file | 2026-09-22 | Test scaffolding is tedious and teaches no Flutter concept; the code under test is author-written. |
 | `test/learning/lesson_providers_test.dart` | file | 2026-09-22 | Test scaffolding is tedious and teaches no Flutter concept; the code under test is author-written. |
@@ -125,7 +124,6 @@ Rules:
 | `lib/learning/lesson_repository.dart` | dartdoc | 2026-09-22 | Docs are time-consuming for the author; code stays author-written. |
 | `lib/learning/lesson_repository_impl.dart` | dartdoc | 2026-09-22 | Docs are time-consuming for the author; code stays author-written. |
 | `lib/learning/lesson_session.dart` | dartdoc | 2026-09-22 | Docs are time-consuming for the author; code stays author-written. |
-| `lib/progress/in_memory_progress_repository.dart` | dartdoc | 2026-09-22 | Docs are time-consuming for the author; code stays author-written. |
 | `lib/progress/progress_providers.dart` | dartdoc | 2026-09-22 | Docs are time-consuming for the author; code stays author-written. |
 | `lib/progress/progress_repository.dart` | dartdoc | 2026-09-22 | Docs are time-consuming for the author; code stays author-written. |
 | `docs/plans/2026-09-23-scanner.md` | file | 2026-09-23 | Plan written from the author's brainstorming answers; the author builds it. |

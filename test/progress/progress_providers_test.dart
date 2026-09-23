@@ -2,7 +2,8 @@
 // Why: Test scaffolding is tedious and teaches no Flutter concept; the code under test is author-written.
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:tenpai/progress/in_memory_progress_repository.dart';
+import 'package:tenpai/auth/auth_providers.dart';
+import 'package:tenpai/auth/auth_user.dart';
 import 'package:tenpai/progress/progress_providers.dart';
 import 'package:tenpai/progress/user_progress.dart';
 import 'package:tenpai/shared/models/lesson.dart';
@@ -18,12 +19,22 @@ final _lesson = Lesson(
 );
 
 void main() {
-  test('progressRepositoryProvider defaults to the in-memory repository', () {
-    final container = ProviderContainer.test();
+  test('progressRepositoryProvider throws while nobody is signed in', () {
+    // No Firebase in tests: the auth stream is faked as "signed out".
+    final container = ProviderContainer.test(
+      overrides: [
+        authStateProvider.overrideWith((_) => Stream<AuthUser?>.value(null)),
+      ],
+    );
 
+    // Riverpod 3 wraps a throwing `create` in a ProviderException that only
+    // `package:riverpod/misc.dart` exports (a transitive dependency here),
+    // so the guard is matched by its message.
     expect(
-      container.read(progressRepositoryProvider),
-      isA<InMemoryProgressRepository>(),
+      () => container.read(progressRepositoryProvider),
+      throwsA(
+        predicate<Object>((e) => '$e'.contains('needs a signed-in user')),
+      ),
     );
   });
 
@@ -61,27 +72,4 @@ void main() {
       );
     });
   });
-
-  test(
-    'completeLesson through the real in-memory repository adds XP once',
-    () async {
-      final container = ProviderContainer.test(
-        overrides: [
-          progressRepositoryProvider.overrideWithValue(
-            InMemoryProgressRepository(),
-          ),
-        ],
-      );
-
-      await container.read(userProgressProvider.future);
-      final notifier = container.read(userProgressProvider.notifier);
-      await notifier.completeLesson(_lesson);
-      await notifier.completeLesson(_lesson);
-
-      expect(
-        container.read(userProgressProvider),
-        const AsyncData(UserProgress(completedLessonIds: {'l1'}, xp: 10)),
-      );
-    },
-  );
 }

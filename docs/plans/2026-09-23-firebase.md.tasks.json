@@ -38,16 +38,16 @@
     {
       "id": 4,
       "subject": "Task 4: Firestore progress repository",
-      "status": "in_progress",
+      "status": "completed",
       "blockedBy": [
         1
       ],
-      "description": "**Files:** see plan Layout\n**Goal:** `lib/progress/firestore_progress_repository.dart`: `FirestoreProgressRepository(this._db, this._uid)` on `users/{uid}/progress/current`; `load()` = get, missing doc → empty; `completeLesson` guards isCompleted then one merge set with arrayUnion + FieldValue.increment + serverTimestamp, returns the value computed locally. `progressRepositoryProvider` builds it from the uid; delete `in_memory_progress_repository.dart` (tests use FakeProgressRepository).\n**Acceptance Criteria:** completing a lesson creates users/{uid}/progress/current in the console; airplane mode: completion shows locally, syncs when back online; restart keeps progress\n**Verify:** flutter analyze && dart run tool/check_conventions.dart, then device\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && dart run tool/check_conventions.dart, then device\", \"acceptanceCriteria\": [\"completing a lesson creates users/{uid}/progress/current in the console\", \"airplane mode: completion shows locally, syncs when back online\", \"restart keeps progress\"], \"modelTier\": \"standard\", \"owner\": \"user\"}\n```"
+      "description": "**Files:** see plan Layout\n**Goal:** `lib/progress/firestore_progress_repository.dart`: `FirestoreProgressRepository(this._db, this._uid)` on `users/{uid}/progress/current`; `load()` = get, missing doc → empty; `completeLesson` guards isCompleted then one merge set with arrayUnion + FieldValue.increment + serverTimestamp, returns the value computed locally. `progressRepositoryProvider` builds it from the uid; delete `in_memory_progress_repository.dart` (tests use FakeProgressRepository).\n**Acceptance Criteria:** completing a lesson creates users/{uid}/progress/current in the console; airplane mode: completion shows locally, syncs when back online; restart keeps progress\n**Verify:** flutter analyze && dart run tool/check_conventions.dart, then device\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && dart run tool/check_conventions.dart, then device\", \"acceptanceCriteria\": [\"completing a lesson creates users/{uid}/progress/current in the console\", \"airplane mode: completion shows locally, syncs when back online\", \"restart keeps progress\"], \"modelTier\": \"standard\", \"owner\": \"user\"}\n```\n**Done:** 2026-09-23 (`FirestoreProgressRepository`, fire-and-forget merge write, provider keyed on the uid; in-memory repository and its test deleted; device acceptance deferred to Task 11 since no route reaches a lesson before Task 6)."
     },
     {
       "id": 5,
       "subject": "Task 5: Security Rules (user) + emulator tests (Claude)",
-      "status": "pending",
+      "status": "in_progress",
       "blockedBy": [
         4
       ],
@@ -112,5 +112,5 @@
       "description": "**Files:** see plan Layout\n**Goal:** Sign-up → level → goal → tabs; lesson completion in the console; sign-out → welcome; sign-in → tabs; Google sign-in; offline completion queued then synced; App Check enforcement on for Firestore, app still works; screenshots 01–04 + 18 light/dark. flutter-reviewer on lib/auth, lib/onboarding, lib/profile, progress repository, router. ROADMAP milestone 4 row + state block + deviations, README fix (google-services line, setup steps), tasks.json done with hash.\n**Acceptance Criteria:** ROADMAP + tasks.json say done with the commit hash; reviewer findings applied\n**Verify:** flutter analyze && flutter test && dart run tool/check_conventions.dart, then visual\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && flutter test && dart run tool/check_conventions.dart, then visual\", \"acceptanceCriteria\": [\"ROADMAP + tasks.json say done with the commit hash\", \"reviewer findings applied\"], \"modelTier\": \"standard\", \"owner\": \"user (Claude drives adb)\"}\n```"
     }
   ],
-  "lastUpdated": "2026-09-23T17:45:18.938788+00:00"
+  "lastUpdated": "2026-09-23T17:55:43.725516+00:00"
 }
