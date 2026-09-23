@@ -123,7 +123,12 @@ in `AppTokens`. Verified on the emulator light + dark: shutter → camera2 →
 result or failure sheet; cancel → viewfinder. Gotcha met: hot reload cannot
 register a native plugin added after the build (image_picker threw, caught
 as notFound); `flutter run` again fixes it; catch now `debugPrint`s.
-**Resume at Task 6:** test-writer for `test/scanner/*` + fake photo source. Isar (settings, scan
+Task 6 done (2026-09-23): `test/scanner/{scan_state,tile_labels,
+fake_tile_identifier,scanner_providers,scanner_screen}_test.dart` +
+`test/fakes/{fake_tile_photo_source,fake_tile_identifier}.dart`
+(`ScriptedTileIdentifier`, to avoid the clash with lib's fake). 27 scanner
+tests. **Resume at Task 7:** flutter-reviewer on `lib/scanner/` + shared
+button, ROADMAP milestone 3 row + deviations, tasks.json done with hash. Isar (settings, scan
 history, cached catalog) is M4 with Firebase.
 
 **Earlier state on 2026-09-22:** lesson slice Tasks 1-6 done (`lib/shared/models/`
