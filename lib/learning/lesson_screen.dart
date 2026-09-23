@@ -257,7 +257,8 @@ class _QuizBlockView extends ConsumerWidget {
                 top: false,
                 child: _PrimaryButton(
                   label: 'Vérifier',
-                  onPressed: session.selectedOption == null
+                  onPressed:
+                      session.selectedOption == null || session.isAnswered
                       ? null
                       : notifier.check,
                 ),

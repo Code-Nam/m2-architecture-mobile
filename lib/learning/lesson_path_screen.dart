@@ -30,7 +30,10 @@ class LessonPathScreen extends ConsumerWidget {
           _Path(units: units, progress: progress),
         (AsyncError(), _) || (_, AsyncError()) => RetryWidget(
           message: 'Impossible de charger le parcours',
-          onRetry: () => ref.invalidate(unitsProvider),
+          onRetry: () {
+            ref.invalidate(unitsProvider);
+            ref.invalidate(userProgressProvider);
+          },
         ),
         _ => const SizedBox.shrink(),
       },

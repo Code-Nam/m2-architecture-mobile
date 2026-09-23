@@ -15,7 +15,14 @@ class LessonRepositoryImpl implements LessonRepository {
   Future<List<Unit>>? _units;
 
   @override
-  Future<List<Unit>> units() => _units ??= _load();
+  Future<List<Unit>> units() async {
+    try {
+      return await (_units ??= _load());
+    } catch (_) {
+      _units = null;
+      rethrow;
+    }
+  }
 
   Future<List<Unit>> _load() async =>
       (await _source.loadUnits()).map(Unit.fromJson).toList();
