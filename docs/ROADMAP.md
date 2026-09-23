@@ -136,8 +136,10 @@ firestore` files at the root; `flutterfire configure` could not see the project,
 so `lib/firebase_options.dart` was written by hand from google-services.json).
 Task 1 done 2026-09-23 (`firebase_core` 4.15, `firebase_auth` 6.7,
 `cloud_firestore` 6.10, `firebase_app_check` 0.4.8; `main.dart` boots Firebase
-+ App Check debug provider; token registered). **Resume at Task 2** (auth
-layer: `lib/auth/` model, failure, repository, impl, providers). Decisions in the
++ App Check debug provider; token registered). Task 2 done 2026-09-23 (`lib/auth/`: `AuthUser`, `AuthFailure` enum with
+French copy + `fromCode`, `AuthRepository`, `FirebaseAuthRepository` with one
+`_guard`, `authRepositoryProvider` + `authStateProvider`). **Resume at Task 3**
+(profile layer in `lib/profile/`). Decisions in the
 plan's Context section.
 
 **Earlier state on 2026-09-22:** lesson slice Tasks 1-6 done (`lib/shared/models/`

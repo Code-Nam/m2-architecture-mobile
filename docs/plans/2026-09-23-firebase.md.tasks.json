@@ -20,16 +20,16 @@
     {
       "id": 2,
       "subject": "Task 2: Auth layer (model, failure, repository, impl, providers)",
-      "status": "in_progress",
+      "status": "completed",
       "blockedBy": [
         1
       ],
-      "description": "**Files:** see plan Layout\n**Goal:** `lib/auth/auth_user.dart` (freezed: uid, email, providerId), `auth_failure.dart` (enum invalidCredentials/emailInUse/weakPassword/invalidEmail/network/cancelled/unknown, French `message`, `fromCode`), `auth_repository.dart` (`Stream<AuthUser?> authState()`, `signIn`, `signUp`, `signInWithGoogle`, `sendPasswordReset`, `signOut`; throws AuthFailure only), `firebase_auth_repository.dart` (`FirebaseAuthRepository(this._auth)`), `auth_providers.dart` (`authRepositoryProvider`, `authStateProvider = StreamProvider<AuthUser?>`).\n**Acceptance Criteria:** unit test with a fake: codes map to failures; authStateProvider emits the fake's stream\n**Verify:** flutter analyze && dart run tool/check_conventions.dart\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && dart run tool/check_conventions.dart\", \"acceptanceCriteria\": [\"unit test with a fake: codes map to failures\", \"authStateProvider emits the fake's stream\"], \"modelTier\": \"standard\", \"owner\": \"user\"}\n```"
+      "description": "**Files:** see plan Layout\n**Goal:** `lib/auth/auth_user.dart` (freezed: uid, email, providerId), `auth_failure.dart` (enum invalidCredentials/emailInUse/weakPassword/invalidEmail/network/cancelled/unknown, French `message`, `fromCode`), `auth_repository.dart` (`Stream<AuthUser?> authState()`, `signIn`, `signUp`, `signInWithGoogle`, `sendPasswordReset`, `signOut`; throws AuthFailure only), `firebase_auth_repository.dart` (`FirebaseAuthRepository(this._auth)`), `auth_providers.dart` (`authRepositoryProvider`, `authStateProvider = StreamProvider<AuthUser?>`).\n**Acceptance Criteria:** unit test with a fake: codes map to failures; authStateProvider emits the fake's stream\n**Verify:** flutter analyze && dart run tool/check_conventions.dart\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && dart run tool/check_conventions.dart\", \"acceptanceCriteria\": [\"unit test with a fake: codes map to failures\", \"authStateProvider emits the fake's stream\"], \"modelTier\": \"standard\", \"owner\": \"user\"}\n```\n**Done:** 2026-09-23 (`lib/auth/{auth_user,auth_failure,auth_repository,firebase_auth_repository,auth_providers}.dart`; unit tests come with Task 10)."
     },
     {
       "id": 3,
       "subject": "Task 3: Profile layer (model, repository, Firestore impl, providers)",
-      "status": "pending",
+      "status": "in_progress",
       "blockedBy": [
         1
       ],
@@ -112,5 +112,5 @@
       "description": "**Files:** see plan Layout\n**Goal:** Sign-up → level → goal → tabs; lesson completion in the console; sign-out → welcome; sign-in → tabs; Google sign-in; offline completion queued then synced; App Check enforcement on for Firestore, app still works; screenshots 01–04 + 18 light/dark. flutter-reviewer on lib/auth, lib/onboarding, lib/profile, progress repository, router. ROADMAP milestone 4 row + state block + deviations, README fix (google-services line, setup steps), tasks.json done with hash.\n**Acceptance Criteria:** ROADMAP + tasks.json say done with the commit hash; reviewer findings applied\n**Verify:** flutter analyze && flutter test && dart run tool/check_conventions.dart, then visual\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && flutter test && dart run tool/check_conventions.dart, then visual\", \"acceptanceCriteria\": [\"ROADMAP + tasks.json say done with the commit hash\", \"reviewer findings applied\"], \"modelTier\": \"standard\", \"owner\": \"user (Claude drives adb)\"}\n```"
     }
   ],
-  "lastUpdated": "2026-09-23T17:20:12.107365+00:00"
+  "lastUpdated": "2026-09-23T17:31:48.713650+00:00"
 }
