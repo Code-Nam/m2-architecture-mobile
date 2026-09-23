@@ -56,8 +56,12 @@ Status truth for the project. Update this file and the matching
 
 ## Next session starts here
 
-**State on 2026-09-23:** milestone 1 lesson slice complete, Tasks 1–10 of
-`docs/plans/2026-09-18-lesson-slice.md` done. Play path: Apprendre tab →
+**State on 2026-09-23:** milestone 1 lesson slice complete at `69b74f0`, Tasks
+1–10 of `docs/plans/2026-09-18-lesson-slice.md` done. Review pass applied:
+`units()` no longer caches a failed load, path retry invalidates both
+providers, « Vérifier » disables once answered, freezed `@Assert`s on
+`Lesson.blocks` and `quiz.options` (those two factories are no longer
+`const`), `statusOf` / `isUnitPlayable` private. Play path: Apprendre tab →
 unit node → `/lesson/:id` (`lib/learning/lesson_screen.dart`: progress bar,
 explanation / quiz / « Bientôt » views, 2×2 option grid, feedback sheet
 slid in with `AnimatedSlide`) → last « Continuer » records the completion in
@@ -225,7 +229,7 @@ Plan: [docs/plans/2026-09-17-project-setup.md](plans/2026-09-17-project-setup.md
 
 | Milestone | Scope | Status |
 |-----------|-------|--------|
-| 1 — Architecture holds | Tile model + widget, learning vertical slice from JSON asset, in-memory progress, shell routes, tests | in progress: tile model + widget + tests done 2026-09-18 (`b105eb7`); lesson slice plan approved 2026-09-18, Tasks 1-5 (lesson domain, unit 1 asset, `LessonRepository` + asset source + impl in `lib/learning/`, `UserProgress` + `ProgressRepository` + in-memory impl in `lib/progress/`, providers + `LessonSession` in `*_providers.dart`, tab shell + placeholders in `lib/app/router.dart`, `LessonPathScreen` with one node per unit) done 2026-09-22, Task 8 (`LessonScreen` + `/lesson/:id` route) next |
+| 1 — Architecture holds | Tile model + widget, learning vertical slice from JSON asset, in-memory progress, shell routes, tests | done 2026-09-23 (`69b74f0`): tile plan `b105eb7`; lesson slice Tasks 1–10 (`lib/shared/models/` lesson domain, six unit assets, `lib/learning/` repository + providers + `LessonPathScreen` + `LessonScreen`, `lib/progress/` in-memory progress, tab shell + `/lesson/:id`), device-checked light + dark vs handoff 05–08, flutter-reviewer pass applied (`06c5a64`, `69b74f0`), 99 tests |
 | 2 — Yaku | dio + REST yaku catalog, Yaku Dex screens | not started |
 | 3 — Scanner | image_picker single shot, fake identifier, scan result card | not started |
 | 4 — Firebase | `firebase_auth` + App Check + Firestore progress (offline persistence on, Security Rules written and tested) replacing the in-memory impl behind the existing repository interfaces; Isar for settings and scan history if not already added | not started |
