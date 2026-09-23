@@ -11,14 +11,14 @@
     {
       "id": 2,
       "subject": "Task 2: ScanState (freezed sealed) + tile labels",
-      "status": "pending",
+      "status": "completed",
       "blockedBy": [],
-      "description": "**Files:** see plan Layout\n**Goal:** `lib/scanner/scan_state.dart`: `@freezed sealed class ScanState` with `idle`, `analysing`, `found(Tile tile)`, `notFound`; build_runner. `lib/scanner/tile_labels.dart`: `tileName(Tile)` (« 5 de cercles rouge », « Vent d'est », « Dragon blanc »…) and `tileFamily(Tile)` (« famille des cercles », « honneurs »), pure switches on `TileSuit`/number with no default.\n**Acceptance Criteria:** tileName(Tile.parse('5pr')) == '5 de cercles rouge'; tileName(Tile.parse('1z')) == \"Vent d'est\"; switch exhaustive, analyze clean\n**Verify:** flutter analyze && dart run tool/check_conventions.dart && dart run build_runner build -d\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && dart run tool/check_conventions.dart && dart run build_runner build -d\", \"acceptanceCriteria\": [\"tileName(Tile.parse('5pr')) == '5 de cercles rouge'\", \"tileName(Tile.parse('1z')) == \\\"Vent d'est\\\"\", \"switch exhaustive, analyze clean\"], \"modelTier\": \"standard\", \"owner\": \"user\"}\n```"
+      "description": "**Files:** see plan Layout\n**Goal:** `lib/scanner/scan_state.dart`: `@freezed sealed class ScanState` with `idle`, `analysing`, `found(Tile tile)`, `notFound`; build_runner. `lib/scanner/tile_labels.dart`: `tileName(Tile)` (« 5 de cercles rouge », « Vent d'est », « Dragon blanc »…) and `tileFamily(Tile)` (« famille des cercles », « honneurs »), pure switches on `TileSuit`/number with no default.\n**Acceptance Criteria:** tileName(Tile.parse('5pr')) == '5 de cercles rouge'; tileName(Tile.parse('1z')) == \"Vent d'est\"; switch exhaustive, analyze clean\n**Verify:** flutter analyze && dart run tool/check_conventions.dart && dart run build_runner build -d\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && dart run tool/check_conventions.dart && dart run build_runner build -d\", \"acceptanceCriteria\": [\"tileName(Tile.parse('5pr')) == '5 de cercles rouge'\", \"tileName(Tile.parse('1z')) == \\\"Vent d'est\\\"\", \"switch exhaustive, analyze clean\"], \"modelTier\": \"standard\", \"owner\": \"user\"}\n```\n**Done 2026-09-23** (review passed: analyze clean, truth table 5pr/1z/7z/3s correct; awaiting commit)."
     },
     {
       "id": 3,
       "subject": "Task 3: Photo source + identifier (interfaces, image_picker impl, fake)",
-      "status": "pending",
+      "status": "in_progress",
       "blockedBy": [
         1,
         2
@@ -62,5 +62,5 @@
       "description": "**Files:** see plan Layout\n**Goal:** Emulator pass (camera flow, both sheets, dark), flutter-reviewer on lib/scanner/ + shared button, ROADMAP milestone 3 row + next-session block (M4 Firebase next), deviations (static viewfinder, sheet-as-card, deferred buttons), tasks.json done with hash.\n**Acceptance Criteria:** ROADMAP + tasks.json say done with the commit hash\n**Verify:** flutter analyze && flutter test && dart run tool/check_conventions.dart, then visual\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && flutter test && dart run tool/check_conventions.dart, then visual\", \"acceptanceCriteria\": [\"ROADMAP + tasks.json say done with the commit hash\"], \"modelTier\": \"standard\", \"owner\": \"user (Claude drives adb)\"}\n```"
     }
   ],
-  "lastUpdated": "2026-09-23T13:29:42.631702+00:00"
+  "lastUpdated": "2026-09-23T13:41:58.654787+00:00"
 }

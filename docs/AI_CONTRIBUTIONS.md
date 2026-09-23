@@ -144,6 +144,8 @@ Rules:
 | `lib/yaku/yaku_screen.dart` | dartdoc; block-free edit 2026-09-23: search field and tier chips simplified to theme defaults, `_tierLabel` top-level (/implement) | 2026-09-22 | Docs are time-consuming for the author; code stays author-written. |
 | `lib/app/router.dart` | dartdoc | 2026-09-22 | Docs are time-consuming for the author; code stays author-written. |
 | `lib/yaku/yaku_providers.dart` | dartdoc | 2026-09-23 | Docs are time-consuming for the author; code stays author-written. |
+| `lib/scanner/tile_labels.dart` | dartdoc | 2026-09-23 | Docs are time-consuming for the author; code stays author-written. |
+| `lib/scanner/scan_state.dart` | dartdoc | 2026-09-23 | Docs are time-consuming for the author; code stays author-written. |
 | `lib/yaku/yaku.dart` | dartdoc | 2026-09-23 | Docs are time-consuming for the author; code stays author-written. |
 | `lib/yaku/yaku_repository_impl.dart` | dartdoc; block: tile validation in `_load` (2026-09-23, /implement) | 2026-09-23 | Docs are time-consuming for the author; code stays author-written. |
 | `lib/yaku/yaku_repository.dart` | dartdoc | 2026-09-23 | Docs are time-consuming for the author; code stays author-written. |
