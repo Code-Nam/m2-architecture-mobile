@@ -98,7 +98,7 @@ Rules:
 | `lib/onboarding/onboarding_scaffold_widget.dart` | dartdoc | 2026-09-23 | Docs are time-consuming for the author; code stays author-written. |
 | `lib/app/app.dart` | file (marker pending, as above); dartdoc (2026-09-22) | 2026-09-17 | Project tooling and setup so study time goes to Flutter code. |
 | `lib/app/router.dart` | file (marker pending, as above); dartdoc (2026-09-22, 2026-09-23) | 2026-09-17 | Project tooling and setup so study time goes to Flutter code. |
-| `lib/shared/theme/app_colors.dart` | blocks: _Palette consts; AppColors fields + light/dark instances (schemes are author-written) | 2026-09-17 | Tedious data entry, no Flutter concept to learn. |
+| `lib/shared/theme/app_colors.dart` | blocks: _Palette consts; AppColors fields + light/dark instances (schemes are author-written); `senseiSeal` / `senseiSealMuted` / `senseiRule` added inside the AppColors block (2026-09-23, /implement) | 2026-09-17 | Tedious data entry, no Flutter concept to learn. |
 | `lib/shared/theme/app_theme.dart` | blocks: _textTheme, `_chipTheme` / `_inputTheme` (2026-09-23, /implement); theme builders are author-written | 2026-09-17 | Tedious data entry, no Flutter concept to learn. |
 | `.vscode/launch.json` | file (no marker) | 2026-09-18 | Editor launch config, no Flutter concept to learn. |
 | `test/shared/models/tile_test.dart` | file | 2026-09-18 | Test scaffolding is tedious and teaches no Flutter concept; the widget under test is author-written. |
@@ -143,6 +143,11 @@ Rules:
 | `.gitignore` | block: Firestore rules test harness | 2026-09-23 | |
 | `docs/plans/2026-09-23-yaku.md` | file | 2026-09-23 | Plan written from the author's brainstorming answers; the author builds it. |
 | `docs/plans/2026-09-23-yaku.md.tasks.json` | file (no marker) | 2026-09-23 | Task carry-over for the plan above. |
+| `docs/plans/2026-09-23-sensei.md` | file | 2026-09-23 | Plan written from the author's brainstorming answers; the author builds it. |
+| `docs/plans/2026-09-23-sensei.md.tasks.json` | file (no marker) | 2026-09-23 | Task carry-over for the plan above. |
+| `lib/app/app_config.dart` | dartdoc | 2026-09-23 | Docs are time-consuming for the author; code stays author-written. |
+| `lib/sensei/sensei_request.dart` | dartdoc | 2026-09-23 | Docs are time-consuming for the author; code stays author-written. |
+| `lib/sensei/sensei_state.dart` | dartdoc | 2026-09-23 | Docs are time-consuming for the author; code stays author-written. |
 | `lib/shared/models/lesson.dart` | block: `@Assert` on the factory (`const` dropped) | 2026-09-23 | Content invariant from the milestone 1 review; plumbing, no Flutter concept to learn. |
 | `lib/progress/user_progress.dart` | dartdoc; block-free edit 2026-09-23: `statusOf` / `isUnitPlayable` made private (/implement, review finding) | 2026-09-22 | Docs are time-consuming for the author; code stays author-written. |
 | `lib/shared/models/lesson_block.dart` | dartdoc; block: `@Assert` on `quiz` (2026-09-23, `const` dropped on that factory) | 2026-09-22 | Docs are time-consuming for the author; code stays author-written. |

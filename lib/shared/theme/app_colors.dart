@@ -102,6 +102,9 @@ final class AppColors extends ThemeExtension<AppColors> {
     required this.trackDeep,
     required this.iconInactive,
     required this.senseiPanel,
+    required this.senseiSeal,
+    required this.senseiSealMuted,
+    required this.senseiRule,
     required this.successPanel,
     required this.successTint,
     required this.successTintDeep,
@@ -147,6 +150,16 @@ final class AppColors extends ThemeExtension<AppColors> {
 
   /// Sensei panel background.
   final Color senseiPanel;
+
+  /// Hanko seal « 先 »; the handoff keeps it red in dark mode, unlike
+  /// [vermillionText], so it is its own slot.
+  final Color senseiSeal;
+
+  /// Seal and left rule once the Sensei failed or is offline.
+  final Color senseiSealMuted;
+
+  /// Panel left rule while the Sensei is active; bamboo in both modes.
+  final Color senseiRule;
 
   /// Success bottom sheet and the correct option card; dark in dark mode,
   /// unlike the tile tints below.
@@ -203,6 +216,9 @@ final class AppColors extends ThemeExtension<AppColors> {
     Color? trackDeep,
     Color? iconInactive,
     Color? senseiPanel,
+    Color? senseiSeal,
+    Color? senseiSealMuted,
+    Color? senseiRule,
     Color? successPanel,
     Color? successTint,
     Color? successTintDeep,
@@ -228,6 +244,9 @@ final class AppColors extends ThemeExtension<AppColors> {
     trackDeep: trackDeep ?? this.trackDeep,
     iconInactive: iconInactive ?? this.iconInactive,
     senseiPanel: senseiPanel ?? this.senseiPanel,
+    senseiSeal: senseiSeal ?? this.senseiSeal,
+    senseiSealMuted: senseiSealMuted ?? this.senseiSealMuted,
+    senseiRule: senseiRule ?? this.senseiRule,
     successPanel: successPanel ?? this.successPanel,
     successTint: successTint ?? this.successTint,
     successTintDeep: successTintDeep ?? this.successTintDeep,
@@ -258,6 +277,13 @@ final class AppColors extends ThemeExtension<AppColors> {
           trackDeep: Color.lerp(trackDeep, other.trackDeep, t)!,
           iconInactive: Color.lerp(iconInactive, other.iconInactive, t)!,
           senseiPanel: Color.lerp(senseiPanel, other.senseiPanel, t)!,
+          senseiSeal: Color.lerp(senseiSeal, other.senseiSeal, t)!,
+          senseiSealMuted: Color.lerp(
+            senseiSealMuted,
+            other.senseiSealMuted,
+            t,
+          )!,
+          senseiRule: Color.lerp(senseiRule, other.senseiRule, t)!,
           successPanel: Color.lerp(successPanel, other.successPanel, t)!,
           successTint: Color.lerp(successTint, other.successTint, t)!,
           successTintDeep: Color.lerp(
@@ -295,6 +321,9 @@ const lightColors = AppColors(
   trackDeep: _Palette.trackDeep,
   iconInactive: _Palette.iconInactive,
   senseiPanel: _Palette.senseiPanel,
+  senseiSeal: _Palette.vermillionText,
+  senseiSealMuted: _Palette.disabled,
+  senseiRule: _Palette.bamboo,
   successPanel: _Palette.successPanel,
   successTint: _Palette.successTint,
   successTintDeep: _Palette.successTintDeep,
@@ -323,6 +352,9 @@ const darkColors = AppColors(
   trackDeep: _Palette.trackDeep,
   iconInactive: _Palette.iconInactiveDark,
   senseiPanel: _Palette.senseiPanelDark,
+  senseiSeal: _Palette.vermillionText,
+  senseiSealMuted: _Palette.disabled,
+  senseiRule: _Palette.bamboo,
   successPanel: _Palette.successPanelDark,
   successTint: _Palette.successTint,
   successTintDeep: _Palette.successTintDeep,

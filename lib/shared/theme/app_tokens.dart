@@ -224,4 +224,33 @@ abstract final class AppTokens {
 
   /// Side of the square card holding the logo tile on the login screen.
   static const logoCardSize = 72.0;
+
+  //* Sensei
+
+  /// Side of the square hanko seal « 先 » (handoff: 22, radius = radiusSeal).
+  static const senseiSealSize = 22.0;
+
+  /// Width of the panel's left rule; the only border in the design system.
+  static const senseiRule = 3.0;
+
+  /// Loading indicator: three small tiles, not a spinner (handoff rule).
+  static const pulseTileWidth = 11.0;
+
+  /// Tile proportion kept (11×15 ≈ 64×88).
+  static const pulseTileHeight = 15.0;
+
+  /// Vertical travel of one pulsing tile at the top of its wave.
+  static const pulseLift = 5.0;
+
+  /// One full wave; tiles start at 0, 0.2 and 0.4 of it.
+  static const pulseDuration = Duration(milliseconds: 1200);
+
+  /// Streaming cursor: a block, not a bar, so it reads as a tile edge.
+  static const cursorWidth = 8.0;
+
+  /// Matches the pulsing tile height so the two indicators align.
+  static const cursorHeight = 15.0;
+
+  /// Full blink period: visible half, hidden half (steps, no fade).
+  static const cursorBlink = Duration(milliseconds: 900);
 }
