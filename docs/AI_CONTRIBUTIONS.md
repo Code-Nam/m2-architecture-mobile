@@ -90,7 +90,7 @@ Rules:
 | `android/app/src/main/kotlin/io/github/codenam/tenpai/MainActivity.kt` | file (template moved and repackaged) | 2026-09-17 | Project tooling and setup so study time goes to Flutter code. |
 | `lib/main.dart` | file (marker pending: lib/ is author-owned, add the header yourself); dartdoc (2026-09-23) | 2026-09-17 | Project tooling and setup so study time goes to Flutter code. |
 | `lib/app/splash_screen.dart` | dartdoc | 2026-09-23 | Docs are time-consuming for the author; code stays author-written. |
-| `lib/auth/login_screen.dart` | dartdoc | 2026-09-23 | Docs are time-consuming for the author; code stays author-written. |
+| `lib/auth/login_screen.dart` | dartdoc; blocks: fields + reset link, field builder + auth actions, « ou » + provider buttons + legal line (2026-09-23, /implement) | 2026-09-23 | Docs are time-consuming for the author; code stays author-written. |
 | `lib/auth/welcome_screen.dart` | dartdoc | 2026-09-23 | Docs are time-consuming for the author; code stays author-written. |
 | `lib/onboarding/level_screen.dart` | dartdoc | 2026-09-23 | Docs are time-consuming for the author; code stays author-written. |
 | `lib/onboarding/goal_screen.dart` | dartdoc | 2026-09-23 | Docs are time-consuming for the author; code stays author-written. |
@@ -201,6 +201,7 @@ Rules:
 | `lib/auth/firebase_auth_repository.dart` | dartdoc | 2026-09-23 | Docs are time-consuming for the author; code stays author-written. |
 | `lib/profile/user_profile.dart` | dartdoc | 2026-09-23 | Docs are time-consuming for the author; code stays author-written. |
 | `lib/profile/profile_providers.dart` | dartdoc | 2026-09-23 | Docs are time-consuming for the author; code stays author-written. |
+| `lib/progress/firestore_progress_repository.dart` | dartdoc | 2026-09-23 | Docs are time-consuming for the author; code stays author-written. |
 | `lib/profile/firestore_profile_repository.dart` | dartdoc | 2026-09-23 | Docs are time-consuming for the author; code stays author-written. |
 
 Not listed: `design/handoff/` (designer's export, not code), `assets/fonts/`

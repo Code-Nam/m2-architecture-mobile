@@ -104,13 +104,13 @@
     {
       "id": 11,
       "subject": "Task 11: Device check + review + handover (Claude drives adb)",
-      "status": "in_progress",
+      "status": "completed",
       "blockedBy": [
         5,
         10
       ],
-      "description": "**Files:** see plan Layout\n**Goal:** Sign-up → level → goal → tabs; lesson completion in the console; sign-out → welcome; sign-in → tabs; Google sign-in; offline completion queued then synced; App Check enforcement on for Firestore, app still works; screenshots 01–04 + 18 light/dark. flutter-reviewer on lib/auth, lib/onboarding, lib/profile, progress repository, router. ROADMAP milestone 4 row + state block + deviations, README fix (google-services line, setup steps), tasks.json done with hash.\n**Acceptance Criteria:** ROADMAP + tasks.json say done with the commit hash; reviewer findings applied\n**Verify:** flutter analyze && flutter test && dart run tool/check_conventions.dart, then visual\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && flutter test && dart run tool/check_conventions.dart, then visual\", \"acceptanceCriteria\": [\"ROADMAP + tasks.json say done with the commit hash\", \"reviewer findings applied\"], \"modelTier\": \"standard\", \"owner\": \"user (Claude drives adb)\"}\n```"
+      "description": "**Files:** see plan Layout\n**Goal:** Sign-up → level → goal → tabs; lesson completion in the console; sign-out → welcome; sign-in → tabs; Google sign-in; offline completion queued then synced; App Check enforcement on for Firestore, app still works; screenshots 01–04 + 18 light/dark. flutter-reviewer on lib/auth, lib/onboarding, lib/profile, progress repository, router. ROADMAP milestone 4 row + state block + deviations, README fix (google-services line, setup steps), tasks.json done with hash.\n**Acceptance Criteria:** ROADMAP + tasks.json say done with the commit hash; reviewer findings applied\n**Verify:** flutter analyze && flutter test && dart run tool/check_conventions.dart, then visual\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && flutter test && dart run tool/check_conventions.dart, then visual\", \"acceptanceCriteria\": [\"ROADMAP + tasks.json say done with the commit hash\", \"reviewer findings applied\"], \"modelTier\": \"standard\", \"owner\": \"user (Claude drives adb)\"}\n```\n**Done:** 2026-09-23 at `81c75e7`. Device pass: dark mode, Google flow to Google's page + cancel, lesson completion → Firestore, persistence across sign-out, offline queue synced. flutter-reviewer findings applied. README updated by doc-reviewer. App Check enforcement toggle left to the author (console)."
     }
   ],
-  "lastUpdated": "2026-09-23T19:20:36.956270+00:00"
+  "lastUpdated": "2026-09-23T19:46:40.014660+00:00"
 }

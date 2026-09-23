@@ -131,40 +131,46 @@ des tuiles » (no tile catalogue); if Android kills `MainActivity` behind the
 camera the photo is lost (`retrieveLostData` not wired) and the user lands on
 idle. Isar (settings, scan history, cached catalog) is M4 with Firebase.
 
-**Next: milestone 4, Firebase.** Plan approved 2026-09-23:
-`docs/plans/2026-09-23-firebase.md` (12 tasks, ids 0–11; gate at launch, email +
-Google sign-in, onboarding 01–04, two Firestore docs per user, rules + emulator
-tests, minimal Profil; Isar and full Profil 18 later). Task 0 done 2026-09-23 (project
-`tenpai-3f494`, Android app + SHA-1/SHA-256, Email + Google providers,
-Firestore europe-west1, App Check Play Integrity registered, `firebase init
-firestore` files at the root; `flutterfire configure` could not see the project,
-so `lib/firebase_options.dart` was written by hand from google-services.json).
-Task 1 done 2026-09-23 (`firebase_core` 4.15, `firebase_auth` 6.7,
-`cloud_firestore` 6.10, `firebase_app_check` 0.4.8; `main.dart` boots Firebase
-+ App Check debug provider; token registered). Task 2 done 2026-09-23 (`lib/auth/`: `AuthUser`, `AuthFailure` enum with
-French copy + `fromCode`, `AuthRepository`, `FirebaseAuthRepository` with one
-`_guard`, `authRepositoryProvider` + `authStateProvider`). Task 3 done 2026-09-23 (`lib/profile/`: `MahjongLevel` + `UserProfile`
-with hand mappers, `ProfileRepository`, Firestore impl on `users/{uid}` with a
-server `createdAt`, `profileRepositoryProvider` keyed on the uid +
-`userProfileProvider.complete`). Task 4 done 2026-09-23 (`FirestoreProgressRepository` on
-`users/{uid}/progress/current`, unawaited merge write, provider keyed on the
-uid; in-memory repository deleted; suite 150). Task 5 done 2026-09-23 (`firestore.rules` owner-only + shape/bounds,
-`firebase/rules-test/` node harness, 17 emulator tests, deployed; both written
-by Claude at the author's request). Run:
-`firebase emulators:exec --only firestore "npm --prefix firebase/rules-test test"`.
-Task 6 done 2026-09-23 (`createRouter(Ref)` + `_redirect` in `router.dart`,
-`routerProvider` in new `lib/app/app_providers.dart` because providers live
-in `*_providers.dart`; `SplashScreen`; placeholders for welcome / login /
-level / goal; device: splash → welcome). Task 7 done 2026-09-23 (`WelcomeScreen` with the tile fan; `LoginScreen`:
-segment, fields, `_run` funnel for auth calls, « ou », Google, Apple disabled,
-legal line; wrong pair shows the French line, sign-up lands on onboarding).
-Task 8 done 2026-09-23 (`lib/onboarding/`: `OptionCardWidget`,
-`OnboardingScaffoldWidget`, `LevelScreen`, `GoalScreen`; level in the goal
-route's query string; profile saved, redirect lands on the tabs).
-Task 9 done 2026-09-23 (`ProfileScreen`: account, XP / leçons, niveau +
-objectif, « Se déconnecter »; sign-out → welcome, sign-in → tabs).
-**Resume at Task 10** (tests, test-writer) then Task 11 (device pass + review
-+ close). Decisions in the
+**State on 2026-09-23 (M4):** milestone 4 Firebase complete at `81c75e7`,
+Tasks 0–11 of `docs/plans/2026-09-23-firebase.md` done. Project
+`tenpai-3f494` (Auth email + Google, Firestore europe-west1, App Check Play
+Integrity + debug token). Entry flow: `/splash` → `/welcome` (fan of tiles)
+→ `/login` (segment Connexion | Inscription, `AuthFailure` copy, Google via
+`signInWithProvider`, Apple disabled) → `/onboarding/level` →
+`/onboarding/goal?level=` → tabs; a returning user with a profile skips
+onboarding. Data: `users/{uid}` (profile) and `users/{uid}/progress/current`
+(progress) behind `ProfileRepository` / `ProgressRepository`, both providers
+keyed on the uid so sign-out rebuilds them; rules owner-only with shape and
+bounds, 17 emulator tests in `firebase/rules-test/`. Router is
+`createRouter(Ref)` + `routerProvider` (`lib/app/app_providers.dart`), a
+`_RouterRefresh` `ChangeNotifier` bridging Riverpod to `refreshListenable`.
+Profil minimal (account, XP / leçons, niveau + objectif, sign-out). Device
+pass on the emulator: dark mode, Google flow up to Google's page and cancel,
+lesson completion written and read back after re-login, offline completion
+queued then synced. 35 new tests, suite at 185. Lessons learned: hot
+reload cannot add native plugins or new widget fields (`R`, or `flutter run`
+again); a swallowed exception must at least `debugPrint`; Riverpod 3 wraps
+a throwing `create` in `ProviderException` (match by message in tests);
+`flutterfire configure` may not list a project the account can access, and
+`firebase_options.dart` is five values from `google-services.json`.
+
+**Known deviations from the handoff (M4), deliberate:** Apple button
+disabled; Profil 18 reduced (no streak, activity graph, badges); path streak
+chip still 0; legal links have no page; no email verification; splash is a
+static tile; level screen has no back arrow; Google button is a card, not a
+« G » logo asset; onboarding answers stored but nothing reads `level` yet; a
+second profile save would be refused by the rules (no settings screen yet,
+documented on `save`). Open item for the author: switch App Check
+**enforcement** on for Firestore in the console and confirm Profil still
+reads XP with the registered debug token. Test account `nobody@tenpai.test`
+exists in Auth (delete or keep as demo).
+
+**Next: milestone 5, AI.** `firebase_ai` (Firebase AI Logic) behind App Check
+for the Sensei panel (quiz miss explanation, handoff 09–12) and tile
+identification (replaces `FakeTileIdentifier` behind `TileIdentifier`,
+handoff 15–16). Enable AI Logic in the console first; plan
+`docs/plans/<date>-sensei.md` before any SDK. Isar (settings, scan history,
+cached catalog) still has its own plan to write. Decisions in the
 plan's Context section.
 
 **Earlier state on 2026-09-22:** lesson slice Tasks 1-6 done (`lib/shared/models/`
@@ -313,7 +319,7 @@ Plan: [docs/plans/2026-09-17-project-setup.md](plans/2026-09-17-project-setup.md
 | 1 — Architecture holds | Tile model + widget, learning vertical slice from JSON asset, in-memory progress, shell routes, tests | done 2026-09-23 (`69b74f0`): tile plan `b105eb7`; lesson slice Tasks 1–10 (`lib/shared/models/` lesson domain, six unit assets, `lib/learning/` repository + providers + `LessonPathScreen` + `LessonScreen`, `lib/progress/` in-memory progress, tab shell + `/lesson/:id`), device-checked light + dark vs handoff 05–08, flutter-reviewer pass applied (`06c5a64`, `69b74f0`), 99 tests |
 | 2 — Yaku | dio + REST yaku catalog, Yaku Dex screens | done 2026-09-23 (`56e9fa1`): catalog on GitHub Pages (`Code-Nam/tenpai-api`, `114da4a`), `YAKU_BASE_URL` via `--dart-define`, `lib/app/app_config.dart`, `lib/yaku/` (model, remote source, repository with failure-dropping cache and tile validation, six providers, `YakuScreen`), chip + input themes in `app_theme.dart`, `hasError` guards on all three data screens; device-checked light/dark incl. offline retry; reviewer pass applied; 29 new tests, suite at 128 |
 | 3 — Scanner | image_picker single shot, fake identifier, scan result card | done 2026-09-23 (`c091442`): `image_picker ^1.2.3` (no manifest change), `lib/scanner/` (sealed `ScanState`, French tile labels, `TilePhotoSource` + impl, `TileIdentifier` + deterministic fake, three providers + `ScanNotifier`, `ScannerScreen` with viewfinder + result/failure sheets), `PrimaryButtonWidget` shared, scanner tokens; device-checked light/dark vs handoff 14/16/17; reviewer pass applied; 28 new tests, suite at 156 |
-| 4 — Firebase | `firebase_auth` (email + Google) + App Check + Firestore progress (offline persistence on, Security Rules written and tested) behind the existing repository interfaces; onboarding 01–04; minimal Profil. Isar for settings and scan history deferred to its own plan | in progress: plan `docs/plans/2026-09-23-firebase.md` approved 2026-09-23, Task 0 (console + CLI prep) next |
+| 4 — Firebase | `firebase_auth` (email + Google) + App Check + Firestore progress (offline persistence on, Security Rules written and tested) behind the existing repository interfaces; onboarding 01–04; minimal Profil. Isar deferred to its own plan | done 2026-09-23 (`81c75e7`): project `tenpai-3f494`, `lib/auth/` + `lib/onboarding/` + `lib/profile/` + Firestore progress, router as provider with auth/profile redirect, `firestore.rules` + 17 emulator tests, device-checked light/dark incl. offline queue, reviewer pass applied, 35 new tests, suite at 185; App Check enforcement toggle pending (author) |
 | 5 — AI | Firebase AI Logic (`firebase_ai`) behind App Check; explanation + tile identification | not started |
 | 6 — Content + polish | remaining units, drill/interactive blocks, gallery parity | not started |
 
