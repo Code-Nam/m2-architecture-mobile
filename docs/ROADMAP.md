@@ -129,9 +129,15 @@ idle. Isar (settings, scan history, cached catalog) is M4 with Firebase.
 **Next: milestone 4, Firebase.** Plan approved 2026-09-23:
 `docs/plans/2026-09-23-firebase.md` (12 tasks, ids 0–11; gate at launch, email +
 Google sign-in, onboarding 01–04, two Firestore docs per user, rules + emulator
-tests, minimal Profil; Isar and full Profil 18 later). **Resume at Task 0**
-(console + CLI prep, user, non-code): nothing in `lib/` changes before
-`google-services.json` and `firebase_options.dart` exist. Decisions in the
+tests, minimal Profil; Isar and full Profil 18 later). Task 0 done 2026-09-23 (project
+`tenpai-3f494`, Android app + SHA-1/SHA-256, Email + Google providers,
+Firestore europe-west1, App Check Play Integrity registered, `firebase init
+firestore` files at the root; `flutterfire configure` could not see the project,
+so `lib/firebase_options.dart` was written by hand from google-services.json).
+Task 1 done 2026-09-23 (`firebase_core` 4.15, `firebase_auth` 6.7,
+`cloud_firestore` 6.10, `firebase_app_check` 0.4.8; `main.dart` boots Firebase
++ App Check debug provider; token registered). **Resume at Task 2** (auth
+layer: `lib/auth/` model, failure, repository, impl, providers). Decisions in the
 plan's Context section.
 
 **Earlier state on 2026-09-22:** lesson slice Tasks 1-6 done (`lib/shared/models/`

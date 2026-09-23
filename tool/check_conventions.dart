@@ -23,7 +23,9 @@ import 'dart:io';
 // --- AI attribution (docs/AI_CONTRIBUTIONS.md) -------------------------------
 
 /// The marker token, split so this file's own regexes do not trip the scan.
-const _tag = 'AI-' 'GENERATED';
+const _tag =
+    'AI-'
+    'GENERATED';
 const _register = 'docs/AI_CONTRIBUTIONS.md';
 const _headerWindow = 15;
 
@@ -39,7 +41,15 @@ const _attributionSkip = <String>[
   _register, // holds the format examples
 ];
 const _attributionExtensions = <String>{
-  '.dart', '.kt', '.kts', '.py', '.md', '.yaml', '.yml', '.xml', '.gitignore',
+  '.dart',
+  '.kt',
+  '.kts',
+  '.py',
+  '.md',
+  '.yaml',
+  '.yml',
+  '.xml',
+  '.gitignore',
 };
 
 /// A marker is the token at the start of a comment. Prose that merely mentions
@@ -88,14 +98,17 @@ final _providerDecl = RegExp(r'^final\s+(\w*Provider)\b', multiLine: true);
 /// Used to run the checker against fixtures outside the project.
 void main(List<String> args) {
   final root = args.isEmpty ? 'lib' : args.first;
-  final files = Directory(root)
-      .listSync(recursive: true)
-      .whereType<File>()
-      .where((f) => f.path.endsWith('.dart'))
-      .where((f) => !f.path.endsWith('.g.dart'))
-      .where((f) => !f.path.endsWith('.freezed.dart'))
-      .toList()
-    ..sort((a, b) => a.path.compareTo(b.path));
+  final files =
+      Directory(root)
+          .listSync(recursive: true)
+          .whereType<File>()
+          .where((f) => f.path.endsWith('.dart'))
+          .where((f) => !f.path.endsWith('.g.dart'))
+          .where((f) => !f.path.endsWith('.freezed.dart'))
+          // flutterfire's fixed file name; git-ignored config, not a class file.
+          .where((f) => !f.path.endsWith('firebase_options.dart'))
+          .toList()
+        ..sort((a, b) => a.path.compareTo(b.path));
   final sources = {for (final f in files) f.path: f.readAsStringSync()};
   final testSources = _readTests();
 
@@ -105,7 +118,9 @@ void main(List<String> args) {
       ..addAll(_checkFileClassMatch(entry.key, entry.value))
       ..addAll(_checkFolderSuffix(entry.key))
       ..addAll(_checkProviderNames(entry.key, entry.value))
-      ..addAll(_checkPublicUnused(entry.key, entry.value, sources, testSources));
+      ..addAll(
+        _checkPublicUnused(entry.key, entry.value, sources, testSources),
+      );
   }
   if (root == 'lib') {
     findings.addAll(_checkAttribution());
@@ -285,9 +300,8 @@ Iterable<String> _checkPublicUnused(
       continue;
     }
     final word = RegExp('\\b$name\\b');
-    final usedElsewhere = sources.entries.any(
-          (e) => e.key != path && word.hasMatch(e.value),
-        ) ||
+    final usedElsewhere =
+        sources.entries.any((e) => e.key != path && word.hasMatch(e.value)) ||
         tests.values.any(word.hasMatch);
     if (!usedElsewhere) {
       yield '$path:${_lineOf(source, entry.value)}: `$name` is public but used '

@@ -88,7 +88,7 @@ Rules:
 | `android/app/src/main/AndroidManifest.xml` | block: INTERNET permission | 2026-09-17 | Project tooling and setup so study time goes to Flutter code. |
 | `android/app/build.gradle.kts` | block: application id | 2026-09-17 | Project tooling and setup so study time goes to Flutter code. |
 | `android/app/src/main/kotlin/io/github/codenam/tenpai/MainActivity.kt` | file (template moved and repackaged) | 2026-09-17 | Project tooling and setup so study time goes to Flutter code. |
-| `lib/main.dart` | file (marker pending: lib/ is author-owned, add the header yourself) | 2026-09-17 | Project tooling and setup so study time goes to Flutter code. |
+| `lib/main.dart` | file (marker pending: lib/ is author-owned, add the header yourself); dartdoc (2026-09-23) | 2026-09-17 | Project tooling and setup so study time goes to Flutter code. |
 | `lib/app/app.dart` | file (marker pending, as above) | 2026-09-17 | Project tooling and setup so study time goes to Flutter code. |
 | `lib/app/router.dart` | file (marker pending, as above) | 2026-09-17 | Project tooling and setup so study time goes to Flutter code. |
 | `lib/shared/theme/app_colors.dart` | blocks: _Palette consts; AppColors fields + light/dark instances (schemes are author-written) | 2026-09-17 | Tedious data entry, no Flutter concept to learn. |
