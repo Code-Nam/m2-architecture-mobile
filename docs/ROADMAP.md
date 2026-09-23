@@ -106,14 +106,19 @@ use `Opacity`, fine with a lazy list.
 `docs/plans/2026-09-23-scanner.md` (7 tasks; `lib/scanner/` flat: photo source
 over `image_picker`, fake identifier deterministic from the bytes, sealed
 `ScanState`, viewfinder + result/failure sheets; the sheet is the tile card).
-Tasks 1–2 done (dependency added, `ScanState` sealed + `tileName` /
-`tileFamily` verified). **Resume at Task 3:** `lib/scanner/tile_photo_source.dart`
-(interface) + `tile_photo_source_impl.dart` (`ImagePicker.pickImage(source:
-ImageSource.camera)` → `readAsBytes()`, null on cancel) + `tile_identifier.dart`
-+ `fake_tile_identifier.dart` (hash rule in the plan). Uncommitted at session
-end, if any: check `git status` first; `scan_state.dart`, `tile_labels.dart`
-and the generated file belong to the Task 2 commit
-(`feat(scanner): add scan state and French tile labels`). Isar (settings, scan
+Tasks 1–3 done (dependency added; `ScanState` sealed + `tileName` /
+`tileFamily`; `tile_photo_source.dart` + `tile_photo_source_impl.dart`
+(`ImagePicker.pickImage(source: .camera, maxWidth: 1024, imageQuality: 85)`
+→ `readAsBytes()`, null on cancel, platform errors propagate) +
+`tile_identifier.dart` + `fake_tile_identifier.dart` (hash masked with
+`& 0x7fffffff` before `%`, else a negative index)). Task 3 files uncommitted
+at review time: commit as `feat(scanner): add photo source and fake
+identifier`. **Resume at Task 4:** `lib/scanner/scanner_providers.dart`
+(`tilePhotoSourceProvider`, `tileIdentifierProvider`, `scanProvider =
+NotifierProvider<ScanNotifier, ScanState>`, not auto-dispose; `scan()`:
+analysing → capture (null → idle) → identify (null → notFound) → found;
+any throw → notFound). `check_conventions` flags the scanner symbols as
+public-unused until Task 4/5 wire them. Isar (settings, scan
 history, cached catalog) is M4 with Firebase.
 
 **Earlier state on 2026-09-22:** lesson slice Tasks 1-6 done (`lib/shared/models/`
