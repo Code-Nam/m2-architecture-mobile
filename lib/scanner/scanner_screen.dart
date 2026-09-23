@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:tenpai/scanner/scan_state.dart';
 import 'package:tenpai/scanner/scanner_providers.dart';
+import 'package:tenpai/sensei/sensei_panel_widget.dart';
+import 'package:tenpai/sensei/sensei_request.dart';
 import 'package:tenpai/shared/models/tile.dart';
 import 'package:tenpai/shared/models/tile_labels.dart';
 import 'package:tenpai/shared/theme/app_colors.dart';
@@ -194,8 +196,10 @@ class _Shutter extends StatelessWidget {
   }
 }
 
-/// Handoff 16 minus the Sensei panel (M5) and « Voir la fiche » (no tile
-/// catalogue to open yet). Big tile, name, family line, one CTA.
+/// Handoff 16 minus « Voir la fiche » (no tile catalogue to open yet). Big
+/// tile, name, family line, the Sensei context streamed (`autoStart`, since
+/// the sheet only exists once a tile is found), one CTA. Leaving the sheet
+/// disposes the panel's provider member, which cancels the stream.
 class _ResultSheet extends StatelessWidget {
   const _ResultSheet({required this.tile, required this.onAgain});
 
@@ -230,6 +234,11 @@ class _ResultSheet extends StatelessWidget {
             color: colors.mutedStrong,
           ),
           textAlign: .center,
+        ),
+        const SizedBox(height: AppTokens.space3),
+        SenseiPanelWidget(
+          request: SenseiRequest.tileContext(tile),
+          autoStart: true,
         ),
         const SizedBox(height: AppTokens.space3),
         PrimaryButtonWidget(

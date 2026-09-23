@@ -55,16 +55,16 @@
     {
       "id": 6,
       "subject": "Task 6: Lesson hook: « Pourquoi ? » link + panel in the feedback sheet",
-      "status": "in_progress",
+      "status": "completed",
       "blockedBy": [
         5
       ],
-      "description": "**Goal:** `lib/learning/lesson_screen.dart`: `_QuizBlockView` builds `SenseiRequest.quizMiss` from `block` + `session` on a miss and passes `whyRequest` (null on a hit) to `_FeedbackSheet`. The sheet, on a miss, watches `senseiProvider(whyRequest)`: while `idle` show a `TextButton` « Pourquoi ? » (bodyMedium underlined, mutedStrong) that calls `ask()`; otherwise `SenseiPanelWidget(request: whyRequest, autoStart: false)`. « Continuer » unchanged and always enabled.\n\n**Files:**\n- lib/learning/lesson_screen.dart\n\n**Acceptance Criteria:**\n- [ ] emulator: miss → link → loading tiles → streamed French text\n- [ ] Continuer works while streaming; next quiz shows the link again\n- [ ] airplane mode → offline note\n- [ ] screenshots vs 09–12 light + dark\n\n**Verify:** flutter analyze && dart run tool/check_conventions.dart, then visual\n\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && dart run tool/check_conventions.dart, then visual\", \"acceptanceCriteria\": [\"emulator: miss → link → loading tiles → streamed French text\", \"Continuer works while streaming; next quiz shows the link again\", \"airplane mode → offline note\", \"screenshots vs 09–12 light + dark\"], \"modelTier\": \"standard\", \"owner\": \"user\", \"files\": [\"lib/learning/lesson_screen.dart\"]}\n```"
+      "description": "**Goal:** `lib/learning/lesson_screen.dart`: `_QuizBlockView` builds `SenseiRequest.quizMiss` from `block` + `session` on a miss and passes `whyRequest` (null on a hit) to `_FeedbackSheet`. The sheet, on a miss, watches `senseiProvider(whyRequest)`: while `idle` show a `TextButton` « Pourquoi ? » (bodyMedium underlined, mutedStrong) that calls `ask()`; otherwise `SenseiPanelWidget(request: whyRequest, autoStart: false)`. « Continuer » unchanged and always enabled.\n\n**Files:**\n- lib/learning/lesson_screen.dart\n\n**Acceptance Criteria:**\n- [ ] emulator: miss → link → loading tiles → streamed French text\n- [ ] Continuer works while streaming; next quiz shows the link again\n- [ ] airplane mode → offline note\n- [ ] screenshots vs 09–12 light + dark\n\n**Verify:** flutter analyze && dart run tool/check_conventions.dart, then visual\n\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && dart run tool/check_conventions.dart, then visual\", \"acceptanceCriteria\": [\"emulator: miss → link → loading tiles → streamed French text\", \"Continuer works while streaming; next quiz shows the link again\", \"airplane mode → offline note\", \"screenshots vs 09–12 light + dark\"], \"modelTier\": \"standard\", \"owner\": \"user\", \"files\": [\"lib/learning/lesson_screen.dart\"]}\n```\n**Done 2026-09-23**: `_QuizBlockView` builds the request, `_FeedbackSheet` (now a `ConsumerWidget`) watches `senseiProvider` and shows `_WhyLink` while idle, the panel otherwise. Emulator: link → loading → **failed** (Gemini 500 « high demand » on `gemini-3.8-flash`), « Réessayer » works; streamed answer still to be seen, model fallback `gemini-3.5-flash-lite` suggested; airplane / dark checks pending with Task 9."
     },
     {
       "id": 7,
       "subject": "Task 7: Scanner hook: Sensei context in the result sheet",
-      "status": "pending",
+      "status": "in_progress",
       "blockedBy": [
         5
       ],
@@ -90,5 +90,5 @@
       "description": "**Goal:** Emulator pass: both flows, dark mode, airplane mode → offline, bogus `senseiModel` name → failed + « Réessayer ». flutter-reviewer on `lib/sensei/` and the two hooks; findings applied by the user. ROADMAP milestone 5 row + next-session block (M6 next; Isar plan still to write); deviations logged; `tasks.json` all done with the commit hash.\n\n**Files:**\n- docs/ROADMAP.md\n- docs/plans/2026-09-23-sensei.md.tasks.json\n\n**Acceptance Criteria:**\n- [ ] flutter analyze && flutter test && dart run tool/check_conventions.dart clean\n- [ ] ROADMAP + tasks.json updated together\n- [ ] reviewer findings applied or logged\n\n**Verify:** flutter analyze && flutter test && dart run tool/check_conventions.dart\n\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && flutter test && dart run tool/check_conventions.dart\", \"acceptanceCriteria\": [\"flutter analyze && flutter test && dart run tool/check_conventions.dart clean\", \"ROADMAP + tasks.json updated together\", \"reviewer findings applied or logged\"], \"modelTier\": \"standard\", \"owner\": \"Claude + user\", \"files\": [\"docs/ROADMAP.md\", \"docs/plans/2026-09-23-sensei.md.tasks.json\"]}\n```"
     }
   ],
-  "lastUpdated": "2026-09-23T21:04:49.287616+00:00"
+  "lastUpdated": "2026-09-23T21:20:27.687444+00:00"
 }
