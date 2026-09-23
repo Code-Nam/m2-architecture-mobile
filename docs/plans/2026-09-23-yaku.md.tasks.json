@@ -1,0 +1,75 @@
+{
+  "planPath": "docs/plans/2026-09-23-yaku.md",
+  "tasks": [
+    {
+      "id": 1,
+      "subject": "Task 1: Catalog fields (summary, unlockUnit)",
+      "status": "in_progress",
+      "blockedBy": [],
+      "description": "**Files:** see plan Layout\n**Goal:** Add `summary` (one line, ≤70 chars, French) and `unlockUnit` (`unit_01`…`unit_06` or null) to the 20 entries of tenpai-api/yaku/v1/catalog.json; still version 1 (additive). Validate with the check script (unique ids, tiers, tile codes, hanOpen<=han, summary length, unlockUnit in known unit ids).\n**Acceptance Criteria:** curl of the Pages URL shows both fields on every entry; version stays 1\n**Verify:** python3 validation script, then curl after the author pushes\n```json:metadata\n{\"verifyCommand\": \"python3 validation script, then curl after the author pushes\", \"acceptanceCriteria\": [\"curl of the Pages URL shows both fields on every entry\", \"version stays 1\"], \"modelTier\": \"mechanical\", \"owner\": \"Claude (tenpai-api repo)\"}\n```"
+    },
+    {
+      "id": 2,
+      "subject": "Task 2: AppConfig + dioProvider",
+      "status": "pending",
+      "blockedBy": [],
+      "description": "**Files:** see plan Layout\n**Goal:** `lib/app/app_config.dart`: `abstract final class AppConfig { static const yakuBaseUrl = String.fromEnvironment('YAKU_BASE_URL'); }`. `main()`: `assert(AppConfig.yakuBaseUrl.isNotEmpty, ...)`. `lib/yaku/yaku_providers.dart`: `dioProvider = Provider<Dio>((_) => Dio(BaseOptions(baseUrl: AppConfig.yakuBaseUrl, connectTimeout: 10 s, receiveTimeout: 10 s)))`. Read dio-5.11.1/lib/src/options.dart:142 (BaseOptions).\n**Acceptance Criteria:** flutter run without the define stops at the assert in debug; with the define, dioProvider's baseUrl ends with '/'\n**Verify:** flutter analyze && dart run tool/check_conventions.dart\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && dart run tool/check_conventions.dart\", \"acceptanceCriteria\": [\"flutter run without the define stops at the assert in debug\", \"with the define, dioProvider's baseUrl ends with '/'\"], \"modelTier\": \"standard\", \"owner\": \"user\"}\n```"
+    },
+    {
+      "id": 3,
+      "subject": "Task 3: Yaku model (freezed) + YakuTier",
+      "status": "pending",
+      "blockedBy": [
+        1
+      ],
+      "description": "**Files:** see plan Layout\n**Goal:** `lib/yaku/yaku.dart`: `@freezed abstract class Yaku` with id, name, kanji, nickname, summary, description, han (int), hanOpen (int?), tier (YakuTier), tiles (List<String>), unlockUnit (String?); `Yaku.fromJson`. `enum YakuTier { @JsonValue('essential') essential, common, rare }` (read freezed_annotation JsonValue / json_annotation). Run build_runner.\n**Acceptance Criteria:** Yaku.fromJson of one catalog entry round-trips through toJson; unknown tier throws (CheckedFromJsonException or ArgumentError, whichever json_serializable emits)\n**Verify:** flutter analyze && dart run tool/check_conventions.dart && dart run build_runner build -d\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && dart run tool/check_conventions.dart && dart run build_runner build -d\", \"acceptanceCriteria\": [\"Yaku.fromJson of one catalog entry round-trips through toJson\", \"unknown tier throws (CheckedFromJsonException or ArgumentError, whichever json_serializable emits)\"], \"modelTier\": \"standard\", \"owner\": \"user\"}\n```"
+    },
+    {
+      "id": 4,
+      "subject": "Task 4: YakuRemoteSource + YakuRepository + impl",
+      "status": "pending",
+      "blockedBy": [
+        2,
+        3
+      ],
+      "description": "**Files:** see plan Layout\n**Goal:** `lib/yaku/yaku_remote_source.dart`: `YakuRemoteSource(this._dio)`, `Future<List<Map<String, Object?>>> fetchYakus()` = GET 'yaku/v1/catalog.json', cast `response.data['yakus']`. `lib/yaku/yaku_repository.dart`: `abstract interface class YakuRepository { Future<List<Yaku>> catalog(); }`. `lib/yaku/yaku_repository_impl.dart`: caches the Future, drops it on failure (try/await/catch/rethrow, as in LessonRepositoryImpl.units()). Read dio-5.11.1/lib/src/dio_mixin.dart get<T> and transformers/sync_transformer.dart:48 (JSON decoded only when content-type is JSON).\n**Acceptance Criteria:** with a fake HttpClientAdapter serving the catalog, catalog() returns 20 Yaku; a 500 then a 200: the second catalog() succeeds\n**Verify:** flutter analyze && dart run tool/check_conventions.dart\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && dart run tool/check_conventions.dart\", \"acceptanceCriteria\": [\"with a fake HttpClientAdapter serving the catalog, catalog() returns 20 Yaku\", \"a 500 then a 200: the second catalog() succeeds\"], \"modelTier\": \"standard\", \"owner\": \"user\"}\n```"
+    },
+    {
+      "id": 5,
+      "subject": "Task 5: Providers: catalog, query, tier filter, cards",
+      "status": "pending",
+      "blockedBy": [
+        4
+      ],
+      "description": "**Files:** see plan Layout\n**Goal:** In `lib/yaku/yaku_providers.dart`: `yakuRepositoryProvider`, `yakuCatalogProvider = FutureProvider<List<Yaku>>`, `yakuQueryProvider = NotifierProvider<_QueryNotifier, String>` (`set(String)`), `yakuTierFilterProvider = NotifierProvider<_TierNotifier, YakuTier?>` (null = Tous), `yakuCardsProvider = Provider<AsyncValue<List<(Yaku, bool)>>>` deriving from catalog + unitsProvider + userProgressProvider: filter by tier then by query over name/nickname/kanji (case- and accent-insensitive), unlocked = unlockUnit == null || every lesson of that unit completed. Private helpers `_matches`, `_isUnlocked`. Naming: providers named for what they expose.\n**Acceptance Criteria:** ProviderContainer.test with fakes: query 'riichi' → 1 card; tier rare → 7 cards; unit_01 completed unlocks yakus tagged unit_01, others stay locked\n**Verify:** flutter analyze && dart run tool/check_conventions.dart\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && dart run tool/check_conventions.dart\", \"acceptanceCriteria\": [\"ProviderContainer.test with fakes: query 'riichi' \\u2192 1 card\", \"tier rare \\u2192 7 cards\", \"unit_01 completed unlocks yakus tagged unit_01, others stay locked\"], \"modelTier\": \"standard\", \"owner\": \"user\"}\n```"
+    },
+    {
+      "id": 6,
+      "subject": "Task 6: YakuScreen",
+      "status": "pending",
+      "blockedBy": [
+        5
+      ],
+      "description": "**Files:** see plan Layout\n**Goal:** Replace the placeholder in `lib/yaku/yaku_screen.dart` (handoff screen 13). Header « Yakus » (headlineLarge) + subtitle « Les combinaisons qui font gagner. Débloquées au fil des chapitres. » (bodyMedium). Search TextField « Rechercher un yaku » (mutedStrong hint, radiusCard, shadowSurface) writing yakuQueryProvider. Chip row Tous / Essentiels / Courants / Rares (`_TierChip`: pill, active primary fill + onPrimary text, inactive surfaceContainer) writing yakuTierFilterProvider. ListView of `_YakuCard`: name titleMedium + nickname labelMedium, Row(spacing:) of TileWidget(size: .small), badge « n han » labelMedium on successPanel, summary bodyMedium. Locked: Opacity + Icons.lock + tiles .faceDown. AsyncError → RetryWidget(« Impossible de charger les yakus », invalidate yakuCatalogProvider). Loading: header/search/chips shown, list empty. Tokens: chipHeight, searchHeight (or reuse buttonHeight). Read material_ui-1.3.0/lib/src/text_field.dart.\n**Acceptance Criteria:** screenshot matches handoff 13 light + dark; typing filters live, chips toggle, locked cards dimmed with lock and face-down tiles; retry state on error\n**Verify:** flutter analyze && dart run tool/check_conventions.dart, then visual\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && dart run tool/check_conventions.dart, then visual\", \"acceptanceCriteria\": [\"screenshot matches handoff 13 light + dark\", \"typing filters live, chips toggle, locked cards dimmed with lock and face-down tiles\", \"retry state on error\"], \"modelTier\": \"standard\", \"owner\": \"user\"}\n```"
+    },
+    {
+      "id": 7,
+      "subject": "Task 7: Tests (test-writer agent)",
+      "status": "pending",
+      "blockedBy": [
+        6
+      ],
+      "description": "**Files:** see plan Layout\n**Goal:** test/yaku/yaku_test.dart (JSON), test/yaku/yaku_repository_impl_test.dart with test/fakes/fake_http_client_adapter.dart (hand-written HttpClientAdapter serving canned responses), test/yaku/yaku_providers_test.dart with test/fakes/fake_yaku_repository.dart, test/yaku/yaku_screen_test.dart (search, chips, locked rendering, retry). ProviderScope/ProviderContainer.test with retry: (_, _) => null. No mocktail.\n**Acceptance Criteria:** flutter test green; fakes under test/fakes/, every new file registered\n**Verify:** flutter test\n```json:metadata\n{\"verifyCommand\": \"flutter test\", \"acceptanceCriteria\": [\"flutter test green\", \"fakes under test/fakes/, every new file registered\"], \"modelTier\": \"standard\", \"owner\": \"test-writer agent\"}\n```"
+    },
+    {
+      "id": 8,
+      "subject": "Task 8: Device check + handover",
+      "status": "pending",
+      "blockedBy": [
+        7
+      ],
+      "description": "**Files:** see plan Layout\n**Goal:** Real endpoint on the emulator: 20 cards; search « tan » → Tanyao; chip Rares → 7; complete unit 1 → its yakus unlock; airplane mode → « Réessayer » → back online → recovers. Screenshots 13 light + dark vs handoff. flutter-reviewer pass on lib/yaku/ + app_config. ROADMAP milestone 2 row + next-session block (M3 scanner next), deviations listed. tasks.json done with the commit hash.\n**Acceptance Criteria:** ROADMAP + tasks.json say done with the commit hash\n**Verify:** flutter analyze && flutter test && dart run tool/check_conventions.dart, then visual\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && flutter test && dart run tool/check_conventions.dart, then visual\", \"acceptanceCriteria\": [\"ROADMAP + tasks.json say done with the commit hash\"], \"modelTier\": \"standard\", \"owner\": \"user (Claude drives adb)\"}\n```"
+    }
+  ],
+  "lastUpdated": "2026-09-23T09:02:24.504979+00:00"
+}

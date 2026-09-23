@@ -128,6 +128,8 @@ Rules:
 | `lib/progress/in_memory_progress_repository.dart` | dartdoc | 2026-09-22 | Docs are time-consuming for the author; code stays author-written. |
 | `lib/progress/progress_providers.dart` | dartdoc | 2026-09-22 | Docs are time-consuming for the author; code stays author-written. |
 | `lib/progress/progress_repository.dart` | dartdoc | 2026-09-22 | Docs are time-consuming for the author; code stays author-written. |
+| `docs/plans/2026-09-23-yaku.md` | file | 2026-09-23 | Plan written from the author's brainstorming answers; the author builds it. |
+| `docs/plans/2026-09-23-yaku.md.tasks.json` | file (no marker) | 2026-09-23 | Task carry-over for the plan above. |
 | `lib/shared/models/lesson.dart` | block: `@Assert` on the factory (`const` dropped) | 2026-09-23 | Content invariant from the milestone 1 review; plumbing, no Flutter concept to learn. |
 | `lib/progress/user_progress.dart` | dartdoc; block-free edit 2026-09-23: `statusOf` / `isUnitPlayable` made private (/implement, review finding) | 2026-09-22 | Docs are time-consuming for the author; code stays author-written. |
 | `lib/shared/models/lesson_block.dart` | dartdoc; block: `@Assert` on `quiz` (2026-09-23, `const` dropped on that factory) | 2026-09-22 | Docs are time-consuming for the author; code stays author-written. |
