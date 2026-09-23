@@ -81,6 +81,10 @@ abstract final class AppTokens {
   /// Button pressed: shift down 1 px.
   static const pressedOffset = Offset(0, 1);
 
+  /// Connect and receive timeout for the one HTTP client; dio's default is
+  /// no timeout at all, which would hang the Yaku Dex on a dead network.
+  static const networkTimeout = Duration(seconds: 10);
+
   //* Tile selection and highlight
 
   /// Width of the tile selection ring

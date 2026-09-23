@@ -4,9 +4,9 @@
     {
       "id": 1,
       "subject": "Task 1: Catalog fields (summary, unlockUnit)",
-      "status": "in_progress",
+      "status": "completed",
       "blockedBy": [],
-      "description": "**Files:** see plan Layout\n**Goal:** Add `summary` (one line, ≤70 chars, French) and `unlockUnit` (`unit_01`…`unit_06` or null) to the 20 entries of tenpai-api/yaku/v1/catalog.json; still version 1 (additive). Validate with the check script (unique ids, tiers, tile codes, hanOpen<=han, summary length, unlockUnit in known unit ids).\n**Acceptance Criteria:** curl of the Pages URL shows both fields on every entry; version stays 1\n**Verify:** python3 validation script, then curl after the author pushes\n```json:metadata\n{\"verifyCommand\": \"python3 validation script, then curl after the author pushes\", \"acceptanceCriteria\": [\"curl of the Pages URL shows both fields on every entry\", \"version stays 1\"], \"modelTier\": \"mechanical\", \"owner\": \"Claude (tenpai-api repo)\"}\n```"
+      "description": "**Files:** see plan Layout\n**Goal:** Add `summary` (one line, ≤70 chars, French) and `unlockUnit` (`unit_01`…`unit_06` or null) to the 20 entries of tenpai-api/yaku/v1/catalog.json; still version 1 (additive). Validate with the check script (unique ids, tiers, tile codes, hanOpen<=han, summary length, unlockUnit in known unit ids).\n**Acceptance Criteria:** curl of the Pages URL shows both fields on every entry; version stays 1\n**Verify:** python3 validation script, then curl after the author pushes\n```json:metadata\n{\"verifyCommand\": \"python3 validation script, then curl after the author pushes\", \"acceptanceCriteria\": [\"curl of the Pages URL shows both fields on every entry\", \"version stays 1\"], \"modelTier\": \"mechanical\", \"owner\": \"Claude (tenpai-api repo)\"}\n```\n**Done 2026-09-23** (tenpai-api `114da4a`, live on Pages, fields verified on all 20 entries)."
     },
     {
       "id": 2,
@@ -71,5 +71,5 @@
       "description": "**Files:** see plan Layout\n**Goal:** Real endpoint on the emulator: 20 cards; search « tan » → Tanyao; chip Rares → 7; complete unit 1 → its yakus unlock; airplane mode → « Réessayer » → back online → recovers. Screenshots 13 light + dark vs handoff. flutter-reviewer pass on lib/yaku/ + app_config. ROADMAP milestone 2 row + next-session block (M3 scanner next), deviations listed. tasks.json done with the commit hash.\n**Acceptance Criteria:** ROADMAP + tasks.json say done with the commit hash\n**Verify:** flutter analyze && flutter test && dart run tool/check_conventions.dart, then visual\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && flutter test && dart run tool/check_conventions.dart, then visual\", \"acceptanceCriteria\": [\"ROADMAP + tasks.json say done with the commit hash\"], \"modelTier\": \"standard\", \"owner\": \"user (Claude drives adb)\"}\n```"
     }
   ],
-  "lastUpdated": "2026-09-23T09:02:24.504979+00:00"
+  "lastUpdated": "2026-09-23T10:19:56.403797+00:00"
 }

@@ -231,7 +231,7 @@ Plan: [docs/plans/2026-09-17-project-setup.md](plans/2026-09-17-project-setup.md
 | Milestone | Scope | Status |
 |-----------|-------|--------|
 | 1 — Architecture holds | Tile model + widget, learning vertical slice from JSON asset, in-memory progress, shell routes, tests | done 2026-09-23 (`69b74f0`): tile plan `b105eb7`; lesson slice Tasks 1–10 (`lib/shared/models/` lesson domain, six unit assets, `lib/learning/` repository + providers + `LessonPathScreen` + `LessonScreen`, `lib/progress/` in-memory progress, tab shell + `/lesson/:id`), device-checked light + dark vs handoff 05–08, flutter-reviewer pass applied (`06c5a64`, `69b74f0`), 99 tests |
-| 2 — Yaku | dio + REST yaku catalog, Yaku Dex screens | in progress: catalog hosted on GitHub Pages (`Code-Nam/tenpai-api`, `22cf7ff` wires `YAKU_BASE_URL`); plan `docs/plans/2026-09-23-yaku.md` approved 2026-09-23, Task 1 (catalog fields) written, awaiting push; Tasks 2–8 pending |
+| 2 — Yaku | dio + REST yaku catalog, Yaku Dex screens | in progress: catalog hosted on GitHub Pages (`Code-Nam/tenpai-api`, `22cf7ff` wires `YAKU_BASE_URL`); plan `docs/plans/2026-09-23-yaku.md` approved 2026-09-23, Task 1 done (tenpai-api `114da4a`), Task 2 (config + dio) written, review passed, awaiting commit; Tasks 3–8 pending |
 | 3 — Scanner | image_picker single shot, fake identifier, scan result card | not started |
 | 4 — Firebase | `firebase_auth` + App Check + Firestore progress (offline persistence on, Security Rules written and tested) replacing the in-memory impl behind the existing repository interfaces; Isar for settings and scan history if not already added | not started |
 | 5 — AI | Firebase AI Logic (`firebase_ai`) behind App Check; explanation + tile identification | not started |
