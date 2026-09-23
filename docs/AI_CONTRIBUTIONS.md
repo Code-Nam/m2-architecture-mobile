@@ -143,6 +143,9 @@ Rules:
 | `lib/app/router.dart` | dartdoc | 2026-09-22 | Docs are time-consuming for the author; code stays author-written. |
 | `lib/yaku/yaku_providers.dart` | dartdoc | 2026-09-23 | Docs are time-consuming for the author; code stays author-written. |
 | `lib/yaku/yaku.dart` | dartdoc | 2026-09-23 | Docs are time-consuming for the author; code stays author-written. |
+| `lib/yaku/yaku_repository_impl.dart` | dartdoc | 2026-09-23 | Docs are time-consuming for the author; code stays author-written. |
+| `lib/yaku/yaku_repository.dart` | dartdoc | 2026-09-23 | Docs are time-consuming for the author; code stays author-written. |
+| `lib/yaku/yaku_remote_source.dart` | dartdoc | 2026-09-23 | Docs are time-consuming for the author; code stays author-written. |
 | `tenpai-api/yaku/v1/catalog.json` | file (no marker; untracked here, tracked in the `tenpai-api` repo) | 2026-09-23 | Content data entry for milestone 2; the yaku facts are standard riichi rules, the French copy follows the handoff tone. |
 | `lib/learning/lesson_screen.dart` | dartdoc; block-free edit 2026-09-23: two call sites switched to `successPanel` (/implement) | 2026-09-22 | Docs are time-consuming for the author; code stays author-written. |
 | `test/shared/models/lesson_block_test.dart` | file | 2026-09-23 | Test scaffolding is tedious and teaches no Flutter concept; the code under test is author-written. |
