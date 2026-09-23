@@ -165,7 +165,23 @@ documented on `save`). Open item for the author: switch App Check
 reads XP with the registered debug token. Test account `nobody@tenpai.test`
 exists in Auth (delete or keep as demo).
 
-**Next: milestone 5, AI.** `firebase_ai` (Firebase AI Logic) behind App Check
+**State on 2026-09-23 (M5 planned):** brainstorming done, plan approved:
+`docs/plans/2026-09-23-sensei.md` + `.tasks.json`. Tasks 0–1 done 2026-09-23 (API enabled, AI monitoring on, `firebase_ai ^4.0.0` added, SDK facts verified and recorded in the plan Context: App Check automatic, `SocketException` for offline, `Schema.enumString` for the tile code); Task 2 done (request/state, config, tokens, colours); Task 3 in progress (repository + identifier); Tasks 4–9 `pending`.
+Decisions: Gemini Developer API backend (Spark); scanner in two calls
+(JSON `{code}` identify, then streamed context); offline without a new
+dependency (network-class failure → offline note, link never pre-dimmed);
+`lib/sensei/` feature folder (`SenseiRequest` / `SenseiState` freezed
+sealed, `SenseiRepository` + `FirebaseSenseiRepository`, `senseiProvider`
+autoDispose family keyed by request, `SenseiPanelWidget`), plus
+`lib/scanner/firebase_tile_identifier.dart`. Model name in
+`AppConfig.senseiModel` (`gemini-3.8-flash`, fallback `gemini-3.5-flash-lite`).
+App Check enforcement for AI Logic becomes mandatory on 2026-11-02 (docs);
+flip it in Task 9 together with Firestore's. Also fixed this session: a « Page Not Found / String has no getter
+path » screen after commit `81c75e7` was a stale hot reload (the router's
+redirect closure kept the old `String` argument); hot restart fixed it.
+
+**Next: milestone 5, AI** (superseded by the block above, kept for the
+original scope). `firebase_ai` (Firebase AI Logic) behind App Check
 for the Sensei panel (quiz miss explanation, handoff 09–12) and tile
 identification (replaces `FakeTileIdentifier` behind `TileIdentifier`,
 handoff 15–16). Enable AI Logic in the console first; plan
@@ -320,7 +336,7 @@ Plan: [docs/plans/2026-09-17-project-setup.md](plans/2026-09-17-project-setup.md
 | 2 — Yaku | dio + REST yaku catalog, Yaku Dex screens | done 2026-09-23 (`56e9fa1`): catalog on GitHub Pages (`Code-Nam/tenpai-api`, `114da4a`), `YAKU_BASE_URL` via `--dart-define`, `lib/app/app_config.dart`, `lib/yaku/` (model, remote source, repository with failure-dropping cache and tile validation, six providers, `YakuScreen`), chip + input themes in `app_theme.dart`, `hasError` guards on all three data screens; device-checked light/dark incl. offline retry; reviewer pass applied; 29 new tests, suite at 128 |
 | 3 — Scanner | image_picker single shot, fake identifier, scan result card | done 2026-09-23 (`c091442`): `image_picker ^1.2.3` (no manifest change), `lib/scanner/` (sealed `ScanState`, French tile labels, `TilePhotoSource` + impl, `TileIdentifier` + deterministic fake, three providers + `ScanNotifier`, `ScannerScreen` with viewfinder + result/failure sheets), `PrimaryButtonWidget` shared, scanner tokens; device-checked light/dark vs handoff 14/16/17; reviewer pass applied; 28 new tests, suite at 156 |
 | 4 — Firebase | `firebase_auth` (email + Google) + App Check + Firestore progress (offline persistence on, Security Rules written and tested) behind the existing repository interfaces; onboarding 01–04; minimal Profil. Isar deferred to its own plan | done 2026-09-23 (`81c75e7`): project `tenpai-3f494`, `lib/auth/` + `lib/onboarding/` + `lib/profile/` + Firestore progress, router as provider with auth/profile redirect, `firestore.rules` + 17 emulator tests, device-checked light/dark incl. offline queue, reviewer pass applied, 35 new tests, suite at 185; App Check enforcement toggle pending (author) |
-| 5 — AI | Firebase AI Logic (`firebase_ai`) behind App Check; explanation + tile identification | not started |
+| 5 — AI | Firebase AI Logic (`firebase_ai`, Gemini Developer API) behind App Check: Sensei panel (quiz miss « Pourquoi ? », scan context, streamed) + real tile identification behind `TileIdentifier` | in progress: [docs/plans/2026-09-23-sensei.md](plans/2026-09-23-sensei.md) + `.tasks.json`; Tasks 0–1 done 2026-09-23 (console + `firebase_ai ^4.0.0`), Tasks 2–9 pending, user builds |
 | 6 — Content + polish | remaining units, drill/interactive blocks, gallery parity | not started |
 
 ## Design import
