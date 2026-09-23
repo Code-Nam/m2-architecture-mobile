@@ -161,7 +161,10 @@ legal line; wrong pair shows the French line, sign-up lands on onboarding).
 Task 8 done 2026-09-23 (`lib/onboarding/`: `OptionCardWidget`,
 `OnboardingScaffoldWidget`, `LevelScreen`, `GoalScreen`; level in the goal
 route's query string; profile saved, redirect lands on the tabs).
-**Resume at Task 9** (minimal Profil: account, level + goal, XP, sign-out). Decisions in the
+Task 9 done 2026-09-23 (`ProfileScreen`: account, XP / leçons, niveau +
+objectif, « Se déconnecter »; sign-out → welcome, sign-in → tabs).
+**Resume at Task 10** (tests, test-writer) then Task 11 (device pass + review
++ close). Decisions in the
 plan's Context section.
 
 **Earlier state on 2026-09-22:** lesson slice Tasks 1-6 done (`lib/shared/models/`

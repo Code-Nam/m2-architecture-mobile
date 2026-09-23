@@ -84,16 +84,16 @@
     {
       "id": 9,
       "subject": "Task 9: Profil minimal",
-      "status": "in_progress",
+      "status": "completed",
       "blockedBy": [
         6
       ],
-      "description": "**Files:** see plan Layout\n**Goal:** `lib/profile/profile_screen.dart` replaces the placeholder: account line (email or « Compte Google »), level + daily goal from userProfileProvider, XP + completed lessons from userProgressProvider, « Se déconnecter » (signOut; redirect handles the rest), debug gallery button kept under kDebugMode.\n**Acceptance Criteria:** sign-out lands on welcome; signing back in shows the same XP\n**Verify:** flutter analyze && dart run tool/check_conventions.dart\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && dart run tool/check_conventions.dart\", \"acceptanceCriteria\": [\"sign-out lands on welcome\", \"signing back in shows the same XP\"], \"modelTier\": \"standard\", \"owner\": \"user\"}\n```"
+      "description": "**Files:** see plan Layout\n**Goal:** `lib/profile/profile_screen.dart` replaces the placeholder: account line (email or « Compte Google »), level + daily goal from userProfileProvider, XP + completed lessons from userProgressProvider, « Se déconnecter » (signOut; redirect handles the rest), debug gallery button kept under kDebugMode.\n**Acceptance Criteria:** sign-out lands on welcome; signing back in shows the same XP\n**Verify:** flutter analyze && dart run tool/check_conventions.dart\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && dart run tool/check_conventions.dart\", \"acceptanceCriteria\": [\"sign-out lands on welcome\", \"signing back in shows the same XP\"], \"modelTier\": \"standard\", \"owner\": \"user\"}\n```\n**Done:** 2026-09-23 (`ProfileScreen`: account header, XP/lessons cards, level + goal card, sign-out; sign-out → welcome, sign-in → tabs verified on the emulator)."
     },
     {
       "id": 10,
       "subject": "Task 10: Tests (test-writer)",
-      "status": "pending",
+      "status": "in_progress",
       "blockedBy": [
         7,
         8,
@@ -112,5 +112,5 @@
       "description": "**Files:** see plan Layout\n**Goal:** Sign-up → level → goal → tabs; lesson completion in the console; sign-out → welcome; sign-in → tabs; Google sign-in; offline completion queued then synced; App Check enforcement on for Firestore, app still works; screenshots 01–04 + 18 light/dark. flutter-reviewer on lib/auth, lib/onboarding, lib/profile, progress repository, router. ROADMAP milestone 4 row + state block + deviations, README fix (google-services line, setup steps), tasks.json done with hash.\n**Acceptance Criteria:** ROADMAP + tasks.json say done with the commit hash; reviewer findings applied\n**Verify:** flutter analyze && flutter test && dart run tool/check_conventions.dart, then visual\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && flutter test && dart run tool/check_conventions.dart, then visual\", \"acceptanceCriteria\": [\"ROADMAP + tasks.json say done with the commit hash\", \"reviewer findings applied\"], \"modelTier\": \"standard\", \"owner\": \"user (Claude drives adb)\"}\n```"
     }
   ],
-  "lastUpdated": "2026-09-23T19:00:17.779541+00:00"
+  "lastUpdated": "2026-09-23T19:09:53.722337+00:00"
 }
