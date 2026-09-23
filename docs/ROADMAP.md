@@ -165,7 +165,40 @@ documented on `save`). Open item for the author: switch App Check
 reads XP with the registered debug token. Test account `nobody@tenpai.test`
 exists in Auth (delete or keep as demo).
 
-**State on 2026-09-23 (M5 planned):** brainstorming done, plan approved:
+**State on 2026-09-23 (M5 done, `31124f6` + docs commit):** milestone 5 Sensei
+complete, Tasks 0–9 of `docs/plans/2026-09-23-sensei.md` done. Play paths:
+quiz miss → « Pourquoi ? » → `SenseiPanelWidget` (pulsing tiles → streamed
+text with cursor → done; failed → « Réessayer »; offline note); Scanner →
+photo → `FirebaseTileIdentifier` (JSON enum schema, `_codes` guard) → sheet
+with the tile → context streamed (`autoStart`). Structure: `lib/sensei/`
+(`SenseiRequest` / `SenseiState` freezed sealed, `SenseiRepository` +
+`FirebaseSenseiRepository`, `senseiModelProvider` / `identifierModelProvider`
+/ `senseiRepositoryProvider` / `senseiProvider` family autoDispose keyed by
+request, `SenseiNotifier.ask()` with one owned subscription,
+`SenseiPanelWidget`), `tile_labels.dart` moved to `lib/shared/models/`, hash
+fake identifier deleted (scripted fake in `test/fakes/`). Model
+`gemini-3.5-flash-lite` in `AppConfig.senseiModel` (Flash 500 « high demand »
+all evening). AI monitoring on in the console. Reviewer warnings applied,
+nits listed in the plan's Deviations. 30 new tests, suite at 210. Lessons
+learned: a stale hot reload keeps old closures (router redirect crash after
+a signature change → hot restart); `CurvedAnimation` must be driven, not
+recreated per build; `Tile.parse` throws an `Error` on short input, so
+validate model output against the enum first; the App Check token fetch
+precedes the socket, so offline detection needs a cached token.
+
+**Known deviations from the handoff (M5), deliberate:** « Pourquoi ? » never
+pre-dimmed (no connectivity probe); no « Voir la fiche »; three-sentence
+limit by prompt only; 先 from the system CJK font; cold-start offline shows
+`failed`; screens 09–12 / 15–16 checked live, not screenshot-compared.
+
+**Next: milestone 6, content + polish** (remaining units, drill/interactive
+blocks, gallery parity, SVG tile art when the designer delivers). Before it
+or alongside: flip App Check enforcement for Firestore and AI Logic (AI Logic
+requires it from 2026-11-02) and confirm the debug token still passes; write
+the Isar plan (settings, scan history, cached yaku catalog) —
+`isar_community` resolution against Dart 3.13 still unchecked.
+
+**Earlier state on 2026-09-23 (M5 planned):** brainstorming done, plan approved:
 `docs/plans/2026-09-23-sensei.md` + `.tasks.json`. Tasks 0–1 done 2026-09-23 (API enabled, AI monitoring on, `firebase_ai ^4.0.0` added, SDK facts verified and recorded in the plan Context: App Check automatic, `SocketException` for offline, `Schema.enumString` for the tile code); Task 2 done (request/state, config, tokens, colours); Task 3 done (repository interface, Firebase repository + identifier via /implement; `tile_labels.dart` moved to `lib/shared/models/`); Task 4 done (providers, notifier, Gemini identifier wired; real-tile recognition check moved to Task 7); Task 5 done (`SenseiPanelWidget`, visual check live in Task 6); Task 6 done (lesson hook; live run hit Gemini 500 « high demand » on `gemini-3.8-flash`, failed state + retry verified, streamed answer pending a model fallback); Task 7 done (scanner hook, live check in Task 9); Task 8 done (25 new tests, suite at 210); Task 9 in progress (device pass with `gemini-3.5-flash-lite`, reviewer, handover).
 Decisions: Gemini Developer API backend (Spark); scanner in two calls
 (JSON `{code}` identify, then streamed context); offline without a new
@@ -336,7 +369,7 @@ Plan: [docs/plans/2026-09-17-project-setup.md](plans/2026-09-17-project-setup.md
 | 2 — Yaku | dio + REST yaku catalog, Yaku Dex screens | done 2026-09-23 (`56e9fa1`): catalog on GitHub Pages (`Code-Nam/tenpai-api`, `114da4a`), `YAKU_BASE_URL` via `--dart-define`, `lib/app/app_config.dart`, `lib/yaku/` (model, remote source, repository with failure-dropping cache and tile validation, six providers, `YakuScreen`), chip + input themes in `app_theme.dart`, `hasError` guards on all three data screens; device-checked light/dark incl. offline retry; reviewer pass applied; 29 new tests, suite at 128 |
 | 3 — Scanner | image_picker single shot, fake identifier, scan result card | done 2026-09-23 (`c091442`): `image_picker ^1.2.3` (no manifest change), `lib/scanner/` (sealed `ScanState`, French tile labels, `TilePhotoSource` + impl, `TileIdentifier` + deterministic fake, three providers + `ScanNotifier`, `ScannerScreen` with viewfinder + result/failure sheets), `PrimaryButtonWidget` shared, scanner tokens; device-checked light/dark vs handoff 14/16/17; reviewer pass applied; 28 new tests, suite at 156 |
 | 4 — Firebase | `firebase_auth` (email + Google) + App Check + Firestore progress (offline persistence on, Security Rules written and tested) behind the existing repository interfaces; onboarding 01–04; minimal Profil. Isar deferred to its own plan | done 2026-09-23 (`81c75e7`): project `tenpai-3f494`, `lib/auth/` + `lib/onboarding/` + `lib/profile/` + Firestore progress, router as provider with auth/profile redirect, `firestore.rules` + 17 emulator tests, device-checked light/dark incl. offline queue, reviewer pass applied, 35 new tests, suite at 185; App Check enforcement toggle pending (author) |
-| 5 — AI | Firebase AI Logic (`firebase_ai`, Gemini Developer API) behind App Check: Sensei panel (quiz miss « Pourquoi ? », scan context, streamed) + real tile identification behind `TileIdentifier` | in progress: [docs/plans/2026-09-23-sensei.md](plans/2026-09-23-sensei.md) + `.tasks.json`; Tasks 0–1 done 2026-09-23 (console + `firebase_ai ^4.0.0`), Tasks 2–9 pending, user builds |
+| 5 — AI | Firebase AI Logic (`firebase_ai ^4.0.0`, Gemini Developer API, `gemini-3.5-flash-lite`) behind App Check: `lib/sensei/` (request/state, repository + Firebase impl, providers + `SenseiNotifier`, `SenseiPanelWidget`), Gemini tile identifier behind `TileIdentifier`, « Pourquoi ? » under a quiz miss, streamed context under a scanned tile | done 2026-09-23 (`31124f6`): [docs/plans/2026-09-23-sensei.md](plans/2026-09-23-sensei.md) Tasks 0–9 done, device-checked on the emulator (quiz miss + scan stream), reviewer pass applied, 30 new tests, suite at 210; App Check enforcement still to flip (mandatory for AI Logic from 2026-11-02) |
 | 6 — Content + polish | remaining units, drill/interactive blocks, gallery parity | not started |
 
 ## Design import

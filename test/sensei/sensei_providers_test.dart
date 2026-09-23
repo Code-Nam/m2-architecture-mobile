@@ -82,19 +82,22 @@ void main() {
       expect(state(), const SenseiState.streaming('Un dragon.'));
     });
 
-    test('closing the stream moves to done with the accumulated text', () async {
-      keepAlive();
-      notifier().ask();
-      fake.emit('Un ');
-      await _flush();
-      fake.emit('dragon.');
-      await _flush();
+    test(
+      'closing the stream moves to done with the accumulated text',
+      () async {
+        keepAlive();
+        notifier().ask();
+        fake.emit('Un ');
+        await _flush();
+        fake.emit('dragon.');
+        await _flush();
 
-      fake.close();
-      await _flush();
+        fake.close();
+        await _flush();
 
-      expect(state(), const SenseiState.done('Un dragon.'));
-    });
+        expect(state(), const SenseiState.done('Un dragon.'));
+      },
+    );
 
     test('closing with no chunk at all is a failure', () async {
       keepAlive();

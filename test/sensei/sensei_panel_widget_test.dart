@@ -48,22 +48,23 @@ Future<void> _pumpPanel(
 
 void main() {
   group('SenseiPanelWidget', () {
-    testWidgets('autoStart asks once and shows the tile-context loading label', (
-      tester,
-    ) async {
-      final fake = ScriptedSenseiRepository();
+    testWidgets(
+      'autoStart asks once and shows the tile-context loading label',
+      (tester) async {
+        final fake = ScriptedSenseiRepository();
 
-      await _pumpPanel(
-        tester,
-        request: _tileRequest,
-        autoStart: true,
-        fake: fake,
-      );
+        await _pumpPanel(
+          tester,
+          request: _tileRequest,
+          autoStart: true,
+          fake: fake,
+        );
 
-      expect(fake.callCount, 1);
-      expect(fake.requests, [_tileRequest]);
-      expect(find.text('Le sensei regarde la tuile'), findsOneWidget);
-    });
+        expect(fake.callCount, 1);
+        expect(fake.requests, [_tileRequest]);
+        expect(find.text('Le sensei regarde la tuile'), findsOneWidget);
+      },
+    );
 
     testWidgets('autoStart shows the quiz-miss loading label', (tester) async {
       final fake = ScriptedSenseiRepository();
@@ -90,7 +91,10 @@ void main() {
       fake.emit('Un dragon blanc porte chance.');
       await tester.pump(const Duration(milliseconds: 100));
 
-      expect(find.textContaining('Un dragon blanc porte chance.'), findsOneWidget);
+      expect(
+        find.textContaining('Un dragon blanc porte chance.'),
+        findsOneWidget,
+      );
     });
 
     testWidgets('the closed stream leaves its full text visible', (

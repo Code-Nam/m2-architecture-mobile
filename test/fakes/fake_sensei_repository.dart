@@ -44,6 +44,5 @@ class ScriptedSenseiRepository implements SenseiRepository {
   void close({int call = 0}) => _controllers[call].close();
 
   /// Errors the [call]-th stream with [error]; the stream closes with it.
-  void fail(Object error, {int call = 0}) =>
-      _controllers[call].addError(error);
+  void fail(Object error, {int call = 0}) => _controllers[call].addError(error);
 }

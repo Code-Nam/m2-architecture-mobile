@@ -25,5 +25,7 @@ sealed class SenseiState with _$SenseiState {
   const factory SenseiState.failed() = SenseiFailed;
 
   /// `SocketException` on the way out: note only, retry comes with the network.
+  /// Not reached on a cold start without network: the App Check token fetch
+  /// fails first with a Firebase error, which lands on [failed].
   const factory SenseiState.offline() = SenseiOffline;
 }

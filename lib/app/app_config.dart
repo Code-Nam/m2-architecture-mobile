@@ -7,7 +7,8 @@ abstract final class AppConfig {
   static const yakuBaseUrl = String.fromEnvironment('YAKU_BASE_URL');
 
   /// Gemini model behind the Sensei and the tile identifier. A product
-  /// choice, not a secret, hence a plain const. Free tier on the Spark plan;
-  /// fall back to `gemini-3.5-flash-lite` if the console asks for Blaze.
+  /// choice, not a secret, hence a plain const. Flash-Lite: stable, free tier
+  /// on Spark; `gemini-3.8-flash` answered every call with a 500 « high
+  /// demand » on 2026-09-23, so it is not the default any more.
   static const senseiModel = 'gemini-3.5-flash-lite';
 }

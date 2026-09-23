@@ -16,7 +16,8 @@ import 'package:tenpai/shared/widgets/tile_widget.dart';
 /// Scanner tab, handoff screens 14, 16 and 17. One `Stack`: the viewfinder
 /// underneath, a sheet slid in from the bottom on a result or a failure
 /// (same pattern as the lesson feedback sheet). The sheet *is* the tile's
-/// card; the Sensei panel joins it at M5 as new [ScanState] variants.
+/// card; the Sensei panel lives inside it as a widget with its own provider,
+/// so [ScanState] never learned about the AI.
 class ScannerScreen extends ConsumerWidget {
   /// Everything comes from [scanProvider]; no parameters.
   const ScannerScreen({super.key});
