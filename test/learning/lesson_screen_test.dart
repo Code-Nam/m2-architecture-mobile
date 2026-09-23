@@ -10,6 +10,7 @@ import 'package:tenpai/app/router.dart';
 import 'package:tenpai/learning/lesson_providers.dart';
 import 'package:tenpai/learning/lesson_screen.dart';
 import 'package:tenpai/progress/progress_providers.dart';
+import 'package:tenpai/sensei/sensei_providers.dart';
 import 'package:tenpai/shared/models/lesson.dart';
 import 'package:tenpai/shared/models/lesson_block.dart';
 import 'package:tenpai/shared/models/tile.dart';
@@ -22,6 +23,7 @@ import 'package:tenpai/shared/widgets/tile_widget.dart';
 
 import '../fakes/fake_lesson_repository.dart';
 import '../fakes/fake_progress_repository.dart';
+import '../fakes/fake_sensei_repository.dart';
 
 final _lesson = Lesson(
   id: 'l1',
@@ -51,9 +53,10 @@ final _lesson = Lesson(
 /// Bundles the router and the progress fake so a test can both drive
 /// navigation and inspect what got recorded.
 class _Harness {
-  _Harness(this.router, this.progressRepository);
+  _Harness(this.router, this.progressRepository, this.senseiRepository);
   final GoRouter router;
   final FakeProgressRepository progressRepository;
+  final ScriptedSenseiRepository senseiRepository;
 }
 
 Future<_Harness> _pumpLessonScreen(
@@ -62,6 +65,7 @@ Future<_Harness> _pumpLessonScreen(
   ThemeData? theme,
 }) async {
   final progressRepository = FakeProgressRepository();
+  final senseiRepository = ScriptedSenseiRepository();
   final router = GoRouter(
     initialLocation: '/',
     routes: [
@@ -83,6 +87,7 @@ Future<_Harness> _pumpLessonScreen(
           ]),
         ),
         progressRepositoryProvider.overrideWithValue(progressRepository),
+        senseiRepositoryProvider.overrideWithValue(senseiRepository),
       ],
       retry: (_, _) => null,
       child: MaterialApp.router(
@@ -98,7 +103,7 @@ Future<_Harness> _pumpLessonScreen(
   unawaited(router.push(AppRoutes.lesson(id)));
   await tester.pumpAndSettle();
 
-  return _Harness(router, progressRepository);
+  return _Harness(router, progressRepository, senseiRepository);
 }
 
 Finder _optionTile(String code) => find.byWidgetPredicate(
@@ -179,6 +184,34 @@ void main() {
           tester.widget<TileWidget>(_optionTile('5s')).state,
           TileState.highlighted,
         );
+      },
+    );
+
+    testWidgets(
+      'a wrong answer shows a Pourquoi link that asks the Sensei once and '
+      'keeps Continuer enabled while it loads',
+      (tester) async {
+        final harness = await _pumpLessonScreen(tester);
+        await _tapContinue(tester);
+
+        await tester.tap(_optionTile('6s'));
+        await tester.pumpAndSettle();
+        await _tapVerifier(tester);
+
+        expect(find.text('Pourquoi ?'), findsOneWidget);
+        expect(harness.senseiRepository.callCount, 0);
+
+        // Not `pumpAndSettle`: the panel's pulsing-tiles animation repeats
+        // forever once the Sensei state leaves idle.
+        await tester.tap(find.text('Pourquoi ?'));
+        await tester.pump();
+
+        expect(harness.senseiRepository.callCount, 1);
+        expect(find.text('Le sensei regarde votre main'), findsOneWidget);
+        final continuer = tester.widget<FilledButton>(
+          find.widgetWithText(FilledButton, 'Continuer'),
+        );
+        expect(continuer.onPressed, isNotNull);
       },
     );
 

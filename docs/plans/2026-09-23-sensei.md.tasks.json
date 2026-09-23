@@ -64,31 +64,31 @@
     {
       "id": 7,
       "subject": "Task 7: Scanner hook: Sensei context in the result sheet",
-      "status": "in_progress",
+      "status": "completed",
       "blockedBy": [
         5
       ],
-      "description": "**Goal:** `lib/scanner/scanner_screen.dart`: `_ResultSheet` hosts `SenseiPanelWidget(request: SenseiRequest.tileContext(tile), autoStart: true)` between the family line and the CTA (`space3` around). `FakeTileIdentifier` stays in `lib/scanner/` only if still referenced from lib; otherwise the test-writer moves it under `test/fakes/` in Task 8.\n\n**Files:**\n- lib/scanner/scanner_screen.dart\n- lib/scanner/fake_tile_identifier.dart\n\n**Acceptance Criteria:**\n- [ ] emulator: photo of a tile → sheet with the tile → context streams\n- [ ] photo of nothing → failure sheet\n- [ ] screenshots vs 15, 16 light + dark\n\n**Verify:** flutter analyze && dart run tool/check_conventions.dart, then visual\n\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && dart run tool/check_conventions.dart, then visual\", \"acceptanceCriteria\": [\"emulator: photo of a tile → sheet with the tile → context streams\", \"photo of nothing → failure sheet\", \"screenshots vs 15, 16 light + dark\"], \"modelTier\": \"standard\", \"owner\": \"user\", \"files\": [\"lib/scanner/scanner_screen.dart\", \"lib/scanner/fake_tile_identifier.dart\"]}\n```"
+      "description": "**Goal:** `lib/scanner/scanner_screen.dart`: `_ResultSheet` hosts `SenseiPanelWidget(request: SenseiRequest.tileContext(tile), autoStart: true)` between the family line and the CTA (`space3` around). `FakeTileIdentifier` stays in `lib/scanner/` only if still referenced from lib; otherwise the test-writer moves it under `test/fakes/` in Task 8.\n\n**Files:**\n- lib/scanner/scanner_screen.dart\n- lib/scanner/fake_tile_identifier.dart\n\n**Acceptance Criteria:**\n- [ ] emulator: photo of a tile → sheet with the tile → context streams\n- [ ] photo of nothing → failure sheet\n- [ ] screenshots vs 15, 16 light + dark\n\n**Verify:** flutter analyze && dart run tool/check_conventions.dart, then visual\n\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && dart run tool/check_conventions.dart, then visual\", \"acceptanceCriteria\": [\"emulator: photo of a tile → sheet with the tile → context streams\", \"photo of nothing → failure sheet\", \"screenshots vs 15, 16 light + dark\"], \"modelTier\": \"standard\", \"owner\": \"user\", \"files\": [\"lib/scanner/scanner_screen.dart\", \"lib/scanner/fake_tile_identifier.dart\"]}\n```\n**Done 2026-09-23**: `_ResultSheet` hosts `SenseiPanelWidget(autoStart: true)` under the family line. Two scanner widget tests red until Task 8 overrides `senseiRepositoryProvider` (no Firebase in tests). Live streaming check folded into Task 9."
     },
     {
       "id": 8,
       "subject": "Task 8: Tests: fake repository, sensei unit + widget tests, screen tests extended",
-      "status": "pending",
+      "status": "completed",
       "blockedBy": [
         6,
         7
       ],
-      "description": "**Goal:** `test/fakes/fake_sensei_repository.dart` (scripted chunks / `SocketException` / `StateError` / empty; records cancel). `test/sensei/{sensei_request,sensei_state,sensei_providers,sensei_panel_widget}_test.dart`. `test/scanner/firebase_tile_identifier_test.dart` only if the JSON → `Tile?` step is a separable function (no network in tests). Extend `test/learning/lesson_screen_test.dart` (miss → link → panel loading label; Continuer enabled during loading) and `test/scanner/scanner_screen_test.dart` (found → loading label « Le sensei regarde la tuile »). Widget tests wrap in `ProviderScope(overrides: [...], retry: (_, _) => null)` + material_ui `MaterialApp`.\n\n**Files:**\n- test/fakes/fake_sensei_repository.dart\n- test/sensei/\n- test/learning/lesson_screen_test.dart\n- test/scanner/scanner_screen_test.dart\n\n**Acceptance Criteria:**\n- [ ] flutter test green\n- [ ] no test imports firebase_ai\n\n**Verify:** flutter test\n\n```json:metadata\n{\"verifyCommand\": \"flutter test\", \"acceptanceCriteria\": [\"flutter test green\", \"no test imports firebase_ai\"], \"modelTier\": \"standard\", \"owner\": \"test-writer\", \"files\": [\"test/fakes/fake_sensei_repository.dart\", \"test/sensei/\", \"test/learning/lesson_screen_test.dart\", \"test/scanner/scanner_screen_test.dart\"]}\n```"
+      "description": "**Goal:** `test/fakes/fake_sensei_repository.dart` (scripted chunks / `SocketException` / `StateError` / empty; records cancel). `test/sensei/{sensei_request,sensei_state,sensei_providers,sensei_panel_widget}_test.dart`. `test/scanner/firebase_tile_identifier_test.dart` only if the JSON → `Tile?` step is a separable function (no network in tests). Extend `test/learning/lesson_screen_test.dart` (miss → link → panel loading label; Continuer enabled during loading) and `test/scanner/scanner_screen_test.dart` (found → loading label « Le sensei regarde la tuile »). Widget tests wrap in `ProviderScope(overrides: [...], retry: (_, _) => null)` + material_ui `MaterialApp`.\n\n**Files:**\n- test/fakes/fake_sensei_repository.dart\n- test/sensei/\n- test/learning/lesson_screen_test.dart\n- test/scanner/scanner_screen_test.dart\n\n**Acceptance Criteria:**\n- [ ] flutter test green\n- [ ] no test imports firebase_ai\n\n**Verify:** flutter test\n\n```json:metadata\n{\"verifyCommand\": \"flutter test\", \"acceptanceCriteria\": [\"flutter test green\", \"no test imports firebase_ai\"], \"modelTier\": \"standard\", \"owner\": \"test-writer\", \"files\": [\"test/fakes/fake_sensei_repository.dart\", \"test/sensei/\", \"test/learning/lesson_screen_test.dart\", \"test/scanner/scanner_screen_test.dart\"]}\n```\n**Done 2026-09-23** (test-writer): `ScriptedSenseiRepository`, four `test/sensei/` files, lesson + scanner screen tests extended; suite 210 green, analyzer clean, no `firebase_ai` import in tests. Register rows added by main Claude (agent hook limits it to test/)."
     },
     {
       "id": 9,
       "subject": "Task 9: Device check + reviewer pass + handover",
-      "status": "pending",
+      "status": "in_progress",
       "blockedBy": [
         8
       ],
       "description": "**Goal:** Emulator pass: both flows, dark mode, airplane mode → offline, bogus `senseiModel` name → failed + « Réessayer ». flutter-reviewer on `lib/sensei/` and the two hooks; findings applied by the user. ROADMAP milestone 5 row + next-session block (M6 next; Isar plan still to write); deviations logged; `tasks.json` all done with the commit hash.\n\n**Files:**\n- docs/ROADMAP.md\n- docs/plans/2026-09-23-sensei.md.tasks.json\n\n**Acceptance Criteria:**\n- [ ] flutter analyze && flutter test && dart run tool/check_conventions.dart clean\n- [ ] ROADMAP + tasks.json updated together\n- [ ] reviewer findings applied or logged\n\n**Verify:** flutter analyze && flutter test && dart run tool/check_conventions.dart\n\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && flutter test && dart run tool/check_conventions.dart\", \"acceptanceCriteria\": [\"flutter analyze && flutter test && dart run tool/check_conventions.dart clean\", \"ROADMAP + tasks.json updated together\", \"reviewer findings applied or logged\"], \"modelTier\": \"standard\", \"owner\": \"Claude + user\", \"files\": [\"docs/ROADMAP.md\", \"docs/plans/2026-09-23-sensei.md.tasks.json\"]}\n```"
     }
   ],
-  "lastUpdated": "2026-09-23T21:20:27.687444+00:00"
+  "lastUpdated": "2026-09-23T21:37:16.705156+00:00"
 }

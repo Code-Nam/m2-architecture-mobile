@@ -10,9 +10,11 @@ import 'package:tenpai/scanner/scanner_providers.dart';
 import 'package:tenpai/scanner/scanner_screen.dart';
 import 'package:tenpai/scanner/tile_identifier.dart';
 import 'package:tenpai/scanner/tile_photo_source.dart';
+import 'package:tenpai/sensei/sensei_providers.dart';
 import 'package:tenpai/shared/models/tile.dart';
 import 'package:tenpai/shared/theme/app_theme.dart';
 
+import '../fakes/fake_sensei_repository.dart';
 import '../fakes/fake_tile_identifier.dart';
 import '../fakes/fake_tile_photo_source.dart';
 
@@ -31,18 +33,32 @@ Future<void> _pumpScanner(
   WidgetTester tester, {
   required TilePhotoSource photos,
   required TileIdentifier identifier,
+  ScriptedSenseiRepository? sensei,
 }) async {
   await tester.pumpWidget(
     ProviderScope(
       overrides: [
         tilePhotoSourceProvider.overrideWithValue(photos),
         tileIdentifierProvider.overrideWithValue(identifier),
+        senseiRepositoryProvider.overrideWithValue(
+          sensei ?? ScriptedSenseiRepository(),
+        ),
       ],
       retry: (_, _) => null,
       child: MaterialApp(theme: lightTheme(), home: const ScannerScreen()),
     ),
   );
   await tester.pumpAndSettle();
+}
+
+/// Drives a fixed number of frames instead of `pumpAndSettle`: once a result
+/// sheet mounts its Sensei panel and the panel starts loading, the
+/// pulsing-tiles animation repeats forever and `pumpAndSettle` would never
+/// return.
+Future<void> _pumpFrames(WidgetTester tester, [int count = 10]) async {
+  for (var i = 0; i < count; i++) {
+    await tester.pump(const Duration(milliseconds: 16));
+  }
 }
 
 /// The shutter is the only InkWell on the idle viewfinder; the sheets add
@@ -103,18 +119,22 @@ void main() {
     });
 
     testWidgets('a recognised tile opens the result sheet', (tester) async {
+      final sensei = ScriptedSenseiRepository();
       await _pumpScanner(
         tester,
         photos: FakeTilePhotoSource.returning(_photo),
         identifier: ScriptedTileIdentifier(tile: Tile.parse('5z')),
+        sensei: sensei,
       );
 
       await tester.tap(_shutter);
-      await tester.pumpAndSettle();
+      await _pumpFrames(tester);
 
       expect(find.text('Dragon blanc'), findsOneWidget);
       expect(find.text('HONNEURS'), findsOneWidget);
       expect(find.text('Scanner une autre tuile'), findsOneWidget);
+      expect(find.text('Le sensei regarde la tuile'), findsOneWidget);
+      expect(sensei.callCount, 1);
     });
 
     testWidgets('a red five gets the aka dora prefix', (tester) async {
@@ -125,7 +145,7 @@ void main() {
       );
 
       await tester.tap(_shutter);
-      await tester.pumpAndSettle();
+      await _pumpFrames(tester);
 
       expect(find.text('5 de cercles rouge'), findsOneWidget);
       expect(find.text('AKA DORA · FAMILLE DES CERCLES'), findsOneWidget);
