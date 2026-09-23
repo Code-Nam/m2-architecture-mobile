@@ -115,11 +115,15 @@ Tasks 1–3 done (dependency added; `ScanState` sealed + `tileName` /
 (`tilePhotoSourceProvider`, `tileIdentifierProvider`, keep-alive
 `scanProvider` with `ScanNotifier.scan()`: analysing → capture (null → idle)
 → identify (null → notFound) → found; `on Exception` → notFound, `Error`s
-stay loud). **Resume at Task 5:** `scanner_screen.dart` replaces the
-placeholder (handoff 14, 16, 17), `PrimaryButtonWidget` promoted to
-`lib/shared/widgets/`, tokens bracketStroke / bracketArm / shutterSize /
-shutterRing / sheetHandleWidth / sheetHandleHeight. `check_conventions`
-flags `scanProvider`, `tileName`, `tileFamily` public-unused until then. Isar (settings, scan
+stay loud). Task 5 done (2026-09-23, /implement for tokens + screen, button move
+by the user): `scanner_screen.dart` (`_Viewfinder`, `_BracketPainter`,
+`_Shutter`, `_ResultSheet`, `_FailureSheet`, `_UnknownTile`, `_Sheet`,
+`_Handle`), `lib/shared/widgets/primary_button_widget.dart`, scanner tokens
+in `AppTokens`. Verified on the emulator light + dark: shutter → camera2 →
+result or failure sheet; cancel → viewfinder. Gotcha met: hot reload cannot
+register a native plugin added after the build (image_picker threw, caught
+as notFound); `flutter run` again fixes it; catch now `debugPrint`s.
+**Resume at Task 6:** test-writer for `test/scanner/*` + fake photo source. Isar (settings, scan
 history, cached catalog) is M4 with Firebase.
 
 **Earlier state on 2026-09-22:** lesson slice Tasks 1-6 done (`lib/shared/models/`

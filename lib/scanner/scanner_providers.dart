@@ -1,3 +1,4 @@
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tenpai/scanner/fake_tile_identifier.dart';
@@ -38,7 +39,8 @@ class ScanNotifier extends Notifier<ScanState> {
       }
       final tile = await ref.read(tileIdentifierProvider).identify(bytes);
       state = tile == null ? const ScanState.notFound() : ScanState.found(tile);
-    } on Exception {
+    } on Exception catch (e) {
+      debugPrint('scan failed: $e');
       state = const ScanState.notFound();
     }
   }

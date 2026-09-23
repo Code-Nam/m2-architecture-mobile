@@ -173,4 +173,30 @@ abstract final class AppTokens {
 
   /// Dimming of a locked yaku card (handoff: « atténués »).
   static const lockedOpacity = 0.55;
+
+  // AI-GENERATED (Claude) BEGIN — scanner geometry, milestone 3
+  //* Scanner
+
+  /// Stroke of the four corner brackets around the viewfinder frame.
+  static const bracketStroke = 3.0;
+
+  /// Length of each bracket arm from the corner.
+  static const bracketArm = 28.0;
+
+  /// Share of the screen width the tile-shaped frame takes; height follows
+  /// the 64:88 tile ratio.
+  static const viewfinderWidthFactor = 0.6;
+
+  /// Diameter of the round shutter.
+  static const shutterSize = 72.0;
+
+  /// Ring stroke around the shutter disc.
+  static const shutterRing = 4.0;
+
+  /// Drag-handle bar at the top of the result and failure sheets.
+  static const sheetHandleWidth = 40.0;
+
+  /// Thickness of that bar.
+  static const sheetHandleHeight = 4.0;
+  // AI-GENERATED (Claude) END
 }
