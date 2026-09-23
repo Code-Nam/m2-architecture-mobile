@@ -62,19 +62,21 @@ class FirebaseTileIdentifier implements TileIdentifier {
     return _parse(response.text);
   }
 
-  /// Null for anything that is not `{"code": "<valid code>"}`: the schema
-  /// makes that unlikely, the `try` makes it harmless.
+  /// Null for anything that is not `{"code": "<code in _codes>"}`. The
+  /// schema makes a stray value unlikely; the membership test makes it
+  /// harmless, and keeps `Tile.parse` (which throws an `Error` on a short
+  /// string) out of the failure path. The `try` covers the decode and cast.
   static Tile? _parse(String? text) {
     if (text == null) return null;
     try {
       final code = (jsonDecode(text) as Map<String, Object?>)['code'];
-      if (code is! String || code == _none) return null;
+      if (code is! String || code == _none || !_codes.contains(code)) {
+        return null;
+      }
       return Tile.parse(code);
     } on FormatException {
       return null;
     } on TypeError {
-      return null;
-    } on StateError {
       return null;
     }
   }

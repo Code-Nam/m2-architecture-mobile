@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:firebase_ai/firebase_ai.dart';
@@ -49,18 +50,33 @@ class SenseiNotifier extends Notifier<SenseiState> {
   /// The family argument; the prompt is built from it by the repository.
   SenseiNotifier(this._request);
   final SenseiRequest _request;
+
+  // AI-GENERATED (Claude) BEGIN — review finding 5: one owned subscription
+  /// The live stream, if any. Held so a retry cancels its predecessor and
+  /// dispose cancels whatever is running; one `onDispose` in `build`, not
+  /// one per `ask()`.
+  StreamSubscription<String>? _sub;
+
   @override
-  SenseiState build() => const SenseiState.idle();
+  SenseiState build() {
+    ref.onDispose(() => _sub?.cancel());
+    return const SenseiState.idle();
+  }
+  // AI-GENERATED (Claude) END
 
   /// Starts (or restarts after a failure) the stream. A tap while loading or
   /// streaming is ignored. Chunks accumulate here, not in the widget; an empty
   /// stream is a failure, a `SocketException` is offline, anything else failed.
-  /// `ref.onDispose` cancels the subscription when the panel leaves the tree.
+  /// Known limit: the SDK fetches an App Check token before opening the
+  /// socket, so a cold start with no network fails there (a Firebase error,
+  /// not a `SocketException`) and shows `failed` instead of `offline`.
+  /// Disposal cancels the subscription when the panel leaves the tree.
   void ask() {
     if (state is SenseiLoading || state is SenseiStreaming) return;
     state = const SenseiState.loading();
     var text = '';
-    final sub = ref
+    _sub?.cancel();
+    _sub = ref
         .read(senseiRepositoryProvider)
         .explain(_request)
         .listen(
@@ -76,6 +92,5 @@ class SenseiNotifier extends Notifier<SenseiState> {
           },
           cancelOnError: true,
         );
-    ref.onDispose(sub.cancel);
   }
 }

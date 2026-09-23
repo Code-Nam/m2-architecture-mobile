@@ -36,9 +36,14 @@ class _SenseiPanelWidgetState extends ConsumerState<SenseiPanelWidget> {
   void initState() {
     super.initState();
     if (widget.autoStart) {
-      WidgetsBinding.instance.addPostFrameCallback(
-        (_) => ref.read(senseiProvider(widget.request).notifier).ask(),
-      );
+      // AI-GENERATED (Claude) BEGIN — review finding 4: mounted guard
+      // The frame may unmount the panel before this runs (re-entered scan,
+      // popped test); `ref` on an unmounted widget throws.
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!mounted) return;
+        ref.read(senseiProvider(widget.request).notifier).ask();
+      });
+      // AI-GENERATED (Claude) END
     }
   }
 
@@ -202,9 +207,8 @@ class _PulsingTilesState extends State<_PulsingTiles>
       for (var i = 0; i < 3; i++) ...[
         if (i > 0) const SizedBox(width: AppTokens.space1 / 2),
         _PulseTile(
-          animation: CurvedAnimation(
-            parent: _controller,
-            curve: Interval(i / 6, i / 6 + 0.5),
+          animation: _controller.drive(
+            CurveTween(curve: Interval(i / 6, i / 6 + 0.5)),
           ),
         ),
       ],

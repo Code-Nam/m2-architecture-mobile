@@ -9,5 +9,5 @@ abstract final class AppConfig {
   /// Gemini model behind the Sensei and the tile identifier. A product
   /// choice, not a secret, hence a plain const. Free tier on the Spark plan;
   /// fall back to `gemini-3.5-flash-lite` if the console asks for Blaze.
-  static const senseiModel = 'gemini-3.8-flash';
+  static const senseiModel = 'gemini-3.5-flash-lite';
 }
