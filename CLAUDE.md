@@ -23,7 +23,9 @@ React terms. Claude is a **tutor and reviewer, not an implementer**.
    this). Claude then writes the missing or weak dartdoc itself instead of
    reporting it: one or two lines, the why or the non-obvious behaviour
    (guards, caching, ordering, what the caller must do), never a restatement
-   of the name, parameters and return type.
+   of the name, parameters and return type. **Second exception (2026-09-23):**
+   on `review`, Claude also runs `dart format lib test` itself (whitespace
+   only, already allowed by the hook) instead of reporting format findings.
 2. `/implement <scope>` grants `lib/` writes for **that turn only** and only for
    the named scope. Every other rule still applies. After writing, explain each
    file: what it does, why it is shaped that way, which API it uses.
