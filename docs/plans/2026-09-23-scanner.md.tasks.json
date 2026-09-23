@@ -1,0 +1,66 @@
+{
+  "planPath": "docs/plans/2026-09-23-scanner.md",
+  "tasks": [
+    {
+      "id": 1,
+      "subject": "Task 1: Dependency: image_picker",
+      "status": "completed",
+      "blockedBy": [],
+      "description": "**Files:** see plan Layout\n**Goal:** `flutter pub add image_picker` (^1.2.3) after explicit approval (CLAUDE.md §1.10). Read `~/.pub-cache/hosted/pub.dev/image_picker-1.2.3/README.md` Android section and `lib/image_picker.dart` (`ImagePicker.pickImage(source: ImageSource.camera, imageQuality:, maxWidth:)` → `XFile?`, `readAsBytes()`).\n**Acceptance Criteria:** pub get clean; README confirms no AndroidManifest change for the camera intent (or says which)\n**Verify:** flutter pub get && flutter analyze\n```json:metadata\n{\"verifyCommand\": \"flutter pub get && flutter analyze\", \"acceptanceCriteria\": [\"pub get clean\", \"README confirms no AndroidManifest change for the camera intent (or says which)\"], \"modelTier\": \"mechanical\", \"owner\": \"user (Claude asks approval first)\"}\n```\n**Done 2026-09-23**: `image_picker ^1.2.3` added after approval; README Android: no configuration, no manifest change (camera via `ACTION_IMAGE_CAPTURE` intent); `retrieveLostData()` noted for low-memory kills (deferred)."
+    },
+    {
+      "id": 2,
+      "subject": "Task 2: ScanState (freezed sealed) + tile labels",
+      "status": "pending",
+      "blockedBy": [],
+      "description": "**Files:** see plan Layout\n**Goal:** `lib/scanner/scan_state.dart`: `@freezed sealed class ScanState` with `idle`, `analysing`, `found(Tile tile)`, `notFound`; build_runner. `lib/scanner/tile_labels.dart`: `tileName(Tile)` (« 5 de cercles rouge », « Vent d'est », « Dragon blanc »…) and `tileFamily(Tile)` (« famille des cercles », « honneurs »), pure switches on `TileSuit`/number with no default.\n**Acceptance Criteria:** tileName(Tile.parse('5pr')) == '5 de cercles rouge'; tileName(Tile.parse('1z')) == \"Vent d'est\"; switch exhaustive, analyze clean\n**Verify:** flutter analyze && dart run tool/check_conventions.dart && dart run build_runner build -d\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && dart run tool/check_conventions.dart && dart run build_runner build -d\", \"acceptanceCriteria\": [\"tileName(Tile.parse('5pr')) == '5 de cercles rouge'\", \"tileName(Tile.parse('1z')) == \\\"Vent d'est\\\"\", \"switch exhaustive, analyze clean\"], \"modelTier\": \"standard\", \"owner\": \"user\"}\n```"
+    },
+    {
+      "id": 3,
+      "subject": "Task 3: Photo source + identifier (interfaces, image_picker impl, fake)",
+      "status": "pending",
+      "blockedBy": [
+        1,
+        2
+      ],
+      "description": "**Files:** see plan Layout\n**Goal:** `tile_photo_source.dart` (`abstract interface class TilePhotoSource { Future<Uint8List?> capture(); }`), `tile_photo_source_impl.dart` (`TilePhotoSourceImpl(this._picker)`, camera source, `readAsBytes()`, null when cancelled), `tile_identifier.dart` (`Future<Tile?> identify(Uint8List photo)`), `fake_tile_identifier.dart` (hash `bytes.fold(17, (h, b) => h * 31 + b)`; `% 5 == 0` → null; else index `% 34` → tile, 27 suit tiles then 7 honours; red five when the hash says so).\n**Acceptance Criteria:** fixed bytes → fixed tile; other fixed bytes → null; cancelled picker → null, no throw\n**Verify:** flutter analyze && dart run tool/check_conventions.dart\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && dart run tool/check_conventions.dart\", \"acceptanceCriteria\": [\"fixed bytes \\u2192 fixed tile; other fixed bytes \\u2192 null\", \"cancelled picker \\u2192 null, no throw\"], \"modelTier\": \"standard\", \"owner\": \"user\"}\n```"
+    },
+    {
+      "id": 4,
+      "subject": "Task 4: Providers + ScanNotifier",
+      "status": "pending",
+      "blockedBy": [
+        3
+      ],
+      "description": "**Files:** see plan Layout\n**Goal:** `scanner_providers.dart`: `tilePhotoSourceProvider`, `tileIdentifierProvider`, `scanProvider = NotifierProvider<ScanNotifier, ScanState>`; `scan()`: state = analysing → capture (null → idle) → identify (null → notFound, tile → found); any throw → notFound. Not auto-dispose (state survives tab switches).\n**Acceptance Criteria:** ProviderContainer.test with fakes walks idle → analysing → found; → notFound on null tile or throw; → idle on cancelled capture\n**Verify:** flutter analyze && dart run tool/check_conventions.dart\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && dart run tool/check_conventions.dart\", \"acceptanceCriteria\": [\"ProviderContainer.test with fakes walks idle \\u2192 analysing \\u2192 found\", \"\\u2192 notFound on null tile or throw\", \"\\u2192 idle on cancelled capture\"], \"modelTier\": \"standard\", \"owner\": \"user\"}\n```"
+    },
+    {
+      "id": 5,
+      "subject": "Task 5: ScannerScreen: viewfinder, shutter, result and failure sheets",
+      "status": "pending",
+      "blockedBy": [
+        4
+      ],
+      "description": "**Files:** see plan Layout\n**Goal:** Replace the placeholder (handoff 14, 16, 17). Dark `Scaffold` (`colors.viewfinderBg`), `Stack` of `_Viewfinder` (mono caption « [ FLUX CAMÉRA ] », `AspectRatio(64/88)` frame with four `_Bracket` corners via `CustomPaint` in `colors.viewfinderBracket`, « Cadrez une tuile », `_Shutter` disc disabled while analysing) and a `Positioned` + `AnimatedSlide` sheet layer (pattern `lesson_screen.dart:278-300`): `_ResultSheet` (drag handle, `TileWidget(size: .demo)`, `tileName` headlineSmall, mono uppercase subtitle with « AKA DORA · » prefix when red, CTA « Scanner une autre tuile ») and `_FailureSheet` (grey « ? » box, « Tuile non reconnue », « RIEN D'IDENTIFIÉ », tips line, « Réessayer »). Promote the lesson screen's `_PrimaryButton` to `lib/shared/widgets/primary_button_widget.dart` (`PrimaryButtonWidget`). Tokens: bracketStroke, bracketArm, shutterSize, shutterRing, sheetHandleWidth, sheetHandleHeight.\n**Acceptance Criteria:** emulator: shutter opens the system camera; photo → result or failure sheet slides up; « Scanner une autre tuile » / « Réessayer » reopen the camera; cancel → viewfinder; screenshots vs 14, 16, 17 light + dark\n**Verify:** flutter analyze && dart run tool/check_conventions.dart, then visual\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && dart run tool/check_conventions.dart, then visual\", \"acceptanceCriteria\": [\"emulator: shutter opens the system camera; photo \\u2192 result or failure sheet slides up; \\u00ab Scanner une autre tuile \\u00bb / \\u00ab R\\u00e9essayer \\u00bb reopen the camera; cancel \\u2192 viewfinder\", \"screenshots vs 14, 16, 17 light + dark\"], \"modelTier\": \"standard\", \"owner\": \"user\"}\n```"
+    },
+    {
+      "id": 6,
+      "subject": "Task 6: Tests (test-writer agent)",
+      "status": "pending",
+      "blockedBy": [
+        5
+      ],
+      "description": "**Files:** see plan Layout\n**Goal:** test/scanner/{scan_state,tile_labels,fake_tile_identifier,scanner_providers,scanner_screen}_test.dart; fakes test/fakes/fake_tile_photo_source.dart (scripted bytes / null / throw). Widget tests: shutter disabled while analysing, found → name text, notFound → « Tuile non reconnue », cancel → viewfinder only, retry calls capture again.\n**Acceptance Criteria:** flutter test green; fakes under test/fakes/, every new file registered\n**Verify:** flutter test\n```json:metadata\n{\"verifyCommand\": \"flutter test\", \"acceptanceCriteria\": [\"flutter test green\", \"fakes under test/fakes/, every new file registered\"], \"modelTier\": \"standard\", \"owner\": \"test-writer agent\"}\n```"
+    },
+    {
+      "id": 7,
+      "subject": "Task 7: Device check + handover",
+      "status": "pending",
+      "blockedBy": [
+        6
+      ],
+      "description": "**Files:** see plan Layout\n**Goal:** Emulator pass (camera flow, both sheets, dark), flutter-reviewer on lib/scanner/ + shared button, ROADMAP milestone 3 row + next-session block (M4 Firebase next), deviations (static viewfinder, sheet-as-card, deferred buttons), tasks.json done with hash.\n**Acceptance Criteria:** ROADMAP + tasks.json say done with the commit hash\n**Verify:** flutter analyze && flutter test && dart run tool/check_conventions.dart, then visual\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && flutter test && dart run tool/check_conventions.dart, then visual\", \"acceptanceCriteria\": [\"ROADMAP + tasks.json say done with the commit hash\"], \"modelTier\": \"standard\", \"owner\": \"user (Claude drives adb)\"}\n```"
+    }
+  ],
+  "lastUpdated": "2026-09-23T13:29:42.631702+00:00"
+}

@@ -102,12 +102,12 @@ search field keeps its text only because the tab shell is an `IndexedStack`
 (a controller seeded from `yakuQueryProvider` would close that); locked cards
 use `Opacity`, fine with a lazy list.
 
-**Next: milestone 3, Scanner.** `image_picker` (approved, not yet added:
-say which and why before `pub add`), single-shot photo → fake identifier →
-result card (handoff screens 14–17, Sensei states are M5). Plan first:
-`docs/plans/<date>-scanner.md` + `.tasks.json`, `lib/scanner/` flat. Camera
-permission goes in `android/app/src/main/AndroidManifest.xml`. Isar (settings,
-scan history, cached catalog) is M4 with Firebase.
+**Next: milestone 3, Scanner.** Plan approved 2026-09-23:
+`docs/plans/2026-09-23-scanner.md` (7 tasks; `lib/scanner/` flat: photo source
+over `image_picker`, fake identifier deterministic from the bytes, sealed
+`ScanState`, viewfinder + result/failure sheets; the sheet is the tile card).
+Start at Task 1 (dependency approval) and Task 2 (state + labels). Isar
+(settings, scan history, cached catalog) is M4 with Firebase.
 
 **Earlier state on 2026-09-22:** lesson slice Tasks 1-6 done (`lib/shared/models/`
 lesson domain, `assets/lessons/` content, `lib/learning/lesson_{repository,
@@ -254,7 +254,7 @@ Plan: [docs/plans/2026-09-17-project-setup.md](plans/2026-09-17-project-setup.md
 |-----------|-------|--------|
 | 1 — Architecture holds | Tile model + widget, learning vertical slice from JSON asset, in-memory progress, shell routes, tests | done 2026-09-23 (`69b74f0`): tile plan `b105eb7`; lesson slice Tasks 1–10 (`lib/shared/models/` lesson domain, six unit assets, `lib/learning/` repository + providers + `LessonPathScreen` + `LessonScreen`, `lib/progress/` in-memory progress, tab shell + `/lesson/:id`), device-checked light + dark vs handoff 05–08, flutter-reviewer pass applied (`06c5a64`, `69b74f0`), 99 tests |
 | 2 — Yaku | dio + REST yaku catalog, Yaku Dex screens | done 2026-09-23 (`56e9fa1`): catalog on GitHub Pages (`Code-Nam/tenpai-api`, `114da4a`), `YAKU_BASE_URL` via `--dart-define`, `lib/app/app_config.dart`, `lib/yaku/` (model, remote source, repository with failure-dropping cache and tile validation, six providers, `YakuScreen`), chip + input themes in `app_theme.dart`, `hasError` guards on all three data screens; device-checked light/dark incl. offline retry; reviewer pass applied; 29 new tests, suite at 128 |
-| 3 — Scanner | image_picker single shot, fake identifier, scan result card | not started |
+| 3 — Scanner | image_picker single shot, fake identifier, scan result card | in progress: plan `docs/plans/2026-09-23-scanner.md` approved 2026-09-23, Task 1 done (`image_picker ^1.2.3` added 2026-09-23, no manifest change); Tasks 2–7 pending |
 | 4 — Firebase | `firebase_auth` + App Check + Firestore progress (offline persistence on, Security Rules written and tested) replacing the in-memory impl behind the existing repository interfaces; Isar for settings and scan history if not already added | not started |
 | 5 — AI | Firebase AI Logic (`firebase_ai`) behind App Check; explanation + tile identification | not started |
 | 6 — Content + polish | remaining units, drill/interactive blocks, gallery parity | not started |
