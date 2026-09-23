@@ -149,6 +149,7 @@ Rules:
 | `lib/sensei/sensei_request.dart` | dartdoc | 2026-09-23 | Docs are time-consuming for the author; code stays author-written. |
 | `lib/sensei/sensei_state.dart` | dartdoc | 2026-09-23 | Docs are time-consuming for the author; code stays author-written. |
 | `lib/sensei/sensei_repository.dart` | dartdoc | 2026-09-23 | Docs are time-consuming for the author; code stays author-written. |
+| `lib/sensei/sensei_providers.dart` | dartdoc | 2026-09-23 | Docs are time-consuming for the author; code stays author-written. |
 | `lib/shared/models/lesson.dart` | block: `@Assert` on the factory (`const` dropped) | 2026-09-23 | Content invariant from the milestone 1 review; plumbing, no Flutter concept to learn. |
 | `lib/progress/user_progress.dart` | dartdoc; block-free edit 2026-09-23: `statusOf` / `isUnitPlayable` made private (/implement, review finding) | 2026-09-22 | Docs are time-consuming for the author; code stays author-written. |
 | `lib/shared/models/lesson_block.dart` | dartdoc; block: `@Assert` on `quiz` (2026-09-23, `const` dropped on that factory) | 2026-09-22 | Docs are time-consuming for the author; code stays author-written. |
@@ -178,7 +179,6 @@ Rules:
 | `test/fakes/fake_tile_identifier.dart` | file | 2026-09-23 | Test scaffolding is tedious and teaches no Flutter concept; the code under test is author-written. |
 | `test/scanner/scan_state_test.dart` | file | 2026-09-23 | Test scaffolding is tedious and teaches no Flutter concept; the code under test is author-written. |
 | `test/scanner/tile_labels_test.dart` | file | 2026-09-23 | Test scaffolding is tedious and teaches no Flutter concept; the code under test is author-written. |
-| `test/scanner/fake_tile_identifier_test.dart` | file | 2026-09-23 | Test scaffolding is tedious and teaches no Flutter concept; the code under test is author-written. |
 | `test/scanner/scanner_providers_test.dart` | file | 2026-09-23 | Test scaffolding is tedious and teaches no Flutter concept; the code under test is author-written. |
 | `test/scanner/scanner_screen_test.dart` | file | 2026-09-23 | Test scaffolding is tedious and teaches no Flutter concept; the code under test is author-written. |
 | `test/fakes/fake_auth_repository.dart` | file | 2026-09-23 | Test scaffolding is tedious and teaches no Flutter concept; the code under test is author-written. |

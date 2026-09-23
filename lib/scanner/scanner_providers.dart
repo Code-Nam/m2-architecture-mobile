@@ -1,20 +1,23 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:tenpai/scanner/fake_tile_identifier.dart';
+import 'package:tenpai/scanner/firebase_tile_identifier.dart';
 import 'package:tenpai/scanner/scan_state.dart';
 import 'package:tenpai/scanner/tile_identifier.dart';
 import 'package:tenpai/scanner/tile_photo_source.dart';
 import 'package:tenpai/scanner/tile_photo_source_impl.dart';
+import 'package:tenpai/sensei/sensei_providers.dart';
+
+/// Gemini behind the M3 interface; the model instance comes from the sensei
+/// providers so both features share one backend. Tests override this with
+/// the scripted fake in `test/fakes/`.
+final tileIdentifierProvider = Provider<TileIdentifier>(
+  (ref) => FirebaseTileIdentifier(ref.watch(identifierModelProvider)),
+);
 
 /// Swap point: tests override with a scripted fake.
 final tilePhotoSourceProvider = Provider<TilePhotoSource>(
   (_) => TilePhotoSourceImpl(ImagePicker()),
-);
-
-/// Fake until M5 swaps in firebase_ai behind the same interface.
-final tileIdentifierProvider = Provider<TileIdentifier>(
-  (_) => FakeTileIdentifier(),
 );
 
 /// Not auto-dispose: the result sheet survives a tab switch.
