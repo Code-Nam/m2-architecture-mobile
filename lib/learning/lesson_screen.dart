@@ -4,6 +4,10 @@ import 'package:material_ui/material_ui.dart';
 import 'package:tenpai/learning/lesson_providers.dart';
 import 'package:tenpai/learning/lesson_session.dart';
 import 'package:tenpai/progress/progress_providers.dart';
+import 'package:tenpai/sensei/sensei_panel_widget.dart';
+import 'package:tenpai/sensei/sensei_providers.dart';
+import 'package:tenpai/sensei/sensei_request.dart';
+import 'package:tenpai/sensei/sensei_state.dart';
 import 'package:tenpai/shared/models/lesson.dart';
 import 'package:tenpai/shared/models/lesson_block.dart';
 import 'package:tenpai/shared/models/tile.dart';
@@ -225,6 +229,19 @@ class _QuizBlockView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final notifier = ref.read(currentLessonProvider(session.lessonId).notifier);
     final theme = Theme.of(context);
+    final chosen = session.selectedOption;
+    final whyRequest =
+        session.isAnswered && chosen != null && chosen != block.correctIndex
+        ? SenseiRequest.quizMiss(
+            question: block.question,
+            hand: block.hand,
+            options: block.options,
+            chosenIndex: chosen,
+            correctIndex: block.correctIndex,
+            feedback: block.feedback,
+          )
+        : null;
+
     return Stack(
       children: [
         Padding(
@@ -267,6 +284,7 @@ class _QuizBlockView extends ConsumerWidget {
               isCorrect: session.selectedOption == block.correctIndex,
               feedback: block.feedback,
               onContinue: onContinue,
+              whyRequest: whyRequest,
             ),
           ),
         ),
@@ -279,11 +297,12 @@ class _QuizBlockView extends ConsumerWidget {
 /// Always in the tree, slid off-screen by the parent until the block is
 /// answered, so opening animates instead of popping in. Sized to content
 /// (`mainAxisSize: .min`), never to the screen.
-class _FeedbackSheet extends StatelessWidget {
+class _FeedbackSheet extends ConsumerWidget {
   const _FeedbackSheet({
     required this.isCorrect,
     required this.feedback,
     required this.onContinue,
+    this.whyRequest,
   });
 
   /// Picks tint, title and CTA colour; the parent derives it from the session
@@ -291,15 +310,20 @@ class _FeedbackSheet extends StatelessWidget {
   final bool isCorrect;
 
   /// The authored line, shown only on a hit; a miss shows the fixed sentence
-  /// pointing at the highlighted card. The « Pourquoi ? » link comes later.
+  /// pointing at the highlighted card, then « Pourquoi ? » (see [whyRequest]).
   final String feedback;
 
   /// The same callback as the block's own « Continuer »: advances or, on the
   /// last block, completes the lesson.
   final VoidCallback onContinue;
 
+  /// Non-null only on a checked miss: keys the Sensei provider the sheet
+  /// watches, so « Pourquoi ? » shows while idle and the panel afterwards.
+  /// Null before checking and on a hit, hence no request exists off-screen.
+  final SenseiRequest? whyRequest;
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
     final scheme = theme.colorScheme;
     final colors = theme.extension<AppColors>()!;
@@ -311,7 +335,6 @@ class _FeedbackSheet extends StatelessWidget {
             'Pas tout à fait',
             'La bonne réponse était la tuile entourée de vert.',
           );
-
     return DecoratedBox(
       decoration: BoxDecoration(color: bg, borderRadius: AppTokens.radiusSheet),
       child: Padding(
@@ -328,6 +351,15 @@ class _FeedbackSheet extends StatelessWidget {
               ),
               const SizedBox(height: AppTokens.space1),
               Text(line, style: theme.textTheme.bodyMedium),
+              if (whyRequest case final request?) ...[
+                const SizedBox(height: AppTokens.space1),
+                switch (ref.watch(senseiProvider(request))) {
+                  SenseiIdle() => _WhyLink(
+                    onTap: ref.read(senseiProvider(request).notifier).ask,
+                  ),
+                  _ => SenseiPanelWidget(request: request, autoStart: false),
+                },
+              ],
               const SizedBox(height: AppTokens.space2),
               PrimaryButtonWidget(
                 label: 'Continuer',
@@ -452,6 +484,31 @@ class _OptionCard extends StatelessWidget {
           child: Center(
             child: TileWidget(tile: tile, state: state, size: .option),
           ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Handoff 08: discreet underlined link under the miss line. Tapping asks the
+/// Sensei once; the sheet swaps it for the panel as soon as the state leaves
+/// idle.
+class _WhyLink extends StatelessWidget {
+  const _WhyLink({required this.onTap});
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colors = theme.extension<AppColors>()!;
+    return TextButton(
+      onPressed: onTap,
+      style: TextButton.styleFrom(padding: EdgeInsets.zero),
+      child: Text(
+        'Pourquoi ?',
+        style: theme.textTheme.bodyMedium?.copyWith(
+          color: colors.mutedStrong,
+          decoration: .underline,
         ),
       ),
     );
