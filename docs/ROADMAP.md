@@ -102,34 +102,37 @@ search field keeps its text only because the tab shell is an `IndexedStack`
 (a controller seeded from `yakuQueryProvider` would close that); locked cards
 use `Opacity`, fine with a lazy list.
 
-**Next: milestone 3, Scanner.** Plan approved 2026-09-23:
-`docs/plans/2026-09-23-scanner.md` (7 tasks; `lib/scanner/` flat: photo source
-over `image_picker`, fake identifier deterministic from the bytes, sealed
-`ScanState`, viewfinder + result/failure sheets; the sheet is the tile card).
-Tasks 1–3 done (dependency added; `ScanState` sealed + `tileName` /
-`tileFamily`; `tile_photo_source.dart` + `tile_photo_source_impl.dart`
-(`ImagePicker.pickImage(source: .camera, maxWidth: 1024, imageQuality: 85)`
-→ `readAsBytes()`, null on cancel, platform errors propagate) +
-`tile_identifier.dart` + `fake_tile_identifier.dart` (hash masked with
-`& 0x7fffffff` before `%`, else a negative index)). Task 4 done (`e3db9a9` + next commit): `scanner_providers.dart`
-(`tilePhotoSourceProvider`, `tileIdentifierProvider`, keep-alive
-`scanProvider` with `ScanNotifier.scan()`: analysing → capture (null → idle)
-→ identify (null → notFound) → found; `on Exception` → notFound, `Error`s
-stay loud). Task 5 done (2026-09-23, /implement for tokens + screen, button move
-by the user): `scanner_screen.dart` (`_Viewfinder`, `_BracketPainter`,
-`_Shutter`, `_ResultSheet`, `_FailureSheet`, `_UnknownTile`, `_Sheet`,
-`_Handle`), `lib/shared/widgets/primary_button_widget.dart`, scanner tokens
-in `AppTokens`. Verified on the emulator light + dark: shutter → camera2 →
-result or failure sheet; cancel → viewfinder. Gotcha met: hot reload cannot
-register a native plugin added after the build (image_picker threw, caught
-as notFound); `flutter run` again fixes it; catch now `debugPrint`s.
-Task 6 done (2026-09-23): `test/scanner/{scan_state,tile_labels,
-fake_tile_identifier,scanner_providers,scanner_screen}_test.dart` +
-`test/fakes/{fake_tile_photo_source,fake_tile_identifier}.dart`
-(`ScriptedTileIdentifier`, to avoid the clash with lib's fake). 27 scanner
-tests. **Resume at Task 7:** flutter-reviewer on `lib/scanner/` + shared
-button, ROADMAP milestone 3 row + deviations, tasks.json done with hash. Isar (settings, scan
-history, cached catalog) is M4 with Firebase.
+**State on 2026-09-23 (M3):** milestone 3 Scanner complete at `c091442`,
+Tasks 1–7 of `docs/plans/2026-09-23-scanner.md` done. Play path: Scanner tab
+→ `ScannerScreen` (dark viewfinder, bracket frame, shutter) → system camera
+via `image_picker` (`TilePhotoSourceImpl`, 1024 px / q85, null on cancel) →
+`FakeTileIdentifier` (hash of the bytes → one of 34 tiles, 1 in 5 → null,
+red bit from `hash ~/ 34`) → `ScanNotifier.scan()` (idle → analysing →
+found / notFound / idle; re-entrant press ignored; `Exception` → failure
+sheet, `Error` stays loud) → result sheet (big tile, `tileName`,
+`tileFamily`, « Scanner une autre tuile ») or failure sheet (« ? »,
+« Tuile non reconnue », « Réessayer »). `PrimaryButtonWidget` promoted to
+`lib/shared/widgets/`. Device-checked light + dark vs handoff 14/16/17.
+28 scanner tests, suite at 156. Lesson learned: hot reload cannot register a
+native plugin added after the build; `flutter run` again, and never swallow
+an exception without at least a `debugPrint`.
+
+**Known deviations from the handoff (Scanner), deliberate:** no live camera
+preview (single-shot requirement); bracket corners square, not arcs; shutter
+ring green, not white; frame vertically centred, no fill; « Cadrez une tuile »
+white, not muted; sheet snaps out instead of sliding out (the camera covers
+it); no « Voir la fiche », no Sensei panel (M5), no « Parcourir le catalogue
+des tuiles » (no tile catalogue); if Android kills `MainActivity` behind the
+camera the photo is lost (`retrieveLostData` not wired) and the user lands on
+idle. Isar (settings, scan history, cached catalog) is M4 with Firebase.
+
+**Next: milestone 4, Firebase.** Non-code prep first (Firebase project,
+Android app registered with `io.github.codenam.tenpai`, Auth, Firestore, App
+Check, AI Logic enabled), then a plan `docs/plans/<date>-firebase.md`:
+`firebase_core` + `firebase_auth` (anonymous) + `firebase_app_check` +
+`cloud_firestore` progress repository behind the existing
+`ProgressRepository`, Security Rules + rules tests, Isar for settings and
+scan history. No SDK until the plan is approved.
 
 **Earlier state on 2026-09-22:** lesson slice Tasks 1-6 done (`lib/shared/models/`
 lesson domain, `assets/lessons/` content, `lib/learning/lesson_{repository,
@@ -276,7 +279,7 @@ Plan: [docs/plans/2026-09-17-project-setup.md](plans/2026-09-17-project-setup.md
 |-----------|-------|--------|
 | 1 — Architecture holds | Tile model + widget, learning vertical slice from JSON asset, in-memory progress, shell routes, tests | done 2026-09-23 (`69b74f0`): tile plan `b105eb7`; lesson slice Tasks 1–10 (`lib/shared/models/` lesson domain, six unit assets, `lib/learning/` repository + providers + `LessonPathScreen` + `LessonScreen`, `lib/progress/` in-memory progress, tab shell + `/lesson/:id`), device-checked light + dark vs handoff 05–08, flutter-reviewer pass applied (`06c5a64`, `69b74f0`), 99 tests |
 | 2 — Yaku | dio + REST yaku catalog, Yaku Dex screens | done 2026-09-23 (`56e9fa1`): catalog on GitHub Pages (`Code-Nam/tenpai-api`, `114da4a`), `YAKU_BASE_URL` via `--dart-define`, `lib/app/app_config.dart`, `lib/yaku/` (model, remote source, repository with failure-dropping cache and tile validation, six providers, `YakuScreen`), chip + input themes in `app_theme.dart`, `hasError` guards on all three data screens; device-checked light/dark incl. offline retry; reviewer pass applied; 29 new tests, suite at 128 |
-| 3 — Scanner | image_picker single shot, fake identifier, scan result card | in progress: plan `docs/plans/2026-09-23-scanner.md` approved 2026-09-23, Tasks 1–2 done 2026-09-23 (`image_picker ^1.2.3`, no manifest change; `lib/scanner/scan_state.dart` + `tile_labels.dart`, review passed); Task 3 (photo source + fake identifier) next; Tasks 4–7 pending |
+| 3 — Scanner | image_picker single shot, fake identifier, scan result card | done 2026-09-23 (`c091442`): `image_picker ^1.2.3` (no manifest change), `lib/scanner/` (sealed `ScanState`, French tile labels, `TilePhotoSource` + impl, `TileIdentifier` + deterministic fake, three providers + `ScanNotifier`, `ScannerScreen` with viewfinder + result/failure sheets), `PrimaryButtonWidget` shared, scanner tokens; device-checked light/dark vs handoff 14/16/17; reviewer pass applied; 28 new tests, suite at 156 |
 | 4 — Firebase | `firebase_auth` + App Check + Firestore progress (offline persistence on, Security Rules written and tested) replacing the in-memory impl behind the existing repository interfaces; Isar for settings and scan history if not already added | not started |
 | 5 — AI | Firebase AI Logic (`firebase_ai`) behind App Check; explanation + tile identification | not started |
 | 6 — Content + polish | remaining units, drill/interactive blocks, gallery parity | not started |
