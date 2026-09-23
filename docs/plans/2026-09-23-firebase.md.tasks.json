@@ -93,18 +93,18 @@
     {
       "id": 10,
       "subject": "Task 10: Tests (test-writer)",
-      "status": "in_progress",
+      "status": "completed",
       "blockedBy": [
         7,
         8,
         9
       ],
-      "description": "**Files:** see plan Layout\n**Goal:** Fakes `test/fakes/fake_auth_repository.dart` (scripted stream + failures), `fake_profile_repository.dart`; `test/auth/{auth_failure,auth_providers,login_screen,welcome_screen}_test.dart`, `test/onboarding/{level_screen,goal_screen}_test.dart`, `test/profile/{profile_providers,profile_screen}_test.dart`, `test/app/router_test.dart`. Firestore impls not unit-tested (no fake_cloud_firestore).\n**Acceptance Criteria:** flutter test green; every new file registered\n**Verify:** flutter test\n```json:metadata\n{\"verifyCommand\": \"flutter test\", \"acceptanceCriteria\": [\"flutter test green\", \"every new file registered\"], \"modelTier\": \"standard\", \"owner\": \"test-writer agent\"}\n```"
+      "description": "**Files:** see plan Layout\n**Goal:** Fakes `test/fakes/fake_auth_repository.dart` (scripted stream + failures), `fake_profile_repository.dart`; `test/auth/{auth_failure,auth_providers,login_screen,welcome_screen}_test.dart`, `test/onboarding/{level_screen,goal_screen}_test.dart`, `test/profile/{profile_providers,profile_screen}_test.dart`, `test/app/router_test.dart`. Firestore impls not unit-tested (no fake_cloud_firestore).\n**Acceptance Criteria:** flutter test green; every new file registered\n**Verify:** flutter test\n```json:metadata\n{\"verifyCommand\": \"flutter test\", \"acceptanceCriteria\": [\"flutter test green\", \"every new file registered\"], \"modelTier\": \"standard\", \"owner\": \"test-writer agent\"}\n```\n**Done:** 2026-09-23 (test-writer: 2 fakes + 9 test files, 35 tests; suite at 185; registered)."
     },
     {
       "id": 11,
       "subject": "Task 11: Device check + review + handover (Claude drives adb)",
-      "status": "pending",
+      "status": "in_progress",
       "blockedBy": [
         5,
         10
@@ -112,5 +112,5 @@
       "description": "**Files:** see plan Layout\n**Goal:** Sign-up → level → goal → tabs; lesson completion in the console; sign-out → welcome; sign-in → tabs; Google sign-in; offline completion queued then synced; App Check enforcement on for Firestore, app still works; screenshots 01–04 + 18 light/dark. flutter-reviewer on lib/auth, lib/onboarding, lib/profile, progress repository, router. ROADMAP milestone 4 row + state block + deviations, README fix (google-services line, setup steps), tasks.json done with hash.\n**Acceptance Criteria:** ROADMAP + tasks.json say done with the commit hash; reviewer findings applied\n**Verify:** flutter analyze && flutter test && dart run tool/check_conventions.dart, then visual\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && flutter test && dart run tool/check_conventions.dart, then visual\", \"acceptanceCriteria\": [\"ROADMAP + tasks.json say done with the commit hash\", \"reviewer findings applied\"], \"modelTier\": \"standard\", \"owner\": \"user (Claude drives adb)\"}\n```"
     }
   ],
-  "lastUpdated": "2026-09-23T19:09:53.722337+00:00"
+  "lastUpdated": "2026-09-23T19:20:36.956270+00:00"
 }
