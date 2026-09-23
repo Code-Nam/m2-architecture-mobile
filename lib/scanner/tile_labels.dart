@@ -12,7 +12,7 @@ String tileName(Tile tile) => switch (tile.suit) {
 /// « honneurs ». Natural case; the sheet uppercases it (mono caps).
 String tileFamily(Tile tile) => switch (tile.suit) {
   .honor => 'honneurs',
-  _ => 'famille des ${_familyOf(tile.suit)}',
+  .man || .pin || .sou => 'famille des ${_familyOf(tile.suit)}',
 };
 
 String _familyOf(TileSuit suit) => switch (suit) {

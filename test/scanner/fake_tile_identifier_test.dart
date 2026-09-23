@@ -78,9 +78,18 @@ void main() {
     );
 
     test('isRed is set only for a red five on a suited tile', () async {
+      // The red bit comes from the part of the hash the index does not use
+      // (`hash ~/ 34`), so two fives can differ; both inputs are checked
+      // against the formula rather than trusted.
+      final redBytes = Uint8List.fromList([30]);
+      final plainBytes = Uint8List.fromList([5]);
+      expect(_hashOf(redBytes) % 34 % 9 + 1, 5);
+      expect((_hashOf(redBytes) ~/ 34).isEven, isTrue);
+      expect(_hashOf(plainBytes) % 34 % 9 + 1, 5);
+      expect((_hashOf(plainBytes) ~/ 34).isEven, isFalse);
       final identifier = FakeTileIdentifier();
-      final redFive = await identifier.identify(Uint8List.fromList([5]));
-      final plainFive = await identifier.identify(Uint8List.fromList([30]));
+      final redFive = await identifier.identify(redBytes);
+      final plainFive = await identifier.identify(plainBytes);
 
       expect(redFive!.number, 5);
       expect(redFive.suit, isNot(TileSuit.honor));
