@@ -91,6 +91,7 @@ Rules:
 | `lib/main.dart` | file (marker pending: lib/ is author-owned, add the header yourself); dartdoc (2026-09-23) | 2026-09-17 | Project tooling and setup so study time goes to Flutter code. |
 | `lib/app/splash_screen.dart` | dartdoc | 2026-09-23 | Docs are time-consuming for the author; code stays author-written. |
 | `lib/auth/login_screen.dart` | dartdoc | 2026-09-23 | Docs are time-consuming for the author; code stays author-written. |
+| `lib/auth/welcome_screen.dart` | dartdoc | 2026-09-23 | Docs are time-consuming for the author; code stays author-written. |
 | `lib/onboarding/level_screen.dart` | dartdoc | 2026-09-23 | Docs are time-consuming for the author; code stays author-written. |
 | `lib/onboarding/goal_screen.dart` | dartdoc | 2026-09-23 | Docs are time-consuming for the author; code stays author-written. |
 | `lib/app/app.dart` | file (marker pending, as above); dartdoc (2026-09-22) | 2026-09-17 | Project tooling and setup so study time goes to Flutter code. |
@@ -145,7 +146,7 @@ Rules:
 | `lib/shared/models/lesson_block.dart` | dartdoc; block: `@Assert` on `quiz` (2026-09-23, `const` dropped on that factory) | 2026-09-22 | Docs are time-consuming for the author; code stays author-written. |
 | `lib/shared/models/tile.dart` | dartdoc | 2026-09-22 | Docs are time-consuming for the author; code stays author-written. |
 | `lib/shared/widgets/tile_state.dart` | dartdoc | 2026-09-22 | Docs are time-consuming for the author; code stays author-written. |
-| `lib/shared/theme/app_tokens.dart` | dartdoc; block: scanner geometry (2026-09-23, /implement) | 2026-09-22 | Docs are time-consuming for the author; code stays author-written. Scanner block: tedious data entry, no Flutter concept to learn. |
+| `lib/shared/theme/app_tokens.dart` | dartdoc (2026-09-22, 2026-09-23); block: scanner geometry (2026-09-23, /implement) | 2026-09-22 | Docs are time-consuming for the author; code stays author-written. Scanner block: tedious data entry, no Flutter concept to learn. |
 | `lib/learning/lesson_path_screen.dart` | dartdoc; block: `hasError` guard (2026-09-23, /implement) | 2026-09-22 | Docs are time-consuming for the author; code stays author-written. |
 | `lib/profile/profile_screen.dart` | dartdoc | 2026-09-22 | Docs are time-consuming for the author; code stays author-written. |
 | `lib/scanner/scanner_screen.dart` | dartdoc | 2026-09-22 | Docs are time-consuming for the author; code stays author-written. |

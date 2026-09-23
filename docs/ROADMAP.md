@@ -155,8 +155,10 @@ by Claude at the author's request). Run:
 Task 6 done 2026-09-23 (`createRouter(Ref)` + `_redirect` in `router.dart`,
 `routerProvider` in new `lib/app/app_providers.dart` because providers live
 in `*_providers.dart`; `SplashScreen`; placeholders for welcome / login /
-level / goal; device: splash → welcome). **Resume at Task 7** (welcome +
-login screens, handoff 01/02). Decisions in the
+level / goal; device: splash → welcome). Task 7 done 2026-09-23 (`WelcomeScreen` with the tile fan; `LoginScreen`:
+segment, fields, `_run` funnel for auth calls, « ou », Google, Apple disabled,
+legal line; wrong pair shows the French line, sign-up lands on onboarding).
+**Resume at Task 8** (level + goal screens, handoff 03/04). Decisions in the
 plan's Context section.
 
 **Earlier state on 2026-09-22:** lesson slice Tasks 1-6 done (`lib/shared/models/`

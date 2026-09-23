@@ -71,7 +71,11 @@ GoRouter createRouter(Ref ref) {
         path: AppRoutes.welcome,
         builder: (_, _) => const WelcomeScreen(),
       ),
-      GoRoute(path: AppRoutes.login, builder: (_, _) => const LoginScreen()),
+      GoRoute(
+        path: AppRoutes.login,
+        builder: (_, state) =>
+            LoginScreen(signUp: state.uri.queryParameters['mode'] == 'signup'),
+      ),
       GoRoute(
         path: AppRoutes.onboardingLevel,
         builder: (_, _) => const LevelScreen(),

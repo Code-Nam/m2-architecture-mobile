@@ -66,16 +66,16 @@
     {
       "id": 7,
       "subject": "Task 7: Welcome + login screens (handoff 01, 02)",
-      "status": "in_progress",
+      "status": "completed",
       "blockedBy": [
         6
       ],
-      "description": "**Files:** see plan Layout\n**Goal:** `lib/auth/welcome_screen.dart`: fan of five TileWidgets (Transform.rotate, tokens), display title, subtitle « Le mahjong japonais, expliqué depuis zéro. Dix minutes par jour. », « Commencer » → /login?mode=signup, « J'ai déjà un compte » → /login. `lib/auth/login_screen.dart`: segmented Connexion | Inscription, email + password fields in cards (mono uppercase labels), « Afficher », « Mot de passe oublié ? » (reset + SnackBar), CTA « Se connecter » / « Créer un compte », « ou », « Continuer avec Google », « Continuer avec Apple » disabled, legal line; inline AuthFailure.message; CTA disabled while a call runs; no navigation in the screen.\n**Acceptance Criteria:** screenshots vs 01/02 light + dark; wrong password shows the French line; Google opens the account chooser\n**Verify:** flutter analyze && dart run tool/check_conventions.dart, then visual\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && dart run tool/check_conventions.dart, then visual\", \"acceptanceCriteria\": [\"screenshots vs 01/02 light + dark\", \"wrong password shows the French line\", \"Google opens the account chooser\"], \"modelTier\": \"standard\", \"owner\": \"user\"}\n```"
+      "description": "**Files:** see plan Layout\n**Goal:** `lib/auth/welcome_screen.dart`: fan of five TileWidgets (Transform.rotate, tokens), display title, subtitle « Le mahjong japonais, expliqué depuis zéro. Dix minutes par jour. », « Commencer » → /login?mode=signup, « J'ai déjà un compte » → /login. `lib/auth/login_screen.dart`: segmented Connexion | Inscription, email + password fields in cards (mono uppercase labels), « Afficher », « Mot de passe oublié ? » (reset + SnackBar), CTA « Se connecter » / « Créer un compte », « ou », « Continuer avec Google », « Continuer avec Apple » disabled, legal line; inline AuthFailure.message; CTA disabled while a call runs; no navigation in the screen.\n**Acceptance Criteria:** screenshots vs 01/02 light + dark; wrong password shows the French line; Google opens the account chooser\n**Verify:** flutter analyze && dart run tool/check_conventions.dart, then visual\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && dart run tool/check_conventions.dart, then visual\", \"acceptanceCriteria\": [\"screenshots vs 01/02 light + dark\", \"wrong password shows the French line\", \"Google opens the account chooser\"], \"modelTier\": \"standard\", \"owner\": \"user\"}\n```\n**Done:** 2026-09-23. Welcome (fan) + login (segment, fields, actions, providers, legal) verified light on the emulator: wrong pair → French line, sign-up → level placeholder. Dark + Google chooser checked at Task 11. Test account nobody@tenpai.test created."
     },
     {
       "id": 8,
       "subject": "Task 8: Level + goal screens (handoff 03, 04)",
-      "status": "pending",
+      "status": "in_progress",
       "blockedBy": [
         6
       ],
@@ -112,5 +112,5 @@
       "description": "**Files:** see plan Layout\n**Goal:** Sign-up → level → goal → tabs; lesson completion in the console; sign-out → welcome; sign-in → tabs; Google sign-in; offline completion queued then synced; App Check enforcement on for Firestore, app still works; screenshots 01–04 + 18 light/dark. flutter-reviewer on lib/auth, lib/onboarding, lib/profile, progress repository, router. ROADMAP milestone 4 row + state block + deviations, README fix (google-services line, setup steps), tasks.json done with hash.\n**Acceptance Criteria:** ROADMAP + tasks.json say done with the commit hash; reviewer findings applied\n**Verify:** flutter analyze && flutter test && dart run tool/check_conventions.dart, then visual\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && flutter test && dart run tool/check_conventions.dart, then visual\", \"acceptanceCriteria\": [\"ROADMAP + tasks.json say done with the commit hash\", \"reviewer findings applied\"], \"modelTier\": \"standard\", \"owner\": \"user (Claude drives adb)\"}\n```"
     }
   ],
-  "lastUpdated": "2026-09-23T18:24:17.821800+00:00"
+  "lastUpdated": "2026-09-23T18:45:59.606739+00:00"
 }

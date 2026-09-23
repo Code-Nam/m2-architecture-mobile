@@ -199,4 +199,23 @@ abstract final class AppTokens {
   /// Thickness of that bar.
   static const sheetHandleHeight = 4.0;
   // AI-GENERATED (Claude) END
+
+  //* Entry
+
+  /// Rotation between neighbouring tiles of the welcome fan, in radians
+  /// (about 12.6°); the outer tiles get twice that.
+  static const fanTileAngle = 0.22;
+
+  /// Horizontal distance between fanned tile centres; less than a tile
+  /// width so they overlap like a held hand.
+  static const fanTileOffset = 44.0;
+
+  /// Extra drop per step away from the centre, so the fan arcs.
+  static const fanDrop = 12.0;
+
+  /// Height of the Connexion | Inscription control (handoff 02).
+  static const segmentHeight = 48.0;
+
+  /// Side of the square card holding the logo tile on the login screen.
+  static const logoCardSize = 72.0;
 }
