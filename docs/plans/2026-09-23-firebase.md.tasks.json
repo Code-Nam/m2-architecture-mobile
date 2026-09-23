@@ -75,16 +75,16 @@
     {
       "id": 8,
       "subject": "Task 8: Level + goal screens (handoff 03, 04)",
-      "status": "in_progress",
+      "status": "completed",
       "blockedBy": [
         6
       ],
-      "description": "**Files:** see plan Layout\n**Goal:** `lib/onboarding/level_screen.dart`: « Vous connaissez déjà le mahjong ? » / « Pour choisir votre point de départ. », cards Jamais joué / J'ai vu jouer / Je connais un peu with their lines, selection ring, « Continuer » → /onboarding/goal?level=. `lib/onboarding/goal_screen.dart`: « Votre objectif quotidien » / « Des leçons courtes suffisent. Vous pourrez changer plus tard. », 5/10/15/20 min / jour (Tranquille / Régulier / Sérieux / Intensif), « C'est parti » → userProfileProvider.complete. Back arrow on both.\n**Acceptance Criteria:** screenshots vs 03/04 light + dark; sign-in with an existing profile skips both\n**Verify:** flutter analyze && dart run tool/check_conventions.dart, then visual\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && dart run tool/check_conventions.dart, then visual\", \"acceptanceCriteria\": [\"screenshots vs 03/04 light + dark\", \"sign-in with an existing profile skips both\"], \"modelTier\": \"standard\", \"owner\": \"user\"}\n```"
+      "description": "**Files:** see plan Layout\n**Goal:** `lib/onboarding/level_screen.dart`: « Vous connaissez déjà le mahjong ? » / « Pour choisir votre point de départ. », cards Jamais joué / J'ai vu jouer / Je connais un peu with their lines, selection ring, « Continuer » → /onboarding/goal?level=. `lib/onboarding/goal_screen.dart`: « Votre objectif quotidien » / « Des leçons courtes suffisent. Vous pourrez changer plus tard. », 5/10/15/20 min / jour (Tranquille / Régulier / Sérieux / Intensif), « C'est parti » → userProfileProvider.complete. Back arrow on both.\n**Acceptance Criteria:** screenshots vs 03/04 light + dark; sign-in with an existing profile skips both\n**Verify:** flutter analyze && dart run tool/check_conventions.dart, then visual\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && dart run tool/check_conventions.dart, then visual\", \"acceptanceCriteria\": [\"screenshots vs 03/04 light + dark\", \"sign-in with an existing profile skips both\"], \"modelTier\": \"standard\", \"owner\": \"user\"}\n```\n**Done:** 2026-09-23 (`OptionCardWidget`, `OnboardingScaffoldWidget`, `LevelScreen`, `GoalScreen`; level → goal → tabs on the emulator, no rejected Firestore write in logcat)."
     },
     {
       "id": 9,
       "subject": "Task 9: Profil minimal",
-      "status": "pending",
+      "status": "in_progress",
       "blockedBy": [
         6
       ],
@@ -112,5 +112,5 @@
       "description": "**Files:** see plan Layout\n**Goal:** Sign-up → level → goal → tabs; lesson completion in the console; sign-out → welcome; sign-in → tabs; Google sign-in; offline completion queued then synced; App Check enforcement on for Firestore, app still works; screenshots 01–04 + 18 light/dark. flutter-reviewer on lib/auth, lib/onboarding, lib/profile, progress repository, router. ROADMAP milestone 4 row + state block + deviations, README fix (google-services line, setup steps), tasks.json done with hash.\n**Acceptance Criteria:** ROADMAP + tasks.json say done with the commit hash; reviewer findings applied\n**Verify:** flutter analyze && flutter test && dart run tool/check_conventions.dart, then visual\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && flutter test && dart run tool/check_conventions.dart, then visual\", \"acceptanceCriteria\": [\"ROADMAP + tasks.json say done with the commit hash\", \"reviewer findings applied\"], \"modelTier\": \"standard\", \"owner\": \"user (Claude drives adb)\"}\n```"
     }
   ],
-  "lastUpdated": "2026-09-23T18:45:59.606739+00:00"
+  "lastUpdated": "2026-09-23T19:00:17.779541+00:00"
 }

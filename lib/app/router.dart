@@ -12,6 +12,7 @@ import 'package:tenpai/onboarding/goal_screen.dart';
 import 'package:tenpai/onboarding/level_screen.dart';
 import 'package:tenpai/profile/profile_providers.dart';
 import 'package:tenpai/profile/profile_screen.dart';
+import 'package:tenpai/profile/user_profile.dart';
 import 'package:tenpai/scanner/scanner_screen.dart';
 import 'package:tenpai/yaku/yaku_screen.dart';
 
@@ -82,7 +83,11 @@ GoRouter createRouter(Ref ref) {
       ),
       GoRoute(
         path: AppRoutes.onboardingGoal,
-        builder: (_, _) => const GoalScreen(),
+        builder: (_, state) => GoalScreen(
+          level: MahjongLevel.fromWire(
+            state.uri.queryParameters['level'] ?? 'never',
+          ),
+        ),
       ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, shell) => _ShellScaffold(shell),

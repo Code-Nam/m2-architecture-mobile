@@ -94,6 +94,8 @@ Rules:
 | `lib/auth/welcome_screen.dart` | dartdoc | 2026-09-23 | Docs are time-consuming for the author; code stays author-written. |
 | `lib/onboarding/level_screen.dart` | dartdoc | 2026-09-23 | Docs are time-consuming for the author; code stays author-written. |
 | `lib/onboarding/goal_screen.dart` | dartdoc | 2026-09-23 | Docs are time-consuming for the author; code stays author-written. |
+| `lib/onboarding/option_card_widget.dart` | dartdoc | 2026-09-23 | Docs are time-consuming for the author; code stays author-written. |
+| `lib/onboarding/onboarding_scaffold_widget.dart` | dartdoc | 2026-09-23 | Docs are time-consuming for the author; code stays author-written. |
 | `lib/app/app.dart` | file (marker pending, as above); dartdoc (2026-09-22) | 2026-09-17 | Project tooling and setup so study time goes to Flutter code. |
 | `lib/app/router.dart` | file (marker pending, as above); dartdoc (2026-09-22, 2026-09-23) | 2026-09-17 | Project tooling and setup so study time goes to Flutter code. |
 | `lib/shared/theme/app_colors.dart` | blocks: _Palette consts; AppColors fields + light/dark instances (schemes are author-written) | 2026-09-17 | Tedious data entry, no Flutter concept to learn. |

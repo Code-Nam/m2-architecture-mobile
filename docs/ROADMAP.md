@@ -158,7 +158,10 @@ in `*_providers.dart`; `SplashScreen`; placeholders for welcome / login /
 level / goal; device: splash → welcome). Task 7 done 2026-09-23 (`WelcomeScreen` with the tile fan; `LoginScreen`:
 segment, fields, `_run` funnel for auth calls, « ou », Google, Apple disabled,
 legal line; wrong pair shows the French line, sign-up lands on onboarding).
-**Resume at Task 8** (level + goal screens, handoff 03/04). Decisions in the
+Task 8 done 2026-09-23 (`lib/onboarding/`: `OptionCardWidget`,
+`OnboardingScaffoldWidget`, `LevelScreen`, `GoalScreen`; level in the goal
+route's query string; profile saved, redirect lands on the tabs).
+**Resume at Task 9** (minimal Profil: account, level + goal, XP, sign-out). Decisions in the
 plan's Context section.
 
 **Earlier state on 2026-09-22:** lesson slice Tasks 1-6 done (`lib/shared/models/`
