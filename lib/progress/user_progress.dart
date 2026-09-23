@@ -38,8 +38,9 @@ enum LessonStatus {
 ///
 /// `completed` when the lesson id is in [progress]; `current` when it is the
 /// first lesson or the previous one is completed; `locked` otherwise.
-/// Unit-level gating is not this function's job (see [isUnitPlayable]).
-LessonStatus statusOf(Unit unit, int lessonIndex, UserProgress progress) {
+/// Unit-level gating is not this function's job (see [_isUnitPlayable]).
+/// Private: only [lessonToOpen] needs it; tests go through that.
+LessonStatus _statusOf(Unit unit, int lessonIndex, UserProgress progress) {
   final lesson = unit.lessons[lessonIndex];
   if (progress.isCompleted(lesson.id)) return .completed;
   final unlocked =
@@ -52,7 +53,8 @@ LessonStatus statusOf(Unit unit, int lessonIndex, UserProgress progress) {
 ///
 /// A unit with no lessons is never playable. The first unit is playable;
 /// any other unit needs the previous unit's last lesson completed.
-bool isUnitPlayable(List<Unit> units, int unitIndex, UserProgress progress) {
+/// Private: only [unitStatusOf] needs it; tests go through that.
+bool _isUnitPlayable(List<Unit> units, int unitIndex, UserProgress progress) {
   if (units[unitIndex].lessons.isEmpty) return false;
   if (unitIndex == 0) return true;
   final previous = units[unitIndex - 1].lessons;
@@ -60,10 +62,10 @@ bool isUnitPlayable(List<Unit> units, int unitIndex, UserProgress progress) {
 }
 
 /// Status of one path node. The handoff shows one node per unit, so this is
-/// what the path screen renders; [statusOf] then picks the lesson inside.
+/// what the path screen renders; [lessonToOpen] then picks the lesson inside.
 ///
 /// `completed` needs every lesson done (an empty unit never completes);
-/// otherwise `current` when [isUnitPlayable], else `locked`.
+/// otherwise `current` when [_isUnitPlayable], else `locked`.
 LessonStatus unitStatusOf(
   List<Unit> units,
   int unitIndex,
@@ -74,7 +76,7 @@ LessonStatus unitStatusOf(
       lessons.every((lesson) => progress.isCompleted(lesson.id))) {
     return .completed;
   }
-  return isUnitPlayable(units, unitIndex, progress) ? .current : .locked;
+  return _isUnitPlayable(units, unitIndex, progress) ? .current : .locked;
 }
 
 /// Numerator of the « 3 / 6 » counter on a current node.
@@ -86,7 +88,7 @@ int completedCount(Unit unit, UserProgress progress) =>
 /// guard with [unitStatusOf] != `locked`, so [unit] is never empty here.
 Lesson lessonToOpen(Unit unit, UserProgress progress) {
   for (var i = 0; i < unit.lessons.length; i++) {
-    if (statusOf(unit, i, progress) == .current) {
+    if (_statusOf(unit, i, progress) == .current) {
       return unit.lessons[i];
     }
   }

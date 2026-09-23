@@ -128,8 +128,9 @@ Rules:
 | `lib/progress/in_memory_progress_repository.dart` | dartdoc | 2026-09-22 | Docs are time-consuming for the author; code stays author-written. |
 | `lib/progress/progress_providers.dart` | dartdoc | 2026-09-22 | Docs are time-consuming for the author; code stays author-written. |
 | `lib/progress/progress_repository.dart` | dartdoc | 2026-09-22 | Docs are time-consuming for the author; code stays author-written. |
-| `lib/progress/user_progress.dart` | dartdoc | 2026-09-22 | Docs are time-consuming for the author; code stays author-written. |
-| `lib/shared/models/lesson_block.dart` | dartdoc | 2026-09-22 | Docs are time-consuming for the author; code stays author-written. |
+| `lib/shared/models/lesson.dart` | block: `@Assert` on the factory (`const` dropped) | 2026-09-23 | Content invariant from the milestone 1 review; plumbing, no Flutter concept to learn. |
+| `lib/progress/user_progress.dart` | dartdoc; block-free edit 2026-09-23: `statusOf` / `isUnitPlayable` made private (/implement, review finding) | 2026-09-22 | Docs are time-consuming for the author; code stays author-written. |
+| `lib/shared/models/lesson_block.dart` | dartdoc; block: `@Assert` on `quiz` (2026-09-23, `const` dropped on that factory) | 2026-09-22 | Docs are time-consuming for the author; code stays author-written. |
 | `lib/shared/models/tile.dart` | dartdoc | 2026-09-22 | Docs are time-consuming for the author; code stays author-written. |
 | `lib/shared/widgets/tile_state.dart` | dartdoc | 2026-09-22 | Docs are time-consuming for the author; code stays author-written. |
 | `lib/shared/theme/app_tokens.dart` | dartdoc | 2026-09-22 | Docs are time-consuming for the author; code stays author-written. |

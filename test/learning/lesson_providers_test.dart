@@ -5,15 +5,26 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:tenpai/learning/lesson_providers.dart';
 import 'package:tenpai/learning/lesson_session.dart';
 import 'package:tenpai/shared/models/lesson.dart';
+import 'package:tenpai/shared/models/lesson_block.dart';
 import 'package:tenpai/shared/models/unit.dart';
 
 import '../fakes/fake_lesson_repository.dart';
 
-const _lesson1 = Lesson(id: 'l1', title: 'one', xp: 10, blocks: []);
-const _lesson2 = Lesson(id: 'l2', title: 'two', xp: 15, blocks: []);
-const _units = [
+final _lesson1 = Lesson(
+  id: 'l1',
+  title: 'one',
+  xp: 10,
+  blocks: const [LessonBlock.drill()],
+);
+final _lesson2 = Lesson(
+  id: 'l2',
+  title: 'two',
+  xp: 15,
+  blocks: const [LessonBlock.drill()],
+);
+final _units = [
   Unit(id: 'u1', title: 'unit one', lessons: [_lesson1, _lesson2]),
-  Unit(id: 'u2', title: 'unit two', lessons: []),
+  const Unit(id: 'u2', title: 'unit two', lessons: []),
 ];
 
 void main() {

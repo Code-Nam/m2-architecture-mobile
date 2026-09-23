@@ -19,7 +19,15 @@ sealed class LessonBlock with _$LessonBlock {
 
   /// Multiple-choice question over a 13-tile hand. [options] has exactly 4
   /// entries (2×2 grid); [feedback] is the one line shown after checking.
-  const factory LessonBlock.quiz({
+  /// Not `const`, unlike its siblings: the asserts read the list.
+  // AI-GENERATED (Claude) BEGIN — content invariant, review finding 2026-09-23
+  @Assert('options.length == 4', 'a quiz has exactly four options')
+  @Assert(
+    'correctIndex >= 0 && correctIndex < 4',
+    'correctIndex must point at one of the four options',
+  )
+  // AI-GENERATED (Claude) END
+  factory LessonBlock.quiz({
     required String question,
     required List<String> hand,
     required List<String> options,

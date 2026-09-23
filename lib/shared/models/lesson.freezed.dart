@@ -218,7 +218,7 @@ return $default(_that.id,_that.title,_that.xp,_that.blocks);case _:
 @JsonSerializable()
 
 class _Lesson implements Lesson {
-  const _Lesson({required this.id, required this.title, required this.xp, required  List<LessonBlock> blocks}): _blocks = blocks;
+   _Lesson({required this.id, required this.title, required this.xp, required  List<LessonBlock> blocks}): assert(blocks.isNotEmpty, 'a lesson needs at least one block'),_blocks = blocks;
   factory _Lesson.fromJson(Map<String, dynamic> json) => _$LessonFromJson(json);
 
 @override final  String id;

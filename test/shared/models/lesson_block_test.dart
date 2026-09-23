@@ -19,7 +19,7 @@ void main() {
     });
 
     test('quiz block survives fromJson(toJson())', () {
-      const block = LessonBlock.quiz(
+      final block = LessonBlock.quiz(
         question: 'Quelle tuile complète la main ?',
         hand: ['1m', '2m', '3m'],
         options: ['6s', '9p', '5s', '1z'],

@@ -6,10 +6,16 @@ import 'package:tenpai/progress/in_memory_progress_repository.dart';
 import 'package:tenpai/progress/progress_providers.dart';
 import 'package:tenpai/progress/user_progress.dart';
 import 'package:tenpai/shared/models/lesson.dart';
+import 'package:tenpai/shared/models/lesson_block.dart';
 
 import '../fakes/fake_progress_repository.dart';
 
-const _lesson = Lesson(id: 'l1', title: 'one', xp: 10, blocks: []);
+final _lesson = Lesson(
+  id: 'l1',
+  title: 'one',
+  xp: 10,
+  blocks: const [LessonBlock.drill()],
+);
 
 void main() {
   test('progressRepositoryProvider defaults to the in-memory repository', () {
@@ -55,4 +61,27 @@ void main() {
       );
     });
   });
+
+  test(
+    'completeLesson through the real in-memory repository adds XP once',
+    () async {
+      final container = ProviderContainer.test(
+        overrides: [
+          progressRepositoryProvider.overrideWithValue(
+            InMemoryProgressRepository(),
+          ),
+        ],
+      );
+
+      await container.read(userProgressProvider.future);
+      final notifier = container.read(userProgressProvider.notifier);
+      await notifier.completeLesson(_lesson);
+      await notifier.completeLesson(_lesson);
+
+      expect(
+        container.read(userProgressProvider),
+        const AsyncData(UserProgress(completedLessonIds: {'l1'}, xp: 10)),
+      );
+    },
+  );
 }

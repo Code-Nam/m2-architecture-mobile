@@ -58,5 +58,18 @@ void main() {
 
       expect(bundle.loads, 6);
     });
+
+    test('a failed units() does not cache the failure', () async {
+      final bundle = FakeAssetBundle(unitJson, failFirst: true);
+      final repository = LessonRepositoryImpl(
+        LessonAssetSource(bundle: bundle),
+      );
+
+      await expectLater(repository.units(), throwsException);
+
+      final units = await repository.units();
+
+      expect(units, hasLength(6));
+    });
   });
 }

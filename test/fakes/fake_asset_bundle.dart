@@ -9,9 +9,12 @@ import 'package:flutter/services.dart';
 /// Extends [AssetBundle] directly, not [CachingAssetBundle], so every
 /// `loadString` call reaches [load] and [loads] reflects real reads.
 class FakeAssetBundle extends AssetBundle {
-  FakeAssetBundle(this._text);
+  /// Makes the very first [load] call throw instead of returning [_text];
+  /// every later call succeeds normally.
+  FakeAssetBundle(this._text, {this.failFirst = false});
 
   final String _text;
+  final bool failFirst;
 
   /// Number of times [load] was called.
   int loads = 0;
@@ -19,6 +22,9 @@ class FakeAssetBundle extends AssetBundle {
   @override
   Future<ByteData> load(String key) async {
     loads++;
+    if (failFirst && loads == 1) {
+      throw Exception('FakeAssetBundle: simulated failure on first load');
+    }
     return ByteData.sublistView(utf8.encode(_text));
   }
 }

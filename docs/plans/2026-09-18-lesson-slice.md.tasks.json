@@ -84,12 +84,12 @@
     {
       "id": 10,
       "subject": "Task 10: Device check + handover",
-      "status": "pending",
+      "status": "in_progress",
       "blockedBy": [
         9
       ],
       "description": "**Files:** user's layout, see plan 'Folder decision'\n**Goal:** Exit criteria from the setup plan: `flutter analyze` clean, `flutter test` green, `check_conventions` only the known `TenpaiApp` finding, complete a lesson on device, next lesson unlocks, hot restart resets progress (expected, in-memory). Screenshots of 05–08 light + dark compared with the handoff; deviations listed in `docs/ROADMAP.md` like the tile plan did. Update ROADMAP milestone 1 row and \"Next session starts here\" (M2 yaku is next). Flutter-reviewer pass on the whole slice before the last commit.\n**Acceptance Criteria:** ROADMAP + `.tasks.json` say done with the commit hash.\n**Verify:** `flutter analyze && flutter test && dart run tool/check_conventions.dart`\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && flutter test && dart run tool/check_conventions.dart\", \"acceptanceCriteria\": [\"see description\"], \"modelTier\": \"standard\", \"owner\": \"user (Claude tutors/reviews)\"}\n```"
     }
   ],
-  "lastUpdated": "2026-09-22T23:56:42.123601+00:00"
+  "lastUpdated": "2026-09-22T23:58:07.168781+00:00"
 }

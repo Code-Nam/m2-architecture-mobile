@@ -10,25 +10,43 @@ import 'package:tenpai/learning/lesson_providers.dart';
 import 'package:tenpai/progress/progress_providers.dart';
 import 'package:tenpai/progress/user_progress.dart';
 import 'package:tenpai/shared/models/lesson.dart';
+import 'package:tenpai/shared/models/lesson_block.dart';
 import 'package:tenpai/shared/models/unit.dart';
 import 'package:tenpai/shared/theme/app_theme.dart';
 
 import '../fakes/fake_lesson_repository.dart';
 import '../fakes/fake_progress_repository.dart';
 
-const _unitA = Unit(
+final _unitA = Unit(
   id: 'u1',
   title: 'Unité A',
   lessons: [
-    Lesson(id: 'u1-l1', title: 'Leçon 1', xp: 10, blocks: []),
-    Lesson(id: 'u1-l2', title: 'Leçon 2', xp: 10, blocks: []),
+    Lesson(
+      id: 'u1-l1',
+      title: 'Leçon 1',
+      xp: 10,
+      blocks: const [LessonBlock.drill()],
+    ),
+    Lesson(
+      id: 'u1-l2',
+      title: 'Leçon 2',
+      xp: 10,
+      blocks: const [LessonBlock.drill()],
+    ),
   ],
 );
 
-const _unitB = Unit(
+final _unitB = Unit(
   id: 'u2',
   title: 'Unité B',
-  lessons: [Lesson(id: 'u2-l1', title: 'Leçon 1', xp: 10, blocks: [])],
+  lessons: [
+    Lesson(
+      id: 'u2-l1',
+      title: 'Leçon 1',
+      xp: 10,
+      blocks: const [LessonBlock.drill()],
+    ),
+  ],
 );
 
 GoRouter _buildRouter() => GoRouter(
@@ -37,8 +55,7 @@ GoRouter _buildRouter() => GoRouter(
     GoRoute(path: '/', builder: (context, state) => const LessonPathScreen()),
     GoRoute(
       path: AppRoutes.lesson(':id'),
-      builder: (context, state) =>
-          Text('lesson ${state.pathParameters['id']}'),
+      builder: (context, state) => Text('lesson ${state.pathParameters['id']}'),
     ),
   ],
 );
@@ -67,34 +84,36 @@ Future<void> _pumpPathScreen(
 
 void main() {
   group('LessonPathScreen', () {
-    testWidgets('fresh progress shows the counter on unit A and a lock on unit B', (
-      tester,
-    ) async {
-      await _pumpPathScreen(
-        tester,
-        progress: const UserProgress(completedLessonIds: {}, xp: 0),
-        router: _buildRouter(),
-      );
+    testWidgets(
+      'fresh progress shows the counter on unit A and a lock on unit B',
+      (tester) async {
+        await _pumpPathScreen(
+          tester,
+          progress: const UserProgress(completedLessonIds: {}, xp: 0),
+          router: _buildRouter(),
+        );
 
-      expect(find.text('0 / 2'), findsOneWidget);
-      expect(find.byIcon(Icons.lock), findsOneWidget);
-    });
+        expect(find.text('0 / 2'), findsOneWidget);
+        expect(find.byIcon(Icons.lock), findsOneWidget);
+      },
+    );
 
-    testWidgets('unit A completed shows a check and unlocks the counter on unit B', (
-      tester,
-    ) async {
-      await _pumpPathScreen(
-        tester,
-        progress: const UserProgress(
-          completedLessonIds: {'u1-l1', 'u1-l2'},
-          xp: 20,
-        ),
-        router: _buildRouter(),
-      );
+    testWidgets(
+      'unit A completed shows a check and unlocks the counter on unit B',
+      (tester) async {
+        await _pumpPathScreen(
+          tester,
+          progress: const UserProgress(
+            completedLessonIds: {'u1-l1', 'u1-l2'},
+            xp: 20,
+          ),
+          router: _buildRouter(),
+        );
 
-      expect(find.byIcon(Icons.check), findsOneWidget);
-      expect(find.text('0 / 1'), findsOneWidget);
-    });
+        expect(find.byIcon(Icons.check), findsOneWidget);
+        expect(find.text('0 / 1'), findsOneWidget);
+      },
+    );
 
     testWidgets('tapping the locked unit B does not navigate', (tester) async {
       await _pumpPathScreen(

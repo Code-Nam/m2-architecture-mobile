@@ -14,6 +14,7 @@ import 'package:tenpai/shared/models/lesson.dart';
 import 'package:tenpai/shared/models/lesson_block.dart';
 import 'package:tenpai/shared/models/tile.dart';
 import 'package:tenpai/shared/models/unit.dart';
+import 'package:tenpai/shared/theme/app_colors.dart';
 import 'package:tenpai/shared/theme/app_theme.dart';
 import 'package:tenpai/shared/widgets/tile_size.dart';
 import 'package:tenpai/shared/widgets/tile_state.dart';
@@ -22,12 +23,16 @@ import 'package:tenpai/shared/widgets/tile_widget.dart';
 import '../fakes/fake_lesson_repository.dart';
 import '../fakes/fake_progress_repository.dart';
 
-const _lesson = Lesson(
+final _lesson = Lesson(
   id: 'l1',
   title: 'Leçon test',
   xp: 10,
   blocks: [
-    LessonBlock.explanation(tile: '1m', title: 'Titre A', body: 'Corps A'),
+    const LessonBlock.explanation(
+      tile: '1m',
+      title: 'Titre A',
+      body: 'Corps A',
+    ),
     LessonBlock.quiz(
       question: 'Quelle tuile ?',
       hand: ['1m', '2m', '3m'],
@@ -35,7 +40,11 @@ const _lesson = Lesson(
       correctIndex: 2,
       feedback: 'FEEDBACK LINE',
     ),
-    LessonBlock.explanation(tile: '9p', title: 'Titre B', body: 'Corps B'),
+    const LessonBlock.explanation(
+      tile: '9p',
+      title: 'Titre B',
+      body: 'Corps B',
+    ),
   ],
 );
 
@@ -47,7 +56,11 @@ class _Harness {
   final FakeProgressRepository progressRepository;
 }
 
-Future<_Harness> _pumpLessonScreen(WidgetTester tester) async {
+Future<_Harness> _pumpLessonScreen(
+  WidgetTester tester, {
+  String id = 'l1',
+  ThemeData? theme,
+}) async {
   final progressRepository = FakeProgressRepository();
   final router = GoRouter(
     initialLocation: '/',
@@ -66,20 +79,23 @@ Future<_Harness> _pumpLessonScreen(WidgetTester tester) async {
       overrides: [
         lessonRepositoryProvider.overrideWithValue(
           FakeLessonRepository([
-            const Unit(id: 'u1', title: 'Unité', lessons: [_lesson]),
+            Unit(id: 'u1', title: 'Unité', lessons: [_lesson]),
           ]),
         ),
         progressRepositoryProvider.overrideWithValue(progressRepository),
       ],
       retry: (_, _) => null,
-      child: MaterialApp.router(theme: lightTheme(), routerConfig: router),
+      child: MaterialApp.router(
+        theme: theme ?? lightTheme(),
+        routerConfig: router,
+      ),
     ),
   );
   await tester.pumpAndSettle();
 
   // `push` returns a Future that only resolves once the pushed route pops,
   // so it must not be awaited here or the pump would hang forever.
-  unawaited(router.push(AppRoutes.lesson('l1')));
+  unawaited(router.push(AppRoutes.lesson(id)));
   await tester.pumpAndSettle();
 
   return _Harness(router, progressRepository);
@@ -184,22 +200,21 @@ void main() {
       );
     });
 
-    testWidgets(
-      'completing every block records the lesson as done and pops',
-      (tester) async {
-        final harness = await _pumpLessonScreen(tester);
+    testWidgets('completing every block records the lesson as done and pops', (
+      tester,
+    ) async {
+      final harness = await _pumpLessonScreen(tester);
 
-        await _tapContinue(tester);
-        await tester.tap(_optionTile('5s'));
-        await tester.pumpAndSettle();
-        await _tapVerifier(tester);
-        await _tapContinue(tester);
-        await _tapContinue(tester);
+      await _tapContinue(tester);
+      await tester.tap(_optionTile('5s'));
+      await tester.pumpAndSettle();
+      await _tapVerifier(tester);
+      await _tapContinue(tester);
+      await _tapContinue(tester);
 
-        expect(harness.progressRepository.completedIds, ['l1']);
-        expect(find.text('path'), findsOneWidget);
-      },
-    );
+      expect(harness.progressRepository.completedIds, ['l1']);
+      expect(find.text('path'), findsOneWidget);
+    });
 
     testWidgets('the close button pops without completing the lesson', (
       tester,
@@ -212,5 +227,81 @@ void main() {
       expect(find.text('path'), findsOneWidget);
       expect(harness.progressRepository.completedIds, isEmpty);
     });
+
+    testWidgets(
+      'completing the lesson after a wrong answer still records it and pops',
+      (tester) async {
+        final harness = await _pumpLessonScreen(tester);
+
+        await _tapContinue(tester);
+        await tester.tap(_optionTile('6s'));
+        await tester.pumpAndSettle();
+        await _tapVerifier(tester);
+        await _tapContinue(tester);
+        await _tapContinue(tester);
+
+        expect(harness.progressRepository.completedIds, ['l1']);
+        expect(find.text('path'), findsOneWidget);
+      },
+    );
+
+    testWidgets('an unknown lesson id shows the retry view', (tester) async {
+      await _pumpLessonScreen(tester, id: 'nope');
+
+      expect(find.text('Impossible de charger la leçon'), findsOneWidget);
+      expect(find.widgetWithText(TextButton, 'Réessayer'), findsOneWidget);
+    });
+
+    testWidgets(
+      'reopening a completed lesson restarts at block 0 and records it again',
+      (tester) async {
+        final harness = await _pumpLessonScreen(tester);
+
+        await _tapContinue(tester);
+        await tester.tap(_optionTile('5s'));
+        await tester.pumpAndSettle();
+        await _tapVerifier(tester);
+        await _tapContinue(tester);
+        await _tapContinue(tester);
+
+        expect(harness.progressRepository.completedIds, ['l1']);
+        expect(find.text('path'), findsOneWidget);
+
+        unawaited(harness.router.push(AppRoutes.lesson('l1')));
+        await tester.pumpAndSettle();
+
+        expect(find.text('Titre A'), findsOneWidget);
+
+        await _tapContinue(tester);
+        await tester.tap(_optionTile('5s'));
+        await tester.pumpAndSettle();
+        await _tapVerifier(tester);
+        await _tapContinue(tester);
+        await _tapContinue(tester);
+
+        expect(harness.progressRepository.completedIds, ['l1', 'l1']);
+      },
+    );
+
+    testWidgets(
+      'a right answer feedback sheet uses the dark success panel colour',
+      (tester) async {
+        await _pumpLessonScreen(tester, theme: darkTheme());
+        await _tapContinue(tester);
+
+        await tester.tap(_optionTile('5s'));
+        await tester.pumpAndSettle();
+        await _tapVerifier(tester);
+
+        final decoratedBox = tester.widget<DecoratedBox>(
+          find.descendant(
+            of: find.byType(AnimatedSlide),
+            matching: find.byType(DecoratedBox),
+          ),
+        );
+        final decoration = decoratedBox.decoration as BoxDecoration;
+        expect(decoration.color, darkColors.successPanel);
+      },
+    );
   });
 }

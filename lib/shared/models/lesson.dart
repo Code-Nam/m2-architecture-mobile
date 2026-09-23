@@ -7,7 +7,13 @@ part 'lesson.g.dart';
 @freezed
 abstract class Lesson with _$Lesson {
   /// Creates a lesson. `xp` comes from the content, no engine computes it.
-  const factory Lesson({
+  /// The screen indexes `blocks` and divides by its length, so an empty
+  /// lesson fails here, at parse time, not on screen. Not `const`: the
+  /// assert reads the list, which a const constructor cannot do.
+  // AI-GENERATED (Claude) BEGIN — content invariant, review finding 2026-09-23
+  @Assert('blocks.isNotEmpty', 'a lesson needs at least one block')
+  // AI-GENERATED (Claude) END
+  factory Lesson({
     required String id,
     required String title,
     required int xp,

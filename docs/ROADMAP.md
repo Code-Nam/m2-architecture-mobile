@@ -56,7 +56,33 @@ Status truth for the project. Update this file and the matching
 
 ## Next session starts here
 
-**State on 2026-09-22:** lesson slice Tasks 1-6 done (`lib/shared/models/`
+**State on 2026-09-23:** milestone 1 lesson slice complete, Tasks 1–10 of
+`docs/plans/2026-09-18-lesson-slice.md` done. Play path: Apprendre tab →
+unit node → `/lesson/:id` (`lib/learning/lesson_screen.dart`: progress bar,
+explanation / quiz / « Bientôt » views, 2×2 option grid, feedback sheet
+slid in with `AnimatedSlide`) → last « Continuer » records the completion in
+the in-memory `ProgressRepository` and pops. Verified on the emulator, light
+and dark, against handoff screens 05–08; replay never double-counts XP; hot
+restart resets progress (expected until Firestore, M4). 98 tests green.
+Shared `RetryWidget` in `lib/shared/widgets/`; tokens `progressHeight`,
+`buttonHeight`, `handGap`; `AppColors.successPanel` (sheet + correct card,
+dark-aware) split from `successTint` (tile gradient, ivory in both modes).
+
+**Known deviations from the handoff (lesson slice), deliberate:** option
+card draws a ring and the inner tile draws its own (double ring; mock puts
+chrome on the card only); check / × badge sits on the tile, not the card
+corner; the mock's 14th "answer slot" at the end of the hand row is not
+rendered; miss line is the generic half of the mock's sentence, the
+lesson-specific tail is the Sensei's (M5); no « Pourquoi ? » link (M5);
+streak chip shows a red pill and `0` until Firestore (M4); settings gear has
+no target; tab icons are Material stand-ins.
+
+**Next: milestone 2, Yaku Dex.** Host the yaku catalog JSON first (below),
+then plan `lib/yaku/` (dio instance via a provider, base URL injected,
+`YakuRemoteSource` → `YakuRepository` → Yaku Dex list + card screens,
+handoff screen 13). Isar cache of the catalog is M4 or later.
+
+**Earlier state on 2026-09-22:** lesson slice Tasks 1-6 done (`lib/shared/models/`
 lesson domain, `assets/lessons/` content, `lib/learning/lesson_{repository,
 asset_source,repository_impl,session,providers,path_screen}.dart`,
 `lib/progress/{user_progress,progress_repository,

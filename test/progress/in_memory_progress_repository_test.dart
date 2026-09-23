@@ -3,9 +3,20 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:tenpai/progress/in_memory_progress_repository.dart';
 import 'package:tenpai/shared/models/lesson.dart';
+import 'package:tenpai/shared/models/lesson_block.dart';
 
-const _lesson1 = Lesson(id: 'l1', title: 'one', xp: 10, blocks: []);
-const _lesson2 = Lesson(id: 'l2', title: 'two', xp: 15, blocks: []);
+final _lesson1 = Lesson(
+  id: 'l1',
+  title: 'one',
+  xp: 10,
+  blocks: const [LessonBlock.drill()],
+);
+final _lesson2 = Lesson(
+  id: 'l2',
+  title: 'two',
+  xp: 15,
+  blocks: const [LessonBlock.drill()],
+);
 
 void main() {
   late InMemoryProgressRepository repository;

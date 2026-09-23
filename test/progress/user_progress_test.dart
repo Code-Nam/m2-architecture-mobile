@@ -3,10 +3,11 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:tenpai/progress/user_progress.dart';
 import 'package:tenpai/shared/models/lesson.dart';
+import 'package:tenpai/shared/models/lesson_block.dart';
 import 'package:tenpai/shared/models/unit.dart';
 
 Lesson _lesson(String id) =>
-    Lesson(id: id, title: id, xp: 10, blocks: const []);
+    Lesson(id: id, title: id, xp: 10, blocks: const [LessonBlock.drill()]);
 
 Unit _unit(String id, List<String> lessonIds) =>
     Unit(id: id, title: id, lessons: [for (final l in lessonIds) _lesson(l)]);
@@ -27,31 +28,7 @@ void main() {
     });
   });
 
-  group('statusOf', () {
-    final unit = _unit('u1', ['l1', 'l2', 'l3']);
-
-    test('first lesson is current, the rest locked, on fresh progress', () {
-      expect(statusOf(unit, 0, _fresh), LessonStatus.current);
-      expect(statusOf(unit, 1, _fresh), LessonStatus.locked);
-      expect(statusOf(unit, 2, _fresh), LessonStatus.locked);
-    });
-
-    test('completing lesson 1 flips lesson 2 from locked to current', () {
-      const progress = UserProgress(completedLessonIds: {'l1'}, xp: 10);
-
-      expect(statusOf(unit, 0, progress), LessonStatus.completed);
-      expect(statusOf(unit, 1, progress), LessonStatus.current);
-      expect(statusOf(unit, 2, progress), LessonStatus.locked);
-    });
-
-    test('a completed lesson stays completed even if the previous is not', () {
-      const progress = UserProgress(completedLessonIds: {'l2'}, xp: 10);
-
-      expect(statusOf(unit, 1, progress), LessonStatus.completed);
-    });
-  });
-
-  group('isUnitPlayable', () {
+  group('unitStatusOf', () {
     final units = [
       _unit('u1', ['l1', 'l2']),
       _unit('u2', ['l3']),
@@ -59,44 +36,14 @@ void main() {
       _unit('u4', ['l4']),
     ];
 
-    test('first unit with lessons is playable on fresh progress', () {
-      expect(isUnitPlayable(units, 0, _fresh), isTrue);
-    });
-
-    test('second unit is locked until the first unit\'s last lesson', () {
-      const partial = UserProgress(completedLessonIds: {'l1'}, xp: 10);
-      const done = UserProgress(completedLessonIds: {'l1', 'l2'}, xp: 20);
-
-      expect(isUnitPlayable(units, 1, _fresh), isFalse);
-      expect(isUnitPlayable(units, 1, partial), isFalse);
-      expect(isUnitPlayable(units, 1, done), isTrue);
-    });
-
-    test('a unit with no lessons is never playable', () {
-      const all = UserProgress(
-        completedLessonIds: {'l1', 'l2', 'l3', 'l4'},
-        xp: 40,
+    test('a unit after an empty unit stays locked, never current', () {
+      const allBefore = UserProgress(
+        completedLessonIds: {'l1', 'l2', 'l3'},
+        xp: 30,
       );
 
-      expect(isUnitPlayable(units, 2, all), isFalse);
+      expect(unitStatusOf(units, 3, allBefore), LessonStatus.locked);
     });
-
-    test('a unit after an empty unit stays locked', () {
-      const all = UserProgress(
-        completedLessonIds: {'l1', 'l2', 'l3', 'l4'},
-        xp: 40,
-      );
-
-      expect(isUnitPlayable(units, 3, all), isFalse);
-    });
-  });
-
-  group('unitStatusOf', () {
-    final units = [
-      _unit('u1', ['l1', 'l2']),
-      _unit('u2', ['l3']),
-      _unit('u3', const []),
-    ];
 
     test('first unit is current on fresh progress, the rest locked', () {
       expect(unitStatusOf(units, 0, _fresh), LessonStatus.current);
@@ -156,6 +103,14 @@ void main() {
       const done = UserProgress(completedLessonIds: {'l1', 'l2', 'l3'}, xp: 30);
 
       expect(lessonToOpen(unit, done).id, 'l1');
+    });
+
+    test('a lesson completed out of order stays completed and is skipped', () {
+      const onlySecond = UserProgress(completedLessonIds: {'l2'}, xp: 10);
+      const firstTwo = UserProgress(completedLessonIds: {'l1', 'l2'}, xp: 20);
+
+      expect(lessonToOpen(unit, onlySecond).id, 'l1');
+      expect(lessonToOpen(unit, firstTwo).id, 'l3');
     });
   });
 }

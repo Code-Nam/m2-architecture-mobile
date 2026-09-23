@@ -340,7 +340,7 @@ String toString() {
 @JsonSerializable()
 
 class QuizBlock implements LessonBlock {
-  const QuizBlock({required this.question, required  List<String> hand, required  List<String> options, required this.correctIndex, required this.feedback,  String? $type}): _hand = hand,_options = options,$type = $type ?? 'quiz';
+   QuizBlock({required this.question, required  List<String> hand, required  List<String> options, required this.correctIndex, required this.feedback,  String? $type}): assert(options.length == 4, 'a quiz has exactly four options'),assert(correctIndex >= 0 && correctIndex < 4, 'correctIndex must point at one of the four options'),_hand = hand,_options = options,$type = $type ?? 'quiz';
   factory QuizBlock.fromJson(Map<String, dynamic> json) => _$QuizBlockFromJson(json);
 
  final  String question;
