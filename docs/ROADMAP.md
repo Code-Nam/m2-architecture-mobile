@@ -111,14 +111,15 @@ Tasks 1–3 done (dependency added; `ScanState` sealed + `tileName` /
 (`ImagePicker.pickImage(source: .camera, maxWidth: 1024, imageQuality: 85)`
 → `readAsBytes()`, null on cancel, platform errors propagate) +
 `tile_identifier.dart` + `fake_tile_identifier.dart` (hash masked with
-`& 0x7fffffff` before `%`, else a negative index)). Task 3 files uncommitted
-at review time: commit as `feat(scanner): add photo source and fake
-identifier`. **Resume at Task 4:** `lib/scanner/scanner_providers.dart`
-(`tilePhotoSourceProvider`, `tileIdentifierProvider`, `scanProvider =
-NotifierProvider<ScanNotifier, ScanState>`, not auto-dispose; `scan()`:
-analysing → capture (null → idle) → identify (null → notFound) → found;
-any throw → notFound). `check_conventions` flags the scanner symbols as
-public-unused until Task 4/5 wire them. Isar (settings, scan
+`& 0x7fffffff` before `%`, else a negative index)). Task 4 done (`e3db9a9` + next commit): `scanner_providers.dart`
+(`tilePhotoSourceProvider`, `tileIdentifierProvider`, keep-alive
+`scanProvider` with `ScanNotifier.scan()`: analysing → capture (null → idle)
+→ identify (null → notFound) → found; `on Exception` → notFound, `Error`s
+stay loud). **Resume at Task 5:** `scanner_screen.dart` replaces the
+placeholder (handoff 14, 16, 17), `PrimaryButtonWidget` promoted to
+`lib/shared/widgets/`, tokens bracketStroke / bracketArm / shutterSize /
+shutterRing / sheetHandleWidth / sheetHandleHeight. `check_conventions`
+flags `scanProvider`, `tileName`, `tileFamily` public-unused until then. Isar (settings, scan
 history, cached catalog) is M4 with Firebase.
 
 **Earlier state on 2026-09-22:** lesson slice Tasks 1-6 done (`lib/shared/models/`

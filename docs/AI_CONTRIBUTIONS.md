@@ -165,6 +165,7 @@ Rules:
 | `lib/scanner/tile_photo_source.dart` | dartdoc | 2026-09-23 | Docs are time-consuming for the author; code stays author-written. |
 | `lib/scanner/tile_identifier.dart` | dartdoc | 2026-09-23 | Docs are time-consuming for the author; code stays author-written. |
 | `lib/scanner/tile_photo_source_impl.dart` | dartdoc | 2026-09-23 | Docs are time-consuming for the author; code stays author-written. |
+| `lib/shared/widgets/primary_button_widget.dart` | dartdoc | 2026-09-23 | Docs are time-consuming for the author; code stays author-written. |
 
 Not listed: `design/handoff/` (designer's export, not code), `assets/fonts/`
 (third-party fonts under OFL), generated `*.g.dart` / `*.freezed.dart`
