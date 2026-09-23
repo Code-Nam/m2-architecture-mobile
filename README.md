@@ -35,11 +35,14 @@ The design handoff (`design/handoff/`) ships 36 reference captures at
   hard-coded).
 - **Tile scanner** — point the camera at a tile for a single-shot photo, and
   see the matching tile card.
-- **Account and progress sync** — email/password or Google sign-in, with
-  streaks, XP, and lesson progress kept in Cloud Firestore; its offline
-  persistence queues changes made without a network and replays them on
-  reconnect. Settings, the cached yaku catalog and scan history stay on the
-  device in Isar.
+- **Account, onboarding and progress sync** — welcome screen → email/password
+  or Google sign-in (Firebase Authentication) → a short onboarding (mahjong
+  level, then daily goal) → the tabs; a returning user with a profile skips
+  straight to the tabs. XP and lesson progress are kept in Cloud Firestore,
+  whose offline persistence queues changes made without a network and
+  replays them on reconnect. The Profil tab shows the account, the
+  onboarding answers, XP, and a sign-out. Settings, the cached yaku catalog
+  and scan history stay on the device in Isar (planned).
 - **Sensei** — a patient AI explanation offered after a wrong quiz answer,
   shown in a dedicated panel (seal `先`) that never blocks the quiz; it
   covers loading, streaming, error, and offline states gracefully.
@@ -63,12 +66,13 @@ Flutter 3.47 / Dart 3.13, targeting Android only. Declared in
 - Isar (planned, `isar_community` fork) as the on-device database for
   local-only data: settings, cached yaku catalog, scan history. The
   original `isar` package has not been published since 2023.
-- `firebase_core`, `firebase_auth`, `cloud_firestore` (planned) for
-  authentication and progress, with Firestore's built-in offline
-  persistence doing the synchronisation.
-- `firebase_ai` with `firebase_app_check` (planned) to run the Sensei
-  explanation through Firebase AI Logic, so no API key ships in the app and
-  only the genuine app can call it.
+- `firebase_core`, `firebase_auth` (email/password and Google),
+  `cloud_firestore` for the account, onboarding profile, and progress, with
+  Firestore's built-in offline persistence doing the synchronisation.
+- `firebase_app_check` (Play Integrity in release, debug provider in debug
+  builds) protects Firestore and, once wired, Firebase AI Logic.
+- `firebase_ai` (planned) to run the Sensei explanation through Firebase AI
+  Logic, so no API key ships in the app and only the genuine app can call it.
 
 ## Getting started
 
@@ -98,6 +102,16 @@ through `toolArgs`. Without it, debug builds fail fast at startup.
 
 ### Firebase configuration (not in the repository)
 
+Console prerequisites, set up once per Firebase project:
+
+- Authentication → sign-in providers Email/Password and Google, with the
+  debug keystore's SHA-1 registered on the Android app (`keytool -list -v
+  -keystore ~/.android/debug.keystore -alias androiddebugkey -storepass
+  android`).
+- Firestore Database → production mode, region `europe-west1`.
+- App Check → Android app → Play Integrity, plus a debug token for emulator
+  builds (printed to logcat on first run, then registered in the console).
+
 The app needs two generated files that hold the Firebase project's
 identifiers and API keys. They are git-ignored; the author provides them with
 the submission, next to the source archive.
@@ -108,14 +122,27 @@ the submission, next to the source archive.
 | `firebase_options.dart` | `lib/firebase_options.dart` |
 
 To import them into a fresh clone, copy each file to its path above, then run
-`flutter pub get` and `flutter run` as usual. Nothing else changes: the Gradle
-plugin entries that read `google-services.json` are committed.
+`flutter pub get` and `flutter run` as usual. No Gradle change is needed: the
+app initialises Firebase from `lib/firebase_options.dart`
+(`Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform)`),
+not from the `google-services` Gradle plugin, so `google-services.json` is
+never read by the build. Its native auto-init still runs and logs a harmless
+warning at startup (`Default FirebaseApp failed to initialize because
+google-services.json is missing` / "google-services was not applied") — this
+is expected and safe to ignore.
 
 To regenerate them for your own Firebase project instead, install the CLI
 with `dart pub global activate flutterfire_cli`, sign in with
-`firebase login`, and run `flutterfire configure` at the repository root
-(Android platform only). The console alternative for the first file is
-Project settings → Your apps → Android app → *Download google-services.json*.
+`firebase login`, and run `flutterfire configure --platforms=android` at the
+repository root. The console alternative for the first file is Project
+settings → Your apps → Android app → *Download google-services.json*.
+`flutterfire configure` may fail to list the project for the signed-in CLI
+account (it did on this project); when that happens, download
+`google-services.json` from the console and write `lib/firebase_options.dart`
+by hand from its contents: `apiKey` = `client[0].api_key[0].current_key`,
+`appId` = `client[0].client_info.mobilesdk_app_id`, `messagingSenderId` =
+`project_info.project_number`, `projectId` = `project_info.project_id`,
+`storageBucket` = `project_info.storage_bucket`.
 
 ### Emulator from WSL2 (Windows 10 host)
 
@@ -178,6 +205,22 @@ actually opened.
 flutter analyze                       # lints, incl. riverpod_lint plugin
 flutter test                          # all tests
 dart run tool/check_conventions.dart  # naming/privacy checks lints can't do
+```
+
+### Firestore rules
+
+Security Rules live in `firestore.rules` at the repository root. Deploy them
+with:
+
+```bash
+firebase deploy --only firestore:rules
+```
+
+Test them against the local emulator (needs Java, and `npm install` once in
+`firebase/rules-test`):
+
+```bash
+firebase emulators:exec --only firestore "npm --prefix firebase/rules-test test"
 ```
 
 ## AI usage
