@@ -69,3 +69,12 @@ lib/firebase_options.dart
 # project for convenience; tracked there, never here.
 tenpai-api/
 # AI-GENERATED (Claude) END — hosted yaku catalog
+
+# AI-GENERATED (Claude) BEGIN — Firestore rules test harness
+firebase/rules-test/node_modules/
+firebase/rules-test/package-lock.json
+firebase-debug.log
+firestore-debug.log
+ui-debug.log
+.firebase/
+# AI-GENERATED (Claude) END — Firestore rules test harness

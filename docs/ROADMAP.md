@@ -143,8 +143,11 @@ with hand mappers, `ProfileRepository`, Firestore impl on `users/{uid}` with a
 server `createdAt`, `profileRepositoryProvider` keyed on the uid +
 `userProfileProvider.complete`). Task 4 done 2026-09-23 (`FirestoreProgressRepository` on
 `users/{uid}/progress/current`, unawaited merge write, provider keyed on the
-uid; in-memory repository deleted; suite 150). **Resume at Task 5** (rules by
-the user, emulator test harness by Claude on OK for `firebase/`). Decisions in the
+uid; in-memory repository deleted; suite 150). Task 5 done 2026-09-23 (`firestore.rules` owner-only + shape/bounds,
+`firebase/rules-test/` node harness, 17 emulator tests, deployed; both written
+by Claude at the author's request). Run:
+`firebase emulators:exec --only firestore "npm --prefix firebase/rules-test test"`.
+**Resume at Task 6** (router as provider + auth/onboarding redirect). Decisions in the
 plan's Context section.
 
 **Earlier state on 2026-09-22:** lesson slice Tasks 1-6 done (`lib/shared/models/`

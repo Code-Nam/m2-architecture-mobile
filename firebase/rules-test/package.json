@@ -1,0 +1,13 @@
+{
+  "name": "tenpai-rules-test",
+  "private": true,
+  "type": "module",
+  "description": "Firestore Security Rules tests against the local emulator (firebase emulators:exec --only firestore \"npm --prefix firebase/rules-test test\").",
+  "scripts": {
+    "test": "node --test rules.test.mjs"
+  },
+  "devDependencies": {
+    "@firebase/rules-unit-testing": "^5.0.2",
+    "firebase": "^12.19.0"
+  }
+}

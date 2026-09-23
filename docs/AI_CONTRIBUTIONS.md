@@ -130,6 +130,11 @@ Rules:
 | `docs/plans/2026-09-23-scanner.md.tasks.json` | file (no marker) | 2026-09-23 | Task carry-over for the plan above. |
 | `docs/plans/2026-09-23-firebase.md` | file | 2026-09-23 | Plan written from the author's brainstorming answers; the author builds it. |
 | `docs/plans/2026-09-23-firebase.md.tasks.json` | file (no marker) | 2026-09-23 | Task carry-over for the plan above. |
+| `firestore.rules` | file | 2026-09-23 | |
+| `firebase.json` | block (no marker): `emulators` section | 2026-09-23 | |
+| `firebase/rules-test/rules.test.mjs` | file | 2026-09-23 | |
+| `firebase/rules-test/package.json` | file (no marker) | 2026-09-23 | |
+| `.gitignore` | block: Firestore rules test harness | 2026-09-23 | |
 | `docs/plans/2026-09-23-yaku.md` | file | 2026-09-23 | Plan written from the author's brainstorming answers; the author builds it. |
 | `docs/plans/2026-09-23-yaku.md.tasks.json` | file (no marker) | 2026-09-23 | Task carry-over for the plan above. |
 | `lib/shared/models/lesson.dart` | block: `@Assert` on the factory (`const` dropped) | 2026-09-23 | Content invariant from the milestone 1 review; plumbing, no Flutter concept to learn. |

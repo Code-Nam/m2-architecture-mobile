@@ -47,16 +47,16 @@
     {
       "id": 5,
       "subject": "Task 5: Security Rules (user) + emulator tests (Claude)",
-      "status": "in_progress",
+      "status": "completed",
       "blockedBy": [
         4
       ],
-      "description": "**Files:** see plan Layout\n**Goal:** `firestore.rules` per the plan's Security Rules section (owner only; profile keys/level/goal validated; progress: hasOnly keys, ids grow by exactly one and keep the old ones, xp +1..+100, updatedAt == request.time). Claude, on explicit OK for `firebase/`: `firebase/rules-test/package.json` (@firebase/rules-unit-testing) + `rules.test.mjs` (owner ok; other uid denied; bad level; xp +101; removed id; wrong updatedAt). Deploy: `firebase deploy --only firestore:rules` (user).\n**Acceptance Criteria:** all rules tests green under the emulator; rules deployed\n**Verify:** firebase emulators:exec --only firestore \"node --test firebase/rules-test\"\n```json:metadata\n{\"verifyCommand\": \"firebase emulators:exec --only firestore \\\"node --test firebase/rules-test\\\"\", \"acceptanceCriteria\": [\"all rules tests green under the emulator\", \"rules deployed\"], \"modelTier\": \"standard\", \"owner\": \"user rules, Claude harness\"}\n```"
+      "description": "**Files:** see plan Layout\n**Goal:** `firestore.rules` per the plan's Security Rules section (owner only; profile keys/level/goal validated; progress: hasOnly keys, ids grow by exactly one and keep the old ones, xp +1..+100, updatedAt == request.time). Claude, on explicit OK for `firebase/`: `firebase/rules-test/package.json` (@firebase/rules-unit-testing) + `rules.test.mjs` (owner ok; other uid denied; bad level; xp +101; removed id; wrong updatedAt). Deploy: `firebase deploy --only firestore:rules` (user).\n**Acceptance Criteria:** all rules tests green under the emulator; rules deployed\n**Verify:** firebase emulators:exec --only firestore \"node --test firebase/rules-test\"\n```json:metadata\n{\"verifyCommand\": \"firebase emulators:exec --only firestore \\\"node --test firebase/rules-test\\\"\", \"acceptanceCriteria\": [\"all rules tests green under the emulator\", \"rules deployed\"], \"modelTier\": \"standard\", \"owner\": \"user rules, Claude harness\"}\n```\n**Done:** 2026-09-23. Rules and harness both by Claude on the author's \"you do it all\"; 17 emulator tests green; rules deployed to tenpai-3f494."
     },
     {
       "id": 6,
       "subject": "Task 6: Router as provider + auth/onboarding redirect",
-      "status": "pending",
+      "status": "in_progress",
       "blockedBy": [
         2,
         3
@@ -112,5 +112,5 @@
       "description": "**Files:** see plan Layout\n**Goal:** Sign-up → level → goal → tabs; lesson completion in the console; sign-out → welcome; sign-in → tabs; Google sign-in; offline completion queued then synced; App Check enforcement on for Firestore, app still works; screenshots 01–04 + 18 light/dark. flutter-reviewer on lib/auth, lib/onboarding, lib/profile, progress repository, router. ROADMAP milestone 4 row + state block + deviations, README fix (google-services line, setup steps), tasks.json done with hash.\n**Acceptance Criteria:** ROADMAP + tasks.json say done with the commit hash; reviewer findings applied\n**Verify:** flutter analyze && flutter test && dart run tool/check_conventions.dart, then visual\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && flutter test && dart run tool/check_conventions.dart, then visual\", \"acceptanceCriteria\": [\"ROADMAP + tasks.json say done with the commit hash\", \"reviewer findings applied\"], \"modelTier\": \"standard\", \"owner\": \"user (Claude drives adb)\"}\n```"
     }
   ],
-  "lastUpdated": "2026-09-23T17:55:43.725516+00:00"
+  "lastUpdated": "2026-09-23T17:59:56.894331+00:00"
 }
