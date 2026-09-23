@@ -82,7 +82,19 @@ dart run build_runner build -d   # regenerates *.g.dart / *.freezed.dart
 flutter run                      # -d <android-device-id> to target a device
 ```
 
-No `--dart-define` values are required.
+The yaku catalog is fetched from a public JSON endpoint whose base URL is
+injected at build time; the app never hard-codes it:
+
+```bash
+flutter run --dart-define=YAKU_BASE_URL=https://code-nam.github.io/tenpai-api/
+```
+
+The trailing slash is required (dio joins base URL and path verbatim). The
+catalog lives in the separate public repository
+[Code-Nam/tenpai-api](https://github.com/Code-Nam/tenpai-api), served by
+GitHub Pages at `yaku/v1/catalog.json`; bump the `v1` path segment for any
+breaking change to its shape. `.vscode/launch.json` passes the same define
+through `toolArgs`. Without it, debug builds fail fast at startup.
 
 ### Firebase configuration (not in the repository)
 
