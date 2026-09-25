@@ -1,5 +1,194 @@
 {
   "id": "unit_04",
   "title": "Le déroulé d'une partie",
-  "lessons": []
+  "lessons": [
+    {
+      "id": "unit_04_lesson_01",
+      "title": "Piocher, jeter, appeler",
+      "xp": 10,
+      "blocks": [
+        {
+          "type": "explanation",
+          "tile": "4s",
+          "title": "Un tour de jeu",
+          "body": "À votre tour, vous piochez une tuile, puis vous en jetez une, face visible devant vous. Vos tuiles jetées forment votre rivière : tout le monde peut la lire."
+        },
+        {
+          "type": "explanation",
+          "tile": "3m",
+          "title": "Chii : prendre une suite",
+          "body": "Quand le joueur à votre gauche jette une tuile qui complète une de vos suites, dites « chii » pour la prendre. Lui seul peut vous la donner."
+        },
+        {
+          "type": "interactive",
+          "prompt": "Votre voisin de gauche jette une tuile. Laquelle vous permet un chii ?",
+          "group": [
+            "3m",
+            "4m"
+          ],
+          "slot": 2,
+          "rack": [
+            "5p",
+            "5m",
+            "2s",
+            "4m"
+          ],
+          "correctIndex": 1,
+          "feedback": "3-4-5 de caractères : chii. Le 4 de caractères ferait une paire, pas une suite."
+        },
+        {
+          "type": "explanation",
+          "tile": "7z",
+          "title": "Pon : prendre un brelan",
+          "body": "Si n'importe quel joueur jette une tuile dont vous tenez déjà la paire, dites « pon » pour la prendre et former un brelan. Pon passe avant chii."
+        },
+        {
+          "type": "drill",
+          "prompt": "Touchez vos paires : ce sont elles qui permettent de dire pon.",
+          "hand": [
+            "1m",
+            "7z",
+            "4m",
+            "2p",
+            "9s",
+            "7z",
+            "5p",
+            "3s",
+            "2p",
+            "8s",
+            "6m",
+            "1z",
+            "4s"
+          ],
+          "answers": [
+            1,
+            3,
+            5,
+            8
+          ],
+          "feedback": "Deux dragons rouges et deux 2 de cercles : un troisième, jeté par n'importe qui, ferait un pon."
+        },
+        {
+          "type": "quiz",
+          "question": "Votre voisin de gauche jette une de ces tuiles. Laquelle permet un chii ?",
+          "hand": [
+            "1m",
+            "1m",
+            "1m",
+            "7m",
+            "8m",
+            "9m",
+            "3p",
+            "4p",
+            "5p",
+            "4s",
+            "5s",
+            "6z",
+            "1z"
+          ],
+          "options": [
+            "1z",
+            "2s",
+            "6s",
+            "8p"
+          ],
+          "correctIndex": 2,
+          "feedback": "Le 6 de bambous complète 4-5-6 : chii. Un 3 de bambous aurait aussi fonctionné."
+        }
+      ]
+    },
+    {
+      "id": "unit_04_lesson_02",
+      "title": "Gagner la main",
+      "xp": 10,
+      "blocks": [
+        {
+          "type": "explanation",
+          "tile": "2p",
+          "title": "Tsumo et ron",
+          "body": "Si la tuile qui complète votre main vient de votre pioche, dites « tsumo ». Si un autre joueur la jette, dites « ron » : c'est lui qui paie."
+        },
+        {
+          "type": "explanation",
+          "tile": "5m",
+          "title": "Riichi",
+          "body": "Votre main est en attente et vous n'avez rien appelé ? Déclarez riichi en misant mille points. Votre main est alors verrouillée : vous jetez chaque tuile piochée qui ne vous fait pas gagner."
+        },
+        {
+          "type": "drill",
+          "prompt": "Touchez les deux tuiles de la suite incomplète.",
+          "hand": [
+            "1m",
+            "2m",
+            "3m",
+            "4p",
+            "5p",
+            "6p",
+            "7s",
+            "8s",
+            "9s",
+            "3s",
+            "4s",
+            "5z",
+            "5z"
+          ],
+          "answers": [
+            9,
+            10
+          ],
+          "feedback": "3-4 de bambous : il leur manque un 2 ou un 5. C'est votre attente."
+        },
+        {
+          "type": "quiz",
+          "question": "Quelle tuile vous ferait dire ron si un adversaire la jetait ?",
+          "hand": [
+            "1m",
+            "2m",
+            "3m",
+            "4p",
+            "5p",
+            "6p",
+            "7s",
+            "8s",
+            "9s",
+            "3s",
+            "4s",
+            "5z",
+            "5z"
+          ],
+          "options": [
+            "5s",
+            "6s",
+            "3s",
+            "5z"
+          ],
+          "correctIndex": 0,
+          "feedback": "Le 5 de bambous termine la suite 3-4-5. Le 2 de bambous aurait aussi fonctionné."
+        },
+        {
+          "type": "interactive",
+          "prompt": "Vous piochez. Quelle tuile vous fait dire tsumo ?",
+          "group": [
+            "7p",
+            "9p"
+          ],
+          "slot": 1,
+          "rack": [
+            "8s",
+            "8p",
+            "6p",
+            "9p"
+          ],
+          "correctIndex": 1,
+          "feedback": "7-8-9 de cercles : la main est complète, tsumo !"
+        },
+        {
+          "type": "explanation",
+          "tile": "1z",
+          "title": "La donne suivante",
+          "body": "Après une victoire, les points changent de mains et une nouvelle donne commence. Si le donneur a gagné, il reste est ; sinon, le rôle de donneur passe au joueur suivant."
+        }
+      ]
+    }
+  ]
 }
