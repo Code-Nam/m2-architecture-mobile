@@ -17,10 +17,11 @@ void main() {
       repository = LessonRepositoryImpl(LessonAssetSource());
     });
 
-    test('loads the six units in path order', () async {
+    test('loads the seven units in path order', () async {
       final units = await repository.units();
 
       expect(units.map((unit) => unit.id), [
+        'unit_00',
         'unit_01',
         'unit_02',
         'unit_03',
@@ -56,7 +57,7 @@ void main() {
       await Future.wait([repository.units(), repository.units()]);
       await repository.units();
 
-      expect(bundle.loads, 6);
+      expect(bundle.loads, 7);
     });
 
     test('a failed units() does not cache the failure', () async {
@@ -69,7 +70,7 @@ void main() {
 
       final units = await repository.units();
 
-      expect(units, hasLength(6));
+      expect(units, hasLength(7));
     });
   });
 }

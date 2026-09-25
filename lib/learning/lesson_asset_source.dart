@@ -13,6 +13,7 @@ class LessonAssetSource {
   final AssetBundle _bundle;
 
   static const _paths = [
+    'assets/lessons/unit_00_dechiffrer_les_tuiles.json',
     'assets/lessons/unit_01_lire_les_tuiles.json',
     'assets/lessons/unit_02_les_briques_d_une_main.json',
     'assets/lessons/unit_03_la_table.json',
