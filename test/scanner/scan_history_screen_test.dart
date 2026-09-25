@@ -26,10 +26,7 @@ Future<void> _pumpHistory(
         ),
       ],
       retry: (_, _) => null,
-      child: MaterialApp(
-        theme: lightTheme(),
-        home: const ScanHistoryScreen(),
-      ),
+      child: MaterialApp(theme: lightTheme(), home: const ScanHistoryScreen()),
     ),
   );
   await tester.pumpAndSettle();
