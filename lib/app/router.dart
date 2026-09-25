@@ -13,6 +13,7 @@ import 'package:tenpai/onboarding/level_screen.dart';
 import 'package:tenpai/profile/profile_providers.dart';
 import 'package:tenpai/profile/profile_screen.dart';
 import 'package:tenpai/profile/user_profile.dart';
+import 'package:tenpai/scanner/scan_history_screen.dart';
 import 'package:tenpai/scanner/scanner_screen.dart';
 import 'package:tenpai/settings/settings_screen.dart';
 import 'package:tenpai/yaku/yaku_screen.dart';
@@ -56,6 +57,9 @@ abstract final class AppRoutes {
 
   /// Réglages, pushed over the tabs from the path header gear.
   static const settings = '/settings';
+
+  /// Every tile scanned, newest first; pushed from the Profil stat.
+  static const scanHistory = '/scanner/history';
 }
 
 /// Builds the one router of the app. Called by `routerProvider` so the
@@ -103,6 +107,10 @@ GoRouter createRouter(Ref ref) {
         path: AppRoutes.lesson(':id'),
         builder: (context, state) =>
             LessonScreen(lessonId: state.pathParameters['id']!),
+      ),
+      GoRoute(
+        path: AppRoutes.scanHistory,
+        builder: (context, state) => const ScanHistoryScreen(),
       ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, shell) => _ShellScaffold(shell),

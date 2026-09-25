@@ -38,16 +38,16 @@
     {
       "id": 4,
       "subject": "Task 4: SettingsScreen + /settings route + gear",
-      "status": "in_progress",
+      "status": "completed",
       "blockedBy": [
         3
       ],
-      "description": "**Goal:** `lib/settings/settings_screen.dart` (`SettingsScreen`): title « Réglages », card with « Thème » label and `SegmentedButton<ThemeMode>` « Système / Clair / Sombre », disabled while loading. `router.dart`: `AppRoutes.settings = '/settings'` outside the shell. `lesson_path_screen.dart:128`: gear `onPressed: () => context.push(AppRoutes.settings)`.\n\n**Files:**\n- lib/settings/settings_screen.dart\n- lib/app/router.dart\n- lib/learning/lesson_path_screen.dart\n\n**Acceptance Criteria:**\n- [ ] emulator: « Sombre » → dark at once; kill + relaunch → still dark\n- [ ] « Système » follows the device\n- [ ] tokens only, French verbatim\n\n**Verify:** flutter analyze && dart run tool/check_conventions.dart, then visual\n\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && dart run tool/check_conventions.dart, then visual\", \"acceptanceCriteria\": [\"emulator: « Sombre » → dark at once; kill + relaunch → still dark\", \"« Système » follows the device\", \"tokens only, French verbatim\"], \"modelTier\": \"standard\", \"owner\": \"user\", \"files\": [\"lib/settings/settings_screen.dart\", \"lib/app/router.dart\", \"lib/learning/lesson_path_screen.dart\"]}\n```"
+      "description": "**Goal:** `lib/settings/settings_screen.dart` (`SettingsScreen`): title « Réglages », card with « Thème » label and `SegmentedButton<ThemeMode>` « Système / Clair / Sombre », disabled while loading. `router.dart`: `AppRoutes.settings = '/settings'` outside the shell. `lesson_path_screen.dart:128`: gear `onPressed: () => context.push(AppRoutes.settings)`.\n\n**Files:**\n- lib/settings/settings_screen.dart\n- lib/app/router.dart\n- lib/learning/lesson_path_screen.dart\n\n**Acceptance Criteria:**\n- [ ] emulator: « Sombre » → dark at once; kill + relaunch → still dark\n- [ ] « Système » follows the device\n- [ ] tokens only, French verbatim\n\n**Verify:** flutter analyze && dart run tool/check_conventions.dart, then visual\n\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && dart run tool/check_conventions.dart, then visual\", \"acceptanceCriteria\": [\"emulator: « Sombre » → dark at once; kill + relaunch → still dark\", \"« Système » follows the device\", \"tokens only, French verbatim\"], \"modelTier\": \"standard\", \"owner\": \"user\", \"files\": [\"lib/settings/settings_screen.dart\", \"lib/app/router.dart\", \"lib/learning/lesson_path_screen.dart\"]}\n```\n**Done 2026-09-25**: `/settings` route, gear enabled, `SettingsScreen` with a `SegmentedButton<ThemeMode>`. Emulator: dark at once, survives a kill, Système follows the device, back returns to the path."
     },
     {
       "id": 5,
       "subject": "Task 5: ScanHistoryScreen + Profil « Tuiles maîtrisées » stat",
-      "status": "pending",
+      "status": "in_progress",
       "blockedBy": [
         3
       ],
@@ -73,5 +73,5 @@
       "description": "**Goal:** Emulator: theme survives a kill; history survives a kill and drives the stat; Dex in airplane mode after one online load; dark mode on both new screens. flutter-reviewer on `lib/local/`, `lib/settings/`, `cached_yaku_repository.dart`, the two scanner additions; findings applied. ROADMAP Isar row + next-session block; deviations logged; `tasks.json` done with hash.\n\n**Files:**\n- docs/ROADMAP.md\n- docs/plans/2026-09-25-isar.md.tasks.json\n\n**Acceptance Criteria:**\n- [ ] flutter analyze && flutter test && dart run tool/check_conventions.dart clean\n- [ ] ROADMAP + tasks.json updated together\n- [ ] reviewer findings applied or logged\n\n**Verify:** flutter analyze && flutter test && dart run tool/check_conventions.dart\n\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && flutter test && dart run tool/check_conventions.dart\", \"acceptanceCriteria\": [\"flutter analyze && flutter test && dart run tool/check_conventions.dart clean\", \"ROADMAP + tasks.json updated together\", \"reviewer findings applied or logged\"], \"modelTier\": \"standard\", \"owner\": \"Claude + user\", \"files\": [\"docs/ROADMAP.md\", \"docs/plans/2026-09-25-isar.md.tasks.json\"]}\n```"
     }
   ],
-  "lastUpdated": "2026-09-25T10:05:40.985955+00:00"
+  "lastUpdated": "2026-09-25T10:30:16.849407+00:00"
 }

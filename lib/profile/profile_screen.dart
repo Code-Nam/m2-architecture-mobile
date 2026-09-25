@@ -7,14 +7,17 @@ import 'package:tenpai/auth/auth_providers.dart';
 import 'package:tenpai/profile/profile_providers.dart';
 import 'package:tenpai/profile/user_profile.dart';
 import 'package:tenpai/progress/progress_providers.dart';
+import 'package:tenpai/scanner/scanner_providers.dart';
 import 'package:tenpai/shared/theme/app_colors.dart';
 import 'package:tenpai/shared/theme/app_tokens.dart';
 import 'package:tenpai/shared/widgets/primary_button_widget.dart';
 import 'package:tenpai/shared/widgets/retry_widget.dart';
 
-/// Profil tab, handoff 18 reduced to account, onboarding answers, XP and
-/// sign-out; streak, activity graph and badges come later. Sign-out never
-/// navigates: the auth stream goes null and the router does the rest.
+/// Profil tab, handoff 18 reduced to account, onboarding answers, XP,
+/// lessons, « Tuiles maîtrisées » (distinct scanned tiles, from Isar; opens
+/// the scan history) and sign-out; streak, activity graph and badges come
+/// later. Sign-out never navigates: the auth stream goes null and the
+/// router does the rest.
 class ProfileScreen extends ConsumerWidget {
   /// No parameters: everything comes from providers.
   const ProfileScreen({super.key});
@@ -39,7 +42,7 @@ class ProfileScreen extends ConsumerWidget {
                 message: 'Impossible de charger votre progression.',
                 onRetry: () => ref.invalidate(userProgressProvider),
               )
-            else
+            else ...[
               Row(
                 children: [
                   Expanded(
@@ -58,6 +61,13 @@ class ProfileScreen extends ConsumerWidget {
                   ),
                 ],
               ),
+              const SizedBox(height: AppTokens.space2),
+              _StatCard(
+                label: 'Tuiles maîtrisées',
+                value: '${ref.watch(masteredTilesProvider)}',
+                onTap: () => context.push(AppRoutes.scanHistory),
+              ),
+            ],
             const SizedBox(height: AppTokens.space3),
             if (profile.value case final p?) _ProfileCard(profile: p),
             const SizedBox(height: AppTokens.space4),
@@ -121,9 +131,14 @@ class _AccountHeader extends StatelessWidget {
 
 /// One number with its mono caption (handoff 18 stat block).
 class _StatCard extends StatelessWidget {
-  const _StatCard({required this.label, required this.value});
+  const _StatCard({required this.label, required this.value, this.onTap});
   final String label;
   final String value;
+
+  /// Null keeps the card inert (no ripple). The ripple needs the transparent
+  /// `Material` inside the box: the page's Material sits under the
+  /// `DecoratedBox` and would hide it.
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -135,19 +150,26 @@ class _StatCard extends StatelessWidget {
         borderRadius: AppTokens.radiusCard,
         boxShadow: AppTokens.shadowSurface,
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(AppTokens.space2),
-        child: Column(
-          crossAxisAlignment: .start,
-          children: [
-            Text(value, style: theme.textTheme.headlineLarge),
-            Text(
-              label.toUpperCase(),
-              style: theme.textTheme.labelMedium?.copyWith(
-                color: colors.mutedStrong,
-              ),
+      child: Material(
+        type: .transparency,
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: AppTokens.radiusCard,
+          child: Padding(
+            padding: const EdgeInsets.all(AppTokens.space2),
+            child: Column(
+              crossAxisAlignment: .start,
+              children: [
+                Text(value, style: theme.textTheme.headlineLarge),
+                Text(
+                  label.toUpperCase(),
+                  style: theme.textTheme.labelMedium?.copyWith(
+                    color: colors.mutedStrong,
+                  ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
