@@ -72,8 +72,9 @@ flutter:
     # AI-GENERATED (Claude) END
 
 # AI-GENERATED (Claude) BEGIN — analyzer override for the Isar generator
-# isar_community_generator 3.3.2 declares analyzer <11 while freezed 4 /
-# Dart 3.13 need analyzer 14. Spike 2026-09-24: the generator compiles and
+# isar_community_generator 3.3.2 declares analyzer <11 while source_gen
+# 4.3.0 (used by freezed 4 and json_serializable) needs analyzer 14.
+# Spike 2026-09-24: the generator compiles and
 # emits schemas on 14, the suite stays green, the APK bundles libisar.so.
 # Remove when isar_community publishes a generator that allows analyzer 14.
 dependency_overrides:

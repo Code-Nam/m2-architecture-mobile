@@ -28,8 +28,9 @@ Status truth for the project. Update this file and the matching
   emits a schema, suite 210 green, debug APK bundles `libisar.so`). The
   original `isar` and `objectbox` do not resolve at all; `drift`, `sqflite`
   and `hive_ce` would. Override documented in `pubspec.yaml`; drop it when
-  the fork publishes a generator allowing analyzer 14. Runtime `Isar.open`
-  on the emulator still to be exercised (first Isar plan task).
+  the fork publishes a generator allowing analyzer 14. `Isar.open` verified
+  on the emulator 2026-09-25 (Isar plan Task 0). What forces analyzer 14 is
+  `source_gen` 4.3.0 (`>=14 <15`); freezed 4 alone accepts 13–14.
 - **2026-09-18 — Isar and Firestore never hold the same data.** Progress
   (completions, XP, streak) goes to Cloud Firestore, whose offline
   persistence already is a local cache with a write queue; Security Rules
@@ -201,7 +202,26 @@ pre-dimmed (no connectivity probe); no « Voir la fiche »; three-sentence
 limit by prompt only; 先 from the system CJK font; cold-start offline shows
 `failed`; screens 09–12 / 15–16 checked live, not screenshot-compared.
 
-**State on 2026-09-25 (Isar planned):** brainstorming done, plan approved:
+**State on 2026-09-25 (Isar done, `e923b31` + review-fix commit):** local
+database requirement met. `Isar.open` in `main` (three schemas:
+`SettingsRecord`, `ScanRecord`, `YakuRecord`), injected via `isarProvider`
+override. Theme mode (Réglages behind the path gear) persists; every
+identified tile is logged and counted on Profil (« Tuiles maîtrisées »,
+opens the history list); the Yaku Dex serves the last good catalog offline.
+Lessons learned: Isar throws `Error`s, not `Exception`s, so best-effort
+writes catch `on Object`; store your own enums by name, not ordinal; a
+`StreamProvider` read via `.future` needs a listener in tests; a dropped WSL
+adb connection leaves `flutter run` pushing nothing (stale app on screen,
+`adb devices` empty → `emu-connect`); `AsyncValue.value` keeps the previous
+data on error (CLAUDE.md §2 says null, which is only true with no prior
+value).
+
+**All school requirements now met** (REST, Firebase, camera, AI, local DB,
+Firestore sync). Next: milestone 6 content + polish; App Check enforcement
+for Firestore and AI Logic (mandatory for AI Logic from 2026-11-02) still
+unconfirmed in chat.
+
+**Earlier state on 2026-09-25 (Isar planned):** brainstorming done, plan approved:
 `docs/plans/2026-09-25-isar.md` + `.tasks.json` (Tasks 0–7, all `pending`).
 Decisions: scope = theme-mode setting + scan history + cached yaku catalog;
 history shown as the Profil « Tuiles maîtrisées » stat opening a plain list;
@@ -390,7 +410,7 @@ Plan: [docs/plans/2026-09-17-project-setup.md](plans/2026-09-17-project-setup.md
 | 3 — Scanner | image_picker single shot, fake identifier, scan result card | done 2026-09-23 (`c091442`): `image_picker ^1.2.3` (no manifest change), `lib/scanner/` (sealed `ScanState`, French tile labels, `TilePhotoSource` + impl, `TileIdentifier` + deterministic fake, three providers + `ScanNotifier`, `ScannerScreen` with viewfinder + result/failure sheets), `PrimaryButtonWidget` shared, scanner tokens; device-checked light/dark vs handoff 14/16/17; reviewer pass applied; 28 new tests, suite at 156 |
 | 4 — Firebase | `firebase_auth` (email + Google) + App Check + Firestore progress (offline persistence on, Security Rules written and tested) behind the existing repository interfaces; onboarding 01–04; minimal Profil. Isar deferred to its own plan | done 2026-09-23 (`81c75e7`): project `tenpai-3f494`, `lib/auth/` + `lib/onboarding/` + `lib/profile/` + Firestore progress, router as provider with auth/profile redirect, `firestore.rules` + 17 emulator tests, device-checked light/dark incl. offline queue, reviewer pass applied, 35 new tests, suite at 185; App Check enforcement toggle pending (author) |
 | 5 — AI | Firebase AI Logic (`firebase_ai ^4.0.0`, Gemini Developer API, `gemini-3.5-flash-lite`) behind App Check: `lib/sensei/` (request/state, repository + Firebase impl, providers + `SenseiNotifier`, `SenseiPanelWidget`), Gemini tile identifier behind `TileIdentifier`, « Pourquoi ? » under a quiz miss, streamed context under a scanned tile | done 2026-09-23 (`31124f6`): [docs/plans/2026-09-23-sensei.md](plans/2026-09-23-sensei.md) Tasks 0–9 done, device-checked on the emulator (quiz miss + scan stream), reviewer pass applied, 30 new tests, suite at 210; App Check enforcement still to flip (mandatory for AI Logic from 2026-11-02) |
-| Isar — local database | `isar_community` (analyzer override) + `path_provider`: theme-mode setting, scan history (Profil « Tuiles maîtrisées » + list), cached yaku catalog (network first, cache fallback) behind the existing `YakuRepository` | plan approved 2026-09-25: [docs/plans/2026-09-25-isar.md](plans/2026-09-25-isar.md) + `.tasks.json`, Task 0 done 2026-09-25 (Isar opens on device, settings collection generated), Task 1 done (scan + yaku records), Task 2 done (repositories + cached catalog), Task 3 done (providers + wiring, offline Dex verified), Task 4 done (settings screen, theme persists), Task 5 done (history screen + Profil stat; device check in Task 7), Task 6 done (16 new tests, suite at 226), Task 7 in progress (device pass, reviewer, handover); user builds |
+| Isar — local database | `isar_community` (analyzer override) + `path_provider`: theme-mode setting, scan history (Profil « Tuiles maîtrisées » + list), cached yaku catalog (network first, cache fallback) behind the existing `YakuRepository` | done 2026-09-25 (`e923b31` + review fixes): [docs/plans/2026-09-25-isar.md](plans/2026-09-25-isar.md) Tasks 0–7 done, three collections, `lib/local/` + `lib/settings/` + scanner/yaku additions, device-checked (theme and history survive a kill, offline Dex, dark), reviewer pass applied, 16 new tests, suite at 226 |
 | 6 — Content + polish | remaining units, drill/interactive blocks, gallery parity | not started |
 
 ## Design import
