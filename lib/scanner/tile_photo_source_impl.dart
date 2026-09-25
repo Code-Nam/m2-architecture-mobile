@@ -15,10 +15,14 @@ class TilePhotoSourceImpl implements TilePhotoSource {
   static const _maxWidth = 1024.0;
   static const _quality = 85;
 
+  // AI-GENERATED (Claude) BEGIN — gallery option, grading fixes Task 2
+  /// Same downscale for both sources, so a large gallery photo uploads as
+  /// small as a camera shot.
   @override
-  Future<Uint8List?> capture() async {
+  Future<Uint8List?> capture({bool fromGallery = false}) async {
     final file = await _picker.pickImage(
-      source: ImageSource.camera,
+      source: fromGallery ? ImageSource.gallery : ImageSource.camera,
+      // AI-GENERATED (Claude) END
       maxWidth: _maxWidth,
       imageQuality: _quality,
     );

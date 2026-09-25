@@ -27,7 +27,7 @@ class _PendingPhotoSource implements TilePhotoSource {
   final completer = Completer<Uint8List?>();
 
   @override
-  Future<Uint8List?> capture() => completer.future;
+  Future<Uint8List?> capture({bool fromGallery = false}) => completer.future;
 }
 
 Future<void> _pumpScanner(
@@ -65,9 +65,13 @@ Future<void> _pumpFrames(WidgetTester tester, [int count = 10]) async {
   }
 }
 
-/// The shutter is the only InkWell on the idle viewfinder; the sheets add
-/// their own through the CTA, so callers only use this while no sheet shows.
-Finder get _shutter => find.byType(InkWell);
+/// The shutter's own InkWell, found through its semantics label since the
+/// gallery TextButton next to it also wraps one; the sheets add their own
+/// through the CTA, so callers only use this while no sheet shows.
+Finder get _shutter => find.descendant(
+  of: find.bySemanticsLabel('Prendre la photo'),
+  matching: find.byType(InkWell),
+);
 
 void main() {
   group('ScannerScreen', () {
@@ -120,6 +124,44 @@ void main() {
       photos.completer.complete(null);
       await tester.pumpAndSettle();
       expect(tester.widget<InkWell>(_shutter).onTap, isNotNull);
+    });
+
+    testWidgets('Choisir une photo starts a gallery scan', (tester) async {
+      final photos = FakeTilePhotoSource.returning(_photo);
+      await _pumpScanner(
+        tester,
+        photos: photos,
+        identifier: ScriptedTileIdentifier(),
+      );
+
+      await tester.tap(find.widgetWithText(TextButton, 'Choisir une photo'));
+      await tester.pumpAndSettle();
+
+      expect(photos.captures, 1);
+      expect(photos.lastFromGallery, isTrue);
+    });
+
+    testWidgets('Choisir une photo is disabled while a scan runs', (
+      tester,
+    ) async {
+      final photos = _PendingPhotoSource();
+      await _pumpScanner(
+        tester,
+        photos: photos,
+        identifier: ScriptedTileIdentifier(),
+      );
+
+      await tester.tap(find.widgetWithText(TextButton, 'Choisir une photo'));
+      await tester.pump();
+
+      final button = tester.widget<TextButton>(
+        find.widgetWithText(TextButton, 'Choisir une photo'),
+      );
+      expect(button.onPressed, isNull);
+
+      // Let the flow finish so nothing touches a disposed notifier.
+      photos.completer.complete(null);
+      await tester.pumpAndSettle();
     });
 
     testWidgets('a recognised tile opens the result sheet', (tester) async {

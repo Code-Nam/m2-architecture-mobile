@@ -58,12 +58,20 @@ class ScanNotifier extends Notifier<ScanState> {
   /// the camera or the identifier lands on the failure sheet with
   /// « Réessayer »; an [Error] is a bug and stays loud. A press while a
   /// scan is open is ignored: image_picker refuses a second camera session.
-  Future<void> scan() async {
+  // AI-GENERATED (Claude) BEGIN — gallery option, grading fixes Task 2
+  /// [fromGallery] picks an existing photo instead of opening the camera;
+  /// everything after the image is the same.
+  Future<void> scan({bool fromGallery = false}) async {
+    // AI-GENERATED (Claude) END
     if (state is ScanAnalysing) return;
     state = const ScanState.analysing();
 
     try {
-      final bytes = await ref.read(tilePhotoSourceProvider).capture();
+      // AI-GENERATED (Claude) BEGIN — gallery option, grading fixes Task 2
+      final bytes = await ref
+          .read(tilePhotoSourceProvider)
+          .capture(fromGallery: fromGallery);
+      // AI-GENERATED (Claude) END
       if (bytes == null) {
         state = const ScanState.idle();
         return;

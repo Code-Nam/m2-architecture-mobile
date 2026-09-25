@@ -154,6 +154,18 @@ void main() {
       ]);
     });
 
+    test('scan(fromGallery: true) reaches the photo source', () async {
+      final photos = FakeTilePhotoSource.returning(_photo);
+      final (:container, states: _) = _harness(
+        photos: photos,
+        identifier: ScriptedTileIdentifier(tile: _tile),
+      );
+
+      await container.read(scanProvider.notifier).scan(fromGallery: true);
+
+      expect(photos.lastFromGallery, isTrue);
+    });
+
     test('a scan started while one is open is ignored', () async {
       final photos = _OpenCamera();
       final (:container, :states) = _harness(
@@ -257,7 +269,7 @@ class _OpenCamera implements TilePhotoSource {
   int captures = 0;
 
   @override
-  Future<Uint8List?> capture() {
+  Future<Uint8List?> capture({bool fromGallery = false}) {
     captures++;
     return completer.future;
   }

@@ -25,9 +25,13 @@ class FakeTilePhotoSource implements TilePhotoSource {
   /// Number of times [capture] was called.
   int captures = 0;
 
+  /// `fromGallery` from the most recent [capture] call; null before any call.
+  bool? lastFromGallery;
+
   @override
-  Future<Uint8List?> capture() async {
+  Future<Uint8List?> capture({bool fromGallery = false}) async {
     captures++;
+    lastFromGallery = fromGallery;
     final entry = _script.removeAt(0);
     if (entry is Exception) throw entry;
     return entry as Uint8List?;

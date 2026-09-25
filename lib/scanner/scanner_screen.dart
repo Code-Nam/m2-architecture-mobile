@@ -27,12 +27,16 @@ class ScannerScreen extends ConsumerWidget {
     final state = ref.watch(scanProvider);
     final colors = Theme.of(context).extension<AppColors>()!;
     void scan() => ref.read(scanProvider.notifier).scan();
+    void pick() => ref.read(scanProvider.notifier).scan(fromGallery: true);
 
     return Scaffold(
       backgroundColor: colors.viewfinderBg,
       body: Stack(
         children: [
-          _Viewfinder(onShutter: state is ScanAnalysing ? null : scan),
+          _Viewfinder(
+            onShutter: state is ScanAnalysing ? null : scan,
+            onGallery: state is ScanAnalysing ? null : pick,
+          ),
           Positioned(
             left: 0,
             right: 0,
@@ -65,10 +69,14 @@ class ScannerScreen extends ConsumerWidget {
 /// Handoff 14. Static: no live preview, the system camera opens on the
 /// shutter (the requirement is a single-shot photo, not a feed).
 class _Viewfinder extends StatelessWidget {
-  const _Viewfinder({required this.onShutter});
+  const _Viewfinder({required this.onShutter, required this.onGallery});
 
   /// Null while a scan runs: the shutter dims and ignores taps.
   final VoidCallback? onShutter;
+
+  /// « Choisir une photo »: same scan from an existing image. Null while a
+  /// scan runs, like the shutter.
+  final VoidCallback? onGallery;
 
   @override
   Widget build(BuildContext context) {
@@ -109,6 +117,14 @@ class _Viewfinder extends StatelessWidget {
             ),
             const SizedBox(height: AppTokens.space4),
             _Shutter(onPressed: onShutter),
+            const SizedBox(height: AppTokens.space1),
+            TextButton(
+              onPressed: onGallery,
+              child: Text(
+                'Choisir une photo',
+                style: theme.textTheme.bodyMedium?.copyWith(color: ink),
+              ),
+            ),
           ],
         ),
       ),
