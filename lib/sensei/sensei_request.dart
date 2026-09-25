@@ -22,4 +22,14 @@ sealed class SenseiRequest with _$SenseiRequest {
 
   /// Built by the scanner result sheet once a tile is identified.
   const factory SenseiRequest.tileContext(Tile tile) = TileContextRequest;
+
+  /// Built by the drill on a miss. [picked] and [answers] are indices into
+  /// [hand], sorted so two identical misses share one provider key.
+  const factory SenseiRequest.drillMiss({
+    required String prompt,
+    required List<String> hand,
+    required List<int> picked,
+    required List<int> answers,
+    required String feedback,
+  }) = DrillMissRequest;
 }

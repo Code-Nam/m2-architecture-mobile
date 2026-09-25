@@ -20,21 +20,26 @@ class FeedbackSheetWidget extends ConsumerWidget {
     required this.isCorrect,
     required this.feedback,
     required this.onContinue,
+    required this.onRetry,
     this.whyRequest,
-    this.missLine = 'La bonne réponse était la tuile entourée de vert.',
+    this.missLine = "Ce n'est pas la bonne tuile. Regardez encore la main.",
   });
 
   /// Picks tint, title and CTA colour; the parent derives it from the session
   /// so the sheet never re-checks the answer itself.
   final bool isCorrect;
 
-  /// The authored line, shown only on a hit; a miss shows the fixed sentence
-  /// pointing at the highlighted card, then « Pourquoi ? » (see [whyRequest]).
+  /// The authored line, shown only on a hit; a miss shows [missLine]
+  /// instead, then « Pourquoi ? » (see [whyRequest]).
   final String feedback;
 
-  /// The same callback as the block's own « Continuer »: advances or, on the
-  /// last block, completes the lesson.
+  /// The hit CTA « Continuer », the same callback as the block's own:
+  /// advances or, on the last block, completes the lesson.
   final VoidCallback onContinue;
+
+  /// The miss CTA « Réessayer »: resets the same block. A miss never
+  /// reaches [onContinue], so a lesson cannot end on a wrong answer.
+  final VoidCallback onRetry;
 
   /// Non-null only on a checked miss: keys the Sensei provider the sheet
   /// watches, so « Pourquoi ? » shows while idle and the panel afterwards.
@@ -49,13 +54,22 @@ class FeedbackSheetWidget extends ConsumerWidget {
     final theme = Theme.of(context);
     final scheme = theme.colorScheme;
     final colors = theme.extension<AppColors>()!;
-    final (bg, fg, title, line) = isCorrect
-        ? (colors.successPanel, colors.bambooText, 'Bien joué !', feedback)
+    final (bg, fg, title, line, cta, onCta) = isCorrect
+        ? (
+            colors.successPanel,
+            colors.bambooText,
+            'Bien joué !',
+            feedback,
+            'Continuer',
+            onContinue,
+          )
         : (
             colors.errorPanel,
             colors.vermillionText,
             'Pas tout à fait',
             missLine,
+            'Réessayer',
+            onRetry,
           );
     return DecoratedBox(
       decoration: BoxDecoration(color: bg, borderRadius: AppTokens.radiusSheet),
@@ -84,8 +98,8 @@ class FeedbackSheetWidget extends ConsumerWidget {
               ],
               const SizedBox(height: AppTokens.space2),
               PrimaryButtonWidget(
-                label: 'Continuer',
-                onPressed: onContinue,
+                label: cta,
+                onPressed: onCta,
                 color: isCorrect ? null : scheme.error,
               ),
             ],

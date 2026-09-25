@@ -51,7 +51,8 @@
       "blockedBy": [
         2,
         4,
-        13
+        13,
+        14
       ],
       "description": "**Goal:** `test/content/lesson_assets_test.dart`: load every assets/lessons/*.json via Unit.fromJson; every code parses; quiz/interactive indices and drill answers in range; 13-tile hands; unique lesson ids; xp > 0.\n\n**Files:**\n- test/content/lesson_assets_test.dart\n\n**Acceptance Criteria:**\n- [ ] green on unit 1\n- [ ] a deliberately broken copy fails (checked once)\n\n**Verify:** flutter test test/content\n\n```json:metadata\n{\"verifyCommand\": \"flutter test test/content\", \"acceptanceCriteria\": [\"green on unit 1\", \"a deliberately broken copy fails (checked once)\"], \"modelTier\": \"standard\", \"owner\": \"test-writer\", \"files\": [\"test/content/lesson_assets_test.dart\"]}\n```"
     },
@@ -124,11 +125,20 @@
     {
       "id": 13,
       "subject": "Task 13: Split lesson_screen.dart",
-      "status": "in_progress",
+      "status": "completed",
       "blockedBy": [
         4
       ],
-      "description": "**Goal:** Break the 794-line lesson_screen.dart into lib/learning/widgets/ public *_widget.dart files (explanation, quiz, drill, interactive, feedback sheet, shared checkable layout); helpers used by one view stay private in its file; lesson_screen keeps LessonScreen, _LessonBody, _TopBar. Pure move, no behaviour change. Done before Task 5.\n\n**Files:**\n- lib/learning/lesson_screen.dart\n- lib/learning/widgets/\n\n**Acceptance Criteria:**\n- [ ] flutter test unchanged (228)\n- [ ] emulator plays unit 1 end to end\n- [ ] lesson_screen.dart about 150 lines\n\n**Verify:** flutter analyze && dart run tool/check_conventions.dart && flutter test, then emulator\n\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && dart run tool/check_conventions.dart && flutter test, then emulator\", \"acceptanceCriteria\": [\"flutter test unchanged (228)\", \"emulator plays unit 1 end to end\", \"lesson_screen.dart about 150 lines\"], \"modelTier\": \"standard\", \"owner\": \"user\", \"files\": [\"lib/learning/lesson_screen.dart\", \"lib/learning/widgets/\"]}\n```\n**Progress 2026-09-25** (/implement): lesson_screen.dart 794 → 148 lines; lib/learning/widgets/ checkable_block (new shared layout), feedback_sheet (+ private _WhyLink), explanation, quiz (+ _HandRow/_OptionGrid/_OptionCard), drill (+ _DrillHand), interactive (+ _GroupRow/_EmptySlot/_Rack). analyze clean, 228 pass, conventions: no finding in learning/. Remaining: emulator unit 1, light + dark."
+      "description": "**Goal:** Break the 794-line lesson_screen.dart into lib/learning/widgets/ public *_widget.dart files (explanation, quiz, drill, interactive, feedback sheet, shared checkable layout); helpers used by one view stay private in its file; lesson_screen keeps LessonScreen, _LessonBody, _TopBar. Pure move, no behaviour change. Done before Task 5.\n\n**Files:**\n- lib/learning/lesson_screen.dart\n- lib/learning/widgets/\n\n**Acceptance Criteria:**\n- [ ] flutter test unchanged (228)\n- [ ] emulator plays unit 1 end to end\n- [ ] lesson_screen.dart about 150 lines\n\n**Verify:** flutter analyze && dart run tool/check_conventions.dart && flutter test, then emulator\n\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && dart run tool/check_conventions.dart && flutter test, then emulator\", \"acceptanceCriteria\": [\"flutter test unchanged (228)\", \"emulator plays unit 1 end to end\", \"lesson_screen.dart about 150 lines\"], \"modelTier\": \"standard\", \"owner\": \"user\", \"files\": [\"lib/learning/lesson_screen.dart\", \"lib/learning/widgets/\"]}\n```\n**Progress 2026-09-25** (/implement): lesson_screen.dart 794 → 148 lines; lib/learning/widgets/ checkable_block (new shared layout), feedback_sheet (+ private _WhyLink), explanation, quiz (+ _HandRow/_OptionGrid/_OptionCard), drill (+ _DrillHand), interactive (+ _GroupRow/_EmptySlot/_Rack). analyze clean, 228 pass, conventions: no finding in learning/. Remaining: emulator unit 1, light + dark.\n**Done 2026-09-25**: emulator unit 1 ok (user), committed."
+    },
+    {
+      "id": 14,
+      "subject": "Task 14: Retry until right",
+      "status": "in_progress",
+      "blockedBy": [
+        13
+      ],
+      "description": "**Goal:** A miss shows « Réessayer » on the sheet, which resets the same block via a new notifier `retry()`; the right answer is not highlighted after a miss; new miss lines. Lesson ends only when every block is right. Done before Task 5.\n\n**Files:**\n- lib/learning/lesson_providers.dart\n- lib/learning/widgets/\n- test/learning/\n\n**Acceptance Criteria:**\n- [ ] emulator: miss then hit on quiz, drill and interactive\n- [ ] lesson completes only once every block is right\n- [ ] no green highlight after a miss\n- [ ] lesson screen tests updated, flutter test green\n\n**Verify:** flutter analyze && dart run tool/check_conventions.dart && flutter test, then emulator\n\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && dart run tool/check_conventions.dart && flutter test, then emulator\", \"acceptanceCriteria\": [\"emulator: miss then hit on quiz, drill and interactive\", \"lesson completes only once every block is right\", \"no green highlight after a miss\", \"lesson screen tests updated, flutter test green\"], \"modelTier\": \"standard\", \"owner\": \"user (lib) + test-writer (tests)\", \"files\": [\"lib/learning/lesson_providers.dart\", \"lib/learning/widgets/\", \"test/learning/\"]}\n```\n**Progress 2026-09-25**: `retry()` + `_fresh`, sheet CTA « Réessayer » on a miss, no highlight after a miss in quiz/drill/interactive, new miss lines; test-writer updated 3 lesson screen tests + 2 retry tests. analyze clean, suite 230. Remaining: emulator.\n**Progress 2026-09-25**: drill « Pourquoi ? » via `SenseiRequest.drillMiss` (sorted picks), `_drillPrompt` names wrong picks and counts forgotten ones, quiz prompt no longer names the answer, `_loadingLabel` arm. analyze clean, 230 pass; test-writer adding drill Sensei tests. Remaining: emulator (quiz + drill Pourquoi, answer not named)."
     }
   ],
   "lastUpdated": "2026-09-25T13:42:52.873476+00:00"

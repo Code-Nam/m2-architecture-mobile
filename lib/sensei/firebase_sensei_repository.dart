@@ -32,19 +32,32 @@ String _prompt(SenseiRequest request) => switch (request) {
     :final hand,
     :final options,
     :final chosenIndex,
-    :final correctIndex,
     :final feedback,
   ) =>
     'Question : $question. '
         'Main : ${hand.join(' ')}. '
         'Propositions : ${options.join(' / ')}. '
-        "L'élève a choisi « ${options[chosenIndex]} » ; "
-        'la bonne réponse est « ${options[correctIndex]} ». '
+        "L'élève a choisi « ${options[chosenIndex]} ». "
         'Indice de la leçon : $feedback. '
-        'Explique pourquoi son choix ne convient pas et pourquoi la bonne '
-        'réponse est meilleure, en partant de SON raisonnement.',
+        'Explique pourquoi son choix ne convient pas, sans nommer la bonne réponse.',
   TileContextRequest(:final tile) =>
     'Tuile : ${tileName(tile)} (${tileFamily(tile)}). '
         "Donne en deux ou trois phrases ce qu'un débutant doit savoir sur "
         'cette tuile à la table (rôle, valeur, piège fréquent).',
+  final DrillMissRequest r => _drillPrompt(r),
 };
+
+/// Wrong picks are named (the screen already shows them red), forgotten
+/// answers only counted: naming them would undo the retry.
+String _drillPrompt(DrillMissRequest r) {
+  final wrong = [
+    for (final i in r.picked)
+      if (!r.answers.contains(i)) r.hand[i],
+  ];
+  final missing = r.answers.where((i) => !r.picked.contains(i)).length;
+  return 'Consigne : ${r.prompt}. Main : ${r.hand.join(' ')}. '
+      "L'élève a choisi : ${r.picked.map((i) => r.hand[i]).join(' ')}. "
+      'Tuiles en trop : ${wrong.isEmpty ? 'aucune' : wrong.join(' ')} ; '
+      'tuiles oubliées : $missing. Indice : ${r.feedback}. '
+      "Explique l'erreur sans jamais nommer les tuiles attendues.";
+}

@@ -69,6 +69,7 @@ class QuizBlockWidget extends ConsumerWidget {
         isCorrect: session.selectedOption == block.correctIndex,
         feedback: block.feedback,
         onContinue: onContinue,
+        onRetry: notifier.retry,
         whyRequest: whyRequest,
       ),
     );
@@ -127,7 +128,7 @@ class _OptionGrid extends StatelessWidget {
   );
 
   /// Before checking only the pick shows; after, the pick turns correct or
-  /// incorrect and, on a miss, the right answer is highlighted as well.
+  /// incorrect. The right answer is never revealed: the learner retries.
   TileState _stateOf(int i) => switch ((
     session.isAnswered,
     session.selectedOption == i,
@@ -136,7 +137,6 @@ class _OptionGrid extends StatelessWidget {
     (false, true, _) => .selected,
     (true, true, true) => .correct,
     (true, true, false) => .incorrect,
-    (true, false, true) => .highlighted,
     _ => .normal,
   };
 }

@@ -13,6 +13,15 @@ SenseiRequest _quizMiss({int chosenIndex = 0}) => SenseiRequest.quizMiss(
   feedback: 'Regardez la suite logique.',
 );
 
+SenseiRequest _drillMiss({List<int> picked = const [0, 12]}) =>
+    SenseiRequest.drillMiss(
+      prompt: 'Trouvez la suite 2-3-4 de pinzu.',
+      hand: const ['1m', '2m', '3m', '4p'],
+      picked: picked,
+      answers: const [9, 10, 11],
+      feedback: 'DRILL FEEDBACK LINE',
+    );
+
 void main() {
   group('SenseiRequest.quizMiss', () {
     test(
@@ -46,6 +55,26 @@ void main() {
     test('requests for different tiles are unequal', () {
       final a = SenseiRequest.tileContext(Tile.parse('1m'));
       final b = SenseiRequest.tileContext(Tile.parse('2m'));
+
+      expect(a, isNot(b));
+    });
+  });
+
+  group('SenseiRequest.drillMiss', () {
+    test(
+      'two requests built from equal lists are equal and share a hashCode',
+      () {
+        final a = _drillMiss();
+        final b = _drillMiss();
+
+        expect(a, b);
+        expect(a.hashCode, b.hashCode);
+      },
+    );
+
+    test('a different picked list makes the requests unequal', () {
+      final a = _drillMiss();
+      final b = _drillMiss(picked: [0, 1]);
 
       expect(a, isNot(b));
     });

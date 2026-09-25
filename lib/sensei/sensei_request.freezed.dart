@@ -56,12 +56,13 @@ extension SenseiRequestPatterns on SenseiRequest {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( QuizMissRequest value)?  quizMiss,TResult Function( TileContextRequest value)?  tileContext,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( QuizMissRequest value)?  quizMiss,TResult Function( TileContextRequest value)?  tileContext,TResult Function( DrillMissRequest value)?  drillMiss,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case QuizMissRequest() when quizMiss != null:
 return quizMiss(_that);case TileContextRequest() when tileContext != null:
-return tileContext(_that);case _:
+return tileContext(_that);case DrillMissRequest() when drillMiss != null:
+return drillMiss(_that);case _:
   return orElse();
 
 }
@@ -79,12 +80,13 @@ return tileContext(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( QuizMissRequest value)  quizMiss,required TResult Function( TileContextRequest value)  tileContext,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( QuizMissRequest value)  quizMiss,required TResult Function( TileContextRequest value)  tileContext,required TResult Function( DrillMissRequest value)  drillMiss,}){
 final _that = this;
 switch (_that) {
 case QuizMissRequest():
 return quizMiss(_that);case TileContextRequest():
-return tileContext(_that);}
+return tileContext(_that);case DrillMissRequest():
+return drillMiss(_that);}
 }
 /// A variant of `map` that fallback to returning `null`.
 ///
@@ -98,12 +100,13 @@ return tileContext(_that);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( QuizMissRequest value)?  quizMiss,TResult? Function( TileContextRequest value)?  tileContext,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( QuizMissRequest value)?  quizMiss,TResult? Function( TileContextRequest value)?  tileContext,TResult? Function( DrillMissRequest value)?  drillMiss,}){
 final _that = this;
 switch (_that) {
 case QuizMissRequest() when quizMiss != null:
 return quizMiss(_that);case TileContextRequest() when tileContext != null:
-return tileContext(_that);case _:
+return tileContext(_that);case DrillMissRequest() when drillMiss != null:
+return drillMiss(_that);case _:
   return null;
 
 }
@@ -120,11 +123,12 @@ return tileContext(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String question,  List<String> hand,  List<String> options,  int chosenIndex,  int correctIndex,  String feedback)?  quizMiss,TResult Function( Tile tile)?  tileContext,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String question,  List<String> hand,  List<String> options,  int chosenIndex,  int correctIndex,  String feedback)?  quizMiss,TResult Function( Tile tile)?  tileContext,TResult Function( String prompt,  List<String> hand,  List<int> picked,  List<int> answers,  String feedback)?  drillMiss,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case QuizMissRequest() when quizMiss != null:
 return quizMiss(_that.question,_that.hand,_that.options,_that.chosenIndex,_that.correctIndex,_that.feedback);case TileContextRequest() when tileContext != null:
-return tileContext(_that.tile);case _:
+return tileContext(_that.tile);case DrillMissRequest() when drillMiss != null:
+return drillMiss(_that.prompt,_that.hand,_that.picked,_that.answers,_that.feedback);case _:
   return orElse();
 
 }
@@ -142,11 +146,12 @@ return tileContext(_that.tile);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String question,  List<String> hand,  List<String> options,  int chosenIndex,  int correctIndex,  String feedback)  quizMiss,required TResult Function( Tile tile)  tileContext,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String question,  List<String> hand,  List<String> options,  int chosenIndex,  int correctIndex,  String feedback)  quizMiss,required TResult Function( Tile tile)  tileContext,required TResult Function( String prompt,  List<String> hand,  List<int> picked,  List<int> answers,  String feedback)  drillMiss,}) {final _that = this;
 switch (_that) {
 case QuizMissRequest():
 return quizMiss(_that.question,_that.hand,_that.options,_that.chosenIndex,_that.correctIndex,_that.feedback);case TileContextRequest():
-return tileContext(_that.tile);}
+return tileContext(_that.tile);case DrillMissRequest():
+return drillMiss(_that.prompt,_that.hand,_that.picked,_that.answers,_that.feedback);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -160,11 +165,12 @@ return tileContext(_that.tile);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String question,  List<String> hand,  List<String> options,  int chosenIndex,  int correctIndex,  String feedback)?  quizMiss,TResult? Function( Tile tile)?  tileContext,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String question,  List<String> hand,  List<String> options,  int chosenIndex,  int correctIndex,  String feedback)?  quizMiss,TResult? Function( Tile tile)?  tileContext,TResult? Function( String prompt,  List<String> hand,  List<int> picked,  List<int> answers,  String feedback)?  drillMiss,}) {final _that = this;
 switch (_that) {
 case QuizMissRequest() when quizMiss != null:
 return quizMiss(_that.question,_that.hand,_that.options,_that.chosenIndex,_that.correctIndex,_that.feedback);case TileContextRequest() when tileContext != null:
-return tileContext(_that.tile);case _:
+return tileContext(_that.tile);case DrillMissRequest() when drillMiss != null:
+return drillMiss(_that.prompt,_that.hand,_that.picked,_that.answers,_that.feedback);case _:
   return null;
 
 }
@@ -337,6 +343,100 @@ $TileCopyWith<$Res> get tile {
     return _then(_self.copyWith(tile: value));
   });
 }
+}
+
+/// @nodoc
+
+
+class DrillMissRequest implements SenseiRequest {
+  const DrillMissRequest({required this.prompt, required  List<String> hand, required  List<int> picked, required  List<int> answers, required this.feedback}): _hand = hand,_picked = picked,_answers = answers;
+  
+
+ final  String prompt;
+ final  List<String> _hand;
+ List<String> get hand {
+  if (_hand is EqualUnmodifiableListView) return _hand;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_hand);
+}
+
+ final  List<int> _picked;
+ List<int> get picked {
+  if (_picked is EqualUnmodifiableListView) return _picked;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_picked);
+}
+
+ final  List<int> _answers;
+ List<int> get answers {
+  if (_answers is EqualUnmodifiableListView) return _answers;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_answers);
+}
+
+ final  String feedback;
+
+/// Create a copy of SenseiRequest
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$DrillMissRequestCopyWith<DrillMissRequest> get copyWith => _$DrillMissRequestCopyWithImpl<DrillMissRequest>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is DrillMissRequest&&(identical(other.prompt, prompt) || other.prompt == prompt)&&const DeepCollectionEquality().equals(other.hand, _hand)&&const DeepCollectionEquality().equals(other.picked, _picked)&&const DeepCollectionEquality().equals(other.answers, _answers)&&(identical(other.feedback, feedback) || other.feedback == feedback));
+}
+
+
+@override
+int get hashCode {
+    return Object.hash(runtimeType,prompt,const DeepCollectionEquality().hash(_hand),const DeepCollectionEquality().hash(_picked),const DeepCollectionEquality().hash(_answers),feedback);
+}
+
+@override
+String toString() {
+    return 'SenseiRequest.drillMiss(prompt: $prompt, hand: $hand, picked: $picked, answers: $answers, feedback: $feedback)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $DrillMissRequestCopyWith<$Res> implements $SenseiRequestCopyWith<$Res> {
+  factory $DrillMissRequestCopyWith(DrillMissRequest value, $Res Function(DrillMissRequest) _then) = _$DrillMissRequestCopyWithImpl;
+@useResult
+$Res call({
+ String prompt, List<String> hand, List<int> picked, List<int> answers, String feedback
+});
+
+
+
+
+}
+/// @nodoc
+class _$DrillMissRequestCopyWithImpl<$Res>
+    implements $DrillMissRequestCopyWith<$Res> {
+  _$DrillMissRequestCopyWithImpl(this._self, this._then);
+
+  final DrillMissRequest _self;
+  final $Res Function(DrillMissRequest) _then;
+
+/// Create a copy of SenseiRequest
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? prompt = null,Object? hand = null,Object? picked = null,Object? answers = null,Object? feedback = null,}) {
+  return _then(DrillMissRequest(
+prompt: null == prompt ? _self.prompt : prompt // ignore: cast_nullable_to_non_nullable
+as String,hand: null == hand ? _self._hand : hand // ignore: cast_nullable_to_non_nullable
+as List<String>,picked: null == picked ? _self._picked : picked // ignore: cast_nullable_to_non_nullable
+as List<int>,answers: null == answers ? _self._answers : answers // ignore: cast_nullable_to_non_nullable
+as List<int>,feedback: null == feedback ? _self.feedback : feedback // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+
 }
 
 // dart format on

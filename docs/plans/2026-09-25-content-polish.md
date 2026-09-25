@@ -112,6 +112,16 @@ Verify for every lib task: `flutter analyze && dart run tool/check_conventions.d
    the three answerable views share one layout widget. Pure move, no
    behaviour change. Accept: `flutter test` unchanged (228), emulator plays
    unit 1 end to end, `lesson_screen.dart` ≈ 150 lines.
+14. **Retry until right** (added 2026-09-25, before Task 5) — user: a miss
+   no longer lets the lesson move on. The miss sheet's CTA becomes
+   « Réessayer » and resets the same block (selection, picks, answered);
+   the right answer is no longer highlighted after a miss, otherwise the
+   retry is copying. « Pourquoi ? » stays on the quiz miss sheet and is
+   added to the drill (`SenseiRequest.drillMiss`); both prompts explain the
+   mistake without naming the answer, or the Sensei would undo the retry. Accept:
+   emulator, miss then hit on each of quiz, drill, interactive, the lesson
+   completes only after every block is right; test-writer updates the
+   lesson screen tests that expect the green highlight and old miss copy.
 5. **Content validation test** — test-writer: `test/content/lesson_assets_test.dart`
    loads every `assets/lessons/*.json` through `Unit.fromJson`; checks every
    code with `Tile.parse`, quiz `correctIndex`, drill answers, interactive
@@ -140,11 +150,17 @@ tile art everywhere (path nodes, hands, options, Dex, scanner, history).
 ## Deviations to log (known before building)
 
 Drill and interactive have no handoff screen (built from the quiz screen's
-parts and tokens); the Sensei covers quiz misses only; tile art is a CC0
+parts and tokens); the Sensei covers quiz and drill misses (interactive has none); tile art is a CC0
 third-party set, not the designer's; lesson prose is Claude-drafted and
 author-reviewed. Dark-mode highlight halo at 0.45 alpha instead of 0.15 (invisible on
 the dark background); a `hand` tile size (44×61) for the tappable drill hand. The interactive empty slot is a
 solid outline, not dashed (no dashed border in Flutter).
+
+- (2026-09-25, Task 14) Miss sheet: CTA « Réessayer » instead of
+  « Continuer », no green highlight of the right answer, and new miss lines
+  replacing « …entourée(s) de vert » (handoff screen 8 shows the answer and
+  lets the learner continue). Author's product decision: a lesson is
+  finished only when every block is answered right.
 
 ## Task carry-over
 

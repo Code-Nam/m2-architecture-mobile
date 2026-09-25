@@ -109,6 +109,28 @@ void main() {
       );
     });
 
+    test('retry keeps the block index and clears the selection and answer', () {
+      notifier('l1').select(1);
+      notifier('l1').check();
+      notifier('l1').retry();
+
+      expect(
+        session('l1'),
+        const LessonSession(lessonId: 'l1', blockIndex: 0, isAnswered: false),
+      );
+    });
+
+    test('retry also clears drill picks', () {
+      notifier('l1').toggle(0);
+      notifier('l1').toggle(2);
+      notifier('l1').check();
+      notifier('l1').retry();
+
+      expect(session('l1').picked, isEmpty);
+      expect(session('l1').blockIndex, 0);
+      expect(session('l1').isAnswered, isFalse);
+    });
+
     test('sessions are independent per lesson id', () {
       notifier('l1').select(1);
 

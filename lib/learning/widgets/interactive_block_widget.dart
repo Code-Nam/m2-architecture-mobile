@@ -67,8 +67,9 @@ class InteractiveBlockWidget extends ConsumerWidget {
       sheet: FeedbackSheetWidget(
         isCorrect: session.selectedOption == block.correctIndex,
         feedback: block.feedback,
-        missLine: 'La bonne tuile est entourée de vert.',
+        missLine: 'Cette tuile ne complète pas le groupe.',
         onContinue: onContinue,
+        onRetry: notifier.retry,
       ),
     );
   }
@@ -130,7 +131,7 @@ class _EmptySlot extends StatelessWidget {
 }
 
 /// Up to six option-size tiles on one line (6 × 48 + 5 × 8 = 328 dp); after
-/// checking, the right one is highlighted when the pick was wrong.
+/// checking, only the pick shows its verdict, never the right tile.
 class _Rack extends StatelessWidget {
   const _Rack({
     required this.rack,
@@ -167,7 +168,6 @@ class _Rack extends StatelessWidget {
         (false, false, _) => .normal,
         (true, true, true) => .correct,
         (true, true, false) => .incorrect,
-        (true, false, true) => .highlighted,
-        (true, false, false) => .normal,
+        (true, false, _) => .normal,
       };
 }

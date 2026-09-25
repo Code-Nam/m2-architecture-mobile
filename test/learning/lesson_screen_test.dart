@@ -11,6 +11,7 @@ import 'package:tenpai/learning/lesson_providers.dart';
 import 'package:tenpai/learning/lesson_screen.dart';
 import 'package:tenpai/progress/progress_providers.dart';
 import 'package:tenpai/sensei/sensei_providers.dart';
+import 'package:tenpai/sensei/sensei_request.dart';
 import 'package:tenpai/shared/models/lesson.dart';
 import 'package:tenpai/shared/models/lesson_block.dart';
 import 'package:tenpai/shared/models/tile.dart';
@@ -50,6 +51,39 @@ final _lesson = Lesson(
   ],
 );
 
+const _drillPrompt = 'Trouvez la suite 2-3-4 de pinzu.';
+const _drillHand = [
+  '1m',
+  '2m',
+  '3m',
+  '4m',
+  '5m',
+  '6m',
+  '7m',
+  '8m',
+  '9m',
+  '2p',
+  '3p',
+  '4p',
+  '1p',
+];
+const _drillAnswers = [9, 10, 11];
+const _drillFeedback = 'DRILL FEEDBACK LINE';
+
+final _drillLesson = Lesson(
+  id: 'l2',
+  title: 'Leçon drill test',
+  xp: 10,
+  blocks: [
+    LessonBlock.drill(
+      prompt: _drillPrompt,
+      hand: _drillHand,
+      answers: _drillAnswers,
+      feedback: _drillFeedback,
+    ),
+  ],
+);
+
 /// Bundles the router and the progress fake so a test can both drive
 /// navigation and inspect what got recorded.
 class _Harness {
@@ -83,7 +117,7 @@ Future<_Harness> _pumpLessonScreen(
       overrides: [
         lessonRepositoryProvider.overrideWithValue(
           FakeLessonRepository([
-            Unit(id: 'u1', title: 'Unité', lessons: [_lesson]),
+            Unit(id: 'u1', title: 'Unité', lessons: [_lesson, _drillLesson]),
           ]),
         ),
         progressRepositoryProvider.overrideWithValue(progressRepository),
@@ -113,6 +147,13 @@ Finder _optionTile(String code) => find.byWidgetPredicate(
       widget.size == TileSize.option,
 );
 
+Finder _handTile(String code) => find.byWidgetPredicate(
+  (widget) =>
+      widget is TileWidget &&
+      widget.tile == Tile.parse(code) &&
+      widget.size == TileSize.hand,
+);
+
 Future<void> _tapContinue(WidgetTester tester) async {
   await tester.tap(find.widgetWithText(FilledButton, 'Continuer').last);
   await tester.pumpAndSettle();
@@ -120,6 +161,11 @@ Future<void> _tapContinue(WidgetTester tester) async {
 
 Future<void> _tapVerifier(WidgetTester tester) async {
   await tester.tap(find.widgetWithText(FilledButton, 'Vérifier'));
+  await tester.pumpAndSettle();
+}
+
+Future<void> _tapReessayer(WidgetTester tester) async {
+  await tester.tap(find.widgetWithText(FilledButton, 'Réessayer'));
   await tester.pumpAndSettle();
 }
 
@@ -162,7 +208,7 @@ void main() {
     );
 
     testWidgets(
-      'a wrong answer shows the miss feedback and highlights the correct tile',
+      'a wrong answer shows the miss feedback, no highlight and offers Réessayer',
       (tester) async {
         await _pumpLessonScreen(tester);
         await _tapContinue(tester);
@@ -173,7 +219,7 @@ void main() {
 
         expect(find.text('Pas tout à fait'), findsOneWidget);
         expect(
-          find.text('La bonne réponse était la tuile entourée de vert.'),
+          find.text("Ce n'est pas la bonne tuile. Regardez encore la main."),
           findsOneWidget,
         );
         expect(
@@ -182,14 +228,15 @@ void main() {
         );
         expect(
           tester.widget<TileWidget>(_optionTile('5s')).state,
-          TileState.highlighted,
+          isNot(TileState.highlighted),
         );
+        expect(find.widgetWithText(FilledButton, 'Réessayer'), findsOneWidget);
       },
     );
 
     testWidgets(
       'a wrong answer shows a Pourquoi link that asks the Sensei once and '
-      'keeps Continuer enabled while it loads',
+      'keeps Réessayer enabled while it loads',
       (tester) async {
         final harness = await _pumpLessonScreen(tester);
         await _tapContinue(tester);
@@ -208,10 +255,10 @@ void main() {
 
         expect(harness.senseiRepository.callCount, 1);
         expect(find.text('Le sensei regarde votre main'), findsOneWidget);
-        final continuer = tester.widget<FilledButton>(
-          find.widgetWithText(FilledButton, 'Continuer'),
+        final retry = tester.widget<FilledButton>(
+          find.widgetWithText(FilledButton, 'Réessayer'),
         );
-        expect(continuer.onPressed, isNotNull);
+        expect(retry.onPressed, isNotNull);
       },
     );
 
@@ -261,22 +308,44 @@ void main() {
       expect(harness.progressRepository.completedIds, isEmpty);
     });
 
-    testWidgets(
-      'completing the lesson after a wrong answer still records it and pops',
-      (tester) async {
-        final harness = await _pumpLessonScreen(tester);
+    testWidgets('retrying after a wrong answer returns to the same block, cleared, before '
+        'completion can be recorded', (tester) async {
+      final harness = await _pumpLessonScreen(tester);
 
-        await _tapContinue(tester);
-        await tester.tap(_optionTile('6s'));
-        await tester.pumpAndSettle();
-        await _tapVerifier(tester);
-        await _tapContinue(tester);
-        await _tapContinue(tester);
+      await _tapContinue(tester);
+      await tester.tap(_optionTile('6s'));
+      await tester.pumpAndSettle();
+      await _tapVerifier(tester);
 
-        expect(harness.progressRepository.completedIds, ['l1']);
-        expect(find.text('path'), findsOneWidget);
-      },
-    );
+      expect(harness.progressRepository.completedIds, isEmpty);
+
+      await _tapReessayer(tester);
+
+      expect(find.text('Quelle tuile ?'), findsOneWidget);
+      final slide = tester.widget<AnimatedSlide>(find.byType(AnimatedSlide));
+      expect(slide.offset, const Offset(0, 1));
+      expect(
+        tester.widget<TileWidget>(_optionTile('6s')).state,
+        TileState.normal,
+      );
+      final verifier = tester.widget<FilledButton>(
+        find.widgetWithText(FilledButton, 'Vérifier'),
+      );
+      expect(verifier.onPressed, isNull);
+      expect(harness.progressRepository.completedIds, isEmpty);
+
+      await tester.tap(_optionTile('5s'));
+      await tester.pumpAndSettle();
+      await _tapVerifier(tester);
+
+      expect(find.widgetWithText(FilledButton, 'Continuer'), findsOneWidget);
+
+      await _tapContinue(tester);
+      await _tapContinue(tester);
+
+      expect(harness.progressRepository.completedIds, ['l1']);
+      expect(find.text('path'), findsOneWidget);
+    });
 
     testWidgets('an unknown lesson id shows the retry view', (tester) async {
       await _pumpLessonScreen(tester, id: 'nope');
@@ -336,5 +405,61 @@ void main() {
         expect(decoration.color, darkColors.successPanel);
       },
     );
+  });
+
+  group('LessonScreen drill', () {
+    testWidgets(
+      'a wrong drill pick shows Pourquoi, asks the Sensei once with a '
+      'sorted picked list and keeps Réessayer enabled while it loads',
+      (tester) async {
+        final harness = await _pumpLessonScreen(tester, id: 'l2');
+
+        expect(find.text(_drillPrompt), findsOneWidget);
+
+        // Tapped in descending index order (12 then 0) to prove the widget
+        // sorts `picked` before building the request, not the tap order.
+        await tester.tap(_handTile('1p'));
+        await tester.pumpAndSettle();
+        await tester.tap(_handTile('1m'));
+        await tester.pumpAndSettle();
+        await _tapVerifier(tester);
+
+        expect(find.text('Pas tout à fait'), findsOneWidget);
+        expect(find.text('Pourquoi ?'), findsOneWidget);
+        expect(harness.senseiRepository.callCount, 0);
+
+        // Not `pumpAndSettle`: the panel's pulsing-tiles animation repeats
+        // forever once the Sensei state leaves idle.
+        await tester.tap(find.text('Pourquoi ?'));
+        await tester.pump();
+
+        expect(harness.senseiRepository.callCount, 1);
+        final request =
+            harness.senseiRepository.requests.single as DrillMissRequest;
+        expect(request.prompt, _drillPrompt);
+        expect(request.hand, _drillHand);
+        expect(request.picked, [0, 12]);
+        expect(request.answers, _drillAnswers);
+        expect(request.feedback, _drillFeedback);
+
+        final retry = tester.widget<FilledButton>(
+          find.widgetWithText(FilledButton, 'Réessayer'),
+        );
+        expect(retry.onPressed, isNotNull);
+      },
+    );
+
+    testWidgets('a correct drill pick shows no Pourquoi link', (tester) async {
+      await _pumpLessonScreen(tester, id: 'l2');
+
+      for (final index in _drillAnswers) {
+        await tester.tap(_handTile(_drillHand[index]));
+        await tester.pumpAndSettle();
+      }
+      await _tapVerifier(tester);
+
+      expect(find.text('Bien joué !'), findsOneWidget);
+      expect(find.text('Pourquoi ?'), findsNothing);
+    });
   });
 }

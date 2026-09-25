@@ -6,6 +6,7 @@ import 'package:tenpai/learning/lesson_providers.dart';
 import 'package:tenpai/learning/lesson_session.dart';
 import 'package:tenpai/learning/widgets/checkable_block_widget.dart';
 import 'package:tenpai/learning/widgets/feedback_sheet_widget.dart';
+import 'package:tenpai/sensei/sensei_request.dart';
 import 'package:tenpai/shared/models/lesson_block.dart';
 import 'package:tenpai/shared/models/tile.dart';
 import 'package:tenpai/shared/theme/app_tokens.dart';
@@ -14,8 +15,8 @@ import 'package:tenpai/shared/widgets/tile_widget.dart';
 
 /// « Find in the hand »: same layout and sheet as the quiz, but the pick is
 /// a set of hand indices, right only when it equals the authored answers
-/// exactly (order-free, `setEquals`). No « Pourquoi ? »: the Sensei request
-/// is quiz-shaped.
+/// exactly (order-free, `setEquals`). A miss offers « Pourquoi ? » through
+/// a `drillMiss` request whose picks are sorted, so one miss is one key.
 class DrillBlockWidget extends ConsumerWidget {
   /// [session] is passed down rather than watched here: the lesson body
   /// already watches it, so the block rebuilds with it.
@@ -38,6 +39,17 @@ class DrillBlockWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final notifier = ref.read(currentLessonProvider(session.lessonId).notifier);
+    final missed =
+        session.isAnswered && !setEquals(session.picked, block.answers.toSet());
+    final whyRequest = missed
+        ? SenseiRequest.drillMiss(
+            prompt: block.prompt,
+            hand: block.hand,
+            picked: session.picked.toList()..sort(),
+            answers: block.answers,
+            feedback: block.feedback,
+          )
+        : null;
     return CheckableBlockWidget(
       prompt: block.prompt,
       body: [
@@ -56,8 +68,10 @@ class DrillBlockWidget extends ConsumerWidget {
       sheet: FeedbackSheetWidget(
         isCorrect: setEquals(session.picked, block.answers.toSet()),
         feedback: block.feedback,
-        missLine: 'Les tuiles attendues sont entourées de vert.',
+        missLine: 'Il manque des tuiles, ou certaines sont en trop.',
+        whyRequest: whyRequest,
         onContinue: onContinue,
+        onRetry: notifier.retry,
       ),
     );
   }
@@ -99,14 +113,14 @@ class _DrillHand extends StatelessWidget {
   );
 
   /// Before checking only the picks show; after, a right pick is correct,
-  /// a wrong pick incorrect, and a missed answer highlighted.
+  /// a wrong pick incorrect, and a missed answer stays plain so the retry
+  /// is not copying.
   TileState _stateOf(int i) =>
       switch ((isAnswered, picked.contains(i), answers.contains(i))) {
         (false, true, _) => .selected,
         (false, false, _) => .normal,
         (true, true, true) => .correct,
         (true, true, false) => .incorrect,
-        (true, false, true) => .highlighted,
-        (true, false, false) => .normal,
+        (true, false, _) => .normal,
       };
 }

@@ -59,15 +59,6 @@ class LessonSessionNotifier extends Notifier<LessonSession> {
     state = state.copyWith(isAnswered: true);
   }
 
-  /// Fresh session for the following block: selection and answer reset.
-  /// Builds a new value instead of `copyWith` because freezed cannot set a
-  /// nullable field back to null through `copyWith`.
-  void next() => state = LessonSession(
-    lessonId: _lessonId,
-    blockIndex: state.blockIndex + 1,
-    isAnswered: false,
-  );
-
   /// Drill only: adds or removes one hand index; ignored once checked, so
   /// the tile states shown after « Vérifier » match what was checked.
   void toggle(int index) {
@@ -76,4 +67,19 @@ class LessonSessionNotifier extends Notifier<LessonSession> {
     picked.contains(index) ? picked.remove(index) : picked.add(index);
     state = state.copyWith(picked: picked);
   }
+
+  /// Fresh session for the following block: selection and answer reset.
+  /// Builds a new value instead of `copyWith` because freezed cannot set a
+  /// nullable field back to null through `copyWith`.
+  void next() => state = _fresh(state.blockIndex + 1);
+
+  /// Same block again after a miss: selection, picks and answer reset, so
+  /// a lesson only moves on once each block is answered right.
+  void retry() => state = _fresh(state.blockIndex);
+
+  LessonSession _fresh(int blockIndex) => LessonSession(
+    lessonId: _lessonId,
+    blockIndex: blockIndex,
+    isAnswered: false,
+  );
 }

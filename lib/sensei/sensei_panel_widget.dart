@@ -96,7 +96,7 @@ class _SenseiPanelWidgetState extends ConsumerState<SenseiPanelWidget> {
 }
 
 String _loadingLabel(SenseiRequest request) => switch (request) {
-  QuizMissRequest() => 'Le sensei regarde votre main',
+  QuizMissRequest() || DrillMissRequest() => 'Le sensei regarde votre main',
   TileContextRequest() => 'Le sensei regarde la tuile',
 };
 
