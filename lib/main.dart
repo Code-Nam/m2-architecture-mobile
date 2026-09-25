@@ -24,8 +24,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   if (AppConfig.yakuBaseUrl.isEmpty) {
     throw StateError(
-      'YAKU_BASE_URL is empty: pass --dart-define=YAKU_BASE_URL=<host>/ '
-      '(README, Getting started).',
+      'YAKU_BASE_URL is empty: run with --dart-define-from-file=dart_defines.json '
+      '(README, How to start the project).',
     );
   }
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
