@@ -6,6 +6,13 @@ abstract final class AppConfig {
   /// Base URL of the yaku catalog host, trailing slash included.
   static const yakuBaseUrl = String.fromEnvironment('YAKU_BASE_URL');
 
+  /// Fixed App Check debug token, allowed once in the console, so debug
+  /// builds on any emulator pass without a per-device step. Empty = the
+  /// SDK generates its own token, printed to logcat.
+  static const appCheckDebugToken = String.fromEnvironment(
+    'APP_CHECK_DEBUG_TOKEN',
+  );
+
   /// Gemini model behind the Sensei and the tile identifier. A product
   /// choice, not a secret, hence a plain const. Flash-Lite: stable, free tier
   /// on Spark; `gemini-3.8-flash` answered every call with a 500 « high

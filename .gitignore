@@ -80,3 +80,4 @@ ui-debug.log
 # AI-GENERATED (Claude) END — Firestore rules test harness
 
 test/**/failures/
+dart_defines.json

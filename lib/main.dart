@@ -31,7 +31,11 @@ void main() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await FirebaseAppCheck.instance.activate(
     providerAndroid: kDebugMode
-        ? const AndroidDebugProvider()
+        ? AndroidDebugProvider(
+            debugToken: AppConfig.appCheckDebugToken.isEmpty
+                ? null
+                : AppConfig.appCheckDebugToken,
+          )
         : const AndroidPlayIntegrityProvider(),
   );
   final dir = await getApplicationDocumentsDirectory();

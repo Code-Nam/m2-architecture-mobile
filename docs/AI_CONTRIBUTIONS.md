@@ -112,8 +112,6 @@ Rules:
 | `test/shared/widgets/goldens/tile_regular_correct_light.png` | file (no marker; golden from `flutter test --update-goldens`) | 2026-09-18 | Test scaffolding is tedious and teaches no Flutter concept; the widget under test is author-written. |
 | `test/shared/widgets/goldens/tile_regular_faceDown_dark.png` | file (no marker; golden from `flutter test --update-goldens`) | 2026-09-18 | Test scaffolding is tedious and teaches no Flutter concept; the widget under test is author-written. |
 | `test/shared/widgets/goldens/tile_regular_faceDown_light.png` | file (no marker; golden from `flutter test --update-goldens`) | 2026-09-18 | Test scaffolding is tedious and teaches no Flutter concept; the widget under test is author-written. |
-| `test/shared/widgets/goldens/tile_regular_highlighted_dark.png` | file (no marker; golden from `flutter test --update-goldens`) | 2026-09-18 | Test scaffolding is tedious and teaches no Flutter concept; the widget under test is author-written. |
-| `test/shared/widgets/goldens/tile_regular_highlighted_light.png` | file (no marker; golden from `flutter test --update-goldens`) | 2026-09-18 | Test scaffolding is tedious and teaches no Flutter concept; the widget under test is author-written. |
 | `test/shared/widgets/goldens/tile_regular_incorrect_dark.png` | file (no marker; golden from `flutter test --update-goldens`) | 2026-09-18 | Test scaffolding is tedious and teaches no Flutter concept; the widget under test is author-written. |
 | `test/shared/widgets/goldens/tile_regular_incorrect_light.png` | file (no marker; golden from `flutter test --update-goldens`) | 2026-09-18 | Test scaffolding is tedious and teaches no Flutter concept; the widget under test is author-written. |
 | `test/shared/widgets/goldens/tile_regular_normal_dark.png` | file (no marker; golden from `flutter test --update-goldens`) | 2026-09-18 | Test scaffolding is tedious and teaches no Flutter concept; the widget under test is author-written. |
@@ -256,3 +254,6 @@ by Claude on 2026-09-25; the only edit is removing an empty, unused
 | `lib/learning/lesson_screen.dart` | block: block widget imports; block: switch arms to split widgets (Task 13), keyed per block (Task 12 review) | 2026-09-25 | |
 | `test/content/lesson_assets_test.dart` | file | 2026-09-25 | |
 | `lib/shared/widgets/tile_widget.dart` | dartdoc | 2026-09-25 | |
+| `docs/wsl-emulator.md` | file (moved from README.md) | 2026-09-25 | |
+| `docs/macos-emulator.md` | file | 2026-09-25 | |
+| `docs/linux-emulator.md` | file | 2026-09-25 | |
