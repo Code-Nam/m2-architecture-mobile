@@ -2,14 +2,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:tenpai/learning/lesson_providers.dart';
-import 'package:tenpai/learning/lesson_session.dart';
 // AI-GENERATED (Claude) BEGIN — block widgets split out, Task 13
 import 'package:tenpai/learning/widgets/drill_block_widget.dart';
 import 'package:tenpai/learning/widgets/explanation_block_widget.dart';
 import 'package:tenpai/learning/widgets/interactive_block_widget.dart';
 import 'package:tenpai/learning/widgets/quiz_block_widget.dart';
 // AI-GENERATED (Claude) END
-import 'package:tenpai/progress/progress_providers.dart';
 import 'package:tenpai/shared/models/lesson.dart';
 import 'package:tenpai/shared/models/lesson_block.dart';
 import 'package:tenpai/shared/theme/app_colors.dart';
@@ -62,7 +60,14 @@ class _LessonBody extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final session = ref.watch(currentLessonProvider(lesson.id));
-    Future<void> onContinue() => _continue(context, ref, session);
+    // AI-GENERATED (Claude) BEGIN — lesson end decided by the notifier, grading fixes Task 1
+    // `context.mounted` guards the pop across the completion await.
+    Future<void> onContinue() async {
+      final notifier = ref.read(currentLessonProvider(lesson.id).notifier);
+      if (await notifier.advance(lesson) && context.mounted) context.pop();
+    }
+
+    // AI-GENERATED (Claude) END
     return Column(
       children: [
         _TopBar(progress: (session.blockIndex + 1) / lesson.blocks.length),
@@ -100,22 +105,6 @@ class _LessonBody extends ConsumerWidget {
         ),
       ],
     );
-  }
-
-  /// Advances, or on the last block records the completion and pops. The
-  /// bound check comes first: `next()` past the end would make `build` index
-  /// out of range. `context.mounted` guards the pop across the await.
-  Future<void> _continue(
-    BuildContext context,
-    WidgetRef ref,
-    LessonSession session,
-  ) async {
-    if (session.blockIndex < lesson.blocks.length - 1) {
-      ref.read(currentLessonProvider(lesson.id).notifier).next();
-      return;
-    }
-    await ref.read(userProgressProvider.notifier).completeLesson(lesson);
-    if (context.mounted) context.pop();
   }
 }
 

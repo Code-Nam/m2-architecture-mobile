@@ -5,7 +5,6 @@ import 'package:tenpai/learning/lesson_providers.dart';
 import 'package:tenpai/learning/lesson_session.dart';
 import 'package:tenpai/learning/widgets/checkable_block_widget.dart';
 import 'package:tenpai/learning/widgets/feedback_sheet_widget.dart';
-import 'package:tenpai/sensei/sensei_request.dart';
 import 'package:tenpai/shared/models/lesson_block.dart';
 import 'package:tenpai/shared/models/tile.dart';
 import 'package:tenpai/shared/theme/app_colors.dart';
@@ -37,17 +36,6 @@ class QuizBlockWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final notifier = ref.read(currentLessonProvider(session.lessonId).notifier);
-    final chosen = session.selectedOption;
-    final whyRequest =
-        session.isAnswered && chosen != null && chosen != block.correctIndex
-        ? SenseiRequest.quizMiss(
-            question: block.question,
-            hand: block.hand,
-            options: block.options,
-            chosenIndex: chosen,
-          )
-        : null;
-
     return CheckableBlockWidget(
       prompt: block.question,
       body: [
@@ -61,14 +49,14 @@ class QuizBlockWidget extends ConsumerWidget {
       ],
       onCheck: session.selectedOption == null || session.isAnswered
           ? null
-          : notifier.check,
+          : () => notifier.check(block),
       isAnswered: session.isAnswered,
       sheet: FeedbackSheetWidget(
-        isCorrect: session.selectedOption == block.correctIndex,
+        isCorrect: session.isCorrect ?? false,
         feedback: block.feedback,
         onContinue: onContinue,
         onRetry: notifier.retry,
-        whyRequest: whyRequest,
+        whyRequest: session.whyRequest,
       ),
     );
   }

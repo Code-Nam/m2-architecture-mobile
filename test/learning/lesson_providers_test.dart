@@ -4,11 +4,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:tenpai/learning/lesson_providers.dart';
 import 'package:tenpai/learning/lesson_session.dart';
+import 'package:tenpai/progress/progress_providers.dart';
+import 'package:tenpai/sensei/sensei_request.dart';
 import 'package:tenpai/shared/models/lesson.dart';
 import 'package:tenpai/shared/models/lesson_block.dart';
 import 'package:tenpai/shared/models/unit.dart';
 
 import '../fakes/fake_lesson_repository.dart';
+import '../fakes/fake_progress_repository.dart';
 
 final _lesson1 = Lesson(
   id: 'l1',
@@ -27,16 +30,62 @@ final _units = [
   const Unit(id: 'u2', title: 'unit two', lessons: []),
 ];
 
+/// A quiz block whose `correctIndex` is 1; used by every check()/verdict
+/// test below regardless of whether the pick should hit or miss.
+final _quizBlock = LessonBlock.quiz(
+  question: 'Quelle tuile ?',
+  hand: const ['1m', '2m', '3m'],
+  options: const ['1p', '2p', '3p', '4p'],
+  correctIndex: 1,
+  feedback: 'quiz feedback',
+);
+
+/// A 13-tile drill whose authored answers are indices 0 and 1.
+final _drillBlock = LessonBlock.drill(
+  prompt: 'Trouvez la paire.',
+  hand: const [
+    '1m',
+    '2m',
+    '3m',
+    '4m',
+    '5m',
+    '6m',
+    '7m',
+    '8m',
+    '9m',
+    '1p',
+    '2p',
+    '3p',
+    '4p',
+  ],
+  answers: const [0, 1],
+  feedback: 'drill feedback',
+);
+
+/// An interactive block whose authored `correctIndex` is 0.
+final _interactiveBlock = LessonBlock.interactive(
+  prompt: 'Complétez la suite.',
+  group: const ['1s', '2s'],
+  slot: 2,
+  rack: const ['3s', '4z', '5z', '6z'],
+  correctIndex: 0,
+  feedback: 'interactive feedback',
+);
+
 void main() {
   late ProviderContainer container;
+  late FakeProgressRepository progressRepository;
 
   setUp(() {
+    progressRepository = FakeProgressRepository();
     container = ProviderContainer.test(
       overrides: [
         lessonRepositoryProvider.overrideWithValue(
           FakeLessonRepository(_units),
         ),
+        progressRepositoryProvider.overrideWithValue(progressRepository),
       ],
+      retry: (_, _) => null,
     );
   });
 
@@ -84,14 +133,14 @@ void main() {
     });
 
     test('check without a selection does nothing', () {
-      notifier('l1').check();
+      notifier('l1').check(_quizBlock);
 
       expect(session('l1').isAnswered, isFalse);
     });
 
     test('check after a selection answers, and freezes the selection', () {
       notifier('l1').select(1);
-      notifier('l1').check();
+      notifier('l1').check(_quizBlock);
       notifier('l1').select(3);
 
       expect(session('l1').isAnswered, isTrue);
@@ -100,7 +149,7 @@ void main() {
 
     test('next advances one block and clears selection and answer', () {
       notifier('l1').select(1);
-      notifier('l1').check();
+      notifier('l1').check(_quizBlock);
       notifier('l1').next();
 
       expect(
@@ -111,7 +160,7 @@ void main() {
 
     test('retry keeps the block index and clears the selection and answer', () {
       notifier('l1').select(1);
-      notifier('l1').check();
+      notifier('l1').check(_quizBlock);
       notifier('l1').retry();
 
       expect(
@@ -123,7 +172,7 @@ void main() {
     test('retry also clears drill picks', () {
       notifier('l1').toggle(0);
       notifier('l1').toggle(2);
-      notifier('l1').check();
+      notifier('l1').check(_drillBlock);
       notifier('l1').retry();
 
       expect(session('l1').picked, isEmpty);
@@ -153,7 +202,7 @@ void main() {
 
     test('toggle is ignored once the block is answered', () {
       notifier('l1').toggle(3);
-      notifier('l1').check();
+      notifier('l1').check(_drillBlock);
       notifier('l1').toggle(5);
 
       expect(session('l1').picked, {3});
@@ -162,7 +211,7 @@ void main() {
     test('check with only drill picks answers the block', () {
       notifier('l1').toggle(0);
       notifier('l1').toggle(2);
-      notifier('l1').check();
+      notifier('l1').check(_drillBlock);
 
       expect(session('l1').isAnswered, isTrue);
       expect(session('l1').picked, {0, 2});
@@ -170,11 +219,120 @@ void main() {
 
     test('next clears the drill picks along with the answer', () {
       notifier('l1').toggle(0);
-      notifier('l1').check();
+      notifier('l1').check(_drillBlock);
       notifier('l1').next();
 
       expect(session('l1').picked, isEmpty);
       expect(session('l1').blockIndex, 1);
+    });
+  });
+
+  group('check computes the verdict', () {
+    LessonSessionNotifier notifier(String id) =>
+        container.read(currentLessonProvider(id).notifier);
+    LessonSession session(String id) =>
+        container.read(currentLessonProvider(id));
+
+    test('a quiz hit sets isCorrect true and no whyRequest', () {
+      notifier('l1').select(1);
+      notifier('l1').check(_quizBlock);
+
+      expect(session('l1').isCorrect, isTrue);
+      expect(session('l1').whyRequest, isNull);
+    });
+
+    test('a quiz miss sets isCorrect false and a QuizMissRequest naming the '
+        'chosen index', () {
+      notifier('l1').select(2);
+      notifier('l1').check(_quizBlock);
+
+      expect(session('l1').isCorrect, isFalse);
+      final request = session('l1').whyRequest;
+      expect(request, isA<QuizMissRequest>());
+      expect((request! as QuizMissRequest).chosenIndex, 2);
+    });
+
+    test('a drill hit sets isCorrect true and no whyRequest', () {
+      notifier('l1').toggle(0);
+      notifier('l1').toggle(1);
+      notifier('l1').check(_drillBlock);
+
+      expect(session('l1').isCorrect, isTrue);
+      expect(session('l1').whyRequest, isNull);
+    });
+
+    test('a drill miss builds a DrillMissRequest with picks sorted regardless '
+        'of tap order', () {
+      notifier('l1').toggle(5);
+      notifier('l1').toggle(0);
+      notifier('l1').check(_drillBlock);
+
+      expect(session('l1').isCorrect, isFalse);
+      final request = session('l1').whyRequest;
+      expect(request, isA<DrillMissRequest>());
+      expect((request! as DrillMissRequest).picked, [0, 5]);
+    });
+
+    test('an interactive miss sets isCorrect false and no whyRequest', () {
+      notifier('l1').select(1);
+      notifier('l1').check(_interactiveBlock);
+
+      expect(session('l1').isCorrect, isFalse);
+      expect(session('l1').whyRequest, isNull);
+    });
+
+    test('retry resets isCorrect and whyRequest to null', () {
+      notifier('l1').select(2);
+      notifier('l1').check(_quizBlock);
+      notifier('l1').retry();
+
+      expect(session('l1').isCorrect, isNull);
+      expect(session('l1').whyRequest, isNull);
+    });
+
+    test('next resets isCorrect and whyRequest to null', () {
+      notifier('l1').select(2);
+      notifier('l1').check(_quizBlock);
+      notifier('l1').next();
+
+      expect(session('l1').isCorrect, isNull);
+      expect(session('l1').whyRequest, isNull);
+    });
+  });
+
+  group('advance', () {
+    test('on a non-last block moves to the next block, returns false and '
+        'does not complete the lesson', () async {
+      final lesson = Lesson(
+        id: 'multi',
+        title: 'multi-block',
+        xp: 5,
+        blocks: const [
+          LessonBlock.explanation(tile: '1m', title: 't1', body: 'b1'),
+          LessonBlock.explanation(tile: '2m', title: 't2', body: 'b2'),
+        ],
+      );
+      final notifier = container.read(
+        currentLessonProvider(lesson.id).notifier,
+      );
+
+      final done = await notifier.advance(lesson);
+
+      expect(done, isFalse);
+      expect(container.read(currentLessonProvider(lesson.id)).blockIndex, 1);
+      expect(progressRepository.completedIds, isEmpty);
+    });
+
+    test('on the last block completes the lesson through userProgressProvider '
+        'and returns true', () async {
+      final notifier = container.read(
+        currentLessonProvider(_lesson1.id).notifier,
+      );
+
+      final done = await notifier.advance(_lesson1);
+
+      expect(done, isTrue);
+      expect(progressRepository.completedIds, [_lesson1.id]);
     });
   });
 }

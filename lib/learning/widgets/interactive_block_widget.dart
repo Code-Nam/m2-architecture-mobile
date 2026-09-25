@@ -47,9 +47,7 @@ class InteractiveBlockWidget extends ConsumerWidget {
           filled: session.isAnswered
               ? Tile.parse(block.rack[session.selectedOption!])
               : null,
-          filledState: session.selectedOption == block.correctIndex
-              ? .correct
-              : .incorrect,
+          filledState: session.isCorrect == true ? .correct : .incorrect,
         ),
         const SizedBox(height: AppTokens.space4),
         _Rack(
@@ -62,10 +60,10 @@ class InteractiveBlockWidget extends ConsumerWidget {
       ],
       onCheck: session.selectedOption == null || session.isAnswered
           ? null
-          : notifier.check,
+          : () => notifier.check(block),
       isAnswered: session.isAnswered,
       sheet: FeedbackSheetWidget(
-        isCorrect: session.selectedOption == block.correctIndex,
+        isCorrect: session.isCorrect ?? false,
         feedback: block.feedback,
         missLine: 'Cette tuile ne complète pas le groupe.',
         onContinue: onContinue,
