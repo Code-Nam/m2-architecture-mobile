@@ -2,16 +2,21 @@ import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:isar_community/isar.dart';
 import 'package:material_ui/material_ui.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:tenpai/app/app.dart';
 import 'package:tenpai/app/app_config.dart';
 import 'package:tenpai/firebase_options.dart';
+import 'package:tenpai/local/isar_providers.dart';
 
 /// Entry point. `ProviderScope` is the Riverpod root; it lives here, not in
 /// `TenpaiApp`, so tests can wrap `TenpaiApp` in a scope with overrides.
-/// Firebase must be initialised before the first provider reads it, hence
-/// the awaits ahead of `runApp`; App Check runs the debug provider in debug
-/// builds (token registered in the console) and Play Integrity in release.
+/// Firebase and Isar must be ready before the first provider reads them,
+/// hence the awaits ahead of `runApp`; App Check runs the debug provider in
+/// debug builds (token registered in the console) and Play Integrity in
+/// release. Isar is opened here and handed to `isarProvider` through the
+/// root override: the only async resource a provider cannot build itself.
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   if (AppConfig.yakuBaseUrl.isEmpty) {
@@ -26,5 +31,12 @@ void main() async {
         ? const AndroidDebugProvider()
         : const AndroidPlayIntegrityProvider(),
   );
-  runApp(const ProviderScope(child: TenpaiApp()));
+  final dir = await getApplicationDocumentsDirectory();
+  final isar = await Isar.open([], directory: dir.path);
+  runApp(
+    ProviderScope(
+      overrides: [isarProvider.overrideWithValue(isar)],
+      child: const TenpaiApp(),
+    ),
+  );
 }
