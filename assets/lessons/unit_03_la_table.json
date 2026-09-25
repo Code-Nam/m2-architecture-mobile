@@ -1,5 +1,188 @@
 {
   "id": "unit_03",
   "title": "La table",
-  "lessons": []
+  "lessons": [
+    {
+      "id": "unit_03_lesson_01",
+      "title": "Quatre joueurs, quatre vents",
+      "xp": 10,
+      "blocks": [
+        {
+          "type": "explanation",
+          "tile": "1z",
+          "title": "Autour de la table",
+          "body": "Quatre joueurs s'assoient autour de la table, et chacun reçoit un vent de place. Le donneur est toujours est ; viennent ensuite sud, ouest et nord, dans le sens inverse des aiguilles d'une montre."
+        },
+        {
+          "type": "interactive",
+          "prompt": "Complétez l'ordre des vents.",
+          "group": [
+            "1z",
+            "2z",
+            "3z"
+          ],
+          "slot": 3,
+          "rack": [
+            "5z",
+            "4z",
+            "1z",
+            "7z"
+          ],
+          "correctIndex": 1,
+          "feedback": "Est, sud, ouest, nord : l'ordre des places, et celui du jeu."
+        },
+        {
+          "type": "explanation",
+          "tile": "2z",
+          "title": "Le vent du tour",
+          "body": "La partie a aussi son vent : on joue d'abord le tour de l'est, puis celui du sud. Un brelan de votre vent de place, ou du vent du tour, rend votre main plus précieuse. Les dragons aussi, pour tout le monde."
+        },
+        {
+          "type": "drill",
+          "prompt": "Vous êtes ouest, au tour de l'est. Touchez les vents qui comptent pour vous.",
+          "hand": [
+            "2m",
+            "5m",
+            "8m",
+            "1z",
+            "4p",
+            "3z",
+            "7p",
+            "2z",
+            "9s",
+            "3z",
+            "6s",
+            "4z",
+            "1z"
+          ],
+          "answers": [
+            3,
+            5,
+            9,
+            12
+          ],
+          "feedback": "L'ouest, votre place, et l'est, le tour : ces deux vents comptent pour vous. Le sud et le nord, non."
+        },
+        {
+          "type": "quiz",
+          "question": "Vous êtes sud. Quelle tuile complète cette main avec un brelan de votre vent ?",
+          "hand": [
+            "1m",
+            "2m",
+            "3m",
+            "4p",
+            "5p",
+            "6p",
+            "7s",
+            "8s",
+            "9s",
+            "2z",
+            "2z",
+            "4z",
+            "4z"
+          ],
+          "options": [
+            "2z",
+            "3z",
+            "1z",
+            "5p"
+          ],
+          "correctIndex": 0,
+          "feedback": "Un troisième vent du sud : un brelan de votre place. Un troisième vent du nord aurait complété la main, mais sans rien rapporter."
+        }
+      ]
+    },
+    {
+      "id": "unit_03_lesson_02",
+      "title": "Le mur et la dora",
+      "xp": 10,
+      "blocks": [
+        {
+          "type": "explanation",
+          "tile": "5p",
+          "title": "Le mur",
+          "body": "Les 136 tuiles sont mélangées face cachée et empilées en un mur carré. Chacun reçoit treize tuiles, puis, à son tour, pioche une tuile et en jette une."
+        },
+        {
+          "type": "explanation",
+          "tile": "3p",
+          "title": "L'indicateur de dora",
+          "body": "Les quatorze dernières tuiles du mur forment le mur mort : on n'y pioche qu'après un carré. On y retourne l'indicateur de dora. La tuile qui le suit dans sa famille devient dora, et chaque dora dans votre main gagnante vaut un bonus."
+        },
+        {
+          "type": "interactive",
+          "prompt": "L'indicateur est le 3 de cercles. Posez la dora à sa suite.",
+          "group": [
+            "3p"
+          ],
+          "slot": 1,
+          "rack": [
+            "2p",
+            "4p",
+            "3s",
+            "4s"
+          ],
+          "correctIndex": 1,
+          "feedback": "La dora est la tuile suivante dans la même famille : le 4 de cercles."
+        },
+        {
+          "type": "explanation",
+          "tile": "9m",
+          "title": "Et après le 9 ?",
+          "body": "Après le 9, on revient au 1 : un 9 de caractères désigne le 1 de caractères. Les vents tournent est, sud, ouest, nord, et les dragons blanc, vert, rouge."
+        },
+        {
+          "type": "drill",
+          "prompt": "L'indicateur est le dragon blanc. Touchez les dora de votre main.",
+          "hand": [
+            "1m",
+            "6z",
+            "4m",
+            "5z",
+            "7p",
+            "6z",
+            "2s",
+            "7z",
+            "9p",
+            "3s",
+            "6s",
+            "1z",
+            "8m"
+          ],
+          "answers": [
+            1,
+            5
+          ],
+          "feedback": "Après le blanc vient le vert : les deux 發 sont dora. Le 6 de bambous n'est pas un dragon."
+        },
+        {
+          "type": "quiz",
+          "question": "L'indicateur est le 9 de caractères. Quelle tuile est dora ?",
+          "hand": [
+            "1m",
+            "2m",
+            "3m",
+            "5p",
+            "6p",
+            "7p",
+            "2s",
+            "3s",
+            "4s",
+            "6s",
+            "7s",
+            "8s",
+            "1z"
+          ],
+          "options": [
+            "9m",
+            "1m",
+            "8m",
+            "1p"
+          ],
+          "correctIndex": 1,
+          "feedback": "Après le 9, on revient au 1 de la même famille : le 1 de caractères est dora."
+        }
+      ]
+    }
+  ]
 }

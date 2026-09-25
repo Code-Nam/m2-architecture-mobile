@@ -68,11 +68,11 @@
     {
       "id": 7,
       "subject": "Task 7: Unit 3 content",
-      "status": "pending",
+      "status": "in_progress",
       "blockedBy": [
         5
       ],
-      "description": "**Goal:** Draft assets/lessons/unit_03_*.json: 2–3 lessons, 4–6 blocks each, all four block types across the unit, French in the handoff tone; `flutter test test/content` green; author reviews Mahjong + French, edits, commits.\n\n**Files:**\n- assets/lessons/unit_03_*.json\n\n**Acceptance Criteria:**\n- [ ] author's « unit 3 ok »\n- [ ] flutter test test/content green\n- [ ] one lesson played on the emulator\n\n**Verify:** flutter test test/content\n\n```json:metadata\n{\"verifyCommand\": \"flutter test test/content\", \"acceptanceCriteria\": [\"author's « unit 3 ok »\", \"flutter test test/content green\", \"one lesson played on the emulator\"], \"modelTier\": \"standard\", \"owner\": \"Claude drafts, user reviews\", \"files\": [\"assets/lessons/unit_03_*.json\"]}\n```"
+      "description": "**Goal:** Draft assets/lessons/unit_03_*.json: 2–3 lessons, 4–6 blocks each, all four block types across the unit, French in the handoff tone; `flutter test test/content` green; author reviews Mahjong + French, edits, commits.\n\n**Files:**\n- assets/lessons/unit_03_*.json\n\n**Acceptance Criteria:**\n- [ ] author's « unit 3 ok »\n- [ ] flutter test test/content green\n- [ ] one lesson played on the emulator\n\n**Verify:** flutter test test/content\n\n```json:metadata\n{\"verifyCommand\": \"flutter test test/content\", \"acceptanceCriteria\": [\"author's « unit 3 ok »\", \"flutter test test/content green\", \"one lesson played on the emulator\"], \"modelTier\": \"standard\", \"owner\": \"Claude drafts, user reviews\", \"files\": [\"assets/lessons/unit_03_*.json\"]}\n```\n**Progress 2026-09-25**: drafted 2 lessons (Quatre joueurs, quatre vents; Le mur et la dora), 11 blocks, all four types; completion quiz checked with the scratch verifier (the dora quiz is not a completion); content test green. Unit 1 renamed « Familles et suites » (title only, file name and id unchanged) on author's request. Awaiting author review."
     },
     {
       "id": 8,
