@@ -91,4 +91,105 @@ void main() {
       );
     });
   });
+
+  group('LessonBlock.drill assertions', () {
+    List<String> handOfLength(int length) =>
+        List.generate(length, (i) => '${i % 9 + 1}m');
+
+    test('throws when the hand does not have 13 tiles', () {
+      expect(
+        () => LessonBlock.drill(
+          prompt: 'p',
+          hand: handOfLength(12),
+          answers: const [0],
+          feedback: 'f',
+        ),
+        throwsA(isA<AssertionError>()),
+      );
+    });
+
+    test('throws when answers is empty', () {
+      expect(
+        () => LessonBlock.drill(
+          prompt: 'p',
+          hand: handOfLength(13),
+          answers: const [],
+          feedback: 'f',
+        ),
+        throwsA(isA<AssertionError>()),
+      );
+    });
+  });
+
+  group('LessonBlock.interactive assertions', () {
+    test('throws when the slot is negative', () {
+      expect(
+        () => LessonBlock.interactive(
+          prompt: 'p',
+          group: const ['4p', '5p'],
+          slot: -1,
+          rack: const ['3s', '6p', '6m', '5p'],
+          correctIndex: 1,
+          feedback: 'f',
+        ),
+        throwsA(isA<AssertionError>()),
+      );
+    });
+
+    test('throws when the slot is past the end of the group', () {
+      expect(
+        () => LessonBlock.interactive(
+          prompt: 'p',
+          group: const ['4p', '5p'],
+          slot: 3,
+          rack: const ['3s', '6p', '6m', '5p'],
+          correctIndex: 1,
+          feedback: 'f',
+        ),
+        throwsA(isA<AssertionError>()),
+      );
+    });
+
+    test('throws when the rack has fewer than 4 tiles', () {
+      expect(
+        () => LessonBlock.interactive(
+          prompt: 'p',
+          group: const ['4p', '5p'],
+          slot: 2,
+          rack: const ['3s', '6p', '6m'],
+          correctIndex: 1,
+          feedback: 'f',
+        ),
+        throwsA(isA<AssertionError>()),
+      );
+    });
+
+    test('throws when the rack has more than 6 tiles', () {
+      expect(
+        () => LessonBlock.interactive(
+          prompt: 'p',
+          group: const ['4p', '5p'],
+          slot: 2,
+          rack: const ['3s', '6p', '6m', '5p', '7m', '8m', '9m'],
+          correctIndex: 1,
+          feedback: 'f',
+        ),
+        throwsA(isA<AssertionError>()),
+      );
+    });
+
+    test('throws when correctIndex does not point into the rack', () {
+      expect(
+        () => LessonBlock.interactive(
+          prompt: 'p',
+          group: const ['4p', '5p'],
+          slot: 2,
+          rack: const ['3s', '6p', '6m', '5p'],
+          correctIndex: 4,
+          feedback: 'f',
+        ),
+        throwsA(isA<AssertionError>()),
+      );
+    });
+  });
 }

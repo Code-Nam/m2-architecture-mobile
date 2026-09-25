@@ -84,6 +84,29 @@ final _drillLesson = Lesson(
   ],
 );
 
+const _interactivePrompt = 'Complétez la suite en sozu.';
+const _interactiveGroup = ['1s', '2s'];
+const _interactiveSlot = 2;
+const _interactiveRack = ['3s', '4z', '5z', '6z'];
+const _interactiveCorrectIndex = 0;
+const _interactiveFeedback = 'INTERACTIVE FEEDBACK LINE';
+
+final _interactiveLesson = Lesson(
+  id: 'l3',
+  title: 'Leçon interactive test',
+  xp: 10,
+  blocks: [
+    LessonBlock.interactive(
+      prompt: _interactivePrompt,
+      group: _interactiveGroup,
+      slot: _interactiveSlot,
+      rack: _interactiveRack,
+      correctIndex: _interactiveCorrectIndex,
+      feedback: _interactiveFeedback,
+    ),
+  ],
+);
+
 /// Bundles the router and the progress fake so a test can both drive
 /// navigation and inspect what got recorded.
 class _Harness {
@@ -117,7 +140,11 @@ Future<_Harness> _pumpLessonScreen(
       overrides: [
         lessonRepositoryProvider.overrideWithValue(
           FakeLessonRepository([
-            Unit(id: 'u1', title: 'Unité', lessons: [_lesson, _drillLesson]),
+            Unit(
+              id: 'u1',
+              title: 'Unité',
+              lessons: [_lesson, _drillLesson, _interactiveLesson],
+            ),
           ]),
         ),
         progressRepositoryProvider.overrideWithValue(progressRepository),
@@ -427,6 +454,24 @@ void main() {
         expect(find.text('Pas tout à fait'), findsOneWidget);
         expect(find.text('Pourquoi ?'), findsOneWidget);
         expect(harness.senseiRepository.callCount, 0);
+        expect(
+          find.text('Il manque des tuiles, ou certaines sont en trop.'),
+          findsOneWidget,
+        );
+        expect(
+          tester.widget<TileWidget>(_handTile(_drillHand[0])).state,
+          TileState.incorrect,
+        );
+        expect(
+          tester.widget<TileWidget>(_handTile(_drillHand[12])).state,
+          TileState.incorrect,
+        );
+        for (final index in _drillAnswers) {
+          expect(
+            tester.widget<TileWidget>(_handTile(_drillHand[index])).state,
+            TileState.normal,
+          );
+        }
 
         // Not `pumpAndSettle`: the panel's pulsing-tiles animation repeats
         // forever once the Sensei state leaves idle.
@@ -449,6 +494,26 @@ void main() {
       },
     );
 
+    testWidgets(
+      'Verifier is disabled with no drill picks and enables after one tap',
+      (tester) async {
+        await _pumpLessonScreen(tester, id: 'l2');
+
+        var verifier = tester.widget<FilledButton>(
+          find.widgetWithText(FilledButton, 'Vérifier'),
+        );
+        expect(verifier.onPressed, isNull);
+
+        await tester.tap(_handTile(_drillHand[_drillAnswers.first]));
+        await tester.pumpAndSettle();
+
+        verifier = tester.widget<FilledButton>(
+          find.widgetWithText(FilledButton, 'Vérifier'),
+        );
+        expect(verifier.onPressed, isNotNull);
+      },
+    );
+
     testWidgets('a correct drill pick shows no Pourquoi link', (tester) async {
       await _pumpLessonScreen(tester, id: 'l2');
 
@@ -460,6 +525,147 @@ void main() {
 
       expect(find.text('Bien joué !'), findsOneWidget);
       expect(find.text('Pourquoi ?'), findsNothing);
+      expect(find.text(_drillFeedback), findsOneWidget);
+      expect(find.widgetWithText(FilledButton, 'Continuer'), findsOneWidget);
+      for (final index in _drillAnswers) {
+        expect(
+          tester.widget<TileWidget>(_handTile(_drillHand[index])).state,
+          TileState.correct,
+        );
+      }
     });
+  });
+
+  group('LessonScreen interactive', () {
+    Finder optionTiles() => find.byWidgetPredicate(
+      (widget) => widget is TileWidget && widget.size == TileSize.option,
+    );
+
+    testWidgets('the empty slot shows no tile before answering', (
+      tester,
+    ) async {
+      await _pumpLessonScreen(tester, id: 'l3');
+
+      expect(find.text(_interactivePrompt), findsOneWidget);
+      // Only the group (2) and rack (4) tiles render; the slot itself is a
+      // plain outline, not a TileWidget, until the block is answered.
+      expect(
+        optionTiles(),
+        findsNWidgets(_interactiveGroup.length + _interactiveRack.length),
+      );
+    });
+
+    testWidgets(
+      'Verifier is disabled with no rack pick and enables after one tap',
+      (tester) async {
+        await _pumpLessonScreen(tester, id: 'l3');
+
+        var verifier = tester.widget<FilledButton>(
+          find.widgetWithText(FilledButton, 'Vérifier'),
+        );
+        expect(verifier.onPressed, isNull);
+
+        await tester.tap(
+          _optionTile(_interactiveRack[_interactiveCorrectIndex]),
+        );
+        await tester.pumpAndSettle();
+
+        verifier = tester.widget<FilledButton>(
+          find.widgetWithText(FilledButton, 'Vérifier'),
+        );
+        expect(verifier.onPressed, isNotNull);
+      },
+    );
+
+    testWidgets('a correct rack pick fills the slot and shows Continuer', (
+      tester,
+    ) async {
+      await _pumpLessonScreen(tester, id: 'l3');
+
+      await tester.tap(_optionTile(_interactiveRack[_interactiveCorrectIndex]));
+      await tester.pumpAndSettle();
+      await _tapVerifier(tester);
+
+      expect(find.text('Bien joué !'), findsOneWidget);
+      expect(find.text(_interactiveFeedback), findsOneWidget);
+      expect(find.widgetWithText(FilledButton, 'Continuer'), findsOneWidget);
+      expect(
+        optionTiles(),
+        findsNWidgets(_interactiveGroup.length + _interactiveRack.length + 1),
+      );
+      final filled = tester
+          .widgetList<TileWidget>(optionTiles())
+          .where(
+            (w) =>
+                w.tile ==
+                    Tile.parse(_interactiveRack[_interactiveCorrectIndex]) &&
+                w.state == TileState.correct,
+          );
+      expect(filled, isNotEmpty);
+    });
+
+    testWidgets(
+      'a wrong rack pick shows the miss line, the picked tile incorrect and '
+      'the right rack tile not highlighted',
+      (tester) async {
+        const wrongIndex = 1;
+        await _pumpLessonScreen(tester, id: 'l3');
+
+        await tester.tap(_optionTile(_interactiveRack[wrongIndex]));
+        await tester.pumpAndSettle();
+        await _tapVerifier(tester);
+
+        expect(find.text('Pas tout à fait'), findsOneWidget);
+        expect(
+          find.text('Cette tuile ne complète pas le groupe.'),
+          findsOneWidget,
+        );
+        expect(find.widgetWithText(FilledButton, 'Réessayer'), findsOneWidget);
+        expect(find.text('Pourquoi ?'), findsNothing);
+        expect(
+          optionTiles(),
+          findsNWidgets(_interactiveGroup.length + _interactiveRack.length + 1),
+        );
+        final filled = tester
+            .widgetList<TileWidget>(optionTiles())
+            .where(
+              (w) =>
+                  w.tile == Tile.parse(_interactiveRack[wrongIndex]) &&
+                  w.state == TileState.incorrect,
+            );
+        expect(filled, isNotEmpty);
+        expect(
+          tester
+              .widget<TileWidget>(
+                _optionTile(_interactiveRack[_interactiveCorrectIndex]),
+              )
+              .state,
+          isNot(TileState.highlighted),
+        );
+      },
+    );
+
+    testWidgets(
+      'retrying after a wrong rack pick empties the slot and clears the '
+      'selection',
+      (tester) async {
+        const wrongIndex = 1;
+        await _pumpLessonScreen(tester, id: 'l3');
+
+        await tester.tap(_optionTile(_interactiveRack[wrongIndex]));
+        await tester.pumpAndSettle();
+        await _tapVerifier(tester);
+        await _tapReessayer(tester);
+
+        expect(
+          optionTiles(),
+          findsNWidgets(_interactiveGroup.length + _interactiveRack.length),
+        );
+        final verifier = tester.widget<FilledButton>(
+          find.widgetWithText(FilledButton, 'Vérifier'),
+        );
+        expect(verifier.onPressed, isNull);
+      },
+    );
   });
 }

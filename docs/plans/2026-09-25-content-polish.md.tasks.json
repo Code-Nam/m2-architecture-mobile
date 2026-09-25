@@ -95,26 +95,26 @@
     {
       "id": 10,
       "subject": "Task 10: Unit 6 content",
-      "status": "in_progress",
+      "status": "completed",
       "blockedBy": [
         5
       ],
-      "description": "**Goal:** Draft assets/lessons/unit_06_*.json: 2–3 lessons, 4–6 blocks each, all four block types across the unit, French in the handoff tone; `flutter test test/content` green; author reviews Mahjong + French, edits, commits.\n\n**Files:**\n- assets/lessons/unit_06_*.json\n\n**Acceptance Criteria:**\n- [ ] author's « unit 6 ok »\n- [ ] flutter test test/content green\n- [ ] one lesson played on the emulator\n\n**Verify:** flutter test test/content\n\n```json:metadata\n{\"verifyCommand\": \"flutter test test/content\", \"acceptanceCriteria\": [\"author's « unit 6 ok »\", \"flutter test test/content green\", \"one lesson played on the emulator\"], \"modelTier\": \"standard\", \"owner\": \"Claude drafts, user reviews\", \"files\": [\"assets/lessons/unit_06_*.json\"]}\n```\n**Progress 2026-09-25**: drafted 2 lessons (Compter les han: red fives, dora count; Des han aux points: mangan, dealer bonus, limits), 10 blocks, all four types. Numeric answers use caractère tiles as numerals (reading taught in unit 0); none of those quiz options completes its hand (scratch verifier). Content test green (127). Awaiting author review."
+      "description": "**Goal:** Draft assets/lessons/unit_06_*.json: 2–3 lessons, 4–6 blocks each, all four block types across the unit, French in the handoff tone; `flutter test test/content` green; author reviews Mahjong + French, edits, commits.\n\n**Files:**\n- assets/lessons/unit_06_*.json\n\n**Acceptance Criteria:**\n- [ ] author's « unit 6 ok »\n- [ ] flutter test test/content green\n- [ ] one lesson played on the emulator\n\n**Verify:** flutter test test/content\n\n```json:metadata\n{\"verifyCommand\": \"flutter test test/content\", \"acceptanceCriteria\": [\"author's « unit 6 ok »\", \"flutter test test/content green\", \"one lesson played on the emulator\"], \"modelTier\": \"standard\", \"owner\": \"Claude drafts, user reviews\", \"files\": [\"assets/lessons/unit_06_*.json\"]}\n```\n**Progress 2026-09-25**: drafted 2 lessons (Compter les han: red fives, dora count; Des han aux points: mangan, dealer bonus, limits), 10 blocks, all four types. Numeric answers use caractère tiles as numerals (reading taught in unit 0); none of those quiz options completes its hand (scratch verifier). Content test green (127). Awaiting author review.\n**Done 2026-09-25**: author approved, committed."
     },
     {
       "id": 11,
       "subject": "Task 11: Tests for the new blocks",
-      "status": "pending",
+      "status": "completed",
       "blockedBy": [
         3,
         4
       ],
-      "description": "**Goal:** Drill/interactive JSON + asserts, notifier toggle/check, widget tests for both views (states after check, Continuer enabled, sheet copy).\n\n**Files:**\n- test/shared/models/\n- test/learning/\n\n**Acceptance Criteria:**\n- [ ] flutter test green\n\n**Verify:** flutter test\n\n```json:metadata\n{\"verifyCommand\": \"flutter test\", \"acceptanceCriteria\": [\"flutter test green\"], \"modelTier\": \"standard\", \"owner\": \"test-writer\", \"files\": [\"test/shared/models/\", \"test/learning/\"]}\n```"
+      "description": "**Goal:** Drill/interactive JSON + asserts, notifier toggle/check, widget tests for both views (states after check, Continuer enabled, sheet copy).\n\n**Files:**\n- test/shared/models/\n- test/learning/\n\n**Acceptance Criteria:**\n- [ ] flutter test green\n\n**Verify:** flutter test\n\n```json:metadata\n{\"verifyCommand\": \"flutter test\", \"acceptanceCriteria\": [\"flutter test green\"], \"modelTier\": \"standard\", \"owner\": \"test-writer\", \"files\": [\"test/shared/models/\", \"test/learning/\"]}\n```\n**Done 2026-09-25**: test-writer: drill/interactive @Assert tests, toggle/check/next notifier tests, drill view states and gating, new interactive widget group (empty slot, gating, hit fills slot, miss no highlight, retry). Suite 379."
     },
     {
       "id": 12,
       "subject": "Task 12: Device check + reviewer + handover",
-      "status": "pending",
+      "status": "in_progress",
       "blockedBy": [
         1,
         10,

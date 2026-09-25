@@ -137,5 +137,44 @@ void main() {
       expect(session('l2').selectedOption, isNull);
       expect(session('l2').lessonId, 'l2');
     });
+
+    test('toggle adds an index not yet picked', () {
+      notifier('l1').toggle(3);
+
+      expect(session('l1').picked, {3});
+    });
+
+    test('toggling the same index twice deselects it', () {
+      notifier('l1').toggle(3);
+      notifier('l1').toggle(3);
+
+      expect(session('l1').picked, isEmpty);
+    });
+
+    test('toggle is ignored once the block is answered', () {
+      notifier('l1').toggle(3);
+      notifier('l1').check();
+      notifier('l1').toggle(5);
+
+      expect(session('l1').picked, {3});
+    });
+
+    test('check with only drill picks answers the block', () {
+      notifier('l1').toggle(0);
+      notifier('l1').toggle(2);
+      notifier('l1').check();
+
+      expect(session('l1').isAnswered, isTrue);
+      expect(session('l1').picked, {0, 2});
+    });
+
+    test('next clears the drill picks along with the answer', () {
+      notifier('l1').toggle(0);
+      notifier('l1').check();
+      notifier('l1').next();
+
+      expect(session('l1').picked, isEmpty);
+      expect(session('l1').blockIndex, 1);
+    });
   });
 }
