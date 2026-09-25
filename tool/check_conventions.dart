@@ -299,6 +299,14 @@ Iterable<String> _checkPublicUnused(
     if (name.startsWith('_') || name == 'main') {
       continue;
     }
+    // Two kinds of class must stay public even when only their own file names
+    // them: a notifier that types a public provider (making it private trips
+    // `library_private_types_in_public_api`), and an Isar `@collection`,
+    // whose generated schema and accessors need the public name.
+    if (_mustStayPublic(source, name, entry.value)) {
+      continue;
+    }
+
     final word = RegExp('\\b$name\\b');
     final usedElsewhere =
         sources.entries.any((e) => e.key != path && word.hasMatch(e.value)) ||
@@ -308,4 +316,24 @@ Iterable<String> _checkPublicUnused(
           'only in this file. Prefix with `_` unless another file needs it.';
     }
   }
+}
+
+/// True for a notifier class named in a public provider declaration of the
+/// same file, and for an Isar collection (annotated just above the class).
+bool _mustStayPublic(String source, String name, int declStart) {
+  final before = source.substring(0, declStart).trimRight();
+  if (before.endsWith('@collection') || before.endsWith('@Collection()')) {
+    return true;
+  }
+  final isNotifier = RegExp(
+    '^class\\s+$name\\s+extends\\s+(?:Async|Stream)?Notifier\\b',
+    multiLine: true,
+  ).hasMatch(source);
+  if (!isNotifier) {
+    return false;
+  }
+  return RegExp(
+    '^final\\s+\\w+Provider\\b[^;]*\\b$name\\b',
+    multiLine: true,
+  ).hasMatch(source);
 }

@@ -257,3 +257,5 @@ by Claude on 2026-09-25; the only edit is removing an empty, unused
 | `docs/wsl-emulator.md` | file (moved from README.md) | 2026-09-25 | |
 | `docs/macos-emulator.md` | file | 2026-09-25 | |
 | `docs/linux-emulator.md` | file | 2026-09-25 | |
+| `docs/plans/2026-09-25-grading-fixes.md` | file | 2026-09-25 | |
+| `docs/plans/2026-09-25-grading-fixes.md.tasks.json` | file (no marker) | 2026-09-25 | |

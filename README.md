@@ -73,6 +73,16 @@ wrote is listed in [docs/AI_CONTRIBUTIONS.md](docs/AI_CONTRIBUTIONS.md).
 Progress lives in Firestore, device-only data in Isar; they never hold the
 same data.
 
+**Why the REST API is self-hosted.** No public API serves Riichi Mahjong
+yaku, and a weather or place API has nothing to do with learning the game.
+So the catalog is published as a public, read-only JSON API from its own
+repository, [Code-Nam/tenpai-api](https://github.com/Code-Nam/tenpai-api),
+on GitHub Pages: anyone can call
+`GET https://code-nam.github.io/tenpai-api/yaku/v1/catalog.json` without a
+key. The app treats it like any third-party API: `dio` over HTTPS, a
+versioned path (`v1`), a base URL injected at build time, timeouts, and an
+Isar cache so the Yaku Dex still works offline.
+
 ## Project structure
 
 The code is cut **by feature**, not by layer: each feature folder holds
