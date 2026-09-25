@@ -43,11 +43,11 @@
     {
       "id": 5,
       "subject": "Task 5: Device pass + close",
-      "status": "in_progress",
+      "status": "completed",
       "blockedBy": [
         4
       ],
-      "description": "**Goal:** emulator lesson, gallery scan, airplane mode round; ROADMAP + hash.\n\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && dart run tool/check_conventions.dart && flutter test\", \"acceptanceCriteria\": [\"emulator lesson, gallery scan, airplane mode round; ROADMAP + hash.\"], \"modelTier\": \"standard\", \"owner\": \"user + Claude\", \"files\": [\"docs/ROADMAP.md\"]}\n```"
+      "description": "**Goal:** emulator lesson, gallery scan, airplane mode round; ROADMAP + hash.\n\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && dart run tool/check_conventions.dart && flutter test\", \"acceptanceCriteria\": [\"emulator lesson, gallery scan, airplane mode round; ROADMAP + hash.\"], \"modelTier\": \"standard\", \"owner\": \"user + Claude\", \"files\": [\"docs/ROADMAP.md\"]}\n```\n**Done 2026-09-25** (`d3a6c29`): emulator lesson, gallery scan and airplane-mode round ok (author). Plan closed."
     }
   ]
 }
