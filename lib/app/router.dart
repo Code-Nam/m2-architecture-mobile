@@ -14,6 +14,7 @@ import 'package:tenpai/profile/profile_providers.dart';
 import 'package:tenpai/profile/profile_screen.dart';
 import 'package:tenpai/profile/user_profile.dart';
 import 'package:tenpai/scanner/scanner_screen.dart';
+import 'package:tenpai/settings/settings_screen.dart';
 import 'package:tenpai/yaku/yaku_screen.dart';
 
 /// Route paths, kept next to the routes so a rename touches one file.
@@ -52,6 +53,9 @@ abstract final class AppRoutes {
 
   /// Debug gallery of tiles
   static const gallery = '/gallery';
+
+  /// Réglages, pushed over the tabs from the path header gear.
+  static const settings = '/settings';
 }
 
 /// Builds the one router of the app. Called by `routerProvider` so the
@@ -86,6 +90,19 @@ GoRouter createRouter(Ref ref) {
         builder: (_, state) => GoalScreen(
           level: MahjongLevel.fromWire(state.uri.queryParameters['level'])!,
         ),
+      ),
+      GoRoute(
+        path: AppRoutes.settings,
+        builder: (context, state) => const SettingsScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.gallery,
+        builder: (context, state) => const TileGalleryScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.lesson(':id'),
+        builder: (context, state) =>
+            LessonScreen(lessonId: state.pathParameters['id']!),
       ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, shell) => _ShellScaffold(shell),
@@ -123,15 +140,6 @@ GoRouter createRouter(Ref ref) {
             ],
           ),
         ],
-      ),
-      GoRoute(
-        path: AppRoutes.gallery,
-        builder: (context, state) => const TileGalleryScreen(),
-      ),
-      GoRoute(
-        path: AppRoutes.lesson(':id'),
-        builder: (context, state) =>
-            LessonScreen(lessonId: state.pathParameters['id']!),
       ),
     ],
   );

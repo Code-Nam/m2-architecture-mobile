@@ -73,7 +73,7 @@ class _Path extends StatelessWidget {
 }
 
 /// Streak, XP and settings row. Streak stays `0` with a placeholder glyph
-/// until Firestore (milestone 4); settings has no target yet.
+/// (no streak computation yet); the gear pushes `/settings` over the tabs.
 class _PathHeader extends StatelessWidget {
   const _PathHeader({required this.xp});
   final int xp;
@@ -125,7 +125,10 @@ class _PathHeader extends StatelessWidget {
               ),
             ),
             const Spacer(),
-            const IconButton(onPressed: null, icon: Icon(Icons.settings)),
+            IconButton(
+              onPressed: () => context.push(AppRoutes.settings),
+              icon: const Icon(Icons.settings),
+            ),
           ],
         ),
       ),
