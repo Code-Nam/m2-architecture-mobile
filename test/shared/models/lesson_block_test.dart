@@ -60,7 +60,14 @@ void main() {
     });
 
     test('interactive block survives fromJson(toJson())', () {
-      const block = LessonBlock.interactive();
+      final block = LessonBlock.interactive(
+        prompt: 'Complétez la suite',
+        group: const ['4p', '5p'],
+        slot: 2,
+        rack: const ['3s', '6p', '6m', '5p'],
+        correctIndex: 1,
+        feedback: '4-5-6 dans la même famille : une suite.',
+      );
 
       final roundTripped = LessonBlock.fromJson(block.toJson());
 

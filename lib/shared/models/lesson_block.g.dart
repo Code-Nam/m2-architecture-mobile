@@ -60,7 +60,23 @@ Map<String, dynamic> _$QuizBlockToJson(QuizBlock instance) => <String, dynamic>{
 };
 
 InteractiveBlock _$InteractiveBlockFromJson(Map<String, dynamic> json) =>
-    InteractiveBlock($type: json['type'] as String?);
+    InteractiveBlock(
+      prompt: json['prompt'] as String,
+      group: (json['group'] as List<dynamic>).map((e) => e as String).toList(),
+      slot: (json['slot'] as num).toInt(),
+      rack: (json['rack'] as List<dynamic>).map((e) => e as String).toList(),
+      correctIndex: (json['correctIndex'] as num).toInt(),
+      feedback: json['feedback'] as String,
+      $type: json['type'] as String?,
+    );
 
 Map<String, dynamic> _$InteractiveBlockToJson(InteractiveBlock instance) =>
-    <String, dynamic>{'type': instance.$type};
+    <String, dynamic>{
+      'prompt': instance.prompt,
+      'group': instance.group,
+      'slot': instance.slot,
+      'rack': instance.rack,
+      'correctIndex': instance.correctIndex,
+      'feedback': instance.feedback,
+      'type': instance.$type,
+    };

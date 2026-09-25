@@ -86,6 +86,23 @@
           "body": "Une suite, c'est trois tuiles consécutives de la même famille : 4-5-6 de caractères, par exemple. Une suite ne traverse jamais le 9 vers le 1, et ne mélange jamais deux familles."
         },
         {
+          "type": "interactive",
+          "prompt": "Complétez la suite.",
+          "group": [
+            "4p",
+            "5p"
+          ],
+          "slot": 2,
+          "rack": [
+            "3s",
+            "6p",
+            "6m",
+            "5p"
+          ],
+          "correctIndex": 1,
+          "feedback": "4-5-6 dans la même famille : une suite. Le 6 de caractères ou le 3 de bambous changent de famille, le 5 de cercles répète."
+        },
+        {
           "type": "quiz",
           "question": "Quelle tuile complète cette main ?",
           "hand": [

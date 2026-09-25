@@ -45,8 +45,27 @@ sealed class LessonBlock with _$LessonBlock {
     required String feedback,
   }) = QuizBlock;
 
-  /// Not authored before milestone 6; parses so content can declare it early.
-  const factory LessonBlock.interactive() = InteractiveBlock;
+  /// « Complete the group »: [group] is drawn in order with an empty box
+  /// inserted at [slot] (0 = before the first tile, `group.length` = after
+  /// the last); the learner picks the missing tile from [rack].
+  /// [correctIndex] is authored. Not `const`: the asserts read the lists.
+  @Assert('rack.length >= 4 && rack.length <= 6', 'a rack has 4 to 6 tiles')
+  @Assert(
+    'slot >= 0 && slot <= group.length',
+    'the slot sits inside the group or right after it',
+  )
+  @Assert(
+    'correctIndex >= 0 && correctIndex < rack.length',
+    'correctIndex points into the rack',
+  )
+  factory LessonBlock.interactive({
+    required String prompt,
+    required List<String> group,
+    required int slot,
+    required List<String> rack,
+    required int correctIndex,
+    required String feedback,
+  }) = InteractiveBlock;
 
   /// Dispatches on the `type` key, the freezed `unionKey`.
   factory LessonBlock.fromJson(Map<String, Object?> json) =>

@@ -38,16 +38,16 @@
     {
       "id": 4,
       "subject": "Task 4: Interactive model + view",
-      "status": "in_progress",
+      "status": "completed",
       "blockedBy": [
         2
       ],
-      "description": "**Goal:** `LessonBlock.interactive({prompt, group, slot, rack, correctIndex, feedback})` with asserts; `_InteractiveBlockView`: group with dashed slot, rack, pick + Vérifier, slot fills, states, same sheet.\n\n**Files:**\n- lib/shared/models/lesson_block.dart\n- lib/learning/lesson_screen.dart\n\n**Acceptance Criteria:**\n- [ ] emulator with a temporary interactive block: slot fills, states, sheet\n- [ ] dark mode\n\n**Verify:** flutter analyze && dart run tool/check_conventions.dart, then emulator\n\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && dart run tool/check_conventions.dart, then emulator\", \"acceptanceCriteria\": [\"emulator with a temporary interactive block: slot fills, states, sheet\", \"dark mode\"], \"modelTier\": \"standard\", \"owner\": \"user\", \"files\": [\"lib/shared/models/lesson_block.dart\", \"lib/learning/lesson_screen.dart\"]}\n```"
+      "description": "**Goal:** `LessonBlock.interactive({prompt, group, slot, rack, correctIndex, feedback})` with asserts; `_InteractiveBlockView`: group with dashed slot, rack, pick + Vérifier, slot fills, states, same sheet.\n\n**Files:**\n- lib/shared/models/lesson_block.dart\n- lib/learning/lesson_screen.dart\n\n**Acceptance Criteria:**\n- [ ] emulator with a temporary interactive block: slot fills, states, sheet\n- [ ] dark mode\n\n**Verify:** flutter analyze && dart run tool/check_conventions.dart, then emulator\n\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && dart run tool/check_conventions.dart, then emulator\", \"acceptanceCriteria\": [\"emulator with a temporary interactive block: slot fills, states, sheet\", \"dark mode\"], \"modelTier\": \"standard\", \"owner\": \"user\", \"files\": [\"lib/shared/models/lesson_block.dart\", \"lib/learning/lesson_screen.dart\"]}\n```\n**Done 2026-09-25**: interactive factory + asserts, `_InteractiveBlockView` (+ `_GroupRow`, `_EmptySlot` solid outline, `_Rack`), `_SoonBlockView` deleted; unit 1 lesson 2 gained a real interactive block (4p 5p _ → 6p). Emulator: unit 1 completed end to end. Suite 228."
     },
     {
       "id": 5,
       "subject": "Task 5: Content validation test",
-      "status": "pending",
+      "status": "in_progress",
       "blockedBy": [
         2,
         4
@@ -121,5 +121,5 @@
       "description": "**Goal:** Full path unit 1 → 6 on the emulator, dark mode; flutter-reviewer on the new views and TileWidget; doc-reviewer for README credits; ROADMAP + tasks.json with hash; deviations.\n\n**Files:**\n- docs/ROADMAP.md\n- README.md\n\n**Acceptance Criteria:**\n- [ ] flutter analyze && flutter test && dart run tool/check_conventions.dart clean\n- [ ] every unit playable\n- [ ] reviewer findings applied or logged\n\n**Verify:** flutter analyze && flutter test && dart run tool/check_conventions.dart\n\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && flutter test && dart run tool/check_conventions.dart\", \"acceptanceCriteria\": [\"flutter analyze && flutter test && dart run tool/check_conventions.dart clean\", \"every unit playable\", \"reviewer findings applied or logged\"], \"modelTier\": \"standard\", \"owner\": \"Claude + user\", \"files\": [\"docs/ROADMAP.md\", \"README.md\"]}\n```"
     }
   ],
-  "lastUpdated": "2026-09-25T13:26:31.622991+00:00"
+  "lastUpdated": "2026-09-25T13:42:52.873476+00:00"
 }

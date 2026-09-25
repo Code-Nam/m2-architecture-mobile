@@ -160,13 +160,13 @@ return interactive(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String tile,  String title,  String body)?  explanation,TResult Function( String prompt,  List<String> hand,  List<int> answers,  String feedback)?  drill,TResult Function( String question,  List<String> hand,  List<String> options,  int correctIndex,  String feedback)?  quiz,TResult Function()?  interactive,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String tile,  String title,  String body)?  explanation,TResult Function( String prompt,  List<String> hand,  List<int> answers,  String feedback)?  drill,TResult Function( String question,  List<String> hand,  List<String> options,  int correctIndex,  String feedback)?  quiz,TResult Function( String prompt,  List<String> group,  int slot,  List<String> rack,  int correctIndex,  String feedback)?  interactive,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case ExplanationBlock() when explanation != null:
 return explanation(_that.tile,_that.title,_that.body);case DrillBlock() when drill != null:
 return drill(_that.prompt,_that.hand,_that.answers,_that.feedback);case QuizBlock() when quiz != null:
 return quiz(_that.question,_that.hand,_that.options,_that.correctIndex,_that.feedback);case InteractiveBlock() when interactive != null:
-return interactive();case _:
+return interactive(_that.prompt,_that.group,_that.slot,_that.rack,_that.correctIndex,_that.feedback);case _:
   return orElse();
 
 }
@@ -184,13 +184,13 @@ return interactive();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String tile,  String title,  String body)  explanation,required TResult Function( String prompt,  List<String> hand,  List<int> answers,  String feedback)  drill,required TResult Function( String question,  List<String> hand,  List<String> options,  int correctIndex,  String feedback)  quiz,required TResult Function()  interactive,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String tile,  String title,  String body)  explanation,required TResult Function( String prompt,  List<String> hand,  List<int> answers,  String feedback)  drill,required TResult Function( String question,  List<String> hand,  List<String> options,  int correctIndex,  String feedback)  quiz,required TResult Function( String prompt,  List<String> group,  int slot,  List<String> rack,  int correctIndex,  String feedback)  interactive,}) {final _that = this;
 switch (_that) {
 case ExplanationBlock():
 return explanation(_that.tile,_that.title,_that.body);case DrillBlock():
 return drill(_that.prompt,_that.hand,_that.answers,_that.feedback);case QuizBlock():
 return quiz(_that.question,_that.hand,_that.options,_that.correctIndex,_that.feedback);case InteractiveBlock():
-return interactive();}
+return interactive(_that.prompt,_that.group,_that.slot,_that.rack,_that.correctIndex,_that.feedback);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -204,13 +204,13 @@ return interactive();}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String tile,  String title,  String body)?  explanation,TResult? Function( String prompt,  List<String> hand,  List<int> answers,  String feedback)?  drill,TResult? Function( String question,  List<String> hand,  List<String> options,  int correctIndex,  String feedback)?  quiz,TResult? Function()?  interactive,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String tile,  String title,  String body)?  explanation,TResult? Function( String prompt,  List<String> hand,  List<int> answers,  String feedback)?  drill,TResult? Function( String question,  List<String> hand,  List<String> options,  int correctIndex,  String feedback)?  quiz,TResult? Function( String prompt,  List<String> group,  int slot,  List<String> rack,  int correctIndex,  String feedback)?  interactive,}) {final _that = this;
 switch (_that) {
 case ExplanationBlock() when explanation != null:
 return explanation(_that.tile,_that.title,_that.body);case DrillBlock() when drill != null:
 return drill(_that.prompt,_that.hand,_that.answers,_that.feedback);case QuizBlock() when quiz != null:
 return quiz(_that.question,_that.hand,_that.options,_that.correctIndex,_that.feedback);case InteractiveBlock() when interactive != null:
-return interactive();case _:
+return interactive(_that.prompt,_that.group,_that.slot,_that.rack,_that.correctIndex,_that.feedback);case _:
   return null;
 
 }
@@ -489,15 +489,37 @@ as String,
 @JsonSerializable()
 
 class InteractiveBlock implements LessonBlock {
-  const InteractiveBlock({ String? $type}): $type = $type ?? 'interactive';
+   InteractiveBlock({required this.prompt, required  List<String> group, required this.slot, required  List<String> rack, required this.correctIndex, required this.feedback,  String? $type}): assert(rack.length >= 4 && rack.length <= 6, 'a rack has 4 to 6 tiles'),assert(slot >= 0 && slot <= group.length, 'the slot sits inside the group or right after it'),assert(correctIndex >= 0 && correctIndex < rack.length, 'correctIndex points into the rack'),_group = group,_rack = rack,$type = $type ?? 'interactive';
   factory InteractiveBlock.fromJson(Map<String, dynamic> json) => _$InteractiveBlockFromJson(json);
 
+ final  String prompt;
+ final  List<String> _group;
+ List<String> get group {
+  if (_group is EqualUnmodifiableListView) return _group;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_group);
+}
 
+ final  int slot;
+ final  List<String> _rack;
+ List<String> get rack {
+  if (_rack is EqualUnmodifiableListView) return _rack;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_rack);
+}
+
+ final  int correctIndex;
+ final  String feedback;
 
 @JsonKey(name: 'type')
 final String $type;
 
 
+/// Create a copy of LessonBlock
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$InteractiveBlockCopyWith<InteractiveBlock> get copyWith => _$InteractiveBlockCopyWithImpl<InteractiveBlock>(this, _$identity);
 
 @override
 Map<String, dynamic> toJson() {
@@ -506,22 +528,58 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is InteractiveBlock);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is InteractiveBlock&&(identical(other.prompt, prompt) || other.prompt == prompt)&&const DeepCollectionEquality().equals(other.group, _group)&&(identical(other.slot, slot) || other.slot == slot)&&const DeepCollectionEquality().equals(other.rack, _rack)&&(identical(other.correctIndex, correctIndex) || other.correctIndex == correctIndex)&&(identical(other.feedback, feedback) || other.feedback == feedback));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => runtimeType.hashCode;
+int get hashCode {
+    return Object.hash(runtimeType,prompt,const DeepCollectionEquality().hash(_group),slot,const DeepCollectionEquality().hash(_rack),correctIndex,feedback);
+}
 
 @override
 String toString() {
-    return 'LessonBlock.interactive()';
+    return 'LessonBlock.interactive(prompt: $prompt, group: $group, slot: $slot, rack: $rack, correctIndex: $correctIndex, feedback: $feedback)';
 }
 
 
 }
 
+/// @nodoc
+abstract mixin class $InteractiveBlockCopyWith<$Res> implements $LessonBlockCopyWith<$Res> {
+  factory $InteractiveBlockCopyWith(InteractiveBlock value, $Res Function(InteractiveBlock) _then) = _$InteractiveBlockCopyWithImpl;
+@useResult
+$Res call({
+ String prompt, List<String> group, int slot, List<String> rack, int correctIndex, String feedback
+});
 
 
+
+
+}
+/// @nodoc
+class _$InteractiveBlockCopyWithImpl<$Res>
+    implements $InteractiveBlockCopyWith<$Res> {
+  _$InteractiveBlockCopyWithImpl(this._self, this._then);
+
+  final InteractiveBlock _self;
+  final $Res Function(InteractiveBlock) _then;
+
+/// Create a copy of LessonBlock
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? prompt = null,Object? group = null,Object? slot = null,Object? rack = null,Object? correctIndex = null,Object? feedback = null,}) {
+  return _then(InteractiveBlock(
+prompt: null == prompt ? _self.prompt : prompt // ignore: cast_nullable_to_non_nullable
+as String,group: null == group ? _self._group : group // ignore: cast_nullable_to_non_nullable
+as List<String>,slot: null == slot ? _self.slot : slot // ignore: cast_nullable_to_non_nullable
+as int,rack: null == rack ? _self._rack : rack // ignore: cast_nullable_to_non_nullable
+as List<String>,correctIndex: null == correctIndex ? _self.correctIndex : correctIndex // ignore: cast_nullable_to_non_nullable
+as int,feedback: null == feedback ? _self.feedback : feedback // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+
+}
 
 // dart format on

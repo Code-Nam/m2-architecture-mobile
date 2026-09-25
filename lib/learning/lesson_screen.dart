@@ -16,6 +16,7 @@ import 'package:tenpai/shared/theme/app_colors.dart';
 import 'package:tenpai/shared/theme/app_tokens.dart';
 import 'package:tenpai/shared/widgets/primary_button_widget.dart';
 import 'package:tenpai/shared/widgets/retry_widget.dart';
+import 'package:tenpai/shared/widgets/tile_size.dart';
 import 'package:tenpai/shared/widgets/tile_state.dart';
 import 'package:tenpai/shared/widgets/tile_widget.dart';
 
@@ -85,7 +86,11 @@ class _LessonBody extends ConsumerWidget {
               session: session,
               onContinue: onContinue,
             ),
-            InteractiveBlock() => _SoonBlockView(onContinue: onContinue),
+            final InteractiveBlock block => _InteractiveBlockView(
+              block: block,
+              session: session,
+              onContinue: onContinue,
+            ),
           },
         ),
       ],
@@ -139,35 +144,6 @@ class _TopBar extends StatelessWidget {
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-/// Drill and interactive blocks are not authored before milestone 6; this
-/// keeps the sealed switch exhaustive and the lesson walkable meanwhile.
-class _SoonBlockView extends StatelessWidget {
-  const _SoonBlockView({required this.onContinue});
-  final VoidCallback onContinue;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: AppTokens.sideMargin),
-      child: Column(
-        children: [
-          const Spacer(),
-          Text('Bientôt', style: theme.textTheme.headlineSmall),
-          const Spacer(),
-          SafeArea(
-            top: false,
-            child: PrimaryButtonWidget(
-              label: 'Continuer',
-              onPressed: onContinue,
-            ),
-          ),
-        ],
       ),
     );
   }
@@ -296,6 +272,183 @@ class _QuizBlockView extends ConsumerWidget {
       ],
     );
   }
+}
+
+/// « Complete the group »: one pick from the rack, checked like a quiz
+/// (`selectedOption` against `correctIndex`); once answered the pick fills
+/// the empty slot. Same sheet, no « Pourquoi ? ».
+class _InteractiveBlockView extends ConsumerWidget {
+  const _InteractiveBlockView({
+    required this.block,
+    required this.session,
+    required this.onContinue,
+  });
+  final InteractiveBlock block;
+  final LessonSession session;
+  final VoidCallback onContinue;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final notifier = ref.read(currentLessonProvider(session.lessonId).notifier);
+    final theme = Theme.of(context);
+    return Stack(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: AppTokens.sideMargin),
+          child: Column(
+            crossAxisAlignment: .start,
+            children: [
+              Text(block.prompt, style: theme.textTheme.headlineSmall),
+              const SizedBox(height: AppTokens.space3),
+              _GroupRow(
+                group: block.group,
+                slot: block.slot,
+                filled: session.isAnswered
+                    ? Tile.parse(block.rack[session.selectedOption!])
+                    : null,
+                filledState: session.selectedOption == block.correctIndex
+                    ? .correct
+                    : .incorrect,
+              ),
+              const SizedBox(height: AppTokens.space4),
+              _Rack(
+                rack: block.rack,
+                correctIndex: block.correctIndex,
+                selected: session.selectedOption,
+                isAnswered: session.isAnswered,
+                onSelect: session.isAnswered ? null : notifier.select,
+              ),
+              const Spacer(),
+              SafeArea(
+                top: false,
+                child: PrimaryButtonWidget(
+                  label: 'Vérifier',
+                  onPressed:
+                      session.selectedOption == null || session.isAnswered
+                      ? null
+                      : notifier.check,
+                ),
+              ),
+            ],
+          ),
+        ),
+        Positioned(
+          left: 0,
+          right: 0,
+          bottom: 0,
+          child: AnimatedSlide(
+            offset: session.isAnswered ? Offset.zero : const Offset(0, 1),
+            duration: AppTokens.duration,
+            curve: AppTokens.curve,
+            child: _FeedbackSheet(
+              isCorrect: session.selectedOption == block.correctIndex,
+              feedback: block.feedback,
+              missLine: 'La bonne tuile est entourée de vert.',
+              onContinue: onContinue,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+/// The partial group with the slot inserted at its position; [filled] is
+/// null until the block is answered, then shows the pick in [filledState].
+class _GroupRow extends StatelessWidget {
+  const _GroupRow({
+    required this.group,
+    required this.slot,
+    required this.filled,
+    required this.filledState,
+  });
+  final List<String> group;
+  final int slot;
+  final Tile? filled;
+  final TileState filledState;
+  @override
+  Widget build(BuildContext context) {
+    final tiles = <Widget>[
+      for (final code in group)
+        TileWidget(tile: Tile.parse(code), size: .option),
+    ];
+    tiles.insert(slot, switch (filled) {
+      final tile? => TileWidget(tile: tile, size: .option, state: filledState),
+      null => const _EmptySlot(),
+    });
+    return Row(
+      mainAxisAlignment: .center,
+      spacing: AppTokens.space1,
+      children: tiles,
+    );
+  }
+}
+
+/// Tile-sized outline marking the missing tile. Solid, not dashed as in the
+/// handoff: Flutter has no dashed border built in.
+class _EmptySlot extends StatelessWidget {
+  const _EmptySlot();
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = Theme.of(context).extension<AppColors>()!;
+    return SizedBox(
+      width: TileSize.option.width,
+      height: TileSize.option.height,
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(TileSize.option.radius),
+          border: Border.all(
+            color: colors.track,
+            width: AppTokens.backFrameWidth,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Up to six option-size tiles on one line (6 × 48 + 5 × 8 = 328 dp); after
+/// checking, the right one is highlighted when the pick was wrong.
+class _Rack extends StatelessWidget {
+  const _Rack({
+    required this.rack,
+    required this.correctIndex,
+    required this.selected,
+    required this.isAnswered,
+    this.onSelect,
+  });
+  final List<String> rack;
+  final int correctIndex;
+  final int? selected;
+  final bool isAnswered;
+  final ValueChanged<int>? onSelect;
+  @override
+  Widget build(BuildContext context) => Wrap(
+    alignment: .center,
+    spacing: AppTokens.space1,
+    runSpacing: AppTokens.space2,
+    children: [
+      for (var i = 0; i < rack.length; i++)
+        GestureDetector(
+          onTap: onSelect == null ? null : () => onSelect!(i),
+          child: TileWidget(
+            tile: Tile.parse(rack[i]),
+            size: .option,
+            state: _stateOf(i),
+          ),
+        ),
+    ],
+  );
+  TileState _stateOf(int i) =>
+      switch ((isAnswered, selected == i, i == correctIndex)) {
+        (false, true, _) => .selected,
+        (false, false, _) => .normal,
+        (true, true, true) => .correct,
+        (true, true, false) => .incorrect,
+        (true, false, true) => .highlighted,
+        (true, false, false) => .normal,
+      };
 }
 
 /// « Find in the hand »: same layout and sheet as the quiz, but the pick is
