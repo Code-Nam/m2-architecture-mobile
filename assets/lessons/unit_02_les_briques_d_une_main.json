@@ -1,5 +1,267 @@
 {
   "id": "unit_02",
   "title": "Les briques d'une main",
-  "lessons": []
+  "lessons": [
+    {
+      "id": "unit_02_lesson_01",
+      "title": "Le brelan et la paire",
+      "xp": 10,
+      "blocks": [
+        {
+          "type": "explanation",
+          "tile": "7z",
+          "title": "Trois tuiles identiques",
+          "body": "Un brelan, ce sont trois tuiles exactement identiques : trois 7 de bambous, trois dragons rouges. Contrairement à la suite, il fonctionne aussi avec les honneurs."
+        },
+        {
+          "type": "interactive",
+          "prompt": "Complétez le brelan.",
+          "group": [
+            "6z",
+            "6z"
+          ],
+          "slot": 2,
+          "rack": [
+            "6s",
+            "5z",
+            "6z",
+            "7z"
+          ],
+          "correctIndex": 2,
+          "feedback": "Trois dragons verts : un brelan. Les autres dragons ne sont pas identiques, et le 6 de bambous n'est pas un honneur."
+        },
+        {
+          "type": "explanation",
+          "tile": "3p",
+          "title": "Deux tuiles identiques",
+          "body": "Deux tuiles identiques forment une paire. Une main complète en contient exactement une : on l'appelle la tête de la main."
+        },
+        {
+          "type": "drill",
+          "prompt": "Touchez les deux tuiles qui forment la paire.",
+          "hand": [
+            "4m",
+            "1z",
+            "7m",
+            "2p",
+            "9s",
+            "5p",
+            "3s",
+            "1z",
+            "8p",
+            "6s",
+            "5z",
+            "1m",
+            "7z"
+          ],
+          "answers": [
+            1,
+            7
+          ],
+          "feedback": "Deux vents d'est : c'est la seule paire de cette main."
+        },
+        {
+          "type": "quiz",
+          "question": "Quelle tuile complète cette main ?",
+          "hand": [
+            "1m",
+            "2m",
+            "3m",
+            "4p",
+            "5p",
+            "6p",
+            "7s",
+            "8s",
+            "9s",
+            "5z",
+            "5z",
+            "7z",
+            "7z"
+          ],
+          "options": [
+            "6z",
+            "7z",
+            "1z",
+            "5s"
+          ],
+          "correctIndex": 1,
+          "feedback": "Un troisième dragon rouge forme un brelan, et les dragons blancs restent la paire. Un troisième dragon blanc aurait fonctionné aussi."
+        }
+      ]
+    },
+    {
+      "id": "unit_02_lesson_02",
+      "title": "Quatre groupes et une paire",
+      "xp": 10,
+      "blocks": [
+        {
+          "type": "explanation",
+          "tile": "1m",
+          "title": "La formule d'une main",
+          "body": "Une main gagnante compte quatorze tuiles : quatre groupes de trois, suites ou brelans, plus une paire. Pendant la partie, vous en tenez treize : il en manque toujours une."
+        },
+        {
+          "type": "drill",
+          "prompt": "Touchez les trois tuiles du brelan.",
+          "hand": [
+            "2m",
+            "3m",
+            "4m",
+            "6p",
+            "6p",
+            "6p",
+            "3s",
+            "4s",
+            "5s",
+            "7s",
+            "8s",
+            "1z",
+            "1z"
+          ],
+          "answers": [
+            3,
+            4,
+            5
+          ],
+          "feedback": "Trois 6 de cercles : le seul brelan de cette main."
+        },
+        {
+          "type": "interactive",
+          "prompt": "Complétez la suite.",
+          "group": [
+            "3m",
+            "5m"
+          ],
+          "slot": 1,
+          "rack": [
+            "4p",
+            "2m",
+            "4m",
+            "6m"
+          ],
+          "correctIndex": 2,
+          "feedback": "3-4-5 de caractères : il manquait la tuile du milieu. Le 4 de cercles change de famille."
+        },
+        {
+          "type": "quiz",
+          "question": "Quelle tuile complète cette main ?",
+          "hand": [
+            "2m",
+            "3m",
+            "4m",
+            "6m",
+            "7m",
+            "8m",
+            "3p",
+            "4p",
+            "5p",
+            "9p",
+            "9p",
+            "6s",
+            "7s"
+          ],
+          "options": [
+            "9s",
+            "8s",
+            "4s",
+            "7p"
+          ],
+          "correctIndex": 1,
+          "feedback": "Le 8 de bambous termine la suite 6-7-8. Le 5 de bambous aurait aussi formé une suite, 5-6-7."
+        },
+        {
+          "type": "explanation",
+          "tile": "5s",
+          "title": "Une tuile d'écart",
+          "body": "Quand il ne vous manque qu'une tuile pour compléter la formule, votre main est en attente. En japonais, on dit qu'elle est tenpai."
+        }
+      ]
+    },
+    {
+      "id": "unit_02_lesson_03",
+      "title": "Le carré",
+      "xp": 10,
+      "blocks": [
+        {
+          "type": "explanation",
+          "tile": "5z",
+          "title": "Quatre tuiles identiques",
+          "body": "Avec la quatrième tuile d'un brelan, vous pouvez déclarer un carré. Il compte comme un seul groupe : la formule ne change pas, et vous piochez une tuile de remplacement."
+        },
+        {
+          "type": "interactive",
+          "prompt": "Complétez le carré.",
+          "group": [
+            "9m",
+            "9m",
+            "9m"
+          ],
+          "slot": 3,
+          "rack": [
+            "9p",
+            "8m",
+            "9m",
+            "9s"
+          ],
+          "correctIndex": 2,
+          "feedback": "Quatre 9 de caractères : un carré. Le 9 de cercles et le 9 de bambous sont d'une autre famille."
+        },
+        {
+          "type": "drill",
+          "prompt": "Touchez les tuiles de tous les brelans.",
+          "hand": [
+            "1m",
+            "1m",
+            "1m",
+            "4p",
+            "5p",
+            "6p",
+            "2s",
+            "3s",
+            "4s",
+            "9s",
+            "7z",
+            "7z",
+            "7z"
+          ],
+          "answers": [
+            0,
+            1,
+            2,
+            10,
+            11,
+            12
+          ],
+          "feedback": "Trois 1 de caractères et trois dragons rouges : deux brelans, donc deux carrés possibles."
+        },
+        {
+          "type": "quiz",
+          "question": "Quelle tuile complète cette main ?",
+          "hand": [
+            "1m",
+            "1m",
+            "1m",
+            "4p",
+            "5p",
+            "6p",
+            "2s",
+            "3s",
+            "4s",
+            "9s",
+            "7z",
+            "7z",
+            "7z"
+          ],
+          "options": [
+            "1m",
+            "9s",
+            "7z",
+            "8s"
+          ],
+          "correctIndex": 1,
+          "feedback": "Un second 9 de bambous forme la paire. Un quatrième 1 de caractères ou dragon rouge ferait un carré, mais la main resterait sans paire."
+        }
+      ]
+    }
+  ]
 }

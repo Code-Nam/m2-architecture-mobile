@@ -122,6 +122,13 @@ Verify for every lib task: `flutter analyze && dart run tool/check_conventions.d
    emulator, miss then hit on each of quiz, drill, interactive, the lesson
    completes only after every block is right; test-writer updates the
    lesson screen tests that expect the green highlight and old miss copy.
+15. **Unit 0 « Déchiffrer les tuiles »** (added 2026-09-25, author's
+   request) — Claude drafts `unit_00_dechiffrer_les_tuiles.json`: reading
+   the glyphs (chinese numerals on caractères, counting circles and
+   bamboos, the 1s bird, wind and dragon characters). User adds its path
+   first in `LessonAssetSource._paths`; Claude updates the repository test's
+   unit id list. Accept: author's « unit 0 ok », content test green, path
+   shows unit 0 first, CJK glyphs render in lesson text on the emulator.
 5. **Content validation test** — test-writer: `test/content/lesson_assets_test.dart`
    loads every `assets/lessons/*.json` through `Unit.fromJson`; checks every
    code with `Tile.parse`, quiz `correctIndex`, drill answers, interactive
