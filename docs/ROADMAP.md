@@ -20,6 +20,16 @@ Status truth for the project. Update this file and the matching
   Cloud Firestore synchronisation. Isar via the maintained `isar_community`
   fork unless the original `isar` 3.1 (last published 2023) proves to build
   on Dart 3.13.
+- **2026-09-24 — Isar stays, via `isar_community` 3.3.2 with an analyzer
+  override.** Its generator declares `analyzer <11`; the project needs 14
+  (freezed 4, Dart 3.13). Spike: downgrading freezed to 3.2.5 is red (it
+  emits `final` in constructor parameters, rejected by Dart 3.13);
+  `dependency_overrides: analyzer: ^14.4.0` is green (generator compiles,
+  emits a schema, suite 210 green, debug APK bundles `libisar.so`). The
+  original `isar` and `objectbox` do not resolve at all; `drift`, `sqflite`
+  and `hive_ce` would. Override documented in `pubspec.yaml`; drop it when
+  the fork publishes a generator allowing analyzer 14. Runtime `Isar.open`
+  on the emulator still to be exercised (first Isar plan task).
 - **2026-09-18 — Isar and Firestore never hold the same data.** Progress
   (completions, XP, streak) goes to Cloud Firestore, whose offline
   persistence already is a local cache with a write queue; Security Rules

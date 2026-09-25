@@ -82,6 +82,7 @@ Rules:
 | `assets/lessons/unit_05_gagner.json` | file (no marker) | 2026-09-18 | |
 | `assets/lessons/unit_06_le_score.json` | file (no marker) | 2026-09-18 | |
 | `pubspec.yaml` | block: lesson content assets | 2026-09-18 | |
+| `pubspec.yaml` | block: analyzer dependency override for the Isar generator | 2026-09-24 | |
 | `.gitignore` | block: Firebase configuration | 2026-09-18 | |
 | `design/README.md` | file | 2026-09-17 | Project tooling and setup so study time goes to Flutter code. |
 | `README.md` | file | 2026-09-17 | Project tooling and setup so study time goes to Flutter code. |
