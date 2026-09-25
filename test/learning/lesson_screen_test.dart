@@ -485,7 +485,6 @@ void main() {
         expect(request.hand, _drillHand);
         expect(request.picked, [0, 12]);
         expect(request.answers, _drillAnswers);
-        expect(request.feedback, _drillFeedback);
 
         final retry = tester.widget<FilledButton>(
           find.widgetWithText(FilledButton, 'Réessayer'),

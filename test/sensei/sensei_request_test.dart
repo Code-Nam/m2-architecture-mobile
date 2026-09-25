@@ -9,8 +9,6 @@ SenseiRequest _quizMiss({int chosenIndex = 0}) => SenseiRequest.quizMiss(
   hand: const ['1m', '2m', '3m'],
   options: const ['4m', '5m', '6m', '7m'],
   chosenIndex: chosenIndex,
-  correctIndex: 1,
-  feedback: 'Regardez la suite logique.',
 );
 
 SenseiRequest _drillMiss({List<int> picked = const [0, 12]}) =>
@@ -19,7 +17,6 @@ SenseiRequest _drillMiss({List<int> picked = const [0, 12]}) =>
       hand: const ['1m', '2m', '3m', '4p'],
       picked: picked,
       answers: const [9, 10, 11],
-      feedback: 'DRILL FEEDBACK LINE',
     );
 
 void main() {

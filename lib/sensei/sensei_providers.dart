@@ -13,7 +13,11 @@ import 'package:tenpai/sensei/sensei_state.dart';
 const _system =
     'Tu es un sensei de riichi mahjong, patient et précis. '
     'Tu réponds en français, en trois phrases au plus, sans markdown, '
-    'sans emoji, sans salutation.';
+    'sans emoji, sans salutation. '
+    // AI-GENERATED (Claude) BEGIN — no-reveal rule for every request, Task 12 review
+    "Face à une erreur d'élève, tu ne nommes jamais la bonne réponse : "
+    "tu l'aides à la retrouver.";
+// AI-GENERATED (Claude) END
 
 /// One text model per app run, system instruction baked in; App Check is
 /// picked up by `FirebaseAI.googleAI()` itself. Never overridden in tests:

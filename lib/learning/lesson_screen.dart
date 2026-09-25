@@ -67,23 +67,30 @@ class _LessonBody extends ConsumerWidget {
       children: [
         _TopBar(progress: (session.blockIndex + 1) / lesson.blocks.length),
         Expanded(
-          // AI-GENERATED (Claude) BEGIN — arms point at the split widgets, Task 13
+          // AI-GENERATED (Claude) BEGIN — arms point at the split widgets, Task 13; keyed per block, Task 12 review
+          // Keyed by block index: a new block gets a fresh subtree, so the old
+          // sheet never slides out with the next block's state; « Réessayer »
+          // keeps the index, hence the same widgets.
           child: switch (lesson.blocks[session.blockIndex]) {
             final ExplanationBlock block => ExplanationBlockWidget(
+              key: ValueKey(session.blockIndex),
               block: block,
               onContinue: onContinue,
             ),
             final QuizBlock block => QuizBlockWidget(
+              key: ValueKey(session.blockIndex),
               block: block,
               session: session,
               onContinue: onContinue,
             ),
             final DrillBlock block => DrillBlockWidget(
+              key: ValueKey(session.blockIndex),
               block: block,
               session: session,
               onContinue: onContinue,
             ),
             final InteractiveBlock block => InteractiveBlockWidget(
+              key: ValueKey(session.blockIndex),
               block: block,
               session: session,
               onContinue: onContinue,

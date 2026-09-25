@@ -25,9 +25,16 @@ The design handoff (`design/handoff/`) ships 36 reference captures at
 
 ## Features
 
-- **Lesson path** — six units of short, illustrated lessons with immediate
-  feedback: Lire les tuiles, Les briques d'une main, La table, Le déroulé
-  d'une partie, Gagner, Le score.
+- **Lesson path** — seven units of short lessons with immediate feedback,
+  from unit 0 to unit 6: Déchiffrer les tuiles, Familles et suites, Les
+  briques d'une main, La table, Le déroulé d'une partie, Gagner, Le score.
+  Each lesson is built from four block types: an explanation (a tile and a
+  short text), a quiz (multiple choice over a hand), a drill (« find in the
+  hand »: tap every tile the prompt asks for), and an interactive block
+  (« complete the group »: pick the missing tile from a rack). A miss never
+  reveals the answer or lets the lesson move on: the sheet reads
+  « Réessayer » and resets the block, and on a quiz or drill miss the Sensei
+  explains the mistake without naming the correct answer.
 - **Yaku Dex** — a browsable catalog of scoring hands (yaku), served from a
   hosted JSON REST API. No public API for Riichi yaku exists, so the catalog
   is authored by hand and hosted as a static JSON file; the app fetches it
@@ -42,10 +49,12 @@ The design handoff (`design/handoff/`) ships 36 reference captures at
   whose offline persistence queues changes made without a network and
   replays them on reconnect. The Profil tab shows the account, the
   onboarding answers, XP, and a sign-out. Settings, the cached yaku catalog
-  and scan history stay on the device in Isar (planned).
-- **Sensei** — a patient AI explanation offered after a wrong quiz answer,
-  shown in a dedicated panel (seal `先`) that never blocks the quiz; it
-  covers loading, streaming, error, and offline states gracefully.
+  and scan history stay on the device in Isar — the two stores never hold
+  the same data.
+- **Sensei** — a patient AI explanation offered after a wrong quiz or drill
+  answer, shown in a dedicated panel (seal `先`) that never blocks the
+  lesson; it covers loading, streaming, error, and offline states
+  gracefully.
 - **Light and dark mode** — a full theme pair (warm, non-pure-black dark
   background; tile faces stay ivory in both).
 
@@ -61,18 +70,31 @@ Flutter 3.47 / Dart 3.13, targeting Android only. Declared in
   `json_serializable` for models and DTOs, `dio` for HTTP.
 - Outfit (400–700) and IBM Plex Mono (400–500) bundled as static TTFs under
   `assets/fonts/`, no `google_fonts`.
-- `flutter_svg` (planned) for tile art.
-- `image_picker` (planned) for the tile scanner.
-- Isar (planned, `isar_community` fork) as the on-device database for
-  local-only data: settings, cached yaku catalog, scan history. The
-  original `isar` package has not been published since 2023.
+- `flutter_svg` renders the tile art (one SVG per tile code under
+  `assets/tiles/`).
+- `image_picker` drives the tile scanner's single-shot camera capture.
+- Isar (`isar_community` fork) is the on-device database for local-only
+  data: settings, cached yaku catalog, scan history. The original `isar`
+  package has not been published since 2023.
 - `firebase_core`, `firebase_auth` (email/password and Google),
   `cloud_firestore` for the account, onboarding profile, and progress, with
   Firestore's built-in offline persistence doing the synchronisation.
 - `firebase_app_check` (Play Integrity in release, debug provider in debug
-  builds) protects Firestore and, once wired, Firebase AI Logic.
-- `firebase_ai` (planned) to run the Sensei explanation through Firebase AI
-  Logic, so no API key ships in the app and only the genuine app can call it.
+  builds) protects Firestore and Firebase AI Logic.
+- `firebase_ai` runs the Sensei explanation and the scanner's tile
+  identification through Firebase AI Logic (Gemini Developer API), so no API
+  key ships in the app and only the genuine app can call it.
+
+## Credits and licences
+
+- **Tile art**: the SVGs under `assets/tiles/` are from
+  FluffyStuff/riichi-mahjong-tiles, released under CC0 1.0 (public domain)
+  per that project's own README. No attribution is required by the licence;
+  it is credited here anyway.
+- **Fonts**: Outfit and IBM Plex Mono, bundled as static TTFs under
+  `assets/fonts/`, are licensed under the SIL Open Font License 1.1; the
+  full licence text ships alongside them (`assets/fonts/OFL-Outfit.txt`,
+  `assets/fonts/OFL-IBMPlexMono.txt`).
 
 ## Getting started
 

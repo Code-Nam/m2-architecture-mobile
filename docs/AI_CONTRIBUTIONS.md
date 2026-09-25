@@ -152,10 +152,10 @@ Rules:
 | `docs/plans/2026-09-25-content-polish.md` | file | 2026-09-25 | Plan written from the author's brainstorming answers; the author builds it. |
 | `docs/plans/2026-09-25-content-polish.md.tasks.json` | file (no marker) | 2026-09-25 | Task carry-over for the plan above. |
 | `lib/app/app_config.dart` | dartdoc | 2026-09-23 | Docs are time-consuming for the author; code stays author-written. |
-| `lib/sensei/sensei_request.dart` | dartdoc | 2026-09-23 | Docs are time-consuming for the author; code stays author-written. |
+| `lib/sensei/sensei_request.dart` | dartdoc; block: quizMiss without answer fields, block: drillMiss without feedback (Task 12 review, 2026-09-25, /implement) | 2026-09-23 | Docs are time-consuming for the author; code stays author-written. |
 | `lib/sensei/sensei_state.dart` | dartdoc | 2026-09-23 | Docs are time-consuming for the author; code stays author-written. |
 | `lib/sensei/sensei_repository.dart` | dartdoc | 2026-09-23 | Docs are time-consuming for the author; code stays author-written. |
-| `lib/sensei/sensei_providers.dart` | dartdoc; block: owned `_sub` + single `onDispose` in `build` (review finding, 2026-09-23, /implement) | 2026-09-23 | Docs are time-consuming for the author; code stays author-written. |
+| `lib/sensei/sensei_providers.dart` | dartdoc; block: owned `_sub` + single `onDispose` in `build` (review finding, 2026-09-23, /implement); block: no-reveal rule in the system instruction (Task 12 review, 2026-09-25, /implement) | 2026-09-23 | Docs are time-consuming for the author; code stays author-written. |
 | `lib/settings/settings_record.dart` | dartdoc | 2026-09-25 | Docs are time-consuming for the author; code stays author-written. |
 | `lib/scanner/scan_record.dart` | dartdoc | 2026-09-25 | Docs are time-consuming for the author; code stays author-written. |
 | `lib/yaku/yaku_record.dart` | dartdoc | 2026-09-25 | Docs are time-consuming for the author; code stays author-written. |
@@ -253,5 +253,5 @@ by Claude on 2026-09-25; the only edit is removing an empty, unused
 | `lib/learning/widgets/quiz_block_widget.dart` | file; code moved from author-written `lesson_screen.dart`, layout now via `CheckableBlockWidget` | 2026-09-25 | |
 | `lib/learning/widgets/drill_block_widget.dart` | file; code moved from author-written `lesson_screen.dart`, layout now via `CheckableBlockWidget` | 2026-09-25 | |
 | `lib/learning/widgets/interactive_block_widget.dart` | file; code moved from author-written `lesson_screen.dart`, layout now via `CheckableBlockWidget` | 2026-09-25 | |
-| `lib/learning/lesson_screen.dart` | block: block widget imports; block: switch arms to split widgets (Task 13) | 2026-09-25 | |
+| `lib/learning/lesson_screen.dart` | block: block widget imports; block: switch arms to split widgets (Task 13), keyed per block (Task 12 review) | 2026-09-25 | |
 | `test/content/lesson_assets_test.dart` | file | 2026-09-25 | |

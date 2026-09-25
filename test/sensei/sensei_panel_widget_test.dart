@@ -19,8 +19,6 @@ const _quizRequest = SenseiRequest.quizMiss(
   hand: ['1m', '2m', '3m'],
   options: ['4m', '5m', '6m', '7m'],
   chosenIndex: 0,
-  correctIndex: 1,
-  feedback: 'Regardez la suite logique.',
 );
 
 Future<void> _pumpPanel(

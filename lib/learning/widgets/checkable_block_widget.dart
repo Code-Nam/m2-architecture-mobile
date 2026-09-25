@@ -68,7 +68,16 @@ class CheckableBlockWidget extends StatelessWidget {
             offset: isAnswered ? Offset.zero : const Offset(0, 1),
             duration: AppTokens.duration,
             curve: AppTokens.curve,
-            child: sheet,
+            // Slid off-screen is not gone: until checked, the sheet takes no
+            // taps, no keyboard focus and says nothing to TalkBack, which
+            // would otherwise skip the block or read the verdict early.
+            child: IgnorePointer(
+              ignoring: !isAnswered,
+              child: ExcludeFocus(
+                excluding: !isAnswered,
+                child: ExcludeSemantics(excluding: !isAnswered, child: sheet),
+              ),
+            ),
           ),
         ),
       ],

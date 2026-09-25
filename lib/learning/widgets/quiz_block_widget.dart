@@ -45,8 +45,6 @@ class QuizBlockWidget extends ConsumerWidget {
             hand: block.hand,
             options: block.options,
             chosenIndex: chosen,
-            correctIndex: block.correctIndex,
-            feedback: block.feedback,
           )
         : null;
 
@@ -137,7 +135,8 @@ class _OptionGrid extends StatelessWidget {
     (false, true, _) => .selected,
     (true, true, true) => .correct,
     (true, true, false) => .incorrect,
-    _ => .normal,
+    (false, false, _) => .normal,
+    (true, false, _) => .normal,
   };
 }
 

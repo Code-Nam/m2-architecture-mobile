@@ -123,12 +123,12 @@ return drillMiss(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String question,  List<String> hand,  List<String> options,  int chosenIndex,  int correctIndex,  String feedback)?  quizMiss,TResult Function( Tile tile)?  tileContext,TResult Function( String prompt,  List<String> hand,  List<int> picked,  List<int> answers,  String feedback)?  drillMiss,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String question,  List<String> hand,  List<String> options,  int chosenIndex)?  quizMiss,TResult Function( Tile tile)?  tileContext,TResult Function( String prompt,  List<String> hand,  List<int> picked,  List<int> answers)?  drillMiss,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case QuizMissRequest() when quizMiss != null:
-return quizMiss(_that.question,_that.hand,_that.options,_that.chosenIndex,_that.correctIndex,_that.feedback);case TileContextRequest() when tileContext != null:
+return quizMiss(_that.question,_that.hand,_that.options,_that.chosenIndex);case TileContextRequest() when tileContext != null:
 return tileContext(_that.tile);case DrillMissRequest() when drillMiss != null:
-return drillMiss(_that.prompt,_that.hand,_that.picked,_that.answers,_that.feedback);case _:
+return drillMiss(_that.prompt,_that.hand,_that.picked,_that.answers);case _:
   return orElse();
 
 }
@@ -146,12 +146,12 @@ return drillMiss(_that.prompt,_that.hand,_that.picked,_that.answers,_that.feedba
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String question,  List<String> hand,  List<String> options,  int chosenIndex,  int correctIndex,  String feedback)  quizMiss,required TResult Function( Tile tile)  tileContext,required TResult Function( String prompt,  List<String> hand,  List<int> picked,  List<int> answers,  String feedback)  drillMiss,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String question,  List<String> hand,  List<String> options,  int chosenIndex)  quizMiss,required TResult Function( Tile tile)  tileContext,required TResult Function( String prompt,  List<String> hand,  List<int> picked,  List<int> answers)  drillMiss,}) {final _that = this;
 switch (_that) {
 case QuizMissRequest():
-return quizMiss(_that.question,_that.hand,_that.options,_that.chosenIndex,_that.correctIndex,_that.feedback);case TileContextRequest():
+return quizMiss(_that.question,_that.hand,_that.options,_that.chosenIndex);case TileContextRequest():
 return tileContext(_that.tile);case DrillMissRequest():
-return drillMiss(_that.prompt,_that.hand,_that.picked,_that.answers,_that.feedback);}
+return drillMiss(_that.prompt,_that.hand,_that.picked,_that.answers);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -165,12 +165,12 @@ return drillMiss(_that.prompt,_that.hand,_that.picked,_that.answers,_that.feedba
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String question,  List<String> hand,  List<String> options,  int chosenIndex,  int correctIndex,  String feedback)?  quizMiss,TResult? Function( Tile tile)?  tileContext,TResult? Function( String prompt,  List<String> hand,  List<int> picked,  List<int> answers,  String feedback)?  drillMiss,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String question,  List<String> hand,  List<String> options,  int chosenIndex)?  quizMiss,TResult? Function( Tile tile)?  tileContext,TResult? Function( String prompt,  List<String> hand,  List<int> picked,  List<int> answers)?  drillMiss,}) {final _that = this;
 switch (_that) {
 case QuizMissRequest() when quizMiss != null:
-return quizMiss(_that.question,_that.hand,_that.options,_that.chosenIndex,_that.correctIndex,_that.feedback);case TileContextRequest() when tileContext != null:
+return quizMiss(_that.question,_that.hand,_that.options,_that.chosenIndex);case TileContextRequest() when tileContext != null:
 return tileContext(_that.tile);case DrillMissRequest() when drillMiss != null:
-return drillMiss(_that.prompt,_that.hand,_that.picked,_that.answers,_that.feedback);case _:
+return drillMiss(_that.prompt,_that.hand,_that.picked,_that.answers);case _:
   return null;
 
 }
@@ -182,7 +182,7 @@ return drillMiss(_that.prompt,_that.hand,_that.picked,_that.answers,_that.feedba
 
 
 class QuizMissRequest implements SenseiRequest {
-  const QuizMissRequest({required this.question, required  List<String> hand, required  List<String> options, required this.chosenIndex, required this.correctIndex, required this.feedback}): _hand = hand,_options = options;
+  const QuizMissRequest({required this.question, required  List<String> hand, required  List<String> options, required this.chosenIndex}): _hand = hand,_options = options;
   
 
  final  String question;
@@ -201,8 +201,6 @@ class QuizMissRequest implements SenseiRequest {
 }
 
  final  int chosenIndex;
- final  int correctIndex;
- final  String feedback;
 
 /// Create a copy of SenseiRequest
 /// with the given fields replaced by the non-null parameter values.
@@ -214,18 +212,18 @@ $QuizMissRequestCopyWith<QuizMissRequest> get copyWith => _$QuizMissRequestCopyW
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is QuizMissRequest&&(identical(other.question, question) || other.question == question)&&const DeepCollectionEquality().equals(other.hand, _hand)&&const DeepCollectionEquality().equals(other.options, _options)&&(identical(other.chosenIndex, chosenIndex) || other.chosenIndex == chosenIndex)&&(identical(other.correctIndex, correctIndex) || other.correctIndex == correctIndex)&&(identical(other.feedback, feedback) || other.feedback == feedback));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is QuizMissRequest&&(identical(other.question, question) || other.question == question)&&const DeepCollectionEquality().equals(other.hand, _hand)&&const DeepCollectionEquality().equals(other.options, _options)&&(identical(other.chosenIndex, chosenIndex) || other.chosenIndex == chosenIndex));
 }
 
 
 @override
 int get hashCode {
-    return Object.hash(runtimeType,question,const DeepCollectionEquality().hash(_hand),const DeepCollectionEquality().hash(_options),chosenIndex,correctIndex,feedback);
+    return Object.hash(runtimeType,question,const DeepCollectionEquality().hash(_hand),const DeepCollectionEquality().hash(_options),chosenIndex);
 }
 
 @override
 String toString() {
-    return 'SenseiRequest.quizMiss(question: $question, hand: $hand, options: $options, chosenIndex: $chosenIndex, correctIndex: $correctIndex, feedback: $feedback)';
+    return 'SenseiRequest.quizMiss(question: $question, hand: $hand, options: $options, chosenIndex: $chosenIndex)';
 }
 
 
@@ -236,7 +234,7 @@ abstract mixin class $QuizMissRequestCopyWith<$Res> implements $SenseiRequestCop
   factory $QuizMissRequestCopyWith(QuizMissRequest value, $Res Function(QuizMissRequest) _then) = _$QuizMissRequestCopyWithImpl;
 @useResult
 $Res call({
- String question, List<String> hand, List<String> options, int chosenIndex, int correctIndex, String feedback
+ String question, List<String> hand, List<String> options, int chosenIndex
 });
 
 
@@ -253,15 +251,13 @@ class _$QuizMissRequestCopyWithImpl<$Res>
 
 /// Create a copy of SenseiRequest
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? question = null,Object? hand = null,Object? options = null,Object? chosenIndex = null,Object? correctIndex = null,Object? feedback = null,}) {
+@pragma('vm:prefer-inline') $Res call({Object? question = null,Object? hand = null,Object? options = null,Object? chosenIndex = null,}) {
   return _then(QuizMissRequest(
 question: null == question ? _self.question : question // ignore: cast_nullable_to_non_nullable
 as String,hand: null == hand ? _self._hand : hand // ignore: cast_nullable_to_non_nullable
 as List<String>,options: null == options ? _self._options : options // ignore: cast_nullable_to_non_nullable
 as List<String>,chosenIndex: null == chosenIndex ? _self.chosenIndex : chosenIndex // ignore: cast_nullable_to_non_nullable
-as int,correctIndex: null == correctIndex ? _self.correctIndex : correctIndex // ignore: cast_nullable_to_non_nullable
-as int,feedback: null == feedback ? _self.feedback : feedback // ignore: cast_nullable_to_non_nullable
-as String,
+as int,
   ));
 }
 
@@ -349,7 +345,7 @@ $TileCopyWith<$Res> get tile {
 
 
 class DrillMissRequest implements SenseiRequest {
-  const DrillMissRequest({required this.prompt, required  List<String> hand, required  List<int> picked, required  List<int> answers, required this.feedback}): _hand = hand,_picked = picked,_answers = answers;
+  const DrillMissRequest({required this.prompt, required  List<String> hand, required  List<int> picked, required  List<int> answers}): _hand = hand,_picked = picked,_answers = answers;
   
 
  final  String prompt;
@@ -374,7 +370,6 @@ class DrillMissRequest implements SenseiRequest {
   return EqualUnmodifiableListView(_answers);
 }
 
- final  String feedback;
 
 /// Create a copy of SenseiRequest
 /// with the given fields replaced by the non-null parameter values.
@@ -386,18 +381,18 @@ $DrillMissRequestCopyWith<DrillMissRequest> get copyWith => _$DrillMissRequestCo
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is DrillMissRequest&&(identical(other.prompt, prompt) || other.prompt == prompt)&&const DeepCollectionEquality().equals(other.hand, _hand)&&const DeepCollectionEquality().equals(other.picked, _picked)&&const DeepCollectionEquality().equals(other.answers, _answers)&&(identical(other.feedback, feedback) || other.feedback == feedback));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is DrillMissRequest&&(identical(other.prompt, prompt) || other.prompt == prompt)&&const DeepCollectionEquality().equals(other.hand, _hand)&&const DeepCollectionEquality().equals(other.picked, _picked)&&const DeepCollectionEquality().equals(other.answers, _answers));
 }
 
 
 @override
 int get hashCode {
-    return Object.hash(runtimeType,prompt,const DeepCollectionEquality().hash(_hand),const DeepCollectionEquality().hash(_picked),const DeepCollectionEquality().hash(_answers),feedback);
+    return Object.hash(runtimeType,prompt,const DeepCollectionEquality().hash(_hand),const DeepCollectionEquality().hash(_picked),const DeepCollectionEquality().hash(_answers));
 }
 
 @override
 String toString() {
-    return 'SenseiRequest.drillMiss(prompt: $prompt, hand: $hand, picked: $picked, answers: $answers, feedback: $feedback)';
+    return 'SenseiRequest.drillMiss(prompt: $prompt, hand: $hand, picked: $picked, answers: $answers)';
 }
 
 
@@ -408,7 +403,7 @@ abstract mixin class $DrillMissRequestCopyWith<$Res> implements $SenseiRequestCo
   factory $DrillMissRequestCopyWith(DrillMissRequest value, $Res Function(DrillMissRequest) _then) = _$DrillMissRequestCopyWithImpl;
 @useResult
 $Res call({
- String prompt, List<String> hand, List<int> picked, List<int> answers, String feedback
+ String prompt, List<String> hand, List<int> picked, List<int> answers
 });
 
 
@@ -425,14 +420,13 @@ class _$DrillMissRequestCopyWithImpl<$Res>
 
 /// Create a copy of SenseiRequest
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? prompt = null,Object? hand = null,Object? picked = null,Object? answers = null,Object? feedback = null,}) {
+@pragma('vm:prefer-inline') $Res call({Object? prompt = null,Object? hand = null,Object? picked = null,Object? answers = null,}) {
   return _then(DrillMissRequest(
 prompt: null == prompt ? _self.prompt : prompt // ignore: cast_nullable_to_non_nullable
 as String,hand: null == hand ? _self._hand : hand // ignore: cast_nullable_to_non_nullable
 as List<String>,picked: null == picked ? _self._picked : picked // ignore: cast_nullable_to_non_nullable
 as List<int>,answers: null == answers ? _self._answers : answers // ignore: cast_nullable_to_non_nullable
-as List<int>,feedback: null == feedback ? _self.feedback : feedback // ignore: cast_nullable_to_non_nullable
-as String,
+as List<int>,
   ));
 }
 

@@ -32,13 +32,11 @@ String _prompt(SenseiRequest request) => switch (request) {
     :final hand,
     :final options,
     :final chosenIndex,
-    :final feedback,
   ) =>
     'Question : $question. '
         'Main : ${hand.join(' ')}. '
         'Propositions : ${options.join(' / ')}. '
         "L'élève a choisi « ${options[chosenIndex]} ». "
-        'Indice de la leçon : $feedback. '
         'Explique pourquoi son choix ne convient pas, sans nommer la bonne réponse.',
   TileContextRequest(:final tile) =>
     'Tuile : ${tileName(tile)} (${tileFamily(tile)}). '
@@ -58,6 +56,6 @@ String _drillPrompt(DrillMissRequest r) {
   return 'Consigne : ${r.prompt}. Main : ${r.hand.join(' ')}. '
       "L'élève a choisi : ${r.picked.map((i) => r.hand[i]).join(' ')}. "
       'Tuiles en trop : ${wrong.isEmpty ? 'aucune' : wrong.join(' ')} ; '
-      'tuiles oubliées : $missing. Indice : ${r.feedback}. '
+      'tuiles oubliées : $missing. '
       "Explique l'erreur sans jamais nommer les tuiles attendues.";
 }

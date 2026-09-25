@@ -47,7 +47,6 @@ class DrillBlockWidget extends ConsumerWidget {
             hand: block.hand,
             picked: session.picked.toList()..sort(),
             answers: block.answers,
-            feedback: block.feedback,
           )
         : null;
     return CheckableBlockWidget(
