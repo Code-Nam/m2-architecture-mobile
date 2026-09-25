@@ -2,10 +2,13 @@ import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tenpai/app/app_config.dart';
 import 'package:tenpai/learning/lesson_providers.dart';
+import 'package:tenpai/local/isar_providers.dart';
 import 'package:tenpai/progress/progress_providers.dart';
 import 'package:tenpai/progress/user_progress.dart';
 import 'package:tenpai/shared/models/unit.dart';
 import 'package:tenpai/shared/theme/app_tokens.dart';
+import 'package:tenpai/yaku/cached_yaku_repository.dart';
+import 'package:tenpai/yaku/isar_yaku_cache_source.dart';
 import 'package:tenpai/yaku/yaku.dart';
 import 'package:tenpai/yaku/yaku_remote_source.dart';
 import 'package:tenpai/yaku/yaku_repository.dart';
@@ -25,10 +28,13 @@ final _dioProvider = Provider<Dio>(
   ),
 );
 
-/// Swap point for the catalog: override with a fake in tests, with the
-/// Isar-cached implementation at M4.
+/// Swap point for the catalog: override with a fake in tests. Network first,
+/// Isar cache when offline (`CachedYakuRepository`).
 final yakuRepositoryProvider = Provider<YakuRepository>(
-  (ref) => YakuRepositoryImpl(YakuRemoteSource(ref.watch(_dioProvider))),
+  (ref) => CachedYakuRepository(
+    YakuRepositoryImpl(YakuRemoteSource(ref.watch(_dioProvider))),
+    IsarYakuCacheSource(ref.watch(isarProvider)),
+  ),
 );
 
 /// The whole catalog, fetched once per app run and kept while the user
