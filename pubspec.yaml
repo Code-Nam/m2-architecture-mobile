@@ -28,6 +28,7 @@ dependencies:
     isar_community: ^3.3.2
     isar_community_flutter_libs: ^3.3.2
     path_provider: ^2.1.6
+    flutter_svg: ^2.3.0
 dev_dependencies:
     flutter_test:
         sdk: flutter
@@ -45,6 +46,7 @@ flutter:
     # One JSON per unit under assets/lessons/, read by the lesson asset source.
     assets:
         - assets/lessons/
+        - assets/tiles/
     # AI-GENERATED (Claude) END — lesson content assets
 
     # AI-GENERATED (Claude) BEGIN — bundled fonts

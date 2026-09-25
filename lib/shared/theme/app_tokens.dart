@@ -137,6 +137,10 @@ abstract final class AppTokens {
   /// Frame height as a fraction of tile height (44 of 88 in the handoff).
   static const backFrameHeightFactor = 44 / 88;
 
+  /// Margin around the SVG symbol as a share of tile width, so the art
+  /// never touches the bevel bands; applied on all four sides.
+  static const symbolInsetFactor = 0.08;
+
   //* Bevel
 
   /// Top edge highlight of a face-up tile, drawn as a foreground gradient.

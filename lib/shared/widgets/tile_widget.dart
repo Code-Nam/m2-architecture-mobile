@@ -1,3 +1,4 @@
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:tenpai/shared/models/tile.dart';
 import 'package:tenpai/shared/theme/app_colors.dart';
@@ -60,7 +61,7 @@ class TileWidget extends StatelessWidget {
             borderRadius: BorderRadius.circular(size.radius),
             boxShadow: _shadows(scheme),
           ),
-          child: state == .faceDown ? _backFrame() : _symbol(theme, colors),
+          child: state == .faceDown ? _backFrame() : _symbol(),
         ),
         if (badge != null)
           Positioned(
@@ -129,13 +130,12 @@ class TileWidget extends StatelessWidget {
     ),
   );
 
-  Widget _symbol(ThemeData theme, AppColors colors) => Center(
-    child: Text(
-      tile.code,
-      style: theme.textTheme.titleMedium?.copyWith(
-        color: tile.isRed ? colors.vermillionText : colors.tileInk,
-      ),
-    ),
+  /// CC0 art from `assets/tiles/<code>.svg`: symbol only on a transparent
+  /// 3:4 canvas (the face is ours), colours baked in, red fives included.
+  /// `contain` fits it into our 64:88 box without cropping.
+  Widget _symbol() => Padding(
+    padding: EdgeInsets.all(size.width * AppTokens.symbolInsetFactor),
+    child: SvgPicture.asset('assets/tiles/${tile.code}.svg'),
   );
 
   BoxDecoration _bevel() {

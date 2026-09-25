@@ -6,7 +6,7 @@ import 'package:tenpai/shared/widgets/tile_state.dart';
 import 'package:tenpai/shared/widgets/tile_widget.dart';
 
 final _sample = Tile.parse('1m');
-final _red = Tile.parse('5pr');
+final _red = Tile.parse('5mr');
 
 /// Debug gallery of every [TileState] x [TileSize]
 class TileGalleryScreen extends StatelessWidget {

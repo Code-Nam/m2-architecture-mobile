@@ -78,3 +78,5 @@ firestore-debug.log
 ui-debug.log
 .firebase/
 # AI-GENERATED (Claude) END — Firestore rules test harness
+
+test/**/failures/

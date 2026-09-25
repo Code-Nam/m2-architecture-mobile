@@ -118,7 +118,6 @@ final class AppColors extends ThemeExtension<AppColors> {
     required this.tileBackBottom,
     required this.viewfinderBg,
     required this.viewfinderBracket,
-    required this.tileInk,
   });
 
   /// Primary pressed / hover fill.
@@ -195,9 +194,6 @@ final class AppColors extends ThemeExtension<AppColors> {
   /// Face-down tile gradient end.
   final Color tileBackBottom;
 
-  /// Symbol ink that stays the same in dark mode.
-  final Color tileInk;
-
   /// Scanner full-screen background.
   final Color viewfinderBg;
 
@@ -230,7 +226,6 @@ final class AppColors extends ThemeExtension<AppColors> {
     Color? tileFaceBottom,
     Color? tileBackTop,
     Color? tileBackBottom,
-    Color? tileInk,
     Color? viewfinderBg,
     Color? viewfinderBracket,
   }) => AppColors(
@@ -258,7 +253,6 @@ final class AppColors extends ThemeExtension<AppColors> {
     tileFaceBottom: tileFaceBottom ?? this.tileFaceBottom,
     tileBackTop: tileBackTop ?? this.tileBackTop,
     tileBackBottom: tileBackBottom ?? this.tileBackBottom,
-    tileInk: tileInk ?? this.tileInk,
     viewfinderBg: viewfinderBg ?? this.viewfinderBg,
     viewfinderBracket: viewfinderBracket ?? this.viewfinderBracket,
   );
@@ -299,7 +293,6 @@ final class AppColors extends ThemeExtension<AppColors> {
           tileFaceBottom: Color.lerp(tileFaceBottom, other.tileFaceBottom, t)!,
           tileBackTop: Color.lerp(tileBackTop, other.tileBackTop, t)!,
           tileBackBottom: Color.lerp(tileBackBottom, other.tileBackBottom, t)!,
-          tileInk: Color.lerp(tileInk, other.tileInk, t)!,
           viewfinderBg: Color.lerp(viewfinderBg, other.viewfinderBg, t)!,
           viewfinderBracket: Color.lerp(
             viewfinderBracket,
@@ -335,7 +328,6 @@ const lightColors = AppColors(
   tileFaceBottom: _Palette.tileFaceBottom,
   tileBackTop: _Palette.tileBackTop,
   tileBackBottom: _Palette.tileBackBottom,
-  tileInk: _Palette.ink,
   viewfinderBg: _Palette.viewfinderBg,
   viewfinderBracket: _Palette.viewfinderBracket,
 );
@@ -366,7 +358,6 @@ const darkColors = AppColors(
   tileFaceBottom: _Palette.tileFaceBottom,
   tileBackTop: _Palette.tileBackTop,
   tileBackBottom: _Palette.tileBackBottom,
-  tileInk: _Palette.ink,
   viewfinderBg: _Palette.viewfinderBg,
   viewfinderBracket: _Palette.viewfinderBracket,
 );
