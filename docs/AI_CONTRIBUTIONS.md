@@ -146,6 +146,8 @@ Rules:
 | `docs/plans/2026-09-23-yaku.md.tasks.json` | file (no marker) | 2026-09-23 | Task carry-over for the plan above. |
 | `docs/plans/2026-09-23-sensei.md` | file | 2026-09-23 | Plan written from the author's brainstorming answers; the author builds it. |
 | `docs/plans/2026-09-23-sensei.md.tasks.json` | file (no marker) | 2026-09-23 | Task carry-over for the plan above. |
+| `docs/plans/2026-09-25-isar.md` | file | 2026-09-25 | Plan written from the author's brainstorming answers; the author builds it. |
+| `docs/plans/2026-09-25-isar.md.tasks.json` | file (no marker) | 2026-09-25 | Task carry-over for the plan above. |
 | `lib/app/app_config.dart` | dartdoc | 2026-09-23 | Docs are time-consuming for the author; code stays author-written. |
 | `lib/sensei/sensei_request.dart` | dartdoc | 2026-09-23 | Docs are time-consuming for the author; code stays author-written. |
 | `lib/sensei/sensei_state.dart` | dartdoc | 2026-09-23 | Docs are time-consuming for the author; code stays author-written. |

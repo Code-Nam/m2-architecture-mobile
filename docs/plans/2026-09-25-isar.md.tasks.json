@@ -1,0 +1,77 @@
+{
+  "planPath": "docs/plans/2026-09-25-isar.md",
+  "tasks": [
+    {
+      "id": 0,
+      "subject": "Task 0: Dependency path_provider + Isar.open on device",
+      "status": "in_progress",
+      "blockedBy": [],
+      "description": "**Goal:** `flutter pub add path_provider` (^2.1.6). `lib/local/isar_providers.dart`: `isarProvider = Provider<Isar>((_) => throw UnimplementedError('override in main'))`. `lib/main.dart`: `final dir = await getApplicationDocumentsDirectory(); final isar = await Isar.open([], directory: dir.path);` then `ProviderScope(overrides: [isarProvider.overrideWithValue(isar)], child: TenpaiApp())`. Entry import is `package:isar_community/isar.dart`.\n\n**Files:**\n- pubspec.yaml\n- lib/local/isar_providers.dart\n- lib/main.dart\n\n**Acceptance Criteria:**\n- [ ] fresh flutter run boots, no Isar error in the console\n- [ ] debugPrint(isar.directory) shows the app files dir (temporary)\n\n**Verify:** flutter pub get && flutter analyze, then flutter run\n\n```json:metadata\n{\"verifyCommand\": \"flutter pub get && flutter analyze, then flutter run\", \"acceptanceCriteria\": [\"fresh flutter run boots, no Isar error in the console\", \"debugPrint(isar.directory) shows the app files dir (temporary)\"], \"modelTier\": \"mechanical\", \"owner\": \"user (Claude confirms before add)\", \"files\": [\"pubspec.yaml\", \"lib/local/isar_providers.dart\", \"lib/main.dart\"]}\n```"
+    },
+    {
+      "id": 1,
+      "subject": "Task 1: Collections + codegen (settings, scan, yaku records)",
+      "status": "pending",
+      "blockedBy": [
+        0
+      ],
+      "description": "**Goal:** `lib/settings/settings_record.dart` (`@collection class SettingsRecord { Id id = 0; @enumerated ThemeMode themeMode = ThemeMode.system; }`), `lib/scanner/scan_record.dart` (`Id id = Isar.autoIncrement; late String code; @Index() late DateTime scannedAt;`), `lib/yaku/yaku_record.dart` (every Yaku field, `@enumerated YakuTier tier`, `List<String> tiles`, nullable `hanOpen` / `unlockUnit`; `Yaku toYaku()` and `YakuRecord.fromYaku(Yaku)`). `dart run build_runner build -d`; add the three schemas to `Isar.open`. If `@enumerated ThemeMode` (enum from Flutter) does not generate, store `int themeModeIndex` and map in the repository; note it in the plan.\n\n**Files:**\n- lib/settings/settings_record.dart\n- lib/scanner/scan_record.dart\n- lib/yaku/yaku_record.dart\n- lib/main.dart\n\n**Acceptance Criteria:**\n- [ ] three .g.dart files generated\n- [ ] flutter analyze clean\n- [ ] app still boots with the schemas\n\n**Verify:** flutter analyze && dart run tool/check_conventions.dart\n\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && dart run tool/check_conventions.dart\", \"acceptanceCriteria\": [\"three .g.dart files generated\", \"flutter analyze clean\", \"app still boots with the schemas\"], \"modelTier\": \"mechanical\", \"owner\": \"user\", \"files\": [\"lib/settings/settings_record.dart\", \"lib/scanner/scan_record.dart\", \"lib/yaku/yaku_record.dart\", \"lib/main.dart\"]}\n```"
+    },
+    {
+      "id": 2,
+      "subject": "Task 2: Repositories: settings, scan history, yaku cache + CachedYakuRepository",
+      "status": "pending",
+      "blockedBy": [
+        1
+      ],
+      "description": "**Goal:** `SettingsRepository` + `IsarSettingsRepository(this._isar)` (`themeMode()` reads row 0 or `system`; `setThemeMode` = `writeTxn(put)`). `ScanHistoryRepository` + `IsarScanHistoryRepository` (`add(Tile)` = `writeTxn(put(ScanRecord..code = tile.code..scannedAt = DateTime.now()))`; `watch()` = `isar.scanRecords.where().sortByScannedAtDesc().watch(fireImmediately: true)`). `YakuCacheSource` (`read()`, `replace(list)`) + `IsarYakuCacheSource` (`replace` = one `writeTxn` with `clear()` + `putAll`). `CachedYakuRepository(this._remote, this._cache) implements YakuRepository`: network first, cache fallback, rethrow on empty cache, `debugPrint` on fallback.\n\n**Files:**\n- lib/settings/settings_repository.dart\n- lib/settings/isar_settings_repository.dart\n- lib/scanner/scan_history_repository.dart\n- lib/scanner/isar_scan_history_repository.dart\n- lib/yaku/yaku_cache_source.dart\n- lib/yaku/isar_yaku_cache_source.dart\n- lib/yaku/cached_yaku_repository.dart\n\n**Acceptance Criteria:**\n- [ ] CachedYakuRepository policy unit-testable with fakes (remote ok → replace called; remote throws + cache → cached list; remote throws + empty → rethrow)\n- [ ] only the Isar impls import isar_community\n\n**Verify:** flutter analyze && dart run tool/check_conventions.dart\n\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && dart run tool/check_conventions.dart\", \"acceptanceCriteria\": [\"CachedYakuRepository policy unit-testable with fakes (remote ok → replace called; remote throws + cache → cached list; remote throws + empty → rethrow)\", \"only the Isar impls import isar_community\"], \"modelTier\": \"standard\", \"owner\": \"user\", \"files\": [\"lib/settings/settings_repository.dart\", \"lib/settings/isar_settings_repository.dart\", \"lib/scanner/scan_history_repository.dart\", \"lib/scanner/isar_scan_history_repository.dart\", \"lib/yaku/yaku_cache_source.dart\", \"lib/yaku/isar_yaku_cache_source.dart\", \"lib/yaku/cached_yaku_repository.dart\"]}\n```"
+    },
+    {
+      "id": 3,
+      "subject": "Task 3: Providers + wiring: theme mode, scan hook, cached catalog",
+      "status": "pending",
+      "blockedBy": [
+        2
+      ],
+      "description": "**Goal:** `lib/settings/settings_providers.dart`: `settingsRepositoryProvider`, `themeModeProvider = AsyncNotifierProvider<ThemeModeNotifier, ThemeMode>` (`build` → repository, `set(mode)` writes then `state = AsyncData(mode)`). `app.dart`: `themeMode: ref.watch(themeModeProvider).value ?? ThemeMode.system`. `scanner_providers.dart`: `scanHistoryRepositoryProvider`, `scanHistoryProvider = StreamProvider<List<ScanRecord>>`, `masteredTilesProvider = Provider<int>` (distinct codes), `scan()` after `found` → `try { await add(tile) } catch (e, s) { debugPrint }`. `yaku_providers.dart`: `yakuRepositoryProvider` → `CachedYakuRepository(YakuRepositoryImpl(remote), IsarYakuCacheSource(isar))`.\n\n**Files:**\n- lib/settings/settings_providers.dart\n- lib/app/app.dart\n- lib/scanner/scanner_providers.dart\n- lib/yaku/yaku_providers.dart\n\n**Acceptance Criteria:**\n- [ ] emulator: scan a tile, kill, relaunch → mastered count 1\n- [ ] Dex loads online once, then loads in airplane mode after a restart\n- [ ] theme provider resolves to system on a fresh install\n\n**Verify:** flutter analyze && dart run tool/check_conventions.dart, then emulator\n\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && dart run tool/check_conventions.dart, then emulator\", \"acceptanceCriteria\": [\"emulator: scan a tile, kill, relaunch → mastered count 1\", \"Dex loads online once, then loads in airplane mode after a restart\", \"theme provider resolves to system on a fresh install\"], \"modelTier\": \"standard\", \"owner\": \"user\", \"files\": [\"lib/settings/settings_providers.dart\", \"lib/app/app.dart\", \"lib/scanner/scanner_providers.dart\", \"lib/yaku/yaku_providers.dart\"]}\n```"
+    },
+    {
+      "id": 4,
+      "subject": "Task 4: SettingsScreen + /settings route + gear",
+      "status": "pending",
+      "blockedBy": [
+        3
+      ],
+      "description": "**Goal:** `lib/settings/settings_screen.dart` (`SettingsScreen`): title « Réglages », card with « Thème » label and `SegmentedButton<ThemeMode>` « Système / Clair / Sombre », disabled while loading. `router.dart`: `AppRoutes.settings = '/settings'` outside the shell. `lesson_path_screen.dart:128`: gear `onPressed: () => context.push(AppRoutes.settings)`.\n\n**Files:**\n- lib/settings/settings_screen.dart\n- lib/app/router.dart\n- lib/learning/lesson_path_screen.dart\n\n**Acceptance Criteria:**\n- [ ] emulator: « Sombre » → dark at once; kill + relaunch → still dark\n- [ ] « Système » follows the device\n- [ ] tokens only, French verbatim\n\n**Verify:** flutter analyze && dart run tool/check_conventions.dart, then visual\n\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && dart run tool/check_conventions.dart, then visual\", \"acceptanceCriteria\": [\"emulator: « Sombre » → dark at once; kill + relaunch → still dark\", \"« Système » follows the device\", \"tokens only, French verbatim\"], \"modelTier\": \"standard\", \"owner\": \"user\", \"files\": [\"lib/settings/settings_screen.dart\", \"lib/app/router.dart\", \"lib/learning/lesson_path_screen.dart\"]}\n```"
+    },
+    {
+      "id": 5,
+      "subject": "Task 5: ScanHistoryScreen + Profil « Tuiles maîtrisées » stat",
+      "status": "pending",
+      "blockedBy": [
+        3
+      ],
+      "description": "**Goal:** `lib/scanner/scan_history_screen.dart` (`ScanHistoryScreen`): title « Tuiles scannées », `ListView.builder` rows `TileWidget(size: .regular)` + `tileName` + date `jj/mm/aaaa` by hand; empty state « Aucune tuile scannée pour l'instant. »; `RetryWidget` on error. `router.dart`: `AppRoutes.scanHistory = '/scanner/history'` outside the shell. `profile_screen.dart`: third `_StatCard` « Tuiles maîtrisées » from `masteredTilesProvider`, `InkWell` → `context.push(AppRoutes.scanHistory)`.\n\n**Files:**\n- lib/scanner/scan_history_screen.dart\n- lib/app/router.dart\n- lib/profile/profile_screen.dart\n\n**Acceptance Criteria:**\n- [ ] stat counts distinct tiles\n- [ ] list newest first with names and dates; empty state on a fresh install\n- [ ] dark mode\n\n**Verify:** flutter analyze && dart run tool/check_conventions.dart, then visual\n\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && dart run tool/check_conventions.dart, then visual\", \"acceptanceCriteria\": [\"stat counts distinct tiles\", \"list newest first with names and dates; empty state on a fresh install\", \"dark mode\"], \"modelTier\": \"standard\", \"owner\": \"user\", \"files\": [\"lib/scanner/scan_history_screen.dart\", \"lib/app/router.dart\", \"lib/profile/profile_screen.dart\"]}\n```"
+    },
+    {
+      "id": 6,
+      "subject": "Task 6: Tests: fakes, cached repository policy, settings + history screens",
+      "status": "pending",
+      "blockedBy": [
+        4,
+        5
+      ],
+      "description": "**Goal:** `test/fakes/fake_settings_repository.dart`, `fake_scan_history_repository.dart` (StreamController-backed, records `add` calls, can throw), `fake_yaku_cache_source.dart`. `test/yaku/cached_yaku_repository_test.dart` (three policy cases). `test/settings/settings_providers_test.dart`, `test/settings/settings_screen_test.dart` (segment tap → repository written). `test/scanner/scan_history_screen_test.dart` (rows, empty state). Extend `test/scanner/scanner_providers_test.dart` (found → add once; add throws → state still found) and `test/profile/profile_screen_test.dart` (stat value). No test opens Isar; widget tests override `isarProvider`-free repositories only.\n\n**Files:**\n- test/fakes/\n- test/yaku/cached_yaku_repository_test.dart\n- test/settings/\n- test/scanner/scan_history_screen_test.dart\n- test/scanner/scanner_providers_test.dart\n- test/profile/profile_screen_test.dart\n\n**Acceptance Criteria:**\n- [ ] flutter test green\n- [ ] no test imports isar_community\n\n**Verify:** flutter test\n\n```json:metadata\n{\"verifyCommand\": \"flutter test\", \"acceptanceCriteria\": [\"flutter test green\", \"no test imports isar_community\"], \"modelTier\": \"standard\", \"owner\": \"test-writer\", \"files\": [\"test/fakes/\", \"test/yaku/cached_yaku_repository_test.dart\", \"test/settings/\", \"test/scanner/scan_history_screen_test.dart\", \"test/scanner/scanner_providers_test.dart\", \"test/profile/profile_screen_test.dart\"]}\n```"
+    },
+    {
+      "id": 7,
+      "subject": "Task 7: Device check + reviewer pass + handover",
+      "status": "pending",
+      "blockedBy": [
+        6
+      ],
+      "description": "**Goal:** Emulator: theme survives a kill; history survives a kill and drives the stat; Dex in airplane mode after one online load; dark mode on both new screens. flutter-reviewer on `lib/local/`, `lib/settings/`, `cached_yaku_repository.dart`, the two scanner additions; findings applied. ROADMAP Isar row + next-session block; deviations logged; `tasks.json` done with hash.\n\n**Files:**\n- docs/ROADMAP.md\n- docs/plans/2026-09-25-isar.md.tasks.json\n\n**Acceptance Criteria:**\n- [ ] flutter analyze && flutter test && dart run tool/check_conventions.dart clean\n- [ ] ROADMAP + tasks.json updated together\n- [ ] reviewer findings applied or logged\n\n**Verify:** flutter analyze && flutter test && dart run tool/check_conventions.dart\n\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && flutter test && dart run tool/check_conventions.dart\", \"acceptanceCriteria\": [\"flutter analyze && flutter test && dart run tool/check_conventions.dart clean\", \"ROADMAP + tasks.json updated together\", \"reviewer findings applied or logged\"], \"modelTier\": \"standard\", \"owner\": \"Claude + user\", \"files\": [\"docs/ROADMAP.md\", \"docs/plans/2026-09-25-isar.md.tasks.json\"]}\n```"
+    }
+  ],
+  "lastUpdated": "2026-09-25T08:39:32.481868+00:00"
+}

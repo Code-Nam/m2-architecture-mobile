@@ -201,6 +201,16 @@ pre-dimmed (no connectivity probe); no « Voir la fiche »; three-sentence
 limit by prompt only; 先 from the system CJK font; cold-start offline shows
 `failed`; screens 09–12 / 15–16 checked live, not screenshot-compared.
 
+**State on 2026-09-25 (Isar planned):** brainstorming done, plan approved:
+`docs/plans/2026-09-25-isar.md` + `.tasks.json` (Tasks 0–7, all `pending`).
+Decisions: scope = theme-mode setting + scan history + cached yaku catalog;
+history shown as the Profil « Tuiles maîtrisées » stat opening a plain list;
+`path_provider` approved; `lib/local/` holds only `isarProvider` (opened in
+`main`, injected by `ProviderScope` override), collections / repositories /
+screens per feature (`lib/settings/` new). Unverified until Task 1:
+`@enumerated` on Flutter's `ThemeMode`. App Check enforcement flipped?
+(user, 2026-09-24, not confirmed in chat).
+
 **Next: milestone 6, content + polish** (remaining units, drill/interactive
 blocks, gallery parity, SVG tile art when the designer delivers). Before it
 or alongside: flip App Check enforcement for Firestore and AI Logic (AI Logic
@@ -380,6 +390,7 @@ Plan: [docs/plans/2026-09-17-project-setup.md](plans/2026-09-17-project-setup.md
 | 3 — Scanner | image_picker single shot, fake identifier, scan result card | done 2026-09-23 (`c091442`): `image_picker ^1.2.3` (no manifest change), `lib/scanner/` (sealed `ScanState`, French tile labels, `TilePhotoSource` + impl, `TileIdentifier` + deterministic fake, three providers + `ScanNotifier`, `ScannerScreen` with viewfinder + result/failure sheets), `PrimaryButtonWidget` shared, scanner tokens; device-checked light/dark vs handoff 14/16/17; reviewer pass applied; 28 new tests, suite at 156 |
 | 4 — Firebase | `firebase_auth` (email + Google) + App Check + Firestore progress (offline persistence on, Security Rules written and tested) behind the existing repository interfaces; onboarding 01–04; minimal Profil. Isar deferred to its own plan | done 2026-09-23 (`81c75e7`): project `tenpai-3f494`, `lib/auth/` + `lib/onboarding/` + `lib/profile/` + Firestore progress, router as provider with auth/profile redirect, `firestore.rules` + 17 emulator tests, device-checked light/dark incl. offline queue, reviewer pass applied, 35 new tests, suite at 185; App Check enforcement toggle pending (author) |
 | 5 — AI | Firebase AI Logic (`firebase_ai ^4.0.0`, Gemini Developer API, `gemini-3.5-flash-lite`) behind App Check: `lib/sensei/` (request/state, repository + Firebase impl, providers + `SenseiNotifier`, `SenseiPanelWidget`), Gemini tile identifier behind `TileIdentifier`, « Pourquoi ? » under a quiz miss, streamed context under a scanned tile | done 2026-09-23 (`31124f6`): [docs/plans/2026-09-23-sensei.md](plans/2026-09-23-sensei.md) Tasks 0–9 done, device-checked on the emulator (quiz miss + scan stream), reviewer pass applied, 30 new tests, suite at 210; App Check enforcement still to flip (mandatory for AI Logic from 2026-11-02) |
+| Isar — local database | `isar_community` (analyzer override) + `path_provider`: theme-mode setting, scan history (Profil « Tuiles maîtrisées » + list), cached yaku catalog (network first, cache fallback) behind the existing `YakuRepository` | plan approved 2026-09-25: [docs/plans/2026-09-25-isar.md](plans/2026-09-25-isar.md) + `.tasks.json`, Task 0 in progress (`path_provider` added 2026-09-25), Tasks 1–7 `pending`; user builds |
 | 6 — Content + polish | remaining units, drill/interactive blocks, gallery parity | not started |
 
 ## Design import
