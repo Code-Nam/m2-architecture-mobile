@@ -246,3 +246,10 @@ Not listed: `design/handoff/` (designer's export, not code), `assets/fonts/`
 by Claude on 2026-09-25; the only edit is removing an empty, unused
 `<pattern/>` that flutter_svg mis-parses as swallowing the whole drawing), generated `*.g.dart` / `*.freezed.dart`
 (produced by build_runner from student code).
+| `lib/learning/widgets/checkable_block_widget.dart` | file | 2026-09-25 | |
+| `lib/learning/widgets/feedback_sheet_widget.dart` | file; code moved from author-written `lesson_screen.dart` (public rename + field dartdoc by Claude) | 2026-09-25 | |
+| `lib/learning/widgets/explanation_block_widget.dart` | file; code moved from author-written `lesson_screen.dart` (public rename + field dartdoc by Claude) | 2026-09-25 | |
+| `lib/learning/widgets/quiz_block_widget.dart` | file; code moved from author-written `lesson_screen.dart`, layout now via `CheckableBlockWidget` | 2026-09-25 | |
+| `lib/learning/widgets/drill_block_widget.dart` | file; code moved from author-written `lesson_screen.dart`, layout now via `CheckableBlockWidget` | 2026-09-25 | |
+| `lib/learning/widgets/interactive_block_widget.dart` | file; code moved from author-written `lesson_screen.dart`, layout now via `CheckableBlockWidget` | 2026-09-25 | |
+| `lib/learning/lesson_screen.dart` | block: block widget imports; block: switch arms to split widgets (Task 13) | 2026-09-25 | |

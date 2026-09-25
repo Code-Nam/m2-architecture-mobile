@@ -47,10 +47,11 @@
     {
       "id": 5,
       "subject": "Task 5: Content validation test",
-      "status": "in_progress",
+      "status": "pending",
       "blockedBy": [
         2,
-        4
+        4,
+        13
       ],
       "description": "**Goal:** `test/content/lesson_assets_test.dart`: load every assets/lessons/*.json via Unit.fromJson; every code parses; quiz/interactive indices and drill answers in range; 13-tile hands; unique lesson ids; xp > 0.\n\n**Files:**\n- test/content/lesson_assets_test.dart\n\n**Acceptance Criteria:**\n- [ ] green on unit 1\n- [ ] a deliberately broken copy fails (checked once)\n\n**Verify:** flutter test test/content\n\n```json:metadata\n{\"verifyCommand\": \"flutter test test/content\", \"acceptanceCriteria\": [\"green on unit 1\", \"a deliberately broken copy fails (checked once)\"], \"modelTier\": \"standard\", \"owner\": \"test-writer\", \"files\": [\"test/content/lesson_assets_test.dart\"]}\n```"
     },
@@ -119,6 +120,15 @@
         11
       ],
       "description": "**Goal:** Full path unit 1 → 6 on the emulator, dark mode; flutter-reviewer on the new views and TileWidget; doc-reviewer for README credits; ROADMAP + tasks.json with hash; deviations.\n\n**Files:**\n- docs/ROADMAP.md\n- README.md\n\n**Acceptance Criteria:**\n- [ ] flutter analyze && flutter test && dart run tool/check_conventions.dart clean\n- [ ] every unit playable\n- [ ] reviewer findings applied or logged\n\n**Verify:** flutter analyze && flutter test && dart run tool/check_conventions.dart\n\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && flutter test && dart run tool/check_conventions.dart\", \"acceptanceCriteria\": [\"flutter analyze && flutter test && dart run tool/check_conventions.dart clean\", \"every unit playable\", \"reviewer findings applied or logged\"], \"modelTier\": \"standard\", \"owner\": \"Claude + user\", \"files\": [\"docs/ROADMAP.md\", \"README.md\"]}\n```"
+    },
+    {
+      "id": 13,
+      "subject": "Task 13: Split lesson_screen.dart",
+      "status": "in_progress",
+      "blockedBy": [
+        4
+      ],
+      "description": "**Goal:** Break the 794-line lesson_screen.dart into lib/learning/widgets/ public *_widget.dart files (explanation, quiz, drill, interactive, feedback sheet, shared checkable layout); helpers used by one view stay private in its file; lesson_screen keeps LessonScreen, _LessonBody, _TopBar. Pure move, no behaviour change. Done before Task 5.\n\n**Files:**\n- lib/learning/lesson_screen.dart\n- lib/learning/widgets/\n\n**Acceptance Criteria:**\n- [ ] flutter test unchanged (228)\n- [ ] emulator plays unit 1 end to end\n- [ ] lesson_screen.dart about 150 lines\n\n**Verify:** flutter analyze && dart run tool/check_conventions.dart && flutter test, then emulator\n\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && dart run tool/check_conventions.dart && flutter test, then emulator\", \"acceptanceCriteria\": [\"flutter test unchanged (228)\", \"emulator plays unit 1 end to end\", \"lesson_screen.dart about 150 lines\"], \"modelTier\": \"standard\", \"owner\": \"user\", \"files\": [\"lib/learning/lesson_screen.dart\", \"lib/learning/widgets/\"]}\n```\n**Progress 2026-09-25** (/implement): lesson_screen.dart 794 → 148 lines; lib/learning/widgets/ checkable_block (new shared layout), feedback_sheet (+ private _WhyLink), explanation, quiz (+ _HandRow/_OptionGrid/_OptionCard), drill (+ _DrillHand), interactive (+ _GroupRow/_EmptySlot/_Rack). analyze clean, 228 pass, conventions: no finding in learning/. Remaining: emulator unit 1, light + dark."
     }
   ],
   "lastUpdated": "2026-09-25T13:42:52.873476+00:00"

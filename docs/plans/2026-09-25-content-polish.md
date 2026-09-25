@@ -105,6 +105,13 @@ Verify for every lib task: `flutter analyze && dart run tool/check_conventions.d
 4. **Interactive model + view** — user: factory + asserts,
    `_InteractiveBlockView`. Accept: emulator with a temporary interactive
    block: slot fills, states, sheet; dark mode.
+13. **Split `lesson_screen.dart`** (added 2026-09-25, done before Task 5;
+   id 13 to keep ids stable) — user: 794 lines, 17 classes. Block views
+   move to `lib/learning/widgets/` as public `*_widget.dart` files (user's
+   choice over `part`), each keeping its only-used-here helpers private;
+   the three answerable views share one layout widget. Pure move, no
+   behaviour change. Accept: `flutter test` unchanged (228), emulator plays
+   unit 1 end to end, `lesson_screen.dart` ≈ 150 lines.
 5. **Content validation test** — test-writer: `test/content/lesson_assets_test.dart`
    loads every `assets/lessons/*.json` through `Unit.fromJson`; checks every
    code with `Tile.parse`, quiz `correctIndex`, drill answers, interactive
