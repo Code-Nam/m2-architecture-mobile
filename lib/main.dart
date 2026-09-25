@@ -9,6 +9,7 @@ import 'package:tenpai/app/app.dart';
 import 'package:tenpai/app/app_config.dart';
 import 'package:tenpai/firebase_options.dart';
 import 'package:tenpai/local/isar_providers.dart';
+import 'package:tenpai/settings/settings_record.dart';
 
 /// Entry point. `ProviderScope` is the Riverpod root; it lives here, not in
 /// `TenpaiApp`, so tests can wrap `TenpaiApp` in a scope with overrides.
@@ -32,7 +33,7 @@ void main() async {
         : const AndroidPlayIntegrityProvider(),
   );
   final dir = await getApplicationDocumentsDirectory();
-  final isar = await Isar.open([], directory: dir.path);
+  final isar = await Isar.open([SettingsRecordSchema], directory: dir.path);
   runApp(
     ProviderScope(
       overrides: [isarProvider.overrideWithValue(isar)],
