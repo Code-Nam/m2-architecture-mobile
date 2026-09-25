@@ -14,6 +14,7 @@ import 'package:tenpai/sensei/sensei_providers.dart';
 import 'package:tenpai/shared/models/tile.dart';
 import 'package:tenpai/shared/theme/app_theme.dart';
 
+import '../fakes/fake_scan_history_repository.dart';
 import '../fakes/fake_sensei_repository.dart';
 import '../fakes/fake_tile_identifier.dart';
 import '../fakes/fake_tile_photo_source.dart';
@@ -42,6 +43,9 @@ Future<void> _pumpScanner(
         tileIdentifierProvider.overrideWithValue(identifier),
         senseiRepositoryProvider.overrideWithValue(
           sensei ?? ScriptedSenseiRepository(),
+        ),
+        scanHistoryRepositoryProvider.overrideWithValue(
+          FakeScanHistoryRepository(),
         ),
       ],
       retry: (_, _) => null,

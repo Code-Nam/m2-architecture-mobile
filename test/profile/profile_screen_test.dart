@@ -10,11 +10,14 @@ import 'package:tenpai/profile/profile_screen.dart';
 import 'package:tenpai/profile/user_profile.dart';
 import 'package:tenpai/progress/progress_providers.dart';
 import 'package:tenpai/progress/user_progress.dart';
+import 'package:tenpai/scanner/scan_record.dart';
+import 'package:tenpai/scanner/scanner_providers.dart';
 import 'package:tenpai/shared/theme/app_theme.dart';
 
 import '../fakes/fake_auth_repository.dart';
 import '../fakes/fake_profile_repository.dart';
 import '../fakes/fake_progress_repository.dart';
+import '../fakes/fake_scan_history_repository.dart';
 
 const _user = AuthUser(
   uid: 'u1',
@@ -22,7 +25,10 @@ const _user = AuthUser(
   providerId: 'password',
 );
 
-Future<FakeAuthRepository> _pumpProfile(WidgetTester tester) async {
+Future<FakeAuthRepository> _pumpProfile(
+  WidgetTester tester, {
+  List<ScanRecord> scanHistory = const [],
+}) async {
   final authRepository = FakeAuthRepository();
   await tester.pumpWidget(
     ProviderScope(
@@ -41,6 +47,9 @@ Future<FakeAuthRepository> _pumpProfile(WidgetTester tester) async {
           FakeProgressRepository(
             const UserProgress(completedLessonIds: {'l1', 'l2'}, xp: 30),
           ),
+        ),
+        scanHistoryRepositoryProvider.overrideWithValue(
+          FakeScanHistoryRepository(seed: scanHistory),
         ),
       ],
       retry: (_, _) => null,
@@ -64,6 +73,31 @@ void main() {
       expect(find.text('2'), findsOneWidget);
       expect(find.text("J'ai vu jouer"), findsOneWidget);
       expect(find.text('10 min / jour'), findsOneWidget);
+    });
+
+    testWidgets('Tuiles maîtrisées shows the distinct scanned-tile count', (
+      tester,
+    ) async {
+      await _pumpProfile(
+        tester,
+        scanHistory: [
+          ScanRecord()
+            ..code = '1m'
+            ..scannedAt = DateTime(2026, 9, 25),
+          ScanRecord()
+            ..code = '2m'
+            ..scannedAt = DateTime(2026, 9, 24),
+          ScanRecord()
+            ..code = '3p'
+            ..scannedAt = DateTime(2026, 9, 23),
+          ScanRecord()
+            ..code = '1m'
+            ..scannedAt = DateTime(2026, 9, 22),
+        ],
+      );
+
+      expect(find.text('Tuiles maîtrisées'.toUpperCase()), findsOneWidget);
+      expect(find.text('3'), findsOneWidget);
     });
 
     testWidgets('tapping Se déconnecter calls signOut', (tester) async {

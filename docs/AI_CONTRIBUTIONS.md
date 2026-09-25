@@ -194,6 +194,13 @@ Rules:
 | `test/fakes/fake_tile_photo_source.dart` | file | 2026-09-23 | Test scaffolding is tedious and teaches no Flutter concept; the code under test is author-written. |
 | `test/fakes/fake_tile_identifier.dart` | file | 2026-09-23 | Test scaffolding is tedious and teaches no Flutter concept; the code under test is author-written. |
 | `test/fakes/fake_sensei_repository.dart` | file | 2026-09-23 | Test scaffolding is tedious and teaches no Flutter concept; the code under test is author-written. |
+| `test/fakes/fake_settings_repository.dart` | file | 2026-09-25 | Test scaffolding is tedious and teaches no Flutter concept; the code under test is author-written. |
+| `test/fakes/fake_scan_history_repository.dart` | file | 2026-09-25 | Test scaffolding is tedious and teaches no Flutter concept; the code under test is author-written. |
+| `test/fakes/fake_yaku_cache_source.dart` | file | 2026-09-25 | Test scaffolding is tedious and teaches no Flutter concept; the code under test is author-written. |
+| `test/yaku/cached_yaku_repository_test.dart` | file | 2026-09-25 | Test scaffolding is tedious and teaches no Flutter concept; the code under test is author-written. |
+| `test/settings/settings_providers_test.dart` | file | 2026-09-25 | Test scaffolding is tedious and teaches no Flutter concept; the code under test is author-written. |
+| `test/settings/settings_screen_test.dart` | file | 2026-09-25 | Test scaffolding is tedious and teaches no Flutter concept; the code under test is author-written. |
+| `test/scanner/scan_history_screen_test.dart` | file | 2026-09-25 | Test scaffolding is tedious and teaches no Flutter concept; the code under test is author-written. |
 | `test/sensei/sensei_request_test.dart` | file | 2026-09-23 | Test scaffolding is tedious and teaches no Flutter concept; the code under test is author-written. |
 | `test/sensei/sensei_state_test.dart` | file | 2026-09-23 | Test scaffolding is tedious and teaches no Flutter concept; the code under test is author-written. |
 | `test/sensei/sensei_providers_test.dart` | file | 2026-09-23 | Test scaffolding is tedious and teaches no Flutter concept; the code under test is author-written. |

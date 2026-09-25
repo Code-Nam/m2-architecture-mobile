@@ -5,12 +5,15 @@ import 'dart:typed_data';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:tenpai/scanner/scan_history_repository.dart';
+import 'package:tenpai/scanner/scan_record.dart';
 import 'package:tenpai/scanner/scan_state.dart';
 import 'package:tenpai/scanner/scanner_providers.dart';
 import 'package:tenpai/scanner/tile_identifier.dart';
 import 'package:tenpai/scanner/tile_photo_source.dart';
 import 'package:tenpai/shared/models/tile.dart';
 
+import '../fakes/fake_scan_history_repository.dart';
 import '../fakes/fake_tile_identifier.dart';
 import '../fakes/fake_tile_photo_source.dart';
 
@@ -19,15 +22,21 @@ const _tile = Tile(suit: .pin, number: 5, isRed: true);
 
 /// Container with both scanner dependencies swapped for scripted fakes and a
 /// listener collecting every state, first one included, so a test can assert
-/// the whole walk and not only the final state.
+/// the whole walk and not only the final state. [history] defaults to a
+/// fresh fake so a test that does not care about the write path never
+/// touches `isarProvider` through the real repository.
 ({ProviderContainer container, List<ScanState> states}) _harness({
   required TilePhotoSource photos,
   required TileIdentifier identifier,
+  ScanHistoryRepository? history,
 }) {
   final container = ProviderContainer.test(
     overrides: [
       tilePhotoSourceProvider.overrideWithValue(photos),
       tileIdentifierProvider.overrideWithValue(identifier),
+      scanHistoryRepositoryProvider.overrideWithValue(
+        history ?? FakeScanHistoryRepository(),
+      ),
     ],
   );
   final states = <ScanState>[];
@@ -167,6 +176,76 @@ void main() {
         const ScanState.analysing(),
         const ScanState.found(_tile),
       ]);
+    });
+
+    test('a recognised tile is appended to the scan history', () async {
+      final history = FakeScanHistoryRepository();
+      final (:container, states: _) = _harness(
+        photos: FakeTilePhotoSource.returning(_photo),
+        identifier: ScriptedTileIdentifier(tile: _tile),
+        history: history,
+      );
+
+      await container.read(scanProvider.notifier).scan();
+
+      expect(history.addCalls, [_tile]);
+    });
+
+    test('nothing recognised does not touch the scan history', () async {
+      final history = FakeScanHistoryRepository();
+      final (:container, states: _) = _harness(
+        photos: FakeTilePhotoSource.returning(_photo),
+        identifier: ScriptedTileIdentifier(),
+        history: history,
+      );
+
+      await container.read(scanProvider.notifier).scan();
+
+      expect(history.addCalls, isEmpty);
+    });
+
+    test('a history write failure still leaves the result on screen', () async {
+      final history = FakeScanHistoryRepository()
+        ..error = Exception('disk full');
+      final (:container, states: _) = _harness(
+        photos: FakeTilePhotoSource.returning(_photo),
+        identifier: ScriptedTileIdentifier(tile: _tile),
+        history: history,
+      );
+
+      await container.read(scanProvider.notifier).scan();
+
+      expect(container.read(scanProvider), const ScanState.found(_tile));
+    });
+  });
+
+  group('masteredTilesProvider', () {
+    test('counts distinct codes, not entries', () async {
+      final history = FakeScanHistoryRepository(
+        seed: [
+          ScanRecord()
+            ..code = '5p'
+            ..scannedAt = DateTime(2026, 9, 25),
+          ScanRecord()
+            ..code = '1m'
+            ..scannedAt = DateTime(2026, 9, 24),
+          ScanRecord()
+            ..code = '5p'
+            ..scannedAt = DateTime(2026, 9, 23),
+        ],
+      );
+      final container = ProviderContainer.test(
+        overrides: [scanHistoryRepositoryProvider.overrideWithValue(history)],
+        retry: (_, _) => null,
+      );
+      // A plain `read` leaves nothing listening to `scanHistoryProvider`, so
+      // Riverpod pauses the underlying stream subscription and `.future`
+      // never resolves; `listen` keeps it active for the length of the test.
+      container.listen(scanHistoryProvider, (_, _) {});
+
+      await container.read(scanHistoryProvider.future);
+
+      expect(container.read(masteredTilesProvider), 2);
     });
   });
 }
