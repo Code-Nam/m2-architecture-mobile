@@ -1,5 +1,173 @@
 {
   "id": "unit_06",
   "title": "Le score",
-  "lessons": []
+  "lessons": [
+    {
+      "id": "unit_06_lesson_01",
+      "title": "Compter les han",
+      "xp": 10,
+      "blocks": [
+        {
+          "type": "explanation",
+          "tile": "3m",
+          "title": "Les han",
+          "body": "Chaque yaku vaut des han, et chaque dora en ajoute un. Plus une main compte de han, plus elle rapporte. Riichi, tanyao et un brelan de valeur valent un han chacun."
+        },
+        {
+          "type": "explanation",
+          "tile": "5pr",
+          "title": "Les cinq rouges",
+          "body": "Certaines tuiles 5 sont rouges. Chacune compte comme une dora : un han de plus. Comme la dora, elle ne remplace pas un yaku."
+        },
+        {
+          "type": "interactive",
+          "prompt": "Complétez la suite en gagnant un han.",
+          "group": [
+            "4p",
+            "6p"
+          ],
+          "slot": 1,
+          "rack": [
+            "4s",
+            "5pr",
+            "6p",
+            "3p"
+          ],
+          "correctIndex": 1,
+          "feedback": "Le cinq rouge complète 4-5-6 de cercles, et il ajoute un han."
+        },
+        {
+          "type": "drill",
+          "prompt": "L'indicateur est le 4 de cercles. Touchez toutes vos dora, cinq rouges comprises.",
+          "hand": [
+            "2m",
+            "3m",
+            "4m",
+            "4p",
+            "5p",
+            "5pr",
+            "6p",
+            "3s",
+            "4s",
+            "5sr",
+            "7s",
+            "7s",
+            "8s"
+          ],
+          "answers": [
+            4,
+            5,
+            9
+          ],
+          "feedback": "Les deux 5 de cercles sont dora grâce à l'indicateur, et chaque cinq rouge compte en plus : quatre han de dora dans cette main."
+        },
+        {
+          "type": "quiz",
+          "question": "Riichi, tanyao et une dora : combien de han ? Répondez avec un caractère.",
+          "hand": [
+            "2m",
+            "3m",
+            "4m",
+            "6p",
+            "7p",
+            "8p",
+            "3s",
+            "4s",
+            "5s",
+            "6s",
+            "7s",
+            "2p",
+            "2p"
+          ],
+          "options": [
+            "2m",
+            "3m",
+            "4m",
+            "1m"
+          ],
+          "correctIndex": 1,
+          "feedback": "三 : un han pour riichi, un pour tanyao, un pour la dora."
+        }
+      ]
+    },
+    {
+      "id": "unit_06_lesson_02",
+      "title": "Des han aux points",
+      "xp": 10,
+      "blocks": [
+        {
+          "type": "explanation",
+          "tile": "5m",
+          "title": "Le mangan",
+          "body": "À partir de cinq han, on arrête de compter finement : la main vaut un mangan, 8 000 points. En dessous, le score dépend aussi des fu, un calcul de détail que vous verrez plus tard."
+        },
+        {
+          "type": "quiz",
+          "question": "Riichi, tsumo main fermée, un brelan de dragons et deux dora : combien de han ? Répondez avec un caractère.",
+          "hand": [
+            "2m",
+            "3m",
+            "4m",
+            "6p",
+            "7p",
+            "8p",
+            "3s",
+            "4s",
+            "5s",
+            "6z",
+            "6z",
+            "6z",
+            "9p"
+          ],
+          "options": [
+            "4m",
+            "5m",
+            "6m",
+            "3m"
+          ],
+          "correctIndex": 1,
+          "feedback": "五 : un han chacun pour riichi, tsumo et le brelan de dragons, plus deux pour les dora. Cinq han : un mangan."
+        },
+        {
+          "type": "explanation",
+          "tile": "1z",
+          "title": "Le bonus du donneur",
+          "body": "Le donneur, le joueur est, gagne une fois et demie plus : un mangan lui rapporte 12 000 points. En contrepartie, il paie davantage quand un autre joueur gagne sur tsumo."
+        },
+        {
+          "type": "explanation",
+          "tile": "9m",
+          "title": "Au-delà du mangan",
+          "body": "6 et 7 han : haneman, 12 000 points. De 8 à 10 : baiman, 16 000. 11 et 12 : sanbaiman, 24 000. Et tout en haut, le yakuman : 32 000 points."
+        },
+        {
+          "type": "quiz",
+          "question": "Un joueur qui n'est pas donneur gagne un mangan. Combien de milliers de points ? Répondez avec un caractère.",
+          "hand": [
+            "1m",
+            "2m",
+            "3m",
+            "4p",
+            "5p",
+            "6p",
+            "7s",
+            "8s",
+            "9s",
+            "5z",
+            "5z",
+            "5z",
+            "1z"
+          ],
+          "options": [
+            "6m",
+            "9m",
+            "8m",
+            "5m"
+          ],
+          "correctIndex": 2,
+          "feedback": "八 : un mangan rapporte 8 000 points, 12 000 au donneur."
+        }
+      ]
+    }
+  ]
 }

@@ -86,20 +86,20 @@
     {
       "id": 9,
       "subject": "Task 9: Unit 5 content",
-      "status": "in_progress",
+      "status": "completed",
       "blockedBy": [
         5
       ],
-      "description": "**Goal:** Draft assets/lessons/unit_05_*.json: 2–3 lessons, 4–6 blocks each, all four block types across the unit, French in the handoff tone; `flutter test test/content` green; author reviews Mahjong + French, edits, commits.\n\n**Files:**\n- assets/lessons/unit_05_*.json\n\n**Acceptance Criteria:**\n- [ ] author's « unit 5 ok »\n- [ ] flutter test test/content green\n- [ ] one lesson played on the emulator\n\n**Verify:** flutter test test/content\n\n```json:metadata\n{\"verifyCommand\": \"flutter test test/content\", \"acceptanceCriteria\": [\"author's « unit 5 ok »\", \"flutter test test/content green\", \"one lesson played on the emulator\"], \"modelTier\": \"standard\", \"owner\": \"Claude drafts, user reviews\", \"files\": [\"assets/lessons/unit_05_*.json\"]}\n```\n**Progress 2026-09-25**: drafted 2 lessons (Il faut un yaku; Deux yaku faciles: tanyao, chiitoitsu), 11 blocks, all four types; quizzes checked with the scratch verifier (two deliberately have a second completing tile that lacks the yaku, which the question excludes); content test green. Awaiting author review."
+      "description": "**Goal:** Draft assets/lessons/unit_05_*.json: 2–3 lessons, 4–6 blocks each, all four block types across the unit, French in the handoff tone; `flutter test test/content` green; author reviews Mahjong + French, edits, commits.\n\n**Files:**\n- assets/lessons/unit_05_*.json\n\n**Acceptance Criteria:**\n- [ ] author's « unit 5 ok »\n- [ ] flutter test test/content green\n- [ ] one lesson played on the emulator\n\n**Verify:** flutter test test/content\n\n```json:metadata\n{\"verifyCommand\": \"flutter test test/content\", \"acceptanceCriteria\": [\"author's « unit 5 ok »\", \"flutter test test/content green\", \"one lesson played on the emulator\"], \"modelTier\": \"standard\", \"owner\": \"Claude drafts, user reviews\", \"files\": [\"assets/lessons/unit_05_*.json\"]}\n```\n**Progress 2026-09-25**: drafted 2 lessons (Il faut un yaku; Deux yaku faciles: tanyao, chiitoitsu), 11 blocks, all four types; quizzes checked with the scratch verifier (two deliberately have a second completing tile that lacks the yaku, which the question excludes); content test green. Awaiting author review.\n**Done 2026-09-25**: author approved, committed."
     },
     {
       "id": 10,
       "subject": "Task 10: Unit 6 content",
-      "status": "pending",
+      "status": "in_progress",
       "blockedBy": [
         5
       ],
-      "description": "**Goal:** Draft assets/lessons/unit_06_*.json: 2–3 lessons, 4–6 blocks each, all four block types across the unit, French in the handoff tone; `flutter test test/content` green; author reviews Mahjong + French, edits, commits.\n\n**Files:**\n- assets/lessons/unit_06_*.json\n\n**Acceptance Criteria:**\n- [ ] author's « unit 6 ok »\n- [ ] flutter test test/content green\n- [ ] one lesson played on the emulator\n\n**Verify:** flutter test test/content\n\n```json:metadata\n{\"verifyCommand\": \"flutter test test/content\", \"acceptanceCriteria\": [\"author's « unit 6 ok »\", \"flutter test test/content green\", \"one lesson played on the emulator\"], \"modelTier\": \"standard\", \"owner\": \"Claude drafts, user reviews\", \"files\": [\"assets/lessons/unit_06_*.json\"]}\n```"
+      "description": "**Goal:** Draft assets/lessons/unit_06_*.json: 2–3 lessons, 4–6 blocks each, all four block types across the unit, French in the handoff tone; `flutter test test/content` green; author reviews Mahjong + French, edits, commits.\n\n**Files:**\n- assets/lessons/unit_06_*.json\n\n**Acceptance Criteria:**\n- [ ] author's « unit 6 ok »\n- [ ] flutter test test/content green\n- [ ] one lesson played on the emulator\n\n**Verify:** flutter test test/content\n\n```json:metadata\n{\"verifyCommand\": \"flutter test test/content\", \"acceptanceCriteria\": [\"author's « unit 6 ok »\", \"flutter test test/content green\", \"one lesson played on the emulator\"], \"modelTier\": \"standard\", \"owner\": \"Claude drafts, user reviews\", \"files\": [\"assets/lessons/unit_06_*.json\"]}\n```\n**Progress 2026-09-25**: drafted 2 lessons (Compter les han: red fives, dora count; Des han aux points: mangan, dealer bonus, limits), 10 blocks, all four types. Numeric answers use caractère tiles as numerals (reading taught in unit 0); none of those quiz options completes its hand (scratch verifier). Content test green (127). Awaiting author review."
     },
     {
       "id": 11,
