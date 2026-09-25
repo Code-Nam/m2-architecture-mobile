@@ -77,8 +77,7 @@ class TileWidget extends StatelessWidget {
 
   LinearGradient _gradient(AppColors colors) {
     final (top, bottom) = switch (state) {
-      .normal ||
-      .selected ||
+      .normal || .selected => (colors.tileFaceTop, colors.tileFaceBottom),
       .correct => (colors.successTint, colors.successTintDeep),
       .incorrect => (colors.errorTint, colors.errorTintDeep),
       .faceDown => (colors.tileBackTop, colors.tileBackBottom),
