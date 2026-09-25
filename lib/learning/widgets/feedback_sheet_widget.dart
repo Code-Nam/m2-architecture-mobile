@@ -9,7 +9,8 @@ import 'package:tenpai/shared/theme/app_colors.dart';
 import 'package:tenpai/shared/theme/app_tokens.dart';
 import 'package:tenpai/shared/widgets/primary_button_widget.dart';
 
-/// Bottom sheet of handoff screens 7–8; the « Continuer » CTA lives in it.
+/// Bottom sheet of handoff screens 7–8; its one CTA is « Continuer » on a
+/// hit and « Réessayer » on a miss.
 /// Always in the tree, slid off-screen by the parent until the block is
 /// answered, so opening animates instead of popping in. Sized to content
 /// (`mainAxisSize: .min`), never to the screen.
@@ -46,7 +47,8 @@ class FeedbackSheetWidget extends ConsumerWidget {
   /// Null before checking and on a hit, hence no request exists off-screen.
   final SenseiRequest? whyRequest;
 
-  /// Second line on a miss; the quiz keeps the default, the drill passes its own.
+  /// Second line on a miss; the quiz keeps the default, drill and
+  /// interactive pass their own. Never names the answer.
   final String missLine;
 
   @override

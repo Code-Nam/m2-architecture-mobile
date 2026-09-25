@@ -51,8 +51,8 @@ class LessonSessionNotifier extends Notifier<LessonSession> {
     state = state.copyWith(selectedOption: option);
   }
 
-  /// No-op without a selection (an option, or at least one drill pick)
-  ///  or when already answered
+  /// No-op without a selection (an option, or at least one drill pick) or
+  /// when already answered.
   void check() {
     if (state.selectedOption == null && state.picked.isEmpty) return;
     if (state.isAnswered) return;

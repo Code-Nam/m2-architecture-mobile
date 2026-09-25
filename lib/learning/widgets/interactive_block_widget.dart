@@ -162,6 +162,9 @@ class _Rack extends StatelessWidget {
         ),
     ],
   );
+
+  /// Before checking only the pick shows; after, the pick turns correct or
+  /// incorrect. The right tile stays plain on a miss: the learner retries.
   TileState _stateOf(int i) =>
       switch ((isAnswered, selected == i, i == correctIndex)) {
         (false, true, _) => .selected,

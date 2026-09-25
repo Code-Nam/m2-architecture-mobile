@@ -76,8 +76,8 @@ class DrillBlockWidget extends ConsumerWidget {
   }
 }
 
-/// The 13 tiles at option size (48×66, tappable, unlike the 24 px quiz
-/// hand) wrapped 7 + 6: 7 × 48 + 6 × 2 = 348 fits the 350 dp column. Row
+/// The 13 tiles at hand size (44×61, tappable, unlike the 24 px quiz
+/// hand) wrapped 7 + 6: 7 × 44 + 6 × 6 = 344 fits the 350 dp column. Row
 /// spacing exceeds the selected lift so a raised tile clears the row above.
 class _DrillHand extends StatelessWidget {
   const _DrillHand({
