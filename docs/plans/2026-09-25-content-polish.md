@@ -135,7 +135,8 @@ tile art everywhere (path nodes, hands, options, Dex, scanner, history).
 Drill and interactive have no handoff screen (built from the quiz screen's
 parts and tokens); the Sensei covers quiz misses only; tile art is a CC0
 third-party set, not the designer's; lesson prose is Claude-drafted and
-author-reviewed.
+author-reviewed. Dark-mode highlight halo at 0.45 alpha instead of 0.15 (invisible on
+the dark background); a `hand` tile size (44×61) for the tappable drill hand.
 
 ## Task carry-over
 

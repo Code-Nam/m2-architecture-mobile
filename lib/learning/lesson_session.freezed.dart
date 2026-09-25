@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$LessonSession {
 
- String get lessonId; int get blockIndex; int? get selectedOption; bool get isAnswered;
+ String get lessonId; int get blockIndex; int? get selectedOption; bool get isAnswered; Set<int> get picked;
 /// Create a copy of LessonSession
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -27,20 +27,20 @@ $LessonSessionCopyWith<LessonSession> get copyWith => _$LessonSessionCopyWithImp
 @override
 bool operator ==(Object other) {
   final _this = this as LessonSession;
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is LessonSession&&(identical(other.lessonId, _this.lessonId) || other.lessonId == _this.lessonId)&&(identical(other.blockIndex, _this.blockIndex) || other.blockIndex == _this.blockIndex)&&(identical(other.selectedOption, _this.selectedOption) || other.selectedOption == _this.selectedOption)&&(identical(other.isAnswered, _this.isAnswered) || other.isAnswered == _this.isAnswered));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LessonSession&&(identical(other.lessonId, _this.lessonId) || other.lessonId == _this.lessonId)&&(identical(other.blockIndex, _this.blockIndex) || other.blockIndex == _this.blockIndex)&&(identical(other.selectedOption, _this.selectedOption) || other.selectedOption == _this.selectedOption)&&(identical(other.isAnswered, _this.isAnswered) || other.isAnswered == _this.isAnswered)&&const DeepCollectionEquality().equals(other.picked, _this.picked));
 }
 
 
 @override
 int get hashCode {
   final _this = this as LessonSession;
-  return Object.hash(runtimeType,_this.lessonId,_this.blockIndex,_this.selectedOption,_this.isAnswered);
+  return Object.hash(runtimeType,_this.lessonId,_this.blockIndex,_this.selectedOption,_this.isAnswered,const DeepCollectionEquality().hash(_this.picked));
 }
 
 @override
 String toString() {
   final _this = this as LessonSession;
-  return 'LessonSession(lessonId: ${_this.lessonId}, blockIndex: ${_this.blockIndex}, selectedOption: ${_this.selectedOption}, isAnswered: ${_this.isAnswered})';
+  return 'LessonSession(lessonId: ${_this.lessonId}, blockIndex: ${_this.blockIndex}, selectedOption: ${_this.selectedOption}, isAnswered: ${_this.isAnswered}, picked: ${_this.picked})';
 }
 
 
@@ -51,7 +51,7 @@ abstract mixin class $LessonSessionCopyWith<$Res>  {
   factory $LessonSessionCopyWith(LessonSession value, $Res Function(LessonSession) _then) = _$LessonSessionCopyWithImpl;
 @useResult
 $Res call({
- String lessonId, int blockIndex, int? selectedOption, bool isAnswered
+ String lessonId, int blockIndex, int? selectedOption, bool isAnswered, Set<int> picked
 });
 
 
@@ -68,13 +68,14 @@ class _$LessonSessionCopyWithImpl<$Res>
 
 /// Create a copy of LessonSession
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? lessonId = null,Object? blockIndex = null,Object? selectedOption = freezed,Object? isAnswered = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? lessonId = null,Object? blockIndex = null,Object? selectedOption = freezed,Object? isAnswered = null,Object? picked = null,}) {
   return _then(LessonSession(
 lessonId: null == lessonId ? _self.lessonId : lessonId // ignore: cast_nullable_to_non_nullable
 as String,blockIndex: null == blockIndex ? _self.blockIndex : blockIndex // ignore: cast_nullable_to_non_nullable
 as int,selectedOption: freezed == selectedOption ? _self.selectedOption : selectedOption // ignore: cast_nullable_to_non_nullable
 as int?,isAnswered: null == isAnswered ? _self.isAnswered : isAnswered // ignore: cast_nullable_to_non_nullable
-as bool,
+as bool,picked: null == picked ? _self.picked : picked // ignore: cast_nullable_to_non_nullable
+as Set<int>,
   ));
 }
 
@@ -159,10 +160,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String lessonId,  int blockIndex,  int? selectedOption,  bool isAnswered)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String lessonId,  int blockIndex,  int? selectedOption,  bool isAnswered,  Set<int> picked)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _LessonSession() when $default != null:
-return $default(_that.lessonId,_that.blockIndex,_that.selectedOption,_that.isAnswered);case _:
+return $default(_that.lessonId,_that.blockIndex,_that.selectedOption,_that.isAnswered,_that.picked);case _:
   return orElse();
 
 }
@@ -180,10 +181,10 @@ return $default(_that.lessonId,_that.blockIndex,_that.selectedOption,_that.isAns
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String lessonId,  int blockIndex,  int? selectedOption,  bool isAnswered)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String lessonId,  int blockIndex,  int? selectedOption,  bool isAnswered,  Set<int> picked)  $default,) {final _that = this;
 switch (_that) {
 case _LessonSession():
-return $default(_that.lessonId,_that.blockIndex,_that.selectedOption,_that.isAnswered);case _:
+return $default(_that.lessonId,_that.blockIndex,_that.selectedOption,_that.isAnswered,_that.picked);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -200,10 +201,10 @@ return $default(_that.lessonId,_that.blockIndex,_that.selectedOption,_that.isAns
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String lessonId,  int blockIndex,  int? selectedOption,  bool isAnswered)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String lessonId,  int blockIndex,  int? selectedOption,  bool isAnswered,  Set<int> picked)?  $default,) {final _that = this;
 switch (_that) {
 case _LessonSession() when $default != null:
-return $default(_that.lessonId,_that.blockIndex,_that.selectedOption,_that.isAnswered);case _:
+return $default(_that.lessonId,_that.blockIndex,_that.selectedOption,_that.isAnswered,_that.picked);case _:
   return null;
 
 }
@@ -215,13 +216,20 @@ return $default(_that.lessonId,_that.blockIndex,_that.selectedOption,_that.isAns
 
 
 class _LessonSession implements LessonSession {
-  const _LessonSession({required this.lessonId, required this.blockIndex, this.selectedOption, required this.isAnswered});
+  const _LessonSession({required this.lessonId, required this.blockIndex, this.selectedOption, required this.isAnswered,  Set<int> picked = const <int>{}}): _picked = picked;
   
 
 @override final  String lessonId;
 @override final  int blockIndex;
 @override final  int? selectedOption;
 @override final  bool isAnswered;
+ final  Set<int> _picked;
+@override@JsonKey() Set<int> get picked {
+  if (_picked is EqualUnmodifiableSetView) return _picked;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableSetView(_picked);
+}
+
 
 /// Create a copy of LessonSession
 /// with the given fields replaced by the non-null parameter values.
@@ -233,18 +241,18 @@ _$LessonSessionCopyWith<_LessonSession> get copyWith => __$LessonSessionCopyWith
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _LessonSession&&(identical(other.lessonId, lessonId) || other.lessonId == lessonId)&&(identical(other.blockIndex, blockIndex) || other.blockIndex == blockIndex)&&(identical(other.selectedOption, selectedOption) || other.selectedOption == selectedOption)&&(identical(other.isAnswered, isAnswered) || other.isAnswered == isAnswered));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _LessonSession&&(identical(other.lessonId, lessonId) || other.lessonId == lessonId)&&(identical(other.blockIndex, blockIndex) || other.blockIndex == blockIndex)&&(identical(other.selectedOption, selectedOption) || other.selectedOption == selectedOption)&&(identical(other.isAnswered, isAnswered) || other.isAnswered == isAnswered)&&const DeepCollectionEquality().equals(other.picked, _picked));
 }
 
 
 @override
 int get hashCode {
-    return Object.hash(runtimeType,lessonId,blockIndex,selectedOption,isAnswered);
+    return Object.hash(runtimeType,lessonId,blockIndex,selectedOption,isAnswered,const DeepCollectionEquality().hash(_picked));
 }
 
 @override
 String toString() {
-    return 'LessonSession(lessonId: $lessonId, blockIndex: $blockIndex, selectedOption: $selectedOption, isAnswered: $isAnswered)';
+    return 'LessonSession(lessonId: $lessonId, blockIndex: $blockIndex, selectedOption: $selectedOption, isAnswered: $isAnswered, picked: $picked)';
 }
 
 
@@ -255,7 +263,7 @@ abstract mixin class _$LessonSessionCopyWith<$Res> implements $LessonSessionCopy
   factory _$LessonSessionCopyWith(_LessonSession value, $Res Function(_LessonSession) _then) = __$LessonSessionCopyWithImpl;
 @override @useResult
 $Res call({
- String lessonId, int blockIndex, int? selectedOption, bool isAnswered
+ String lessonId, int blockIndex, int? selectedOption, bool isAnswered, Set<int> picked
 });
 
 
@@ -272,13 +280,14 @@ class __$LessonSessionCopyWithImpl<$Res>
 
 /// Create a copy of LessonSession
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? lessonId = null,Object? blockIndex = null,Object? selectedOption = freezed,Object? isAnswered = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? lessonId = null,Object? blockIndex = null,Object? selectedOption = freezed,Object? isAnswered = null,Object? picked = null,}) {
   return _then(_LessonSession(
 lessonId: null == lessonId ? _self.lessonId : lessonId // ignore: cast_nullable_to_non_nullable
 as String,blockIndex: null == blockIndex ? _self.blockIndex : blockIndex // ignore: cast_nullable_to_non_nullable
 as int,selectedOption: freezed == selectedOption ? _self.selectedOption : selectedOption // ignore: cast_nullable_to_non_nullable
 as int?,isAnswered: null == isAnswered ? _self.isAnswered : isAnswered // ignore: cast_nullable_to_non_nullable
-as bool,
+as bool,picked: null == picked ? _self._picked : picked // ignore: cast_nullable_to_non_nullable
+as Set<int>,
   ));
 }
 

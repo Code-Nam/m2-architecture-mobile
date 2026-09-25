@@ -33,7 +33,9 @@ final _units = [
         id: 'u1-l1',
         title: 'Leçon 1',
         xp: 10,
-        blocks: const [LessonBlock.drill()],
+        blocks: const [
+          LessonBlock.explanation(tile: '1m', title: 't', body: 'b'),
+        ],
       ),
     ],
   ),

@@ -25,13 +25,17 @@ final _unitA = Unit(
       id: 'u1-l1',
       title: 'Leçon 1',
       xp: 10,
-      blocks: const [LessonBlock.drill()],
+      blocks: const [
+        LessonBlock.explanation(tile: '1m', title: 't', body: 'b'),
+      ],
     ),
     Lesson(
       id: 'u1-l2',
       title: 'Leçon 2',
       xp: 10,
-      blocks: const [LessonBlock.drill()],
+      blocks: const [
+        LessonBlock.explanation(tile: '1m', title: 't', body: 'b'),
+      ],
     ),
   ],
 );
@@ -44,7 +48,9 @@ final _unitB = Unit(
       id: 'u2-l1',
       title: 'Leçon 1',
       xp: 10,
-      blocks: const [LessonBlock.drill()],
+      blocks: const [
+        LessonBlock.explanation(tile: '1m', title: 't', body: 'b'),
+      ],
     ),
   ],
 );

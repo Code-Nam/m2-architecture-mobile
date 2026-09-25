@@ -22,11 +22,24 @@ Map<String, dynamic> _$ExplanationBlockToJson(ExplanationBlock instance) =>
       'type': instance.$type,
     };
 
-DrillBlock _$DrillBlockFromJson(Map<String, dynamic> json) =>
-    DrillBlock($type: json['type'] as String?);
+DrillBlock _$DrillBlockFromJson(Map<String, dynamic> json) => DrillBlock(
+  prompt: json['prompt'] as String,
+  hand: (json['hand'] as List<dynamic>).map((e) => e as String).toList(),
+  answers: (json['answers'] as List<dynamic>)
+      .map((e) => (e as num).toInt())
+      .toList(),
+  feedback: json['feedback'] as String,
+  $type: json['type'] as String?,
+);
 
 Map<String, dynamic> _$DrillBlockToJson(DrillBlock instance) =>
-    <String, dynamic>{'type': instance.$type};
+    <String, dynamic>{
+      'prompt': instance.prompt,
+      'hand': instance.hand,
+      'answers': instance.answers,
+      'feedback': instance.feedback,
+      'type': instance.$type,
+    };
 
 QuizBlock _$QuizBlockFromJson(Map<String, dynamic> json) => QuizBlock(
   question: json['question'] as String,

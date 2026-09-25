@@ -3,6 +3,9 @@ enum TileSize {
   /// Hand row
   small(24, 34, 4),
 
+  /// Tappable hand (drill): 7 + 6 fit 350 dp with a 6 dp gap.
+  hand(44, 61, 6),
+
   /// Quiz row
   option(48, 66, 7),
 

@@ -14,8 +14,18 @@ sealed class LessonBlock with _$LessonBlock {
     required String body,
   }) = ExplanationBlock;
 
-  /// Not authored before milestone 6; parses so content can declare it early.
-  const factory LessonBlock.drill() = DrillBlock;
+  /// « Find in the hand »: the learner taps every tile [prompt] asks for.
+  /// [answers] are hand indices chosen by the author (no evaluation engine);
+  /// their range is checked by the content test, not here, since an
+  /// `@Assert` cannot loop. Not `const`: the asserts read the lists.
+  @Assert('hand.length == 13', 'a drill hand has 13 tiles')
+  @Assert('answers.length > 0', 'a drill needs at least one answer')
+  factory LessonBlock.drill({
+    required String prompt,
+    required List<String> hand,
+    required List<int> answers,
+    required String feedback,
+  }) = DrillBlock;
 
   /// Multiple-choice question over a 13-tile hand. [options] has exactly 4
   /// entries (2×2 grid); [feedback] is the one line shown after checking.

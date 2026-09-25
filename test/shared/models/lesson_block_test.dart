@@ -33,7 +33,26 @@ void main() {
     });
 
     test('drill block survives fromJson(toJson())', () {
-      const block = LessonBlock.drill();
+      final block = LessonBlock.drill(
+        prompt: 'Touchez les cercles',
+        hand: const [
+          '1m',
+          '2m',
+          '3m',
+          '1p',
+          '2p',
+          '3p',
+          '1s',
+          '2s',
+          '3s',
+          '1z',
+          '2z',
+          '3z',
+          '4z',
+        ],
+        answers: const [3, 4, 5],
+        feedback: 'Les cercles se lisent au nombre de points.',
+      );
 
       final roundTripped = LessonBlock.fromJson(block.toJson());
 

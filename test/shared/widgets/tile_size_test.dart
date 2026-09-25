@@ -5,9 +5,10 @@ import 'package:tenpai/shared/widgets/tile_size.dart';
 
 void main() {
   group('TileSize', () {
-    test('declares exactly the four documented sizes in order', () {
+    test('declares exactly the five documented sizes in order', () {
       expect(TileSize.values, [
         TileSize.small,
+        TileSize.hand,
         TileSize.option,
         TileSize.regular,
         TileSize.demo,

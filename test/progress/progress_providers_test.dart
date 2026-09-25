@@ -15,7 +15,7 @@ final _lesson = Lesson(
   id: 'l1',
   title: 'one',
   xp: 10,
-  blocks: const [LessonBlock.drill()],
+  blocks: const [LessonBlock.explanation(tile: '1m', title: 't', body: 'b')],
 );
 
 void main() {

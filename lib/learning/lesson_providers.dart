@@ -51,10 +51,10 @@ class LessonSessionNotifier extends Notifier<LessonSession> {
     state = state.copyWith(selectedOption: option);
   }
 
-  /// No-op without a selection or when already answered; the screen may
-  /// still disable its button, the notifier does not rely on it.
+  /// No-op without a selection (an option, or at least one drill pick)
+  ///  or when already answered
   void check() {
-    if (state.selectedOption == null) return;
+    if (state.selectedOption == null && state.picked.isEmpty) return;
     if (state.isAnswered) return;
     state = state.copyWith(isAnswered: true);
   }
@@ -67,4 +67,13 @@ class LessonSessionNotifier extends Notifier<LessonSession> {
     blockIndex: state.blockIndex + 1,
     isAnswered: false,
   );
+
+  /// Drill only: adds or removes one hand index; ignored once checked, so
+  /// the tile states shown after « Vérifier » match what was checked.
+  void toggle(int index) {
+    if (state.isAnswered) return;
+    final picked = {...state.picked};
+    picked.contains(index) ? picked.remove(index) : picked.add(index);
+    state = state.copyWith(picked: picked);
+  }
 }

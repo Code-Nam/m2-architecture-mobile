@@ -57,7 +57,7 @@ const YakuRecordSchema = CollectionSchema(
       id: -7330170829173428077,
       name: r'yakuId',
       unique: true,
-      replace: false,
+      replace: true,
       properties: [
         IndexPropertySchema(
           name: r'yakuId',

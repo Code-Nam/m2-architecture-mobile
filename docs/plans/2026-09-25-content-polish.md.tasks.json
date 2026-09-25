@@ -20,25 +20,25 @@
     {
       "id": 2,
       "subject": "Task 2: Drill model + session",
-      "status": "in_progress",
+      "status": "completed",
       "blockedBy": [
         0
       ],
-      "description": "**Goal:** `LessonBlock.drill({prompt, hand, answers, feedback})` with asserts (13-tile hand, non-empty answers in 0..12); `LessonSession.picked` (Set<int>); notifier `toggle(i)` (ignored once answered), `check()` for drill; build_runner.\n\n**Files:**\n- lib/shared/models/lesson_block.dart\n- lib/learning/lesson_session.dart\n- lib/learning/lesson_providers.dart\n\n**Acceptance Criteria:**\n- [ ] a drill JSON parses\n- [ ] toggle twice deselects\n- [ ] check sets isAnswered\n\n**Verify:** flutter analyze && dart run tool/check_conventions.dart\n\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && dart run tool/check_conventions.dart\", \"acceptanceCriteria\": [\"a drill JSON parses\", \"toggle twice deselects\", \"check sets isAnswered\"], \"modelTier\": \"standard\", \"owner\": \"user\", \"files\": [\"lib/shared/models/lesson_block.dart\", \"lib/learning/lesson_session.dart\", \"lib/learning/lesson_providers.dart\"]}\n```"
+      "description": "**Goal:** `LessonBlock.drill({prompt, hand, answers, feedback})` with asserts (13-tile hand, non-empty answers in 0..12); `LessonSession.picked` (Set<int>); notifier `toggle(i)` (ignored once answered), `check()` for drill; build_runner.\n\n**Files:**\n- lib/shared/models/lesson_block.dart\n- lib/learning/lesson_session.dart\n- lib/learning/lesson_providers.dart\n\n**Acceptance Criteria:**\n- [ ] a drill JSON parses\n- [ ] toggle twice deselects\n- [ ] check sets isAnswered\n\n**Verify:** flutter analyze && dart run tool/check_conventions.dart\n\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && dart run tool/check_conventions.dart\", \"acceptanceCriteria\": [\"a drill JSON parses\", \"toggle twice deselects\", \"check sets isAnswered\"], \"modelTier\": \"standard\", \"owner\": \"user\", \"files\": [\"lib/shared/models/lesson_block.dart\", \"lib/learning/lesson_session.dart\", \"lib/learning/lesson_providers.dart\"]}\n```\n**Done 2026-09-25**: drill factory + asserts (index range left to the content test), `picked` with `@Default`, `toggle`. 7 test files used `const LessonBlock.drill()` as filler → replaced by a const explanation block (main Claude, test/). Suite 226."
     },
     {
       "id": 3,
       "subject": "Task 3: Drill view",
-      "status": "pending",
+      "status": "completed",
       "blockedBy": [
         2
       ],
-      "description": "**Goal:** `_DrillBlockView` in lesson_screen.dart: prompt, tappable hand (selected), « Vérifier » when picked non-empty; after check correct/incorrect/highlighted; same feedback sheet with the drill miss line; switch arm in _LessonBody.\n\n**Files:**\n- lib/learning/lesson_screen.dart\n\n**Acceptance Criteria:**\n- [ ] emulator with a temporary drill: pick, check, states, sheet, Continuer\n- [ ] dark mode\n\n**Verify:** flutter analyze && dart run tool/check_conventions.dart, then emulator\n\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && dart run tool/check_conventions.dart, then emulator\", \"acceptanceCriteria\": [\"emulator with a temporary drill: pick, check, states, sheet, Continuer\", \"dark mode\"], \"modelTier\": \"standard\", \"owner\": \"user\", \"files\": [\"lib/learning/lesson_screen.dart\"]}\n```"
+      "description": "**Goal:** `_DrillBlockView` in lesson_screen.dart: prompt, tappable hand (selected), « Vérifier » when picked non-empty; after check correct/incorrect/highlighted; same feedback sheet with the drill miss line; switch arm in _LessonBody.\n\n**Files:**\n- lib/learning/lesson_screen.dart\n\n**Acceptance Criteria:**\n- [ ] emulator with a temporary drill: pick, check, states, sheet, Continuer\n- [ ] dark mode\n\n**Verify:** flutter analyze && dart run tool/check_conventions.dart, then emulator\n\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && dart run tool/check_conventions.dart, then emulator\", \"acceptanceCriteria\": [\"emulator with a temporary drill: pick, check, states, sheet, Continuer\", \"dark mode\"], \"modelTier\": \"standard\", \"owner\": \"user\", \"files\": [\"lib/learning/lesson_screen.dart\"]}\n```\n**Done 2026-09-25**: `_DrillBlockView` + `_DrillHand` (new `TileSize.hand` 44×61, `drillGap` 6), `missLine` on the sheet, `check()` accepts drill picks (the quiz-only guard blocked it). Dark-mode halo alpha 0.45 (`haloAlphaDark`) since 0.15 was invisible; one golden regenerated. Emulator: hit and miss in dark mode. Unit 1 lesson 1 gained a real drill. Suite 226."
     },
     {
       "id": 4,
       "subject": "Task 4: Interactive model + view",
-      "status": "pending",
+      "status": "in_progress",
       "blockedBy": [
         2
       ],
@@ -121,5 +121,5 @@
       "description": "**Goal:** Full path unit 1 → 6 on the emulator, dark mode; flutter-reviewer on the new views and TileWidget; doc-reviewer for README credits; ROADMAP + tasks.json with hash; deviations.\n\n**Files:**\n- docs/ROADMAP.md\n- README.md\n\n**Acceptance Criteria:**\n- [ ] flutter analyze && flutter test && dart run tool/check_conventions.dart clean\n- [ ] every unit playable\n- [ ] reviewer findings applied or logged\n\n**Verify:** flutter analyze && flutter test && dart run tool/check_conventions.dart\n\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && flutter test && dart run tool/check_conventions.dart\", \"acceptanceCriteria\": [\"flutter analyze && flutter test && dart run tool/check_conventions.dart clean\", \"every unit playable\", \"reviewer findings applied or logged\"], \"modelTier\": \"standard\", \"owner\": \"Claude + user\", \"files\": [\"docs/ROADMAP.md\", \"README.md\"]}\n```"
     }
   ],
-  "lastUpdated": "2026-09-25T12:44:45.366099+00:00"
+  "lastUpdated": "2026-09-25T13:26:31.622991+00:00"
 }

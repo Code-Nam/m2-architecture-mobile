@@ -80,13 +80,13 @@ final _lesson1 = Lesson(
   id: 'l1',
   title: 'one',
   xp: 10,
-  blocks: const [LessonBlock.drill()],
+  blocks: const [LessonBlock.explanation(tile: '1m', title: 't', body: 'b')],
 );
 final _lesson2 = Lesson(
   id: 'l2',
   title: 'two',
   xp: 10,
-  blocks: const [LessonBlock.drill()],
+  blocks: const [LessonBlock.explanation(tile: '1m', title: 't', body: 'b')],
 );
 final _units = [
   Unit(id: 'unit_01', title: 'unit one', lessons: [_lesson1, _lesson2]),

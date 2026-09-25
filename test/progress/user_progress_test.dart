@@ -6,8 +6,12 @@ import 'package:tenpai/shared/models/lesson.dart';
 import 'package:tenpai/shared/models/lesson_block.dart';
 import 'package:tenpai/shared/models/unit.dart';
 
-Lesson _lesson(String id) =>
-    Lesson(id: id, title: id, xp: 10, blocks: const [LessonBlock.drill()]);
+Lesson _lesson(String id) => Lesson(
+  id: id,
+  title: id,
+  xp: 10,
+  blocks: const [LessonBlock.explanation(tile: '1m', title: 't', body: 'b')],
+);
 
 Unit _unit(String id, List<String> lessonIds) =>
     Unit(id: id, title: id, lessons: [for (final l in lessonIds) _lesson(l)]);

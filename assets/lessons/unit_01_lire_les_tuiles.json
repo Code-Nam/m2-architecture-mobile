@@ -14,6 +14,32 @@
           "body": "Chaque tuile numérotée appartient à une famille : caractères, cercles ou bambous. Neuf valeurs par famille, et vous savez déjà lire les deux tiers du jeu."
         },
         {
+          "type": "drill",
+          "prompt": "Touchez toutes les tuiles de cercles.",
+          "hand": [
+            "2m",
+            "5p",
+            "7s",
+            "1z",
+            "3p",
+            "9m",
+            "4s",
+            "8p",
+            "6z",
+            "1s",
+            "2p",
+            "5m",
+            "7z"
+          ],
+          "answers": [
+            1,
+            4,
+            7,
+            10
+          ],
+          "feedback": "Les cercles se reconnaissent à leurs disques, de un à neuf."
+        },
+        {
           "type": "quiz",
           "question": "Quelle tuile complète cette main ?",
           "hand": [

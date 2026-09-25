@@ -28,6 +28,9 @@ abstract final class AppTokens {
   /// Gap between hand tiles: 13 × 24 + 12 × 2 = 336 must fit 350 dp.
   static const handGap = 2.0;
 
+  /// Gap between drill hand tiles: 7 × 44 + 6 × 6 = 344 fits 350 dp.
+  static const drillGap = 6.0;
+
   //* Radius
   /// Cards and buttons
   static const radiusCard = BorderRadius.all(Radius.circular(16));
@@ -98,6 +101,11 @@ abstract final class AppTokens {
 
   /// Alpha of the tile highlight halo
   static const haloAlpha = 0.15;
+
+  /// Dark-mode halo alpha. Deviation from the handoff (0.15 in both modes):
+  /// at 0.15 the green halo vanishes on the dark background, and the miss
+  /// copy « entourées de vert » points at it.
+  static const haloAlphaDark = 0.45;
 
   /// Lift of a selected tile
   static const tileLift = 6.0;

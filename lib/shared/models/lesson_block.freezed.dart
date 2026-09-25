@@ -160,11 +160,11 @@ return interactive(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String tile,  String title,  String body)?  explanation,TResult Function()?  drill,TResult Function( String question,  List<String> hand,  List<String> options,  int correctIndex,  String feedback)?  quiz,TResult Function()?  interactive,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String tile,  String title,  String body)?  explanation,TResult Function( String prompt,  List<String> hand,  List<int> answers,  String feedback)?  drill,TResult Function( String question,  List<String> hand,  List<String> options,  int correctIndex,  String feedback)?  quiz,TResult Function()?  interactive,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case ExplanationBlock() when explanation != null:
 return explanation(_that.tile,_that.title,_that.body);case DrillBlock() when drill != null:
-return drill();case QuizBlock() when quiz != null:
+return drill(_that.prompt,_that.hand,_that.answers,_that.feedback);case QuizBlock() when quiz != null:
 return quiz(_that.question,_that.hand,_that.options,_that.correctIndex,_that.feedback);case InteractiveBlock() when interactive != null:
 return interactive();case _:
   return orElse();
@@ -184,11 +184,11 @@ return interactive();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String tile,  String title,  String body)  explanation,required TResult Function()  drill,required TResult Function( String question,  List<String> hand,  List<String> options,  int correctIndex,  String feedback)  quiz,required TResult Function()  interactive,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String tile,  String title,  String body)  explanation,required TResult Function( String prompt,  List<String> hand,  List<int> answers,  String feedback)  drill,required TResult Function( String question,  List<String> hand,  List<String> options,  int correctIndex,  String feedback)  quiz,required TResult Function()  interactive,}) {final _that = this;
 switch (_that) {
 case ExplanationBlock():
 return explanation(_that.tile,_that.title,_that.body);case DrillBlock():
-return drill();case QuizBlock():
+return drill(_that.prompt,_that.hand,_that.answers,_that.feedback);case QuizBlock():
 return quiz(_that.question,_that.hand,_that.options,_that.correctIndex,_that.feedback);case InteractiveBlock():
 return interactive();}
 }
@@ -204,11 +204,11 @@ return interactive();}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String tile,  String title,  String body)?  explanation,TResult? Function()?  drill,TResult? Function( String question,  List<String> hand,  List<String> options,  int correctIndex,  String feedback)?  quiz,TResult? Function()?  interactive,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String tile,  String title,  String body)?  explanation,TResult? Function( String prompt,  List<String> hand,  List<int> answers,  String feedback)?  drill,TResult? Function( String question,  List<String> hand,  List<String> options,  int correctIndex,  String feedback)?  quiz,TResult? Function()?  interactive,}) {final _that = this;
 switch (_that) {
 case ExplanationBlock() when explanation != null:
 return explanation(_that.tile,_that.title,_that.body);case DrillBlock() when drill != null:
-return drill();case QuizBlock() when quiz != null:
+return drill(_that.prompt,_that.hand,_that.answers,_that.feedback);case QuizBlock() when quiz != null:
 return quiz(_that.question,_that.hand,_that.options,_that.correctIndex,_that.feedback);case InteractiveBlock() when interactive != null:
 return interactive();case _:
   return null;
@@ -301,15 +301,35 @@ as String,
 @JsonSerializable()
 
 class DrillBlock implements LessonBlock {
-  const DrillBlock({ String? $type}): $type = $type ?? 'drill';
+   DrillBlock({required this.prompt, required  List<String> hand, required  List<int> answers, required this.feedback,  String? $type}): assert(hand.length == 13, 'a drill hand has 13 tiles'),assert(answers.length > 0, 'a drill needs at least one answer'),_hand = hand,_answers = answers,$type = $type ?? 'drill';
   factory DrillBlock.fromJson(Map<String, dynamic> json) => _$DrillBlockFromJson(json);
 
+ final  String prompt;
+ final  List<String> _hand;
+ List<String> get hand {
+  if (_hand is EqualUnmodifiableListView) return _hand;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_hand);
+}
 
+ final  List<int> _answers;
+ List<int> get answers {
+  if (_answers is EqualUnmodifiableListView) return _answers;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_answers);
+}
+
+ final  String feedback;
 
 @JsonKey(name: 'type')
 final String $type;
 
 
+/// Create a copy of LessonBlock
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$DrillBlockCopyWith<DrillBlock> get copyWith => _$DrillBlockCopyWithImpl<DrillBlock>(this, _$identity);
 
 @override
 Map<String, dynamic> toJson() {
@@ -318,23 +338,57 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is DrillBlock);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is DrillBlock&&(identical(other.prompt, prompt) || other.prompt == prompt)&&const DeepCollectionEquality().equals(other.hand, _hand)&&const DeepCollectionEquality().equals(other.answers, _answers)&&(identical(other.feedback, feedback) || other.feedback == feedback));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => runtimeType.hashCode;
+int get hashCode {
+    return Object.hash(runtimeType,prompt,const DeepCollectionEquality().hash(_hand),const DeepCollectionEquality().hash(_answers),feedback);
+}
 
 @override
 String toString() {
-    return 'LessonBlock.drill()';
+    return 'LessonBlock.drill(prompt: $prompt, hand: $hand, answers: $answers, feedback: $feedback)';
 }
 
 
 }
 
+/// @nodoc
+abstract mixin class $DrillBlockCopyWith<$Res> implements $LessonBlockCopyWith<$Res> {
+  factory $DrillBlockCopyWith(DrillBlock value, $Res Function(DrillBlock) _then) = _$DrillBlockCopyWithImpl;
+@useResult
+$Res call({
+ String prompt, List<String> hand, List<int> answers, String feedback
+});
 
 
+
+
+}
+/// @nodoc
+class _$DrillBlockCopyWithImpl<$Res>
+    implements $DrillBlockCopyWith<$Res> {
+  _$DrillBlockCopyWithImpl(this._self, this._then);
+
+  final DrillBlock _self;
+  final $Res Function(DrillBlock) _then;
+
+/// Create a copy of LessonBlock
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? prompt = null,Object? hand = null,Object? answers = null,Object? feedback = null,}) {
+  return _then(DrillBlock(
+prompt: null == prompt ? _self.prompt : prompt // ignore: cast_nullable_to_non_nullable
+as String,hand: null == hand ? _self._hand : hand // ignore: cast_nullable_to_non_nullable
+as List<String>,answers: null == answers ? _self._answers : answers // ignore: cast_nullable_to_non_nullable
+as List<int>,feedback: null == feedback ? _self.feedback : feedback // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+
+}
 
 /// @nodoc
 @JsonSerializable()

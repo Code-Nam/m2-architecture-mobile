@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
@@ -79,7 +80,11 @@ class _LessonBody extends ConsumerWidget {
               session: session,
               onContinue: onContinue,
             ),
-            DrillBlock() ||
+            final DrillBlock block => _DrillBlockView(
+              block: block,
+              session: session,
+              onContinue: onContinue,
+            ),
             InteractiveBlock() => _SoonBlockView(onContinue: onContinue),
           },
         ),
@@ -293,6 +298,122 @@ class _QuizBlockView extends ConsumerWidget {
   }
 }
 
+/// « Find in the hand »: same layout and sheet as the quiz, but the pick is
+/// a set of hand indices, right only when it equals the authored answers
+/// exactly (order-free, `setEquals`). No « Pourquoi ? »: the Sensei request
+/// is quiz-shaped.
+class _DrillBlockView extends ConsumerWidget {
+  const _DrillBlockView({
+    required this.block,
+    required this.session,
+    required this.onContinue,
+  });
+  final DrillBlock block;
+  final LessonSession session;
+  final VoidCallback onContinue;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final notifier = ref.read(currentLessonProvider(session.lessonId).notifier);
+    final theme = Theme.of(context);
+    return Stack(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: AppTokens.sideMargin),
+          child: Column(
+            crossAxisAlignment: .start,
+            children: [
+              Text(block.prompt, style: theme.textTheme.headlineSmall),
+              const SizedBox(height: AppTokens.space3),
+              _DrillHand(
+                hand: block.hand,
+                answers: block.answers,
+                isAnswered: session.isAnswered,
+                onToggle: session.isAnswered ? null : notifier.toggle,
+                picked: session.picked,
+              ),
+              const Spacer(),
+              SafeArea(
+                top: false,
+                child: PrimaryButtonWidget(
+                  label: 'Vérifier',
+                  onPressed: session.picked.isEmpty || session.isAnswered
+                      ? null
+                      : notifier.check,
+                ),
+              ),
+            ],
+          ),
+        ),
+        Positioned(
+          left: 0,
+          right: 0,
+          bottom: 0,
+          child: AnimatedSlide(
+            offset: session.isAnswered ? Offset.zero : const Offset(0, 1),
+            duration: AppTokens.duration,
+            curve: AppTokens.curve,
+            child: _FeedbackSheet(
+              isCorrect: setEquals(session.picked, block.answers.toSet()),
+              feedback: block.feedback,
+              missLine: 'Les tuiles attendues sont entourées de vert.',
+              onContinue: onContinue,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+/// The 13 tiles at option size (48×66, tappable, unlike the 24 px quiz
+/// hand) wrapped 7 + 6: 7 × 48 + 6 × 2 = 348 fits the 350 dp column. Row
+/// spacing exceeds the selected lift so a raised tile clears the row above.
+class _DrillHand extends StatelessWidget {
+  const _DrillHand({
+    required this.hand,
+    required this.answers,
+    required this.picked,
+    required this.isAnswered,
+    this.onToggle,
+  });
+  final List<String> hand;
+  final List<int> answers;
+  final Set<int> picked;
+  final bool isAnswered;
+  final ValueChanged<int>? onToggle;
+
+  @override
+  Widget build(BuildContext context) => Wrap(
+    alignment: .center,
+    spacing: AppTokens.drillGap,
+    runSpacing: AppTokens.space2,
+    children: [
+      for (var i = 0; i < hand.length; i++)
+        GestureDetector(
+          onTap: onToggle == null ? null : () => onToggle!(i),
+          child: TileWidget(
+            tile: Tile.parse(hand[i]),
+            size: .hand,
+            state: _stateOf(i),
+          ),
+        ),
+    ],
+  );
+
+  /// Before checking only the picks show; after, a right pick is correct,
+  /// a wrong pick incorrect, and a missed answer highlighted.
+  TileState _stateOf(int i) =>
+      switch ((isAnswered, picked.contains(i), answers.contains(i))) {
+        (false, true, _) => .selected,
+        (false, false, _) => .normal,
+        (true, true, true) => .correct,
+        (true, true, false) => .incorrect,
+        (true, false, true) => .highlighted,
+        (true, false, false) => .normal,
+      };
+}
+
 /// Bottom sheet of handoff screens 7–8; the « Continuer » CTA lives in it.
 /// Always in the tree, slid off-screen by the parent until the block is
 /// answered, so opening animates instead of popping in. Sized to content
@@ -303,6 +424,7 @@ class _FeedbackSheet extends ConsumerWidget {
     required this.feedback,
     required this.onContinue,
     this.whyRequest,
+    this.missLine = 'La bonne réponse était la tuile entourée de vert.',
   });
 
   /// Picks tint, title and CTA colour; the parent derives it from the session
@@ -322,6 +444,9 @@ class _FeedbackSheet extends ConsumerWidget {
   /// Null before checking and on a hit, hence no request exists off-screen.
   final SenseiRequest? whyRequest;
 
+  /// Second line on a miss; the quiz keeps the default, the drill passes its own.
+  final String missLine;
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
@@ -333,7 +458,7 @@ class _FeedbackSheet extends ConsumerWidget {
             colors.errorPanel,
             colors.vermillionText,
             'Pas tout à fait',
-            'La bonne réponse était la tuile entourée de vert.',
+            missLine,
           );
     return DecoratedBox(
       decoration: BoxDecoration(color: bg, borderRadius: AppTokens.radiusSheet),

@@ -104,7 +104,11 @@ class TileWidget extends StatelessWidget {
         spreadRadius: AppTokens.ringWidth,
       ),
       .highlighted => BoxShadow(
-        color: scheme.primary.withValues(alpha: AppTokens.haloAlpha),
+        color: scheme.primary.withValues(
+          alpha: scheme.brightness == .dark
+              ? AppTokens.haloAlphaDark
+              : AppTokens.haloAlpha,
+        ),
         spreadRadius: AppTokens.haloWidth,
       ),
     };

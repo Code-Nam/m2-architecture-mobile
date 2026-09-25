@@ -30,12 +30,12 @@ void main() {
       ]);
     });
 
-    test('finds unit 1 lesson 1 with its three blocks', () async {
+    test('finds unit 1 lesson 1 with its four blocks', () async {
       final lesson = await repository.lessonById('unit_01_lesson_01');
 
       expect(lesson.title, 'Trois familles, un même alphabet');
       expect(lesson.xp, 10);
-      expect(lesson.blocks, hasLength(3));
+      expect(lesson.blocks, hasLength(4));
     });
 
     test('throws ArgumentError for an unknown lesson id', () {
