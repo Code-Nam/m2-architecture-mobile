@@ -253,3 +253,4 @@ by Claude on 2026-09-25; the only edit is removing an empty, unused
 | `lib/learning/widgets/drill_block_widget.dart` | file; code moved from author-written `lesson_screen.dart`, layout now via `CheckableBlockWidget` | 2026-09-25 | |
 | `lib/learning/widgets/interactive_block_widget.dart` | file; code moved from author-written `lesson_screen.dart`, layout now via `CheckableBlockWidget` | 2026-09-25 | |
 | `lib/learning/lesson_screen.dart` | block: block widget imports; block: switch arms to split widgets (Task 13) | 2026-09-25 | |
+| `test/content/lesson_assets_test.dart` | file | 2026-09-25 | |
