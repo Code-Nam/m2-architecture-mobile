@@ -40,8 +40,10 @@ final scanHistoryProvider = StreamProvider<List<ScanRecord>>(
   (ref) => ref.watch(scanHistoryRepositoryProvider).watch(),
 );
 
-/// Distinct tiles ever scanned (Profil « Tuiles maîtrisées »); 0 while the
-/// history loads or fails, never an error of its own.
+/// Distinct tile codes ever scanned (Profil « Tuiles maîtrisées »); a red
+/// five counts apart from its plain five, by design. 0 before the first
+/// emission; after a stream error it keeps the last count, since
+/// `AsyncValue.value` holds the previous data. Never an error of its own.
 final masteredTilesProvider = Provider<int>(
   (ref) =>
       {...?ref.watch(scanHistoryProvider).value?.map((r) => r.code)}.length,
@@ -74,7 +76,7 @@ class ScanNotifier extends Notifier<ScanState> {
       state = ScanState.found(tile);
       try {
         await ref.read(scanHistoryRepositoryProvider).add(tile);
-      } on Exception catch (e, s) {
+      } on Object catch (e, s) {
         debugPrint('scan history write failed: $e\n$s');
       }
     } on Exception catch (e, s) {

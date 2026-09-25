@@ -41,7 +41,10 @@ void main() {
       await container.read(themeModeProvider.notifier).set(ThemeMode.dark);
 
       expect(repository.setThemeModeCalls, [ThemeMode.dark]);
-      expect(container.read(themeModeProvider), const AsyncData(ThemeMode.dark));
+      expect(
+        container.read(themeModeProvider),
+        const AsyncData(ThemeMode.dark),
+      );
     });
 
     test('a failing write does not update state', () async {

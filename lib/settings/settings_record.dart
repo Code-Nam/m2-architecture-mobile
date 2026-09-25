@@ -10,8 +10,9 @@ class SettingsRecord {
   /// Fixed key: `put` always overwrites the one row instead of appending.
   Id id = 0;
 
-  /// Stored by ordinal (`@enumerated` default); reordering [ThemeMode] in a
-  /// future Flutter would silently remap, acceptable for a preference.
+  /// Stored by ordinal (`@enumerated` default); [ThemeMode] ships in
+  /// material_ui, and a release reordering it would silently remap the
+  /// choice. Acceptable for a preference; `EnumType.name` would remove it.
   @enumerated
   ThemeMode themeMode = ThemeMode.system;
 }

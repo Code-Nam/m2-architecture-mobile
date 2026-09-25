@@ -135,9 +135,9 @@ class _StatCard extends StatelessWidget {
   final String label;
   final String value;
 
-  /// Null keeps the card inert (no ripple). The ripple needs the transparent
-  /// `Material` inside the box: the page's Material sits under the
-  /// `DecoratedBox` and would hide it.
+  /// Null keeps the card inert (no ripple). Ink paints on the nearest
+  /// `Material`; without the transparent one inside, that would be the
+  /// page's, which the opaque `DecoratedBox` covers.
   final VoidCallback? onTap;
 
   @override

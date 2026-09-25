@@ -35,7 +35,7 @@ const YakuRecordSchema = CollectionSchema(
     r'tier': PropertySchema(
       id: 7,
       name: r'tier',
-      type: IsarType.byte,
+      type: IsarType.string,
       enumMap: _YakuRecordtierEnumValueMap,
     ),
     r'tiles': PropertySchema(id: 8, name: r'tiles', type: IsarType.stringList),
@@ -87,6 +87,7 @@ int _yakuRecordEstimateSize(
   bytesCount += 3 + object.name.length * 3;
   bytesCount += 3 + object.nickname.length * 3;
   bytesCount += 3 + object.summary.length * 3;
+  bytesCount += 3 + object.tier.name.length * 3;
   bytesCount += 3 + object.tiles.length * 3;
   {
     for (var i = 0; i < object.tiles.length; i++) {
@@ -117,7 +118,7 @@ void _yakuRecordSerialize(
   writer.writeString(offsets[4], object.name);
   writer.writeString(offsets[5], object.nickname);
   writer.writeString(offsets[6], object.summary);
-  writer.writeByte(offsets[7], object.tier.index);
+  writer.writeString(offsets[7], object.tier.name);
   writer.writeStringList(offsets[8], object.tiles);
   writer.writeString(offsets[9], object.unlockUnit);
   writer.writeString(offsets[10], object.yakuId);
@@ -139,7 +140,7 @@ YakuRecord _yakuRecordDeserialize(
   object.nickname = reader.readString(offsets[5]);
   object.summary = reader.readString(offsets[6]);
   object.tier =
-      _YakuRecordtierValueEnumMap[reader.readByteOrNull(offsets[7])] ??
+      _YakuRecordtierValueEnumMap[reader.readStringOrNull(offsets[7])] ??
       YakuTier.essential;
   object.tiles = reader.readStringList(offsets[8]) ?? [];
   object.unlockUnit = reader.readStringOrNull(offsets[9]);
@@ -169,7 +170,7 @@ P _yakuRecordDeserializeProp<P>(
     case 6:
       return (reader.readString(offset)) as P;
     case 7:
-      return (_YakuRecordtierValueEnumMap[reader.readByteOrNull(offset)] ??
+      return (_YakuRecordtierValueEnumMap[reader.readStringOrNull(offset)] ??
               YakuTier.essential)
           as P;
     case 8:
@@ -183,11 +184,15 @@ P _yakuRecordDeserializeProp<P>(
   }
 }
 
-const _YakuRecordtierEnumValueMap = {'essential': 0, 'common': 1, 'rare': 2};
+const _YakuRecordtierEnumValueMap = {
+  r'essential': r'essential',
+  r'common': r'common',
+  r'rare': r'rare',
+};
 const _YakuRecordtierValueEnumMap = {
-  0: YakuTier.essential,
-  1: YakuTier.common,
-  2: YakuTier.rare,
+  r'essential': YakuTier.essential,
+  r'common': YakuTier.common,
+  r'rare': YakuTier.rare,
 };
 
 Id _yakuRecordGetId(YakuRecord object) {
@@ -1317,11 +1322,16 @@ extension YakuRecordQueryFilter
   }
 
   QueryBuilder<YakuRecord, YakuRecord, QAfterFilterCondition> tierEqualTo(
-    YakuTier value,
-  ) {
+    YakuTier value, {
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
-        FilterCondition.equalTo(property: r'tier', value: value),
+        FilterCondition.equalTo(
+          property: r'tier',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
       );
     });
   }
@@ -1329,6 +1339,7 @@ extension YakuRecordQueryFilter
   QueryBuilder<YakuRecord, YakuRecord, QAfterFilterCondition> tierGreaterThan(
     YakuTier value, {
     bool include = false,
+    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
@@ -1336,6 +1347,7 @@ extension YakuRecordQueryFilter
           include: include,
           property: r'tier',
           value: value,
+          caseSensitive: caseSensitive,
         ),
       );
     });
@@ -1344,6 +1356,7 @@ extension YakuRecordQueryFilter
   QueryBuilder<YakuRecord, YakuRecord, QAfterFilterCondition> tierLessThan(
     YakuTier value, {
     bool include = false,
+    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
@@ -1351,6 +1364,7 @@ extension YakuRecordQueryFilter
           include: include,
           property: r'tier',
           value: value,
+          caseSensitive: caseSensitive,
         ),
       );
     });
@@ -1361,6 +1375,7 @@ extension YakuRecordQueryFilter
     YakuTier upper, {
     bool includeLower = true,
     bool includeUpper = true,
+    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
@@ -1370,7 +1385,84 @@ extension YakuRecordQueryFilter
           includeLower: includeLower,
           upper: upper,
           includeUpper: includeUpper,
+          caseSensitive: caseSensitive,
         ),
+      );
+    });
+  }
+
+  QueryBuilder<YakuRecord, YakuRecord, QAfterFilterCondition> tierStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.startsWith(
+          property: r'tier',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<YakuRecord, YakuRecord, QAfterFilterCondition> tierEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.endsWith(
+          property: r'tier',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<YakuRecord, YakuRecord, QAfterFilterCondition> tierContains(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.contains(
+          property: r'tier',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<YakuRecord, YakuRecord, QAfterFilterCondition> tierMatches(
+    String pattern, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.matches(
+          property: r'tier',
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<YakuRecord, YakuRecord, QAfterFilterCondition> tierIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'tier', value: ''),
+      );
+    });
+  }
+
+  QueryBuilder<YakuRecord, YakuRecord, QAfterFilterCondition> tierIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(property: r'tier', value: ''),
       );
     });
   }
@@ -2196,9 +2288,11 @@ extension YakuRecordQueryWhereDistinct
     });
   }
 
-  QueryBuilder<YakuRecord, YakuRecord, QDistinct> distinctByTier() {
+  QueryBuilder<YakuRecord, YakuRecord, QDistinct> distinctByTier({
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'tier');
+      return query.addDistinctBy(r'tier', caseSensitive: caseSensitive);
     });
   }
 

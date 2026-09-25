@@ -20,7 +20,7 @@ class IsarScanHistoryRepository implements ScanHistoryRepository {
 
   @override
   Stream<List<ScanRecord>> watch() => _isar.scanRecords
-      .where()
-      .sortByScannedAtDesc()
+      .where(sort: Sort.desc)
+      .anyScannedAt()
       .watch(fireImmediately: true);
 }

@@ -126,6 +126,7 @@ class _PathHeader extends StatelessWidget {
             ),
             const Spacer(),
             IconButton(
+              tooltip: 'Réglages',
               onPressed: () => context.push(AppRoutes.settings),
               icon: const Icon(Icons.settings),
             ),

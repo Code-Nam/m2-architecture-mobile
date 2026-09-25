@@ -20,7 +20,7 @@ class SettingsScreen extends ConsumerWidget {
         child: _ThemeCard(
           mode: mode.value,
           onChanged: mode.hasValue
-              ? ref.read(themeModeProvider.notifier).set
+              ? (m) => ref.read(themeModeProvider.notifier).set(m)
               : null,
         ),
       ),

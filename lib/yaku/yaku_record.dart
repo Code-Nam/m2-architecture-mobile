@@ -11,8 +11,10 @@ class YakuRecord {
   /// Isar's own key; the catalog id lives in [yakuId].
   Id id = Isar.autoIncrement;
 
-  /// Catalog id; unique so a re-cache cannot duplicate an entry.
-  @Index(unique: true)
+  /// Catalog id. `replace` clears before refilling, so the unique index
+  /// only matters for a duplicate id inside one API response: `replace:
+  /// true` keeps the last one instead of failing the whole write.
+  @Index(unique: true, replace: true)
   late String yakuId;
 
   /// Mirrors [Yaku.name].
@@ -36,8 +38,9 @@ class YakuRecord {
   /// Mirrors [Yaku.hanOpen]; null when the yaku requires a closed hand.
   int? hanOpen;
 
-  /// Stored by ordinal; the `@JsonValue` strings only matter for the API.
-  @enumerated
+  /// Stored by enum *name*, so reordering [YakuTier] cannot remap cached
+  /// entries; the `@JsonValue` strings only matter for the API.
+  @Enumerated(EnumType.name)
   late YakuTier tier;
 
   /// Tile codes for the card preview, `Tile.parse` format.
