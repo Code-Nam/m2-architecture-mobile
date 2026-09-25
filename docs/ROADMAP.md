@@ -171,7 +171,7 @@ chip still 0; legal links have no page; no email verification; splash is a
 static tile; level screen has no back arrow; Google button is a card, not a
 « G » logo asset; onboarding answers stored but nothing reads `level` yet; a
 second profile save would be refused by the rules (no settings screen yet,
-documented on `save`). Open item for the author: switch App Check
+documented on `save`). Done 2026-09-25: App Check
 **enforcement** on for Firestore in the console and confirm Profil still
 reads XP with the registered debug token. Test account `nobody@tenpai.test`
 exists in Auth (delete or keep as demo).
@@ -217,9 +217,10 @@ data on error (CLAUDE.md §2 says null, which is only true with no prior
 value).
 
 **All school requirements now met** (REST, Firebase, camera, AI, local DB,
-Firestore sync). Next: milestone 6 content + polish; App Check enforcement
-for Firestore and AI Logic (mandatory for AI Logic from 2026-11-02) still
-unconfirmed in chat.
+Firestore sync). App Check enforcement on for Firestore and AI Logic
+(confirmed by the author 2026-09-25; mandatory for AI Logic from
+2026-11-02). Offline Dex after the tier switch to names: checked, tiers
+correct. Next: milestone 6 content + polish.
 
 **Earlier state on 2026-09-25 (Isar planned):** brainstorming done, plan approved:
 `docs/plans/2026-09-25-isar.md` + `.tasks.json` (Tasks 0–7, all `pending`).
