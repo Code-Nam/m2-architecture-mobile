@@ -98,7 +98,7 @@ Rules:
 | `lib/onboarding/goal_screen.dart` | dartdoc | 2026-09-23 | Docs are time-consuming for the author; code stays author-written. |
 | `lib/onboarding/option_card_widget.dart` | dartdoc | 2026-09-23 | Docs are time-consuming for the author; code stays author-written. |
 | `lib/onboarding/onboarding_scaffold_widget.dart` | dartdoc | 2026-09-23 | Docs are time-consuming for the author; code stays author-written. |
-| `lib/app/app.dart` | file (marker pending, as above); dartdoc (2026-09-22) | 2026-09-17 | Project tooling and setup so study time goes to Flutter code. |
+| `lib/app/tenpai_app.dart` | file (marker pending, as above); dartdoc (2026-09-22) | 2026-09-17 | Project tooling and setup so study time goes to Flutter code. |
 | `lib/app/router.dart` | file (marker pending, as above); dartdoc (2026-09-22, 2026-09-23) | 2026-09-17 | Project tooling and setup so study time goes to Flutter code. |
 | `lib/shared/theme/app_colors.dart` | blocks: _Palette consts; AppColors fields + light/dark instances (schemes are author-written); `senseiSeal` / `senseiSealMuted` / `senseiRule` added inside the AppColors block (2026-09-23, /implement); `tileInk` removed (placeholder text gone, 2026-09-25, /implement) | 2026-09-17 | Tedious data entry, no Flutter concept to learn. |
 | `lib/shared/theme/app_theme.dart` | blocks: _textTheme, `_chipTheme` / `_inputTheme` (2026-09-23, /implement); theme builders are author-written | 2026-09-17 | Tedious data entry, no Flutter concept to learn. |
@@ -259,3 +259,9 @@ by Claude on 2026-09-25; the only edit is removing an empty, unused
 | `docs/linux-emulator.md` | file | 2026-09-25 | |
 | `docs/plans/2026-09-25-grading-fixes.md` | file | 2026-09-25 | |
 | `docs/plans/2026-09-25-grading-fixes.md.tasks.json` | file (no marker) | 2026-09-25 | |
+| `lib/learning/lesson_session.dart` | block: verdict fields `isCorrect` + `whyRequest` (grading fixes Task 1, /implement) | 2026-09-25 | |
+| `lib/learning/lesson_providers.dart` | block: verdict imports; block: `check(block)` verdict + Sensei request, `advance(lesson)` (grading fixes Task 1, /implement) | 2026-09-25 | |
+| `lib/learning/lesson_screen.dart` | block: `onContinue` via `advance` (grading fixes Task 1, /implement) | 2026-09-25 | |
+| `lib/scanner/tile_photo_source.dart` | block: `capture({fromGallery})` (grading fixes Task 2, /implement) | 2026-09-25 | |
+| `lib/scanner/tile_photo_source_impl.dart` | block: gallery source (grading fixes Task 2, /implement) | 2026-09-25 | |
+| `lib/scanner/scanner_providers.dart` | block: `scan({fromGallery})` (grading fixes Task 2, /implement) | 2026-09-25 | |

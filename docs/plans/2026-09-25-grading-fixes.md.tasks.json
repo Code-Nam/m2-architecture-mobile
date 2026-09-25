@@ -11,39 +11,39 @@
     {
       "id": 1,
       "subject": "Task 1: Verdict in the notifier",
-      "status": "pending",
+      "status": "completed",
       "blockedBy": [],
-      "description": "**Goal:** LessonSession isCorrect + whyRequest; check(block) computes them; advance(lesson) replaces _continue; widgets only read.\n\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && dart run tool/check_conventions.dart && flutter test\", \"acceptanceCriteria\": [\"LessonSession isCorrect + whyRequest; check(block) computes them; advance(lesson) replaces _continue; widgets only read.\"], \"modelTier\": \"standard\", \"owner\": \"user or /implement\", \"files\": [\"lib/learning/lesson_session.dart\", \"lib/learning/lesson_providers.dart\", \"lib/learning/lesson_screen.dart\", \"lib/learning/widgets/\"]}\n```"
+      "description": "**Goal:** LessonSession isCorrect + whyRequest; check(block) computes them; advance(lesson) replaces _continue; widgets only read.\n\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && dart run tool/check_conventions.dart && flutter test\", \"acceptanceCriteria\": [\"LessonSession isCorrect + whyRequest; check(block) computes them; advance(lesson) replaces _continue; widgets only read.\"], \"modelTier\": \"standard\", \"owner\": \"user or /implement\", \"files\": [\"lib/learning/lesson_session.dart\", \"lib/learning/lesson_providers.dart\", \"lib/learning/lesson_screen.dart\", \"lib/learning/widgets/\"]}\n```\n**Done 2026-09-25** (/implement): verdict + whyRequest in LessonSession, check(block) and advance(lesson) in the notifier, widgets only read; lesson_screen pops on advance()==true."
     },
     {
       "id": 2,
       "subject": "Task 2: Gallery",
-      "status": "pending",
+      "status": "completed",
       "blockedBy": [],
-      "description": "**Goal:** capture({fromGallery}), scan({fromGallery}), « Choisir une photo » button.\n\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && dart run tool/check_conventions.dart && flutter test\", \"acceptanceCriteria\": [\"capture({fromGallery}), scan({fromGallery}), « Choisir une photo » button.\"], \"modelTier\": \"standard\", \"owner\": \"user or /implement\", \"files\": [\"lib/scanner/tile_photo_source.dart\", \"lib/scanner/tile_photo_source_impl.dart\", \"lib/scanner/scanner_providers.dart\", \"lib/scanner/scanner_screen.dart\"]}\n```"
+      "description": "**Goal:** capture({fromGallery}), scan({fromGallery}), « Choisir une photo » button.\n\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && dart run tool/check_conventions.dart && flutter test\", \"acceptanceCriteria\": [\"capture({fromGallery}), scan({fromGallery}), « Choisir une photo » button.\"], \"modelTier\": \"standard\", \"owner\": \"user or /implement\", \"files\": [\"lib/scanner/tile_photo_source.dart\", \"lib/scanner/tile_photo_source_impl.dart\", \"lib/scanner/scanner_providers.dart\", \"lib/scanner/scanner_screen.dart\"]}\n```\n**Done 2026-09-25** (/implement): capture({fromGallery}), scan({fromGallery}), « Choisir une photo » TextButton under the shutter."
     },
     {
       "id": 3,
       "subject": "Task 3: File name",
-      "status": "pending",
+      "status": "completed",
       "blockedBy": [],
-      "description": "**Goal:** lib/app/app.dart → tenpai_app.dart; imports updated.\n\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && dart run tool/check_conventions.dart && flutter test\", \"acceptanceCriteria\": [\"lib/app/app.dart → tenpai_app.dart; imports updated.\"], \"modelTier\": \"standard\", \"owner\": \"user or /implement\", \"files\": [\"lib/app/\", \"lib/main.dart\", \"test/app/router_test.dart\"]}\n```"
+      "description": "**Goal:** lib/app/app.dart → tenpai_app.dart; imports updated.\n\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && dart run tool/check_conventions.dart && flutter test\", \"acceptanceCriteria\": [\"lib/app/app.dart → tenpai_app.dart; imports updated.\"], \"modelTier\": \"standard\", \"owner\": \"user or /implement\", \"files\": [\"lib/app/\", \"lib/main.dart\", \"test/app/router_test.dart\"]}\n```\n**Done 2026-09-25** (/implement): lib/app/app.dart → tenpai_app.dart (plain mv; stage the delete + add), imports in main.dart and router_test; check_conventions 0 findings."
     },
     {
       "id": 4,
       "subject": "Task 4: Tests",
-      "status": "pending",
+      "status": "completed",
       "blockedBy": [
         1,
         2,
         3
       ],
-      "description": "**Goal:** check verdicts, whyRequest, advance, gallery path.\n\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && dart run tool/check_conventions.dart && flutter test\", \"acceptanceCriteria\": [\"check verdicts, whyRequest, advance, gallery path.\"], \"modelTier\": \"standard\", \"owner\": \"test-writer\", \"files\": [\"test/\"]}\n```"
+      "description": "**Goal:** check verdicts, whyRequest, advance, gallery path.\n\n```json:metadata\n{\"verifyCommand\": \"flutter analyze && dart run tool/check_conventions.dart && flutter test\", \"acceptanceCriteria\": [\"check verdicts, whyRequest, advance, gallery path.\"], \"modelTier\": \"standard\", \"owner\": \"test-writer\", \"files\": [\"test/\"]}\n```\n**Done 2026-09-25**: test-writer; verdict, whyRequest, advance, gallery tests; shutter finder rescoped. Suite 388."
     },
     {
       "id": 5,
       "subject": "Task 5: Device pass + close",
-      "status": "pending",
+      "status": "in_progress",
       "blockedBy": [
         4
       ],

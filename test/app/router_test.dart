@@ -2,7 +2,7 @@
 // Why: Test scaffolding is tedious and teaches no Flutter concept; the code under test is author-written.
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:tenpai/app/app.dart';
+import 'package:tenpai/app/tenpai_app.dart';
 import 'package:tenpai/auth/auth_providers.dart';
 import 'package:tenpai/auth/auth_user.dart';
 import 'package:tenpai/learning/lesson_providers.dart';
