@@ -220,7 +220,9 @@ value).
 Firestore sync). App Check enforcement on for Firestore and AI Logic
 (confirmed by the author 2026-09-25; mandatory for AI Logic from
 2026-11-02). Offline Dex after the tier switch to names: checked, tiers
-correct. Next: milestone 6 content + polish.
+correct. Next: milestone 6 content + polish, planned 2026-09-25 in
+`docs/plans/2026-09-25-content-polish.md` (scope: tile art, drill +
+interactive blocks, units 2–6; polish backlog deferred).
 
 **Earlier state on 2026-09-25 (Isar planned):** brainstorming done, plan approved:
 `docs/plans/2026-09-25-isar.md` + `.tasks.json` (Tasks 0–7, all `pending`).
@@ -412,7 +414,7 @@ Plan: [docs/plans/2026-09-17-project-setup.md](plans/2026-09-17-project-setup.md
 | 4 — Firebase | `firebase_auth` (email + Google) + App Check + Firestore progress (offline persistence on, Security Rules written and tested) behind the existing repository interfaces; onboarding 01–04; minimal Profil. Isar deferred to its own plan | done 2026-09-23 (`81c75e7`): project `tenpai-3f494`, `lib/auth/` + `lib/onboarding/` + `lib/profile/` + Firestore progress, router as provider with auth/profile redirect, `firestore.rules` + 17 emulator tests, device-checked light/dark incl. offline queue, reviewer pass applied, 35 new tests, suite at 185; App Check enforcement toggle pending (author) |
 | 5 — AI | Firebase AI Logic (`firebase_ai ^4.0.0`, Gemini Developer API, `gemini-3.5-flash-lite`) behind App Check: `lib/sensei/` (request/state, repository + Firebase impl, providers + `SenseiNotifier`, `SenseiPanelWidget`), Gemini tile identifier behind `TileIdentifier`, « Pourquoi ? » under a quiz miss, streamed context under a scanned tile | done 2026-09-23 (`31124f6`): [docs/plans/2026-09-23-sensei.md](plans/2026-09-23-sensei.md) Tasks 0–9 done, device-checked on the emulator (quiz miss + scan stream), reviewer pass applied, 30 new tests, suite at 210; App Check enforcement still to flip (mandatory for AI Logic from 2026-11-02) |
 | Isar — local database | `isar_community` (analyzer override) + `path_provider`: theme-mode setting, scan history (Profil « Tuiles maîtrisées » + list), cached yaku catalog (network first, cache fallback) behind the existing `YakuRepository` | done 2026-09-25 (`e923b31` + review fixes): [docs/plans/2026-09-25-isar.md](plans/2026-09-25-isar.md) Tasks 0–7 done, three collections, `lib/local/` + `lib/settings/` + scanner/yaku additions, device-checked (theme and history survive a kill, offline Dex, dark), reviewer pass applied, 16 new tests, suite at 226 |
-| 6 — Content + polish | remaining units, drill/interactive blocks, gallery parity | not started |
+| 6 — Content + polish | CC0 tile art (FluffyStuff) via `flutter_svg`, drill (« find in the hand ») + interactive (« complete the group ») blocks, units 2–6 drafted by Claude and reviewed by the author, a content validation test | plan approved 2026-09-25: [docs/plans/2026-09-25-content-polish.md](plans/2026-09-25-content-polish.md) + `.tasks.json`, Tasks 0–1 done (content exception, CC0 tile art via flutter_svg), Task 2 in progress (drill model), Tasks 3–12 `pending` |
 
 ## Design import
 

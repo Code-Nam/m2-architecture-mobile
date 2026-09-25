@@ -26,6 +26,10 @@ React terms. Claude is a **tutor and reviewer, not an implementer**.
    of the name, parameters and return type. **Second exception (2026-09-23):**
    on `review`, Claude also runs `dart format lib test` itself (whitespace
    only, already allowed by the hook) instead of reporting format findings.
+   **Third exception (2026-09-25):** lesson content is data, not Flutter
+   learning: Claude drafts `assets/lessons/*.json` itself (each file marked in
+   the register); the author reviews every unit for Mahjong and French
+   accuracy before it is committed.
 2. `/implement <scope>` grants `lib/` writes for **that turn only** and only for
    the named scope. Every other rule still applies. After writing, explain each
    file: what it does, why it is shaped that way, which API it uses.
@@ -199,7 +203,7 @@ flutter run                              # device / emulator
 | `flutter-reviewer` | no | read-only; findings in chat |
 | `test-writer` | yes | `test/**` only (hook-enforced) |
 | `doc-reviewer` | yes | `README.md` only (hook-enforced); reports on code docs, does not rewrite them |
-| main Claude | on request | `CLAUDE.md`, `docs/**`, `.claude/**`, `analysis_options.yaml`, `tool/**`, `test/**`; never `lib/**` without `/implement` |
+| main Claude | on request | `CLAUDE.md`, `docs/**`, `.claude/**`, `analysis_options.yaml`, `tool/**`, `test/**`, `assets/lessons/*.json`; never `lib/**` without `/implement` |
 
 ## 8. Plans and task carry-over
 

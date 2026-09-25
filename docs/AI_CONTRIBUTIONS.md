@@ -99,7 +99,7 @@ Rules:
 | `lib/onboarding/onboarding_scaffold_widget.dart` | dartdoc | 2026-09-23 | Docs are time-consuming for the author; code stays author-written. |
 | `lib/app/app.dart` | file (marker pending, as above); dartdoc (2026-09-22) | 2026-09-17 | Project tooling and setup so study time goes to Flutter code. |
 | `lib/app/router.dart` | file (marker pending, as above); dartdoc (2026-09-22, 2026-09-23) | 2026-09-17 | Project tooling and setup so study time goes to Flutter code. |
-| `lib/shared/theme/app_colors.dart` | blocks: _Palette consts; AppColors fields + light/dark instances (schemes are author-written); `senseiSeal` / `senseiSealMuted` / `senseiRule` added inside the AppColors block (2026-09-23, /implement) | 2026-09-17 | Tedious data entry, no Flutter concept to learn. |
+| `lib/shared/theme/app_colors.dart` | blocks: _Palette consts; AppColors fields + light/dark instances (schemes are author-written); `senseiSeal` / `senseiSealMuted` / `senseiRule` added inside the AppColors block (2026-09-23, /implement); `tileInk` removed (placeholder text gone, 2026-09-25, /implement) | 2026-09-17 | Tedious data entry, no Flutter concept to learn. |
 | `lib/shared/theme/app_theme.dart` | blocks: _textTheme, `_chipTheme` / `_inputTheme` (2026-09-23, /implement); theme builders are author-written | 2026-09-17 | Tedious data entry, no Flutter concept to learn. |
 | `.vscode/launch.json` | file (no marker) | 2026-09-18 | Editor launch config, no Flutter concept to learn. |
 | `test/shared/models/tile_test.dart` | file | 2026-09-18 | Test scaffolding is tedious and teaches no Flutter concept; the widget under test is author-written. |
@@ -148,6 +148,8 @@ Rules:
 | `docs/plans/2026-09-23-sensei.md.tasks.json` | file (no marker) | 2026-09-23 | Task carry-over for the plan above. |
 | `docs/plans/2026-09-25-isar.md` | file | 2026-09-25 | Plan written from the author's brainstorming answers; the author builds it. |
 | `docs/plans/2026-09-25-isar.md.tasks.json` | file (no marker) | 2026-09-25 | Task carry-over for the plan above. |
+| `docs/plans/2026-09-25-content-polish.md` | file | 2026-09-25 | Plan written from the author's brainstorming answers; the author builds it. |
+| `docs/plans/2026-09-25-content-polish.md.tasks.json` | file (no marker) | 2026-09-25 | Task carry-over for the plan above. |
 | `lib/app/app_config.dart` | dartdoc | 2026-09-23 | Docs are time-consuming for the author; code stays author-written. |
 | `lib/sensei/sensei_request.dart` | dartdoc | 2026-09-23 | Docs are time-consuming for the author; code stays author-written. |
 | `lib/sensei/sensei_state.dart` | dartdoc | 2026-09-23 | Docs are time-consuming for the author; code stays author-written. |
@@ -239,5 +241,8 @@ Rules:
 | `lib/profile/firestore_profile_repository.dart` | dartdoc | 2026-09-23 | Docs are time-consuming for the author; code stays author-written. |
 
 Not listed: `design/handoff/` (designer's export, not code), `assets/fonts/`
-(third-party fonts under OFL), generated `*.g.dart` / `*.freezed.dart`
+(third-party fonts under OFL), `assets/tiles/` (FluffyStuff/riichi-mahjong-tiles
+`Regular/` SVGs, public domain CC0 1.0, fetched and renamed to tile codes
+by Claude on 2026-09-25; the only edit is removing an empty, unused
+`<pattern/>` that flutter_svg mis-parses as swallowing the whole drawing), generated `*.g.dart` / `*.freezed.dart`
 (produced by build_runner from student code).
