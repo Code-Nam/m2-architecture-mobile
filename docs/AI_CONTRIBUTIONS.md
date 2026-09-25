@@ -80,7 +80,7 @@ Rules:
 | `assets/lessons/unit_02_les_briques_d_une_main.json` | file (no marker); 3 lessons drafted 2026-09-25 (content exception) | 2026-09-18 | |
 | `assets/lessons/unit_03_la_table.json` | file (no marker); 2 lessons drafted 2026-09-25 (content exception) | 2026-09-18 | |
 | `assets/lessons/unit_04_le_deroule_d_une_partie.json` | file (no marker); 2 lessons drafted 2026-09-25 (content exception) | 2026-09-18 | |
-| `assets/lessons/unit_05_gagner.json` | file (no marker) | 2026-09-18 | |
+| `assets/lessons/unit_05_gagner.json` | file (no marker); 2 lessons drafted 2026-09-25 (content exception) | 2026-09-18 | |
 | `assets/lessons/unit_06_le_score.json` | file (no marker) | 2026-09-18 | |
 | `pubspec.yaml` | block: lesson content assets | 2026-09-18 | |
 | `pubspec.yaml` | block: analyzer dependency override for the Isar generator | 2026-09-24 | |

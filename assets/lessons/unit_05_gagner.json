@@ -1,5 +1,208 @@
 {
   "id": "unit_05",
   "title": "Gagner",
-  "lessons": []
+  "lessons": [
+    {
+      "id": "unit_05_lesson_01",
+      "title": "Il faut un yaku",
+      "xp": 10,
+      "blocks": [
+        {
+          "type": "explanation",
+          "tile": "5p",
+          "title": "Le yaku",
+          "body": "Une main complète ne suffit pas : pour gagner, elle doit aussi contenir au moins un yaku, une combinaison reconnue. La dora n'en est pas un : elle ajoute de la valeur, sans permettre de gagner."
+        },
+        {
+          "type": "explanation",
+          "tile": "7z",
+          "title": "Le brelan de valeur",
+          "body": "Le yaku le plus simple : un brelan de dragons, de votre vent de place ou du vent du tour. Il reste valable même si vous l'avez formé avec un pon."
+        },
+        {
+          "type": "drill",
+          "prompt": "Touchez les tuiles qui forment le yaku de cette main.",
+          "hand": [
+            "2m",
+            "3m",
+            "4m",
+            "5p",
+            "6p",
+            "7p",
+            "6z",
+            "6z",
+            "6z",
+            "3s",
+            "4s",
+            "5s",
+            "9s"
+          ],
+          "answers": [
+            6,
+            7,
+            8
+          ],
+          "feedback": "Trois dragons verts : un brelan de dragons est un yaku à lui seul."
+        },
+        {
+          "type": "interactive",
+          "prompt": "Complétez le yaku.",
+          "group": [
+            "5z",
+            "5z"
+          ],
+          "slot": 2,
+          "rack": [
+            "6z",
+            "5z",
+            "1s",
+            "5p"
+          ],
+          "correctIndex": 1,
+          "feedback": "Trois dragons blancs : un brelan de valeur, donc un yaku."
+        },
+        {
+          "type": "quiz",
+          "question": "Vous êtes nord, au tour de l'est, sans riichi. Un adversaire jette une de ces tuiles : laquelle vous permet de dire ron ?",
+          "hand": [
+            "1m",
+            "2m",
+            "3m",
+            "4p",
+            "5p",
+            "6p",
+            "7s",
+            "8s",
+            "9s",
+            "1z",
+            "1z",
+            "2z",
+            "2z"
+          ],
+          "options": [
+            "2z",
+            "1z",
+            "4z",
+            "9s"
+          ],
+          "correctIndex": 1,
+          "feedback": "Un troisième vent d'est, le vent du tour : c'est un yaku. Un troisième vent du sud complète aussi la main, mais sans yaku : impossible de gagner avec."
+        }
+      ]
+    },
+    {
+      "id": "unit_05_lesson_02",
+      "title": "Deux yaku faciles",
+      "xp": 10,
+      "blocks": [
+        {
+          "type": "explanation",
+          "tile": "5s",
+          "title": "Tanyao : que des simples",
+          "body": "Une main sans aucun 1, aucun 9 ni aucun honneur forme le yaku tanyao. Seules les tuiles de 2 à 8 y ont leur place."
+        },
+        {
+          "type": "drill",
+          "prompt": "Touchez les tuiles qui empêchent tanyao.",
+          "hand": [
+            "2m",
+            "3m",
+            "4m",
+            "6p",
+            "7p",
+            "8p",
+            "7s",
+            "8s",
+            "9s",
+            "3s",
+            "4s",
+            "1z",
+            "1z"
+          ],
+          "answers": [
+            8,
+            11,
+            12
+          ],
+          "feedback": "Le 9 de bambous et les deux vents d'est : un 9 et des honneurs, donc pas de tanyao."
+        },
+        {
+          "type": "quiz",
+          "question": "Quelle tuile complète cette main en gardant tanyao ?",
+          "hand": [
+            "2m",
+            "3m",
+            "4m",
+            "5m",
+            "6m",
+            "7m",
+            "3p",
+            "4p",
+            "5p",
+            "6s",
+            "6s",
+            "7s",
+            "8s"
+          ],
+          "options": [
+            "9s",
+            "6s",
+            "5s",
+            "1z"
+          ],
+          "correctIndex": 1,
+          "feedback": "Le 6 de bambous garde toute la main entre 2 et 8 : tanyao. Le 9 de bambous complète aussi, mais il casse tanyao."
+        },
+        {
+          "type": "explanation",
+          "tile": "1m",
+          "title": "Chiitoitsu : sept paires",
+          "body": "Une exception à la formule : sept paires différentes forment aussi une main gagnante, le yaku chiitoitsu. Pas de groupes, seulement des paires, et aucun appel."
+        },
+        {
+          "type": "interactive",
+          "prompt": "Complétez la septième paire.",
+          "group": [
+            "4p"
+          ],
+          "slot": 1,
+          "rack": [
+            "5p",
+            "4s",
+            "4p",
+            "3p"
+          ],
+          "correctIndex": 2,
+          "feedback": "Deux 4 de cercles : sept paires, chiitoitsu !"
+        },
+        {
+          "type": "quiz",
+          "question": "Quelle tuile complète ces sept paires ?",
+          "hand": [
+            "1m",
+            "1m",
+            "4m",
+            "4m",
+            "2p",
+            "2p",
+            "7p",
+            "7p",
+            "3s",
+            "3s",
+            "9s",
+            "9s",
+            "5z"
+          ],
+          "options": [
+            "6z",
+            "5m",
+            "4m",
+            "5z"
+          ],
+          "correctIndex": 3,
+          "feedback": "Un second dragon blanc forme la septième paire : chiitoitsu."
+        }
+      ]
+    }
+  ]
 }
