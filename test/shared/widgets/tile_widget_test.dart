@@ -75,7 +75,6 @@ void main() {
     for (final state in [
       TileState.normal,
       TileState.selected,
-      TileState.highlighted,
       TileState.faceDown,
     ]) {
       testWidgets('shows no badge for ${state.name}', (tester) async {

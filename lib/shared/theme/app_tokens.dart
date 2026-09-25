@@ -91,21 +91,10 @@ abstract final class AppTokens {
   /// no timeout at all, which would hang the Yaku Dex on a dead network.
   static const networkTimeout = Duration(seconds: 10);
 
-  //* Tile selection and highlight
+  //* Tile selection
 
   /// Width of the tile selection ring
   static const ringWidth = 3.0;
-
-  /// Width of the tile highlight halo
-  static const haloWidth = 6.0;
-
-  /// Alpha of the tile highlight halo
-  static const haloAlpha = 0.15;
-
-  /// Dark-mode halo alpha. Deviation from the handoff (0.15 in both modes):
-  /// at 0.15 the green halo vanishes on the dark background, and the miss
-  /// copy « entourées de vert » points at it.
-  static const haloAlphaDark = 0.45;
 
   /// Lift of a selected tile
   static const tileLift = 6.0;
@@ -113,7 +102,7 @@ abstract final class AppTokens {
   //* Badge
 
   /// Badge diameter. One size for every [TileSize]: a known deviation from
-  /// the handoff, accepted until SVG art lands.
+  /// the handoff, which scales it with the tile.
   static const badgeSize = 22.0;
 
   /// How far the badge sticks out past the tile's top-right corner.

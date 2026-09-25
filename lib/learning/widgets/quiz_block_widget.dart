@@ -167,7 +167,7 @@ class _OptionCard extends StatelessWidget {
     final (bg, ring) = switch (state) {
       .correct => (colors.successPanel, scheme.primary),
       .incorrect => (colors.errorCard, scheme.error),
-      .selected || .highlighted => (scheme.surfaceContainer, scheme.primary),
+      .selected => (scheme.surfaceContainer, scheme.primary),
       .normal || .faceDown => (scheme.surfaceContainer, Colors.transparent),
     };
     return GestureDetector(

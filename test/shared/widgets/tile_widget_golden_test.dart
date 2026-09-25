@@ -11,7 +11,7 @@ import 'package:tenpai/shared/widgets/tile_widget.dart';
 const _tile = Tile(suit: TileSuit.pin, number: 5, isRed: true);
 
 // Regular is 64x88; this frame leaves 48 logical px on every side, enough
-// for the badge overhang and the highlight halo to stay inside the capture.
+// for the badge overhang to stay inside the capture.
 Widget _frame({
   required TileState state,
   required ThemeMode mode,

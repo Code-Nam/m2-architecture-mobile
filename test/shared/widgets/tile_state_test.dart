@@ -5,13 +5,12 @@ import 'package:tenpai/shared/widgets/tile_state.dart';
 
 void main() {
   group('TileState', () {
-    test('declares exactly the six documented states in order', () {
+    test('declares exactly the five documented states in order', () {
       expect(TileState.values, [
         TileState.normal,
         TileState.selected,
         TileState.correct,
         TileState.incorrect,
-        TileState.highlighted,
         TileState.faceDown,
       ]);
     });

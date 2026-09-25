@@ -1,11 +1,11 @@
-/// Visual variants of `TileWidget`; the widget maps each to a gradient, a
-/// ring or halo, and an optional badge. Red five is not a state: it comes
-/// from the tile itself.
+/// Visual variants of `TileWidget`; the widget maps each to a gradient, an
+/// optional ring and an optional badge. Red five is not a state: it comes
+/// from the tile itself. No « highlighted »: a miss never reveals the answer.
 enum TileState {
   /// Default state
   normal,
 
-  /// Tapped in a quiz
+  /// Picked but not yet checked (quiz option, drill tile, rack tile).
   selected,
 
   /// Answered right
@@ -13,9 +13,6 @@ enum TileState {
 
   /// Answered wrong
   incorrect,
-
-  /// Soft green halo: the tile an explanation is talking about.
-  highlighted,
 
   /// Back shown, symbol hidden.
   faceDown,

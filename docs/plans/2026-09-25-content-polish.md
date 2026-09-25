@@ -159,8 +159,7 @@ tile art everywhere (path nodes, hands, options, Dex, scanner, history).
 Drill and interactive have no handoff screen (built from the quiz screen's
 parts and tokens); the Sensei covers quiz and drill misses (interactive has none); tile art is a CC0
 third-party set, not the designer's; lesson prose is Claude-drafted and
-author-reviewed. Dark-mode highlight halo at 0.45 alpha instead of 0.15 (invisible on
-the dark background); a `hand` tile size (44×61) for the tappable drill hand. The interactive empty slot is a
+author-reviewed. a `hand` tile size (44×61) for the tappable drill hand. The interactive empty slot is a
 solid outline, not dashed (no dashed border in Flutter).
 
 - (2026-09-25, Task 14) Miss sheet: CTA « Réessayer » instead of
@@ -168,6 +167,10 @@ solid outline, not dashed (no dashed border in Flutter).
   replacing « …entourée(s) de vert » (handoff screen 8 shows the answer and
   lets the learner continue). Author's product decision: a lesson is
   finished only when every block is answered right.
+
+- (2026-09-25, Task 12) `TileState.highlighted` and its halo tokens removed:
+  since Task 14 no block reveals the answer, so nothing produced it. The
+  earlier dark-mode halo deviation (alpha 0.45) goes with it.
 
 ## Task carry-over
 

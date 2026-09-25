@@ -6,7 +6,9 @@ import 'package:tenpai/shared/theme/app_tokens.dart';
 import 'package:tenpai/shared/widgets/tile_size.dart';
 import 'package:tenpai/shared/widgets/tile_state.dart';
 
-/// The one tile renderer. States from [TileState], Symbol is text until SVG art lands
+/// The one tile renderer. States from [TileState]; the symbol is the CC0
+/// SVG for the tile code, drawn on an ivory face that stays light in dark
+/// mode.
 class TileWidget extends StatelessWidget {
   /// Draws [tile] in [state] at [size]. Red comes from [Tile.isRed]
   const TileWidget({
@@ -41,7 +43,7 @@ class TileWidget extends StatelessWidget {
         icon: Icons.close,
         onColor: scheme.onError,
       ),
-      .normal || .selected || .highlighted || .faceDown => null,
+      .normal || .selected || .faceDown => null,
     };
 
     return Stack(
@@ -77,7 +79,6 @@ class TileWidget extends StatelessWidget {
     final (top, bottom) = switch (state) {
       .normal ||
       .selected ||
-      .highlighted => (colors.tileFaceTop, colors.tileFaceBottom),
       .correct => (colors.successTint, colors.successTintDeep),
       .incorrect => (colors.errorTint, colors.errorTintDeep),
       .faceDown => (colors.tileBackTop, colors.tileBackBottom),
@@ -102,14 +103,6 @@ class TileWidget extends StatelessWidget {
       .incorrect => BoxShadow(
         color: scheme.error,
         spreadRadius: AppTokens.ringWidth,
-      ),
-      .highlighted => BoxShadow(
-        color: scheme.primary.withValues(
-          alpha: scheme.brightness == .dark
-              ? AppTokens.haloAlphaDark
-              : AppTokens.haloAlpha,
-        ),
-        spreadRadius: AppTokens.haloWidth,
       ),
     };
 

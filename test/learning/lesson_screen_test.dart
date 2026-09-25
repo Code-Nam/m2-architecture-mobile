@@ -235,7 +235,8 @@ void main() {
     );
 
     testWidgets(
-      'a wrong answer shows the miss feedback, no highlight and offers Réessayer',
+      'a wrong answer shows the miss feedback, does not reveal the answer '
+      'and offers Réessayer',
       (tester) async {
         await _pumpLessonScreen(tester);
         await _tapContinue(tester);
@@ -255,7 +256,7 @@ void main() {
         );
         expect(
           tester.widget<TileWidget>(_optionTile('5s')).state,
-          isNot(TileState.highlighted),
+          TileState.normal,
         );
         expect(find.widgetWithText(FilledButton, 'Réessayer'), findsOneWidget);
       },
@@ -605,7 +606,7 @@ void main() {
 
     testWidgets(
       'a wrong rack pick shows the miss line, the picked tile incorrect and '
-      'the right rack tile not highlighted',
+      'does not reveal the right rack tile',
       (tester) async {
         const wrongIndex = 1;
         await _pumpLessonScreen(tester, id: 'l3');
@@ -639,7 +640,7 @@ void main() {
                 _optionTile(_interactiveRack[_interactiveCorrectIndex]),
               )
               .state,
-          isNot(TileState.highlighted),
+          TileState.normal,
         );
       },
     );
